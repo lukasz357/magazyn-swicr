@@ -23,8 +23,11 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import magazyn.util.MagazynUtils;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
@@ -102,6 +105,7 @@ public class Magazyn {
 				}
 			}
 		});
+		
 		openFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		menuPlik.add(openFile);
 		menuPlik.addSeparator();

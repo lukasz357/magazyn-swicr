@@ -1,4 +1,4 @@
-package magazyn;
+package magazyn.util;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
