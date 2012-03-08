@@ -26,6 +26,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.utils.MagazynUtils;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -33,6 +34,9 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.TitledBorder;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
@@ -44,6 +48,7 @@ public class Magazyn {
 	private JMenu mnZmienStyl;
 	private JFileChooser fileChooser;
 	private JLabel lblNewLabel = new JLabel("Magazyn");
+	private JPanel mapaMagazynu;
 
 	/**
 	 * Launch the application.
@@ -171,21 +176,33 @@ public class Magazyn {
 
 		mnZmienStyl = new JMenu("Zmień styl");
 		mnOkno.add(mnZmienStyl);
+		
+		mapaMagazynu = new MapaMagazynu();
+
+		
+		mapaMagazynu.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(437)
-					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
 					.addGap(436))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, mapaMagazynu.getWidth(), GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(864, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblNewLabel)
-					.addContainerGap(488, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, mapaMagazynu.getHeight(), GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(404, Short.MAX_VALUE))
 		);
+		
 		frame.getContentPane().setLayout(groupLayout);
 
 		ButtonGroup styleGroup = new ButtonGroup();
