@@ -1,5 +1,6 @@
 package siwc.magazyn;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
@@ -37,6 +39,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
+import javax.swing.colorchooser.ColorSelectionModel;
+import javax.swing.JButton;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
@@ -48,7 +52,9 @@ public class Magazyn {
 	private JMenu mnZmienStyl;
 	private JFileChooser fileChooser;
 	private JLabel lblNewLabel = new JLabel("Magazyn");
-	private JPanel mapaMagazynu;
+	private MapaMagazynu mapaMagazynu;
+	private JButton btnRegal1Random;
+	private JButton btnRegal2Random;
 
 	/**
 	 * Launch the application.
@@ -82,8 +88,8 @@ public class Magazyn {
 		lblNewLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 15));
 		frame = new JFrame();
 		frame.setTitle(MagazynUtils.frameTitle);
-		frame.setSize(MagazynUtils.frameWidth, MagazynUtils.frameHeight);
-		frame.setLocationByPlatform(true);
+		frame.setBounds(50, 50, MagazynUtils.frameWidth, MagazynUtils.frameHeight);
+
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -98,12 +104,11 @@ public class Magazyn {
 		ustawStyl();
 
 		fileChooser = new JFileChooser();
-		FileNameExtensionFilter marekFilter = new FileNameExtensionFilter("Marek (*.ms; *.pała, *.pala, *.marek)", "ms","marek", "pała", "pala");
+		FileNameExtensionFilter marekFilter = new FileNameExtensionFilter("Marek (*.ms; *.pała, *.pala, *.marek)", "ms", "marek", "pała", "pala");
 		fileChooser.setFileFilter(marekFilter);
 		fileChooser.addChoosableFileFilter(marekFilter);
 		fileChooser.setMultiSelectionEnabled(false);
 		fileChooser.setAcceptAllFileFilterUsed(true);
-
 
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -131,7 +136,7 @@ public class Magazyn {
 		saveFile.setEnabled(false);
 		saveFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				// TODO
 				int result = fileChooser.showSaveDialog(frame);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
@@ -146,7 +151,7 @@ public class Magazyn {
 		saveAsFile.setEnabled(false);
 		saveAsFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				// TODO
 				int result = fileChooser.showSaveDialog(frame);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					log.info("Zapisz jako: " + fileChooser.getSelectedFile().getName());
@@ -176,33 +181,47 @@ public class Magazyn {
 
 		mnZmienStyl = new JMenu("Zmień styl");
 		mnOkno.add(mnZmienStyl);
-		
+
 		mapaMagazynu = new MapaMagazynu();
 
-		
 		mapaMagazynu.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+
+		// TODO MOCK ZMAIAN W BOXACH
+		final Color[] colors = new Color[4];
+		colors[0] = Color.WHITE;
+		colors[1] = Color.BLACK;
+		colors[2] = Color.RED;
+		colors[3] = Color.BLUE;
+		btnRegal1Random = new JButton("Regal1 random");
+		btnRegal1Random.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Random rand = new Random();
+
+				int x = rand.nextInt(MagazynUtils.kolumnWRegale);
+				int y = rand.nextInt(MagazynUtils.rzedowWRegale);
+				int c = rand.nextInt(colors.length);
+				mapaMagazynu.zmienKolorBoksu("regal1", x, y, colors[c]);
+				log.info("R1:  x=" + x + " y=" + y + " color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
+			}
+		});
+
+		btnRegal2Random = new JButton("Regal2 random");
+		btnRegal2Random.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Random rand = new Random();
+
+				int x = rand.nextInt(MagazynUtils.kolumnWRegale);
+				int y = rand.nextInt(MagazynUtils.rzedowWRegale);
+				int c = rand.nextInt(colors.length);
+				mapaMagazynu.zmienKolorBoksu("regal2", x, y, colors[c]);
+				log.info("Zmieniam box w R2: x=" + x + " y=" + y + " color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
+			}
+		});
+
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(437)
-					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-					.addGap(436))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, mapaMagazynu.getWidth(), GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(864, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblNewLabel)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, mapaMagazynu.getHeight(), GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(404, Short.MAX_VALUE))
-		);
-		
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup().addGap(437).addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE).addGap(436)).addGroup(groupLayout.createSequentialGroup().addGap(197).addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE).addGap(197)).addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup().addContainerGap(865, Short.MAX_VALUE).addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(btnRegal2Random).addComponent(btnRegal1Random)).addGap(54)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(lblNewLabel).addPreferredGap(ComponentPlacement.RELATED).addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, 345, 345).addGap(18).addComponent(btnRegal1Random).addPreferredGap(ComponentPlacement.RELATED).addComponent(btnRegal2Random).addContainerGap(67, Short.MAX_VALUE)));
+
 		frame.getContentPane().setLayout(groupLayout);
 
 		ButtonGroup styleGroup = new ButtonGroup();
