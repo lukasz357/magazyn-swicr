@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 import siwc.magazyn.utils.MagazynUtils;
 
-public class Lift extends JPanel {
+public class LiftPanel extends JPanel {
 
 	/**
 	 * Create the panel.
@@ -20,7 +20,7 @@ public class Lift extends JPanel {
 	private int dx = MagazynUtils.liftStepX;
 	private int dy = MagazynUtils.liftStepY;
 
-	public Lift() {
+	public LiftPanel() {
 
 	}
 
