@@ -42,5 +42,16 @@ public class MarekUtils {
 		return lista;
 	}
 	
+	public static List<Wspolrzedne> getPunktOdbioru(){
+		List<Wspolrzedne> lista = new ArrayList<Wspolrzedne>();
+		
+		//wspolrzedne punktu odbioru
+		
+		lista.add(new Wspolrzedne(9, 0));
+		lista.add(new Wspolrzedne(9, 1));
+		
+		return lista;
+	}
+	
 
 }
