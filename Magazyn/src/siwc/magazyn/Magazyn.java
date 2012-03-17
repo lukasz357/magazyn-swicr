@@ -2,45 +2,42 @@ package siwc.magazyn;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.util.Random;
 
 import javax.swing.ButtonGroup;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.utils.MagazynUtils;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.JPanel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.TitledBorder;
-import javax.swing.colorchooser.ColorSelectionModel;
-import javax.swing.JButton;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
@@ -94,10 +91,12 @@ public class Magazyn {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				int result = JOptionPane.showConfirmDialog(frame, "Zamknąć program?", "Zamknąc?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				if (result == JOptionPane.YES_OPTION) {
-					frame.dispose();
-				}
+//				int result = JOptionPane.showConfirmDialog(frame, "Zamknąć program?", "Zamknąc?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+//				if (result == JOptionPane.YES_OPTION) {
+//					frame.dispose();
+//				}
+				// TODO
+				frame.dispose();
 			}
 
 		});
@@ -136,7 +135,7 @@ public class Magazyn {
 		saveFile.setEnabled(false);
 		saveFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				// TODO - ogarnac forme zapisywania
 				int result = fileChooser.showSaveDialog(frame);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
@@ -151,7 +150,7 @@ public class Magazyn {
 		saveAsFile.setEnabled(false);
 		saveAsFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				// TODO - ogarnac forme zapisywania
 				int result = fileChooser.showSaveDialog(frame);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					log.info("Zapisz jako: " + fileChooser.getSelectedFile().getName());
@@ -186,7 +185,7 @@ public class Magazyn {
 
 		mapaMagazynu.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
-		// TODO MOCK ZMAIAN W BOXACH
+		// TODO MOCK ZMAIAN W BOXACH - do wywalenia soon
 		final Color[] colors = new Color[4];
 		colors[0] = Color.WHITE;
 		colors[1] = Color.BLACK;
