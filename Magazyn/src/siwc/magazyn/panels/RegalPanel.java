@@ -1,11 +1,13 @@
 package siwc.magazyn.panels;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import siwc.magazyn.dto.BoxTO;
 import siwc.magazyn.utils.MagazynUtils;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 
@@ -32,6 +34,10 @@ public class RegalPanel extends JPanel {
 	}
 
 	public void zmienKolorBoksu(int x, int y, Color c) {
-		boxes[y][x].setBackground(c);		
+		boxes[y][x].setBackground(c);
+		JLabel nr = new JLabel(x*y+"");
+		nr.setForeground(new Color(255, 200, 0));
+		boxes[y][x].add(nr, BorderLayout.CENTER);
+		boxes[y][x].revalidate();
 	}
 }
