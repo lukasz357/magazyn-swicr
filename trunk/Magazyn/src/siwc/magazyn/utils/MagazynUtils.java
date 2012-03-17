@@ -17,7 +17,7 @@ public class MagazynUtils {
 	public static int mapWidth = (int) (frameWidth * 0.6);
 
 	// box
-	public static int boxSize = 16;
+	public static int boxSize = 15;
 
 	// Regal
 	public static int liczbaRegalow = 2;		//TODO - nie wykorzystywane chwilowo ;-)
@@ -26,13 +26,13 @@ public class MagazynUtils {
 	public static int regalWidth = boxSize * kolumnWRegale;
 	public static int regalHeight = boxSize * rzedowWRegale;
 	public static int regalY = -1;
-	public static int regalX = 100;
+	public static int regalX = boxSize * 7;
 
 	// wozek
 	public static int liftSizeX = boxSize;
 	public static int liftSizeY = boxSize * 2;
-	public static int liftStepX = 8;
-	public static int liftStepY = 8;
+	public static int liftStepX = 15;
+	public static int liftStepY = 15;
 	
 	
 	public static int getRegalY(int numerRegalu) { // nie wiem jak to nazwac :D ale ma to liczyc wartosc Y do setbounds(...) ;-)

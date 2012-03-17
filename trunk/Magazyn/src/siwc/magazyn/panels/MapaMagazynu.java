@@ -11,7 +11,7 @@ public class MapaMagazynu extends JPanel {
 	private static final long serialVersionUID = -8459627889558824665L;
 	private RegalPanel regalPanel1;
 	private RegalPanel regalPanel2;
-	private Lift lift;
+	private LiftPanel lift;
 
 	public MapaMagazynu() {
 		setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
@@ -27,7 +27,7 @@ public class MapaMagazynu extends JPanel {
 		regalPanel2.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(1), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
 		add(regalPanel2);
 
-		lift = new Lift();
+		lift = new LiftPanel();
 		lift.setBackground(Color.red);
 		lift.setBounds(lift.getX(), lift.getY(), lift.getXsize(), lift.getYsize());
 		// lift.moveUP(getBounds());
