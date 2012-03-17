@@ -204,7 +204,7 @@ public class Magazyn {
 				int y = rand.nextInt(MagazynUtils.rzedowWRegale);
 				int c = rand.nextInt(colors.length);
 				mapaMagazynu.zmienKolorBoksu("regal1", x, y, colors[c]);
-				log.info("R1:  x=" + x + " y=" + y + " color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
+				log.info("R1: x=" + x + " y=" + y + " color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
 			}
 		});
 
@@ -217,7 +217,7 @@ public class Magazyn {
 				int y = rand.nextInt(MagazynUtils.rzedowWRegale);
 				int c = rand.nextInt(colors.length);
 				mapaMagazynu.zmienKolorBoksu("regal2", x, y, colors[c]);
-				log.info("Zmieniam box w R2: x=" + x + " y=" + y + " color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
+				log.info("R2: x=" + x + " y=" + y + " color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
 			}
 		});
 		

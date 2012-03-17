@@ -31,8 +31,8 @@ public class MagazynUtils {
 	// wozek
 	public static int liftSizeX = boxSize;
 	public static int liftSizeY = boxSize * 2;
-	public static int liftStepX = 20;
-	public static int liftStepY = 20;
+	public static int liftStepX = 8;
+	public static int liftStepY = 8;
 	
 	
 	public static int getRegalY(int numerRegalu) { // nie wiem jak to nazwac :D ale ma to liczyc wartosc Y do setbounds(...) ;-)
