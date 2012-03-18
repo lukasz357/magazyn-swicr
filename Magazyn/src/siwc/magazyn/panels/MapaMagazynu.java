@@ -1,19 +1,24 @@
 package siwc.magazyn.panels;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.xml.Log4jEntityResolver;
 
 import siwc.magazyn.utils.MagazynUtils;
 
 public class MapaMagazynu extends JPanel {
 	private static final long serialVersionUID = -8459627889558824665L;
+	
+	private Logger log = Logger.getLogger(MapaMagazynu.class);
 	private RegalPanel regalPanel1;
 	private RegalPanel regalPanel2;
 	private RegalPanel regalPanel3;
+	private ArrayList<RegalPanel> regaly = new ArrayList<>();
 	private LiftPanel lift;
 
 	public MapaMagazynu() {
@@ -21,18 +26,22 @@ public class MapaMagazynu extends JPanel {
 		setSize(MagazynUtils.mapWidth, MagazynUtils.mapHeight);
 		setBackground(Color.WHITE);
 		setLayout(null);
+		log.info("Rozmiar mapy: " + MagazynUtils.mapWidth + "x" + MagazynUtils.mapHeight);
 
 		regalPanel1 = new RegalPanel(true);
 		regalPanel1.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(0), MagazynUtils.regalWidth + MagazynUtils.boxSize, MagazynUtils.regalHeight + MagazynUtils.boxSize);
 		add(regalPanel1);
+		regaly.add(regalPanel1);
 
 		regalPanel2 = new RegalPanel(false);
 		regalPanel2.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(1), MagazynUtils.regalWidth + MagazynUtils.boxSize, MagazynUtils.regalHeight);
 		add(regalPanel2);
-
+		regaly.add(regalPanel2);
+		
 		regalPanel3 = new RegalPanel(false);
 		regalPanel3.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(2), MagazynUtils.regalWidth + MagazynUtils.boxSize, MagazynUtils.regalHeight);
 		add(regalPanel3);
+		regaly.add(regalPanel3);
 
 		lift = new LiftPanel();
 		lift.setBackground(Color.red);
@@ -62,7 +71,7 @@ public class MapaMagazynu extends JPanel {
 		System.out.println("regal 1 = " + regalPanel1.getBounds().getMinX() + " x max = " + regalPanel1.getBounds().getMaxX());
 		System.out.println("regal 1 :y " + regalPanel1.getBounds().getMinY() + ", " + regalPanel1.getBounds().getMaxY());
 		//sprawdzenie czy w 1 regale
-		if ( ( xAktualne >= regalPanel1.getBounds().getMinX() && xAktualne <= regalPanel1.getBounds().getMaxX() ) && (yPo >= regalPanel1.getBounds().getMinY() && yPo <= regalPanel1.getBounds().getMaxY()) ) {
+		if ( ( xAktualne >= regalPanel1.getBounds().getMinX() && xAktualne <= regalPanel1.getBounds().getMaxX() ) && (yPo >= regalPanel1.getBounds().getMinY() && lift.getY() <= regalPanel1.getBounds().getMaxY()) ) {
 			System.err.println("argh !");
 			System.out.println("Panie, co Pan robi ? Na regal wjechac chce Pan ?!");
 		} else {
