@@ -31,13 +31,14 @@ public class MagazynUtils {
 	// wozek
 	public static int liftSizeX = boxSize;
 	public static int liftSizeY = boxSize * 2;
-	public static int liftStepX = 15;
-	public static int liftStepY = 15;
+	public static int liftStepX = boxSize;
+	public static int liftStepY = boxSize;
 	
 	
 	public static int getRegalY(int numerRegalu) { // nie wiem jak to nazwac :D ale ma to liczyc wartosc Y do setbounds(...) ;-)
 		int pos=0;
-			pos += liftSizeY;
+			pos += liftSizeY - boxSize;
+			if(numerRegalu > 0) pos += boxSize;
 			for(int i=0; i<numerRegalu; i++) {
 				pos += regalHeight;
 				pos += liftSizeY;
