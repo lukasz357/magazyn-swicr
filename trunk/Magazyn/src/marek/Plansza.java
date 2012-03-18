@@ -98,7 +98,7 @@ public class Plansza extends JFrame {
 	private void zaznaczPunktOdbioru() {
 		List<Wspolrzedne> lista = MarekUtils.getPunktOdbioru();
 
-		// iteruje po liscie wspolrzednych regalow
+		// iteruje po liscie wspolrzednych punktu odbioru
 		for (Wspolrzedne iterator : lista) {
 			macierz[iterator.getX()][iterator.getY()].setIsEntryPoint(true); // zaznaczam ,ze jest punktem odbioru
 			macierz[iterator.getX()][iterator.getY()].setBackground(Color.yellow); // koloruje go
