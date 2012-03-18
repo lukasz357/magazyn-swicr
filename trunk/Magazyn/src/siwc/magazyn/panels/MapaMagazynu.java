@@ -9,8 +9,9 @@ import siwc.magazyn.utils.MagazynUtils;
 
 public class MapaMagazynu extends JPanel {
 	private static final long serialVersionUID = -8459627889558824665L;
-	private RegalPanel regalPanel1;
+	private RegalPanel regalPanel1;	
 	private RegalPanel regalPanel2;
+	private RegalPanel regalPanel3;
 	private LiftPanel lift;
 
 	public MapaMagazynu() {
@@ -19,13 +20,17 @@ public class MapaMagazynu extends JPanel {
 		setBackground(Color.WHITE);
 		setLayout(null);
 
-		regalPanel1 = new RegalPanel();
-		regalPanel1.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(0), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
+		regalPanel1 = new RegalPanel(true);
+		regalPanel1.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(0), MagazynUtils.regalWidth+MagazynUtils.boxSize, MagazynUtils.regalHeight+MagazynUtils.boxSize);
 		add(regalPanel1);
 
-		regalPanel2 = new RegalPanel();
-		regalPanel2.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(1), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
+		regalPanel2 = new RegalPanel(false);
+		regalPanel2.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(1), MagazynUtils.regalWidth+MagazynUtils.boxSize, MagazynUtils.regalHeight);
 		add(regalPanel2);
+		
+		regalPanel3 = new RegalPanel(false);
+		regalPanel3.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(2), MagazynUtils.regalWidth+MagazynUtils.boxSize, MagazynUtils.regalHeight);
+		add(regalPanel3);
 
 		lift = new LiftPanel();
 		lift.setBackground(Color.red);
@@ -42,7 +47,6 @@ public class MapaMagazynu extends JPanel {
 			regalPanel2.zmienKolorBoksu(x, y, c);
 		}
 	}
-	
 
 	public void moveUp() {
 		lift.moveUp(this.getBounds());
@@ -64,6 +68,4 @@ public class MapaMagazynu extends JPanel {
 		repaint();
 	}
 
-
 }
-
