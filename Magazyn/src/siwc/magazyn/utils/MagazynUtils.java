@@ -2,6 +2,8 @@ package siwc.magazyn.utils;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 
 public class MagazynUtils {
@@ -10,15 +12,20 @@ public class MagazynUtils {
 	// Rozmiary okna
 	public static Toolkit toolkit = Toolkit.getDefaultToolkit();
 	public static Dimension screenSize = toolkit.getScreenSize();
-	public static int frameWidth = (int) (screenSize.getWidth() * 0.75);
-	public static int frameHeight = (int) (screenSize.getHeight() * 0.75);
-
+	
+	public static Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds(); //maxymalne
+	public static int frameWidth = (int) maxBounds.getWidth();
+	public static int frameHeight = (int) maxBounds.getHeight();
+//	public static int frameWidth = (int) ((int) screenSize.getWidth()*0.75);
+//	public static int frameHeight = (int) ((int) screenSize.getHeight()*0.75);
+	
+	
 	// Mapa
 	public static int mapHeight = (int) (frameHeight * 0.5);
 	public static int mapWidth = (int) (frameWidth * 0.5);
 
 	// box
-	public static int boxSize = 15;
+	public static int boxSize = 16*frameWidth/1366;
 	public static Color defaultBackground = Color.GRAY;
 	
 	// Regal
