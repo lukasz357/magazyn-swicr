@@ -33,15 +33,21 @@ public class RegalPanel extends JPanel {
 	private TreeMap<String, BoxPanel> pietro3 = new TreeMap<>();
 	private TreeMap<String, BoxPanel> pietro4 = new TreeMap<>();
 
-	public RegalPanel(boolean withColNumbers) {
-		if (withColNumbers) { // czy sa wyswietlane numery kolumn - sadze by to wpisywac w pierwszym tylko rzedzie ;P
+	public RegalPanel(boolean litery, boolean numery) {
+		if (numery && litery) { // czy sa wyswietlane numery kolumn - sadze by to wpisywac w pierwszym tylko rzedzie ;P
 			setLayout(new GridLayout(MagazynUtils.rzedowWRegale + 1, MagazynUtils.kolumnWRegale + 1, 0, 0));
 			add(new JLabel());
 			for (int i = 0; i < cols; i++)
 				add(new JLabel(Integer.toString(i + 1)));
 
+		} else if(numery) {
+			setLayout(new GridLayout(MagazynUtils.rzedowWRegale + 1, MagazynUtils.kolumnWRegale, 0, 0));
+			for (int i = 0; i < cols; i++)
+				add(new JLabel(Integer.toString(i + 1)));
+		} else if(litery) {
+			setLayout(new GridLayout(MagazynUtils.rzedowWRegale , MagazynUtils.kolumnWRegale+ 1, 0, 0));
 		} else {
-			setLayout(new GridLayout(MagazynUtils.rzedowWRegale, MagazynUtils.kolumnWRegale + 1, 0, 0));
+			setLayout(new GridLayout(MagazynUtils.rzedowWRegale, MagazynUtils.kolumnWRegale, 0, 0));
 		}
 
 		setBackground(Color.WHITE);
@@ -50,7 +56,9 @@ public class RegalPanel extends JPanel {
 
 		for (int i = 0; i < rows; i++) {
 			char c = (char) (65 + i);
-			add(new JLabel(c + ""));
+			if(litery)
+				add(new JLabel(c + ""));
+			
 			for (int j = 0; j < cols; j++) {
 				bp = new BoxPanel(j, i, new BoxTO());
 				bp.setBackground(MagazynUtils.defaultBackground);

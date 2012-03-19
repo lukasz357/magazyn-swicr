@@ -32,7 +32,7 @@ public class LiftPanel extends JPanel {
 
 	public void moveDown(Rectangle2D bounds) {
 		// System.out.println("minX=" + bounds.getMinX() + " maxX=" + bounds.getMaxX() + " minY=" + bounds.getMinY() + " maxY=" + bounds.getMaxY());
-		if (y + YSIZE + dx < bounds.getMaxY() - bounds.getMinY())
+		if (y + YSIZE + dx <= bounds.getMaxY() - bounds.getMinY() )
 			y += dy;
 
 	}
@@ -45,7 +45,7 @@ public class LiftPanel extends JPanel {
 
 	public void moveRight(Rectangle2D bounds) {
 		// System.out.println("minX=" + bounds.getMinX() + " maxX=" + bounds.getMaxX() + " minY=" + bounds.getMinY() + " maxY=" + bounds.getMaxY());
-		if (x + XSIZE + dx < bounds.getMaxX() - bounds.getMinX())
+		if (x + XSIZE + dx <= bounds.getMaxX() - bounds.getMinX())
 			x += dx;
 	}
 

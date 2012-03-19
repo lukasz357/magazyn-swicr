@@ -19,17 +19,12 @@ public class MagazynUtils {
 //	public static int frameWidth = (int) ((int) screenSize.getWidth()*0.75);
 //	public static int frameHeight = (int) ((int) screenSize.getHeight()*0.75);
 	
-	
-	// Mapa
-	public static int mapHeight = (int) (frameHeight * 0.5);
-	public static int mapWidth = (int) (frameWidth * 0.5);
-
 	// box
-	public static int boxSize = 16*frameWidth/1366;
+	public static int boxSize = 18*frameWidth/1366;
 	public static Color defaultBackground = Color.GRAY;
 	
 	// Regal
-	public static int liczbaRegalow = 2;		//TODO - nie wykorzystywane chwilowo ;-)
+	public static int liczbaRegalow = 3;		//TODO - nie wykorzystywane chwilowo ;-)
 	public static int kolumnWRegale = 30;
 	public static int rzedowWRegale = 4;
 	public static int regalWidth = boxSize * kolumnWRegale;
@@ -43,8 +38,23 @@ public class MagazynUtils {
 	public static int liftSizeY = boxSize * 2;
 	public static int liftStepX = boxSize;
 	public static int liftStepY = boxSize;
-
 	
+	
+	// Mapa
+	public static int mapHeight = getMapHeight();
+	public static int mapWidth = (int) (frameWidth * 0.5);
+
+	private static int getMapHeight() {
+		int height = 0;
+		height += liftSizeY;
+		for(int i=0; i<liczbaRegalow; i++)
+			height += 3*liftSizeY;
+		
+		height += liftSizeY;
+		
+		return height * frameWidth/1366;
+		
+	}
 
 
 	
