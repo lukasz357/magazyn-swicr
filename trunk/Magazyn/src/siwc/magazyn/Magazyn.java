@@ -96,8 +96,12 @@ public class Magazyn {
 		lblNewLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 15));
 		frame = new JFrame();
 		frame.setTitle(MagazynUtils.frameTitle);
-		frame.setBounds(50, 50, MagazynUtils.frameWidth, MagazynUtils.frameHeight);
-		log.info("Rozmiar okna: " + MagazynUtils.frameWidth + "x" + MagazynUtils.frameHeight);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+//		frame.setSize(MagazynUtils.frameWidth, MagazynUtils.frameHeight);
+		
+//		 frame.setBounds(50, 50, MagazynUtils.frameWidth, MagazynUtils.frameHeight);
+		log.info("Rozmiar okna: " + MagazynUtils.frameWidth + "x" + MagazynUtils.frameHeight + "\t" + frame.getWidth() + "x" + frame.getHeight());
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -211,7 +215,7 @@ public class Magazyn {
 				int sufix = rand.nextInt(MagazynUtils.kolumnWRegale);
 				int c = rand.nextInt(colors.length);
 
-				String position = prefix + Integer.toString(sufix+1);
+				String position = prefix + Integer.toString(sufix + 1);
 
 				mapaMagazynu.zmienKolorBoksu("regal1", position, colors[c]);
 				log.info("R1: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
@@ -227,7 +231,7 @@ public class Magazyn {
 				int sufix = rand.nextInt(MagazynUtils.kolumnWRegale);
 				int c = rand.nextInt(colors.length);
 
-				String position = prefix + Integer.toString(sufix+1);
+				String position = prefix + Integer.toString(sufix + 1);
 
 				mapaMagazynu.zmienKolorBoksu("regal2", position, colors[c]);
 				log.info("R2: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
