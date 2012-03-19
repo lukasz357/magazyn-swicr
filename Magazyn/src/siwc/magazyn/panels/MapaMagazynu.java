@@ -28,18 +28,18 @@ public class MapaMagazynu extends JPanel {
 		setLayout(null);
 		log.info("Rozmiar mapy: " + MagazynUtils.mapWidth + "x" + MagazynUtils.mapHeight);
 
-		regalPanel1 = new RegalPanel(true, true);
-		regalPanel1.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(0), MagazynUtils.regalWidth + MagazynUtils.boxSize, MagazynUtils.regalHeight + MagazynUtils.boxSize);
+		regalPanel1 = new RegalPanel(false, false);
+		regalPanel1.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(0, false), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
 		add(regalPanel1);
 		regaly.add(regalPanel1);
 
-		regalPanel2 = new RegalPanel(true, false);
-		regalPanel2.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(1), MagazynUtils.regalWidth + MagazynUtils.boxSize, MagazynUtils.regalHeight);
+		regalPanel2 = new RegalPanel(false, false);
+		regalPanel2.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(1, false), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
 		add(regalPanel2);
 		regaly.add(regalPanel2);
 
-		regalPanel3 = new RegalPanel(false, true);
-		regalPanel3.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(2), MagazynUtils.regalWidth, MagazynUtils.regalHeight + MagazynUtils.boxSize);
+		regalPanel3 = new RegalPanel(false, false);
+		regalPanel3.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(2, false), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
 		add(regalPanel3);
 		regaly.add(regalPanel3);
 

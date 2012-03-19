@@ -59,10 +59,12 @@ public class MagazynUtils {
 
 	
 	
-	public static int getRegalY(int numerRegalu) { // nie wiem jak to nazwac :D ale ma to liczyc wartosc Y do setbounds(...) ;-)
+	public static int getRegalY(int numerRegalu, boolean numbers) { // nie wiem jak to nazwac :D ale ma to liczyc wartosc Y do setbounds(...) ;-)
 		int pos=0;
-			pos += liftSizeY - boxSize;
-			if(numerRegalu > 0) pos += boxSize;
+			pos += liftSizeY;
+			if(numbers && numerRegalu > 0)
+				pos += boxSize;
+				
 			for(int i=0; i<numerRegalu; i++) {
 				pos += regalHeight;
 				pos += liftSizeY;
