@@ -297,27 +297,69 @@ public class Magazyn {
 		levelTextField.setText(Integer.toString(pietro));
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-				groupLayout.createSequentialGroup().addGap(437).addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE).addGap(313).addComponent(btnMinus).addPreferredGap(
-						ComponentPlacement.RELATED).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED).addComponent(
-						btnPlus).addContainerGap()).addGroup(groupLayout.createSequentialGroup().addGap(204).addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, MagazynUtils.mapWidth, Short.MAX_VALUE).addGap(131))
-				.addGroup(
-						groupLayout.createSequentialGroup().addGap(206).addComponent(btnLeft).addPreferredGap(ComponentPlacement.RELATED).addGroup(
-								groupLayout.createParallelGroup(Alignment.LEADING).addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE).addComponent(btnDown))
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnRight).addPreferredGap(ComponentPlacement.RELATED, 468, Short.MAX_VALUE).addGroup(
-										groupLayout.createParallelGroup(Alignment.LEADING).addComponent(btnRegal2Random).addComponent(btnRegal1Random)).addGap(54)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-				groupLayout.createSequentialGroup().addContainerGap().addGroup(
-						groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel).addComponent(btnPlus).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(btnMinus)).addPreferredGap(ComponentPlacement.RELATED).addComponent(mapaMagazynu,
-						GroupLayout.PREFERRED_SIZE, MagazynUtils.mapHeight, MagazynUtils.mapHeight).addGroup(
-						groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-								groupLayout.createSequentialGroup().addGap(18).addGroup(
-										groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-												groupLayout.createSequentialGroup().addComponent(btnRegal1Random).addPreferredGap(ComponentPlacement.RELATED).addComponent(btnRegal2Random)).addGroup(
-												groupLayout.createSequentialGroup().addComponent(btnUp).addPreferredGap(ComponentPlacement.RELATED).addComponent(btnDown)))).addGroup(
-								groupLayout.createSequentialGroup().addGap(32).addComponent(btnRight)).addGroup(groupLayout.createSequentialGroup().addGap(33).addComponent(btnLeft))).addContainerGap(
-						67, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(437)
+					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+					.addGap(313)
+					.addComponent(btnMinus)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnPlus)
+					.addContainerGap())
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(206)
+					.addComponent(btnLeft)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnDown))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnRight)
+					.addPreferredGap(ComponentPlacement.RELATED, 810, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnRegal2Random)
+						.addComponent(btnRegal1Random))
+					.addGap(54))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 792, 792)
+					.addContainerGap(548, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel)
+						.addComponent(btnPlus)
+						.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnMinus))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, 396, 396)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(btnRegal1Random)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnRegal2Random))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(btnUp)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnDown))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(32)
+							.addComponent(btnRight))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(33)
+							.addComponent(btnLeft)))
+					.addContainerGap(163, Short.MAX_VALUE))
+		);
 
 		frame.getContentPane().setLayout(groupLayout);
 
