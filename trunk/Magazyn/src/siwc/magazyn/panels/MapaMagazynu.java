@@ -51,14 +51,14 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public void zmienKolorBoksu(String r, int x, int y, Color c) {
+	public void zmienKolorBoksu(String r, String position, Color c) {
 		if (r.equals("regal1")) {
-			regalPanel1.zmienKolorBoksu(x, y, c);
+			regalPanel1.zmienKolorBoksu(position, c);
 		} else if (r.equals("regal2")) {
-			regalPanel2.zmienKolorBoksu(x, y, c);
+			regalPanel2.zmienKolorBoksu(position, c);
 		}
 	}
-
+	
 	public void moveUp() {
 
 		int xAktualne = lift.getX() + lift.getXsize();
@@ -144,6 +144,12 @@ public class MapaMagazynu extends JPanel {
 			lift.moveRight(getBounds());
 			repaint();
 		}
+	}
+
+	public void ustawPietro(int pietro) {
+		for(RegalPanel r : regaly)
+			r.ustawPietro(pietro);
+		
 	}
 
 }
