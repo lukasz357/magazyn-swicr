@@ -1,5 +1,6 @@
 package siwc.magazyn.utils;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -13,12 +14,13 @@ public class MagazynUtils {
 	public static int frameHeight = (int) (screenSize.getHeight() * 0.75);
 
 	// Mapa
-	public static int mapHeight = (int) (frameHeight * 0.6);
-	public static int mapWidth = (int) (frameWidth * 0.6);
+	public static int mapHeight = (int) (frameHeight * 0.5);
+	public static int mapWidth = (int) (frameWidth * 0.5);
 
 	// box
 	public static int boxSize = 15;
-
+	public static Color defaultBackground = Color.GRAY;
+	
 	// Regal
 	public static int liczbaRegalow = 2;		//TODO - nie wykorzystywane chwilowo ;-)
 	public static int kolumnWRegale = 30;
@@ -27,12 +29,17 @@ public class MagazynUtils {
 	public static int regalHeight = boxSize * rzedowWRegale;
 	public static int regalY = -1;
 	public static int regalX = boxSize * 7;
+	public static int liczbaPieter = 5;
 
 	// wozek
 	public static int liftSizeX = boxSize;
 	public static int liftSizeY = boxSize * 2;
 	public static int liftStepX = boxSize;
 	public static int liftStepY = boxSize;
+
+	
+
+
 	
 	
 	public static int getRegalY(int numerRegalu) { // nie wiem jak to nazwac :D ale ma to liczyc wartosc Y do setbounds(...) ;-)
