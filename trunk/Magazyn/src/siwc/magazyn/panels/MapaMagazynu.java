@@ -28,18 +28,18 @@ public class MapaMagazynu extends JPanel {
 		setLayout(null);
 		log.info("Rozmiar mapy: " + MagazynUtils.mapWidth + "x" + MagazynUtils.mapHeight);
 
-		regalPanel1 = new RegalPanel(true);
+		regalPanel1 = new RegalPanel(true, true);
 		regalPanel1.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(0), MagazynUtils.regalWidth + MagazynUtils.boxSize, MagazynUtils.regalHeight + MagazynUtils.boxSize);
 		add(regalPanel1);
 		regaly.add(regalPanel1);
 
-		regalPanel2 = new RegalPanel(false);
+		regalPanel2 = new RegalPanel(true, false);
 		regalPanel2.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(1), MagazynUtils.regalWidth + MagazynUtils.boxSize, MagazynUtils.regalHeight);
 		add(regalPanel2);
 		regaly.add(regalPanel2);
 
-		regalPanel3 = new RegalPanel(false);
-		regalPanel3.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(2), MagazynUtils.regalWidth + MagazynUtils.boxSize, MagazynUtils.regalHeight);
+		regalPanel3 = new RegalPanel(false, true);
+		regalPanel3.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(2), MagazynUtils.regalWidth, MagazynUtils.regalHeight + MagazynUtils.boxSize);
 		add(regalPanel3);
 		regaly.add(regalPanel3);
 
@@ -90,7 +90,7 @@ public class MapaMagazynu extends JPanel {
 		boolean isEnteringShelf = false;
 
 		for (RegalPanel it : regaly) {
-			if (((xAktualne > it.getBounds().getMinX()) && (xAktualne <= it.getBounds().getMaxX())) && (yPo == it.getBounds().getMinY())) {
+			if (((xAktualne > it.getBounds().getMinX()) && (xAktualne <= it.getBounds().getMaxX() + 1)) && (yPo == it.getBounds().getMinY())) {
 				isEnteringShelf = true;
 			}
 		}
