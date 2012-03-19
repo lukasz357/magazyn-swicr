@@ -96,9 +96,8 @@ public class Magazyn {
 		lblNewLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 15));
 		frame = new JFrame();
 		frame.setTitle(MagazynUtils.frameTitle);
+		frame.setSize(MagazynUtils.frameWidth, MagazynUtils.frameHeight);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-//		frame.setSize(MagazynUtils.frameWidth, MagazynUtils.frameHeight);
 		
 //		 frame.setBounds(50, 50, MagazynUtils.frameWidth, MagazynUtils.frameHeight);
 		log.info("Rozmiar okna: " + MagazynUtils.frameWidth + "x" + MagazynUtils.frameHeight + "\t" + frame.getWidth() + "x" + frame.getHeight());
