@@ -22,7 +22,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -38,10 +40,6 @@ import org.apache.log4j.PropertyConfigurator;
 
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.utils.MagazynUtils;
-import javax.swing.JFormattedTextField;
-import javax.swing.JTextField;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
