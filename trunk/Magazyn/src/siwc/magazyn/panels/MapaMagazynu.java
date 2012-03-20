@@ -68,6 +68,8 @@ public class MapaMagazynu extends JPanel {
 			regalPanel1.zmienKolorBoksu(position, c);
 		} else if (r.equals("regal2")) {
 			regalPanel2.zmienKolorBoksu(position, c);
+		} else if(r.equals("regal3")) {
+			regalPanel3.zmienKolorBoksu(position, c);
 		}
 	}
 
@@ -179,6 +181,16 @@ public class MapaMagazynu extends JPanel {
 		for (RegalPanel r : regaly)
 			r.ustawPietro(pietro);
 
+	}
+
+	public void obrocWPrawo(String regal) {
+		log.warn("Zaimplementuj metode obroc w prawo! " + regal);
+		
+	}
+
+	public void obrocWLewo(String regal) {
+		log.warn("Zaimplementuj metode obroc w lewo! " + regal);
+		
 	}
 
 }
