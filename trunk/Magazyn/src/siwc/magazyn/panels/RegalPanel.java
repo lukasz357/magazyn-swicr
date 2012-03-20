@@ -37,12 +37,12 @@ public class RegalPanel extends JPanel {
 			for (int i = 0; i < cols; i++)
 				add(new JLabel(Integer.toString(i + 1)));
 
-		} else if(numery) {
+		} else if (numery) {
 			setLayout(new GridLayout(MagazynUtils.rzedowWRegale + 1, MagazynUtils.kolumnWRegale, 0, 0));
 			for (int i = 0; i < cols; i++)
 				add(new JLabel(Integer.toString(i + 1)));
-		} else if(litery) {
-			setLayout(new GridLayout(MagazynUtils.rzedowWRegale , MagazynUtils.kolumnWRegale+ 1, 0, 0));
+		} else if (litery) {
+			setLayout(new GridLayout(MagazynUtils.rzedowWRegale, MagazynUtils.kolumnWRegale + 1, 0, 0));
 		} else {
 			setLayout(new GridLayout(MagazynUtils.rzedowWRegale, MagazynUtils.kolumnWRegale, 0, 0));
 		}
@@ -53,31 +53,31 @@ public class RegalPanel extends JPanel {
 
 		for (int i = 0; i < rows; i++) {
 			char c = (char) (65 + i);
-			if(litery)
+			if (litery)
 				add(new JLabel(c + ""));
-			
+
 			for (int j = 0; j < cols; j++) {
 				bp = new BoxPanel(j, i, new BoxTO());
 				bp.setBackground(MagazynUtils.defaultBackground);
 				bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
-				//ramki
-				
-//				int top = 0;
-//				int left = 0;
-//				int bottom = 0;
-//				int right = 0;
-//				
-//				if(i==0 || i == rows-1) {
-//					top = 1;
-//					bottom = 1;
-//				} 
-//				if(j == 0 || j == cols -1) {
-//					left = 1;
-//					right = 1;
-//				}
-//				if(top != 0 || left != 0 || bottom != 0 || right !=0)
-//					bp.setBorder(new MatteBorder(top, left, bottom, right, Color.black));
-				
+				// ramki
+
+				// int top = 0;
+				// int left = 0;
+				// int bottom = 0;
+				// int right = 0;
+				//
+				// if(i==0 || i == rows-1) {
+				// top = 1;
+				// bottom = 1;
+				// }
+				// if(j == 0 || j == cols -1) {
+				// left = 1;
+				// right = 1;
+				// }
+				// if(top != 0 || left != 0 || bottom != 0 || right !=0)
+				// bp.setBorder(new MatteBorder(top, left, bottom, right, Color.black));
+
 				String position = c + Integer.toString(j + 1);
 				visibleBoxes.put(position, bp);
 				add(bp);
@@ -109,17 +109,17 @@ public class RegalPanel extends JPanel {
 
 	public void zmienKolorBoksu(String position, Color c) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap();
-		
+
 		levelMap.get(position).setBackground(c);
-		
-//		TODO  czy dodawac labele?
-//		JLabel nr = new JLabel(position);
-//		nr.setForeground(new Color(255, 200, 0));
-//		levelMap.get(position).add(nr, BorderLayout.CENTER);
-//		visibleBoxes.get(position).removeAll();
-//		for(Component comp : levelMap.get(position).getComponents())
-//			visibleBoxes.get(position).add(comp);
-		
+
+		// TODO czy dodawac labele?
+		// JLabel nr = new JLabel(position);
+		// nr.setForeground(new Color(255, 200, 0));
+		// levelMap.get(position).add(nr, BorderLayout.CENTER);
+		// visibleBoxes.get(position).removeAll();
+		// for(Component comp : levelMap.get(position).getComponents())
+		// visibleBoxes.get(position).add(comp);
+
 		visibleBoxes.get(position).setBackground(levelMap.get(position).getBackground());
 		visibleBoxes.get(position).revalidate();
 	}
@@ -130,18 +130,17 @@ public class RegalPanel extends JPanel {
 
 		if (levelMap != null) {
 			for (String k : visibleBoxes.keySet()) {
-//				TODO  czy dodawac labele?
-//				visibleBoxes.get(k).removeAll();
-//				
-//				for(Component comp : levelMap.get(k).getComponents()) {
-//					visibleBoxes.get(k).add(comp);
-//
-//				}
+				// TODO czy dodawac labele?
+				// visibleBoxes.get(k).removeAll();
+				//
+				// for(Component comp : levelMap.get(k).getComponents()) {
+				// visibleBoxes.get(k).add(comp);
+				//
+				// }
 				visibleBoxes.get(k).setBackground(levelMap.get(k).getBackground());
 				visibleBoxes.get(k).revalidate();
 			}
 
-			
 			log.info("Ustawilem pietro: " + this.pietro);
 
 		} else {
@@ -163,5 +162,55 @@ public class RegalPanel extends JPanel {
 			return pietro4;
 		}
 		return null;
+	}
+
+	public void obrocWPrawo() {
+
+		TreeMap<String, BoxPanel> levelMap = getLevelMap();
+		if (levelMap != null) {
+			BoxPanel actual = null;
+			BoxPanel next = null;
+
+			// A
+			actual = levelMap.get("A1");
+			for (int i = 1; i < cols; i++) {
+				String nextKey = "A" + Integer.toString(i+1);
+				System.out.println("Zmieniam: " + nextKey);
+				next = levelMap.get(nextKey);
+				levelMap.put(nextKey, actual);
+				actual = next;
+
+			}
+			// ostatnia kolumna
+			for (int i = 0; i < rows - 1; i++) {
+				String nextKey = (char) (65 + i + 1) + Integer.toString(cols);
+				System.out.println("Zmieniam: " + nextKey);
+				next = levelMap.get(nextKey);
+				levelMap.put(nextKey, actual);
+				actual = next;
+			}
+			//  D
+			for(int i=cols; i>1; i--) {
+				String nextKey = "D" + Integer.toString(i - 1);
+				System.out.println("Zmieniam: " + nextKey);
+				next = levelMap.get(nextKey);
+				levelMap.put(nextKey, actual);
+				actual = next;
+			}
+			// pierwsza kolumna
+			for (int i = rows-2; i >= 0; i--) {
+				String nextKey = (char) (65 + i) + Integer.toString(1);
+				System.out.println("Zmieniam: " + nextKey);
+				next = levelMap.get(nextKey);
+				levelMap.put(nextKey, actual);
+				actual = next;
+			}
+		}
+		ustawPietro(pietro);
+	}
+
+	public void obrocWLewo() {
+		log.warn("Zaimplementuj metode obroc w prawo! ");
+
 	}
 }

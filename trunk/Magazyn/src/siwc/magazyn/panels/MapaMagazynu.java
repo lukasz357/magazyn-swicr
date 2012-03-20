@@ -184,13 +184,25 @@ public class MapaMagazynu extends JPanel {
 	}
 
 	public void obrocWPrawo(String regal) {
-		log.warn("Zaimplementuj metode obroc w prawo! " + regal);
+		if(regal.equals("regal1")) {
+			regalPanel1.obrocWPrawo();
+		} else if(regal.equals("regal2")) {
+			regalPanel2.obrocWPrawo();
+		} else if(regal.equals("regal3")) {
+			regalPanel3.obrocWPrawo();
+		}
+
 		
 	}
 
 	public void obrocWLewo(String regal) {
-		log.warn("Zaimplementuj metode obroc w lewo! " + regal);
-		
+		if(regal.equals("regal1")) {
+			regalPanel1.obrocWLewo();
+		} else if(regal.equals("regal2")) {
+			regalPanel2.obrocWLewo();
+		} else if(regal.equals("regal3")) {
+			regalPanel3.obrocWLewo();
+		}		
 	}
 
 }
