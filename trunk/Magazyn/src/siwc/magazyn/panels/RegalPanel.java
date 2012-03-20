@@ -92,21 +92,6 @@ public class RegalPanel extends JPanel {
 
 	}
 
-	private void dodajBoxy(TreeMap<String, BoxPanel> level) {
-		BoxPanel bp;
-		for (int i = 0; i < rows; i++) {
-			char c = (char) (65 + i);
-			for (int j = 0; j < cols; j++) {
-				bp = new BoxPanel(j, i, new BoxTO());
-				bp.setBackground(MagazynUtils.defaultBackground);
-				bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
-				String position = c + Integer.toString(j + 1);
-				level.put(position, bp);
-			}
-		}
-
-	}
-
 	public void zmienKolorBoksu(String position, Color c) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap();
 
@@ -148,6 +133,106 @@ public class RegalPanel extends JPanel {
 		}
 	}
 
+	public void obrocWPrawo() {
+
+		TreeMap<String, BoxPanel> levelMap = getLevelMap();
+		if (levelMap != null) {
+			BoxPanel actual = null;
+			BoxPanel right = null;
+
+			// A
+			actual = levelMap.get("A1");
+			for (int i = 1; i < cols; i++) {
+				String rightKey = "A" + Integer.toString(i + 1);
+
+				right = levelMap.get(rightKey);
+				levelMap.put(rightKey, actual);
+
+				actual = right;
+
+			}
+			// ostatnia kolumna
+			for (int i = 0; i < rows - 1; i++) {
+				String rightKey = (char) (65 + i + 1) + Integer.toString(cols);
+
+				right = levelMap.get(rightKey);
+				levelMap.put(rightKey, actual);
+
+				actual = right;
+			}
+			// D
+			for (int i = cols; i > 1; i--) {
+				String rightKey = "D" + Integer.toString(i - 1);
+
+				right = levelMap.get(rightKey);
+				levelMap.put(rightKey, actual);
+
+				actual = right;
+			}
+			// pierwsza kolumna
+			for (int i = rows - 2; i >= 0; i--) {
+				String rightKey = (char) (65 + i) + Integer.toString(1);
+
+				right = levelMap.get(rightKey);
+				levelMap.put(rightKey, actual);
+
+				actual = right;
+			}
+		}
+		ustawPietro(pietro);
+	}
+
+	public void obrocWLewo() {
+		TreeMap<String, BoxPanel> levelMap = getLevelMap();
+		if (levelMap != null) {
+			BoxPanel actual = null;
+			BoxPanel left = null;
+
+			// pierwsza kolumna
+			actual = levelMap.get("A1");
+			for (int i = 1; i < rows; i++) {
+				String leftKey = (char) (65 + i) + Integer.toString(1);
+
+				left = levelMap.get(leftKey);
+				levelMap.put(leftKey, actual);
+
+				actual = left;
+			}
+
+			// D
+			for (int i = 1; i < cols; i++) {
+				String leftKey = "D" + Integer.toString(i + 1);
+
+				left = levelMap.get(leftKey);
+				levelMap.put(leftKey, actual);
+
+				actual = left;
+			}
+
+			// ostatnia kolumna
+			for (int i = rows - 2; i >= 0; i--) {
+				String leftKey = (char) (65 + i) + Integer.toString(cols);
+
+				left = levelMap.get(leftKey);
+				levelMap.put(leftKey, actual);
+
+				actual = left;
+			}
+			// A
+			for (int i = cols; i > 1; i--) {
+				String leftKey = "A" + Integer.toString(i - 1);
+
+				left = levelMap.get(leftKey);
+				levelMap.put(leftKey, actual);
+
+				actual = left;
+			}
+
+		}
+		ustawPietro(pietro);
+
+	}
+
 	private TreeMap<String, BoxPanel> getLevelMap() {
 		switch (pietro) {
 		case 0:
@@ -164,53 +249,19 @@ public class RegalPanel extends JPanel {
 		return null;
 	}
 
-	public void obrocWPrawo() {
-
-		TreeMap<String, BoxPanel> levelMap = getLevelMap();
-		if (levelMap != null) {
-			BoxPanel actual = null;
-			BoxPanel next = null;
-
-			// A
-			actual = levelMap.get("A1");
-			for (int i = 1; i < cols; i++) {
-				String nextKey = "A" + Integer.toString(i+1);
-				System.out.println("Zmieniam: " + nextKey);
-				next = levelMap.get(nextKey);
-				levelMap.put(nextKey, actual);
-				actual = next;
-
-			}
-			// ostatnia kolumna
-			for (int i = 0; i < rows - 1; i++) {
-				String nextKey = (char) (65 + i + 1) + Integer.toString(cols);
-				System.out.println("Zmieniam: " + nextKey);
-				next = levelMap.get(nextKey);
-				levelMap.put(nextKey, actual);
-				actual = next;
-			}
-			//  D
-			for(int i=cols; i>1; i--) {
-				String nextKey = "D" + Integer.toString(i - 1);
-				System.out.println("Zmieniam: " + nextKey);
-				next = levelMap.get(nextKey);
-				levelMap.put(nextKey, actual);
-				actual = next;
-			}
-			// pierwsza kolumna
-			for (int i = rows-2; i >= 0; i--) {
-				String nextKey = (char) (65 + i) + Integer.toString(1);
-				System.out.println("Zmieniam: " + nextKey);
-				next = levelMap.get(nextKey);
-				levelMap.put(nextKey, actual);
-				actual = next;
+	private void dodajBoxy(TreeMap<String, BoxPanel> level) {
+		BoxPanel bp;
+		for (int i = 0; i < rows; i++) {
+			char c = (char) (65 + i);
+			for (int j = 0; j < cols; j++) {
+				bp = new BoxPanel(j, i, new BoxTO());
+				bp.setBackground(MagazynUtils.defaultBackground);
+				bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
+				String position = c + Integer.toString(j + 1);
+				level.put(position, bp);
 			}
 		}
-		ustawPietro(pietro);
-	}
-
-	public void obrocWLewo() {
-		log.warn("Zaimplementuj metode obroc w prawo! ");
 
 	}
+
 }
