@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 
 public class MagazynUtils {
-	public static final String frameTitle = "Symulator magazynu";
+	public static final String frameTitle = "Magazyn";
 
 	// Rozmiary okna
 	public static Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -15,7 +15,7 @@ public class MagazynUtils {
 
 	public static Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds(); // maxymalne
 	public static int frameWidth = maxBounds.getWidth() > 1366 ?  1366 :(int) maxBounds.getWidth();
-	public static int frameHeight = (int) maxBounds.getHeight();
+	public static int frameHeight = maxBounds.getWidth() > 1366 ? 750 : (int) maxBounds.getHeight();
 	// public static int frameWidth = (int) ((int) screenSize.getWidth()*0.75);
 	// public static int frameHeight = (int) ((int) screenSize.getHeight()*0.75);
 
