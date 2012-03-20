@@ -125,11 +125,6 @@ public class RegalPanel extends JPanel {
 				visibleBoxes.get(k).setBackground(levelMap.get(k).getBackground());
 				visibleBoxes.get(k).revalidate();
 			}
-
-			log.info("Ustawilem pietro: " + this.pietro);
-
-		} else {
-			log.info("Nie udalo sie ustawic pietra: " + level);
 		}
 	}
 
