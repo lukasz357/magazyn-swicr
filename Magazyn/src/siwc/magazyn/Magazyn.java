@@ -40,6 +40,8 @@ import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.utils.MagazynUtils;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
@@ -63,6 +65,13 @@ public class Magazyn {
 	private JTextField levelTextField;
 
 	private int pietro = 0;
+	private JButton btnStop;
+	private JButton btnStart;
+	private JLabel lblStatystyki;
+	private JLabel lblKonsola;
+	private JLabel lblZamwienia;
+	private JButton btnDodaj;
+	private JButton btnEdytuj;
 
 	/**
 	 * Launch the application.
@@ -97,7 +106,7 @@ public class Magazyn {
 		frame = new JFrame();
 		frame.setTitle(MagazynUtils.frameTitle);
 		frame.setSize(MagazynUtils.frameWidth, MagazynUtils.frameHeight);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		// frame.setBounds(50, 50, MagazynUtils.frameWidth, MagazynUtils.frameHeight);
 		log.info("Rozmiar okna: " + MagazynUtils.frameWidth + "x" + MagazynUtils.frameHeight + "\t" + frame.getWidth() + "x" + frame.getHeight());
@@ -296,37 +305,127 @@ public class Magazyn {
 		levelTextField.setColumns(10);
 		levelTextField.setText(Integer.toString(pietro));
 
+		/* STOP MAGAZYNU */
+		btnStop = new JButton("STOP");
+		btnStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				log.info("Magazyn został zatrzymany");
+
+				/*
+				 * TODO:
+				 * 
+				 * dodac wpis do konsoli
+				 * 
+				 * zatrzymac magazyn
+				 */
+
+			}
+		});
+
+		/* START MAGAZYNU */
+		btnStart = new JButton("START");
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				log.info("Magazyn został uruchomiony");
+				/*
+				 * TODO: dodac wpis do konsoli
+				 * 
+				 * uruchomic magazyn ;p
+				 */
+			}
+		});
+
+		lblStatystyki = new JLabel("Statystyki");
+
+		lblKonsola = new JLabel("Konsola");
+
+		lblZamwienia = new JLabel("Zamówienia");
+
+		/* DODAJ ZAMOWIENIE */
+		btnDodaj = new JButton("Dodaj");
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				
+
+				/*
+				 * TODO
+				 * 
+				 * dodaj zamowienie 
+				 * zaloguj w konsoli
+				 */
+				log.info("Dodano zamówienie");
+			}
+		});
+
+		/* EDYTUJ ZAMOWIENIE */
+		btnEdytuj = new JButton("Edytuj");
+		btnEdytuj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				
+
+				/*
+				 * TODO
+				 * 
+				 * edytuj zamowienie 
+				 * zaloguj w konsoli
+				 */
+				log.info("Edytowano zamówienie zamówienie");
+			}
+		});
+
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(437)
-					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
-					.addGap(313)
-					.addComponent(btnMinus)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnPlus)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap(1114, Short.MAX_VALUE)
+							.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnStop, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblStatystyki))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(206)
+							.addComponent(btnLeft)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblKonsola)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnDown))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnRight)
+									.addPreferredGap(ComponentPlacement.RELATED, 829, Short.MAX_VALUE)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnRegal2Random)
+										.addComponent(btnRegal1Random)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addComponent(btnDodaj)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(btnEdytuj))))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 792, 792)
+									.addPreferredGap(ComponentPlacement.RELATED, 410, Short.MAX_VALUE)
+									.addComponent(lblZamwienia))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(437)
+									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+									.addGap(313)
+									.addComponent(btnMinus)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnPlus)))
 					.addContainerGap())
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(206)
-					.addComponent(btnLeft)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnDown))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnRight)
-					.addPreferredGap(ComponentPlacement.RELATED, 810, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnRegal2Random)
-						.addComponent(btnRegal1Random))
-					.addGap(54))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 792, 792)
-					.addContainerGap(548, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -337,8 +436,17 @@ public class Magazyn {
 						.addComponent(btnPlus)
 						.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnMinus))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, 396, 396)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, 396, 396))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(49)
+							.addComponent(lblZamwienia)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnDodaj)
+								.addComponent(btnEdytuj))))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
@@ -358,7 +466,15 @@ public class Magazyn {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(33)
 							.addComponent(btnLeft)))
-					.addContainerGap(163, Short.MAX_VALUE))
+					.addGap(50)
+					.addComponent(lblKonsola)
+					.addGap(117)
+					.addComponent(lblStatystyki)
+					.addPreferredGap(ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(btnStart, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnStop, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 
 		frame.getContentPane().setLayout(groupLayout);
