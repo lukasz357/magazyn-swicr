@@ -9,6 +9,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.ButtonGroup;
@@ -18,12 +19,14 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -79,7 +82,15 @@ public class Magazyn {
 	private JButton btnRWPrawo_2;
 	private JButton btnRWLewo_1;
 	private JButton btnRWLewo_2;
+	private JScrollPane KonsolaScrollPane;
+	private JList KonsolaList;
 
+	
+	/* Listy konsoli/zamowien */
+	ArrayList<String> konsolaLista = new ArrayList<>();
+	
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -96,11 +107,26 @@ public class Magazyn {
 			}
 		});
 	}
+	
+	/*temp */
+	public void tymczasowoWypelnijKonsole(){
+		konsolaLista.add("Magazyn został uruchomiony");
+		konsolaLista.add("Dodano zamowienie nr 5435345, czas odbioru 14:10");
+		konsolaLista.add("Dodano zamowienie nr 423423, czas odbioru 14:11");
+		konsolaLista.add("Dodano zamowienie nr 5434235423432345, czas odbioru 14:18");
+		konsolaLista.add("Dodano zamowienie nr 54432435345, czas odbioru 15:50");
+		konsolaLista.add("Dodano zamowienie nr 543423425345, czas odbioru 14:10");
+		konsolaLista.add("Dodano zamowienie nr 523, czas odbioru 14:15");
+		konsolaLista.add("Dodano zamowienie nr 123123, czas odbioru 18:00");
+		konsolaLista.add("Magazyn został zatrzymany");
+		
+	}
 
 	/**
 	 * Create the application.
 	 */
 	public Magazyn() {
+		tymczasowoWypelnijKonsole();
 		initialize();
 	}
 
@@ -301,22 +327,30 @@ public class Magazyn {
 		
 		panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Panel testowy", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		
+		
+		
+		KonsolaScrollPane = new JScrollPane();
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 585, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(panel, 0, 0, Short.MAX_VALUE))
-						.addComponent(panel_1, 0, 0, Short.MAX_VALUE)
-						.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 585, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(panel, 0, 0, Short.MAX_VALUE))
+							.addComponent(panel_1, 0, 0, Short.MAX_VALUE)
+							.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(10)
+							.addComponent(KonsolaScrollPane, GroupLayout.PREFERRED_SIZE, 780, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(btnDodaj)
@@ -330,7 +364,7 @@ public class Magazyn {
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)))
 							.addContainerGap())
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblStatystyki)
 							.addGap(39))))
 		);
@@ -352,13 +386,14 @@ public class Magazyn {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, 396, 396)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-							.addGap(109))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addGap(41)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(KonsolaScrollPane, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+							.addGap(40))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblStatystyki)
 							.addGap(94)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE, false)
@@ -367,6 +402,9 @@ public class Magazyn {
 							.addGap(75)))
 					.addGap(14))
 		);
+		
+		KonsolaList = new JList(konsolaLista.toArray());
+		KonsolaScrollPane.setViewportView(KonsolaList);
 		
 				btnLeft = new JButton("left");
 				
