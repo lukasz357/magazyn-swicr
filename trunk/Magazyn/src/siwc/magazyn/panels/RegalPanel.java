@@ -2,11 +2,9 @@ package siwc.magazyn.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.TreeMap;
 
-import javax.crypto.spec.PSource;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -63,7 +61,24 @@ public class RegalPanel extends JPanel {
 				bp = new BoxPanel(j, i, new BoxTO());
 				bp.setBackground(MagazynUtils.defaultBackground);
 				bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
-
+				//ramki
+				
+//				int top = 0;
+//				int left = 0;
+//				int bottom = 0;
+//				int right = 0;
+//				
+//				if(i==0 || i == rows-1) {
+//					top = 1;
+//					bottom = 1;
+//				} 
+//				if(j == 0 || j == cols -1) {
+//					left = 1;
+//					right = 1;
+//				}
+//				if(top != 0 || left != 0 || bottom != 0 || right !=0)
+//					bp.setBorder(new MatteBorder(top, left, bottom, right, Color.black));
+				
 				String position = c + Integer.toString(j + 1);
 				visibleBoxes.put(position, bp);
 				add(bp);

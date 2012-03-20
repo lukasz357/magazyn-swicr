@@ -1,13 +1,15 @@
 package siwc.magazyn.panels;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.xml.Log4jEntityResolver;
 
 import siwc.magazyn.utils.MagazynUtils;
 
@@ -20,6 +22,7 @@ public class MapaMagazynu extends JPanel {
 	private RegalPanel regalPanel3;
 	private ArrayList<RegalPanel> regaly = new ArrayList<>();
 	private LiftPanel lift;
+	private JPanel odbior;
 
 	public MapaMagazynu() {
 		setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
@@ -46,8 +49,17 @@ public class MapaMagazynu extends JPanel {
 		lift = new LiftPanel();
 		lift.setBackground(Color.red);
 		lift.setBounds(lift.getX(), lift.getY(), lift.getXsize(), lift.getYsize());
-		// lift.moveUP(getBounds());
 		add(lift);
+
+		odbior = new JPanel();
+		odbior.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		odbior.setBackground(Color.YELLOW);
+		JLabel label = new JLabel("Odbiór");
+		label.setFont(new Font("Tahoma", Font.BOLD, 12));
+		odbior.add(label, BorderLayout.CENTER);
+		int odbiorPozycjaY = MagazynUtils.mapHeight - MagazynUtils.liftSizeY;
+		odbior.setBounds(0, odbiorPozycjaY, 4 * MagazynUtils.liftSizeX, MagazynUtils.liftSizeY);
+		add(odbior);
 
 	}
 
@@ -58,13 +70,13 @@ public class MapaMagazynu extends JPanel {
 			regalPanel2.zmienKolorBoksu(position, c);
 		}
 	}
-	
+
 	public void moveUp() {
 
 		int xAktualne = lift.getX() + lift.getXsize();
 		int yPo = lift.getY();
 		boolean isEnteringShelf = false;
-
+		boolean isEnteringReceivePoint = false;
 		/*
 		 * 1 - czy x nalezy do x regalu 2- czy yWindy wejdzie na dolna krawedz regalu dla kazdego regalu
 		 */
@@ -74,9 +86,14 @@ public class MapaMagazynu extends JPanel {
 				isEnteringShelf = true;
 			}
 		}
+		//punkt odbioru
+//		if (xAktualne <= odbior.getBounds().getMaxX() && lift.getX() >= odbior.getBounds().getMinX() && lift.getY() >= odbior.getBounds().getMaxY())
+//			isEnteringReceivePoint = true;
 
 		if (isEnteringShelf) {
 			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
+		} else if(isEnteringReceivePoint) {
+			System.err.println("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
 		} else {
 			lift.moveUp(this.getBounds());
 			repaint();
@@ -88,15 +105,20 @@ public class MapaMagazynu extends JPanel {
 		int xAktualne = lift.getX() + lift.getXsize();
 		double yPo = lift.getY() + lift.getYsize();
 		boolean isEnteringShelf = false;
-
+		boolean isEnteringReceivePoint = false;
 		for (RegalPanel it : regaly) {
 			if (((xAktualne > it.getBounds().getMinX()) && (xAktualne <= it.getBounds().getMaxX() + 1)) && (yPo == it.getBounds().getMinY())) {
 				isEnteringShelf = true;
 			}
 		}
+		// punkt odbioru
+//		if (xAktualne <= odbior.getBounds().getMaxX() && lift.getX() >= odbior.getBounds().getMinX() && yPo >= odbior.getBounds().getMinY())
+//			isEnteringReceivePoint = true;
 
 		if (isEnteringShelf) {
 			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
+		} else if (isEnteringReceivePoint) {
+			System.err.println("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
 		} else {
 			lift.moveDown(getBounds());
 			repaint();
@@ -108,7 +130,7 @@ public class MapaMagazynu extends JPanel {
 		int xPo = lift.getX();
 		double yAktualne = lift.getY();
 		boolean isEnteringShelf = false;
-
+		boolean isEnteringReceivePoint = false;
 		System.out.println("xPo = " + xPo);
 		System.out.println("regal 3 = " + regalPanel3.getBounds().getMaxX());
 
@@ -117,9 +139,16 @@ public class MapaMagazynu extends JPanel {
 				isEnteringShelf = true;
 			}
 		}
+		
+		//zle dziala
+//		if ((lift.getY() +lift.getYsize() <= odbior.getBounds().getMaxY() || lift.getY() >= odbior.getBounds().getMinY()) && lift.getX() == odbior.getBounds().getMaxX())
+//			isEnteringReceivePoint = true;
+
 
 		if (isEnteringShelf) {
 			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
+		} else if (isEnteringReceivePoint) {
+			System.err.println("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
 		} else {
 			lift.moveLeft(getBounds());
 			repaint();
@@ -147,9 +176,9 @@ public class MapaMagazynu extends JPanel {
 	}
 
 	public void ustawPietro(int pietro) {
-		for(RegalPanel r : regaly)
+		for (RegalPanel r : regaly)
 			r.ustawPietro(pietro);
-		
+
 	}
 
 }

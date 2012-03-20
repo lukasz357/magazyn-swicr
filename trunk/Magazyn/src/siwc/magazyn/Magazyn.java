@@ -106,8 +106,12 @@ public class Magazyn {
 		frame = new JFrame();
 		frame.setTitle(MagazynUtils.frameTitle);
 		frame.setSize(MagazynUtils.frameWidth, MagazynUtils.frameHeight);
-		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+		if (MagazynUtils.screenSize.getWidth() <= 1366)
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+
+		frame.setResizable(false);
 		// frame.setBounds(50, 50, MagazynUtils.frameWidth, MagazynUtils.frameHeight);
 		log.info("Rozmiar okna: " + MagazynUtils.frameWidth + "x" + MagazynUtils.frameHeight + "\t" + frame.getWidth() + "x" + frame.getHeight());
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -377,6 +381,7 @@ public class Magazyn {
 		});
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -413,7 +418,7 @@ public class Magazyn {
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addContainerGap()
-									.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 792, 792)
+									.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, MagazynUtils.mapWidth, MagazynUtils.mapWidth)
 									.addPreferredGap(ComponentPlacement.RELATED, 410, Short.MAX_VALUE)
 									.addComponent(lblZamwienia))
 								.addGroup(groupLayout.createSequentialGroup()
@@ -439,7 +444,7 @@ public class Magazyn {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, 396, 396))
+							.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, MagazynUtils.mapHeight, MagazynUtils.mapHeight))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(49)
 							.addComponent(lblZamwienia)
