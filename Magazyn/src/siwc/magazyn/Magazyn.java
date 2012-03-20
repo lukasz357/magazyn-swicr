@@ -68,10 +68,19 @@ public class Magazyn {
 	private JButton btnStop;
 	private JButton btnStart;
 	private JLabel lblStatystyki;
-	private JLabel lblKonsola;
 	private JLabel lblZamwienia;
 	private JButton btnDodaj;
 	private JButton btnEdytuj;
+	private JPanel panel;
+	private JLabel lblPietro;
+	private JPanel panel_1;
+	private JButton btnRegal3Random;
+	private JButton btnRWPrawo;
+	private JButton btnRWLewo;
+	private JButton btnRWPrawo_1;
+	private JButton btnRWPrawo_2;
+	private JButton btnRWLewo_1;
+	private JButton btnRWLewo_2;
 
 	/**
 	 * Launch the application.
@@ -101,8 +110,9 @@ public class Magazyn {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		lblNewLabel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 15));
+		lblNewLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 16));
 		frame = new JFrame();
 		frame.setTitle(MagazynUtils.frameTitle);
 		frame.setSize(MagazynUtils.frameWidth, MagazynUtils.frameHeight);
@@ -130,9 +140,9 @@ public class Magazyn {
 		ustawStyl();
 
 		fileChooser = new JFileChooser();
-		FileNameExtensionFilter marekFilter = new FileNameExtensionFilter("Marek (*.ms; *.pała, *.pala, *.marek)", "ms", "marek", "pała", "pala");
-		fileChooser.setFileFilter(marekFilter);
-		fileChooser.addChoosableFileFilter(marekFilter);
+		FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Plik tekstowy (*.txt)", "txt");
+		fileChooser.setFileFilter(txtFilter);
+		fileChooser.addChoosableFileFilter(txtFilter);
 		fileChooser.setMultiSelectionEnabled(false);
 		fileChooser.setAcceptAllFileFilterUsed(true);
 
@@ -218,96 +228,6 @@ public class Magazyn {
 		colors[1] = Color.BLACK;
 		colors[2] = Color.RED;
 		colors[3] = Color.BLUE;
-		btnRegal1Random = new JButton("Regal1 random");
-		btnRegal1Random.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Random rand = new Random();
-
-				char prefix = (char) (65 + rand.nextInt(MagazynUtils.rzedowWRegale));
-				int sufix = rand.nextInt(MagazynUtils.kolumnWRegale);
-				int c = rand.nextInt(colors.length);
-
-				String position = prefix + Integer.toString(sufix + 1);
-
-				mapaMagazynu.zmienKolorBoksu("regal1", position, colors[c]);
-				log.info("R1: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
-			}
-		});
-
-		btnRegal2Random = new JButton("Regal2 random");
-		btnRegal2Random.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Random rand = new Random();
-
-				char prefix = (char) (65 + rand.nextInt(MagazynUtils.rzedowWRegale));
-				int sufix = rand.nextInt(MagazynUtils.kolumnWRegale);
-				int c = rand.nextInt(colors.length);
-
-				String position = prefix + Integer.toString(sufix + 1);
-
-				mapaMagazynu.zmienKolorBoksu("regal2", position, colors[c]);
-				log.info("R2: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
-			}
-		});
-
-		btnUp = new JButton("up");
-		btnUp.setMnemonic(KeyEvent.VK_UP);
-		btnUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.moveUp();
-			}
-		});
-
-		btnDown = new JButton("down");
-		btnDown.setMnemonic(KeyEvent.VK_DOWN);
-		btnDown.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.moveDown();
-
-			}
-		});
-
-		btnRight = new JButton("right");
-		btnRight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.moveRight();
-			}
-		});
-
-		btnLeft = new JButton("left");
-		btnLeft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.moveLeft();
-
-			}
-		});
-
-		btnPlus = new JButton("+");
-		btnPlus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (pietro < MagazynUtils.liczbaPieter) {
-					pietro++;
-					levelTextField.setText(Integer.toString(pietro));
-					mapaMagazynu.ustawPietro(pietro);
-				}
-			}
-		});
-
-		btnMinus = new JButton("-");
-		btnMinus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (pietro > 0) {
-					pietro--;
-					levelTextField.setText(Integer.toString(pietro));
-					mapaMagazynu.ustawPietro(pietro);
-				}
-			}
-		});
-
-		levelTextField = new JTextField();
-		levelTextField.setDisabledTextColor(Color.WHITE);
-		levelTextField.setColumns(10);
-		levelTextField.setText(Integer.toString(pietro));
 
 		/* STOP MAGAZYNU */
 		btnStop = new JButton("STOP");
@@ -341,8 +261,6 @@ public class Magazyn {
 		});
 
 		lblStatystyki = new JLabel("Statystyki");
-
-		lblKonsola = new JLabel("Konsola");
 
 		lblZamwienia = new JLabel("Zamówienia");
 
@@ -379,108 +297,341 @@ public class Magazyn {
 				log.info("Edytowano zamówienie zamówienie");
 			}
 		});
+		
+		panel = new JPanel();
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		
+		panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Panel testowy", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap(1114, Short.MAX_VALUE)
 							.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnStop, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblStatystyki)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblStatystyki))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(206)
-							.addComponent(btnLeft)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblKonsola)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-										.addComponent(btnDown))
+									.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 585, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnRight)
-									.addPreferredGap(ComponentPlacement.RELATED, 829, Short.MAX_VALUE)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnRegal2Random)
-										.addComponent(btnRegal1Random)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(btnDodaj)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(btnEdytuj))))))
-						.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(panel, 0, 0, Short.MAX_VALUE))
+								.addComponent(panel_1, 0, 0, Short.MAX_VALUE)
+								.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 414, Short.MAX_VALUE)
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addContainerGap()
-									.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, MagazynUtils.mapWidth, MagazynUtils.mapWidth)
-									.addPreferredGap(ComponentPlacement.RELATED, 410, Short.MAX_VALUE)
-									.addComponent(lblZamwienia))
+									.addComponent(btnDodaj)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(btnEdytuj))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(437)
-									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
-									.addGap(313)
-									.addComponent(btnMinus)))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnPlus)))
+									.addComponent(lblZamwienia)
+									.addGap(74)))))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(btnPlus)
-						.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnMinus))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, MagazynUtils.mapHeight, MagazynUtils.mapHeight))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(49)
 							.addComponent(lblZamwienia)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnDodaj)
-								.addComponent(btnEdytuj))))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnEdytuj)))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnRegal1Random)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnRegal2Random))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnUp)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnDown))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(32)
-							.addComponent(btnRight))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(33)
-							.addComponent(btnLeft)))
-					.addGap(50)
-					.addComponent(lblKonsola)
-					.addGap(117)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, 396, 396)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+					.addGap(109)
 					.addComponent(lblStatystyki)
-					.addPreferredGap(ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(btnStart, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(btnStop, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
 					.addContainerGap())
 		);
+		
+				btnLeft = new JButton("left");
+				
+						btnUp = new JButton("up");
+						btnUp.setMnemonic(KeyEvent.VK_UP);
+						btnUp.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								mapaMagazynu.moveUp();
+							}
+						});
+				
+						btnRight = new JButton("right");
+						btnRight.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								mapaMagazynu.moveRight();
+							}
+						});
+				
+						btnDown = new JButton("down");
+						btnDown.setMnemonic(KeyEvent.VK_DOWN);
+						btnDown.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								mapaMagazynu.moveDown();
+
+							}
+						});
+				
+						btnRegal2Random = new JButton("Regal2 random");
+						btnRegal2Random.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								Random rand = new Random();
+
+								char prefix = (char) (65 + rand.nextInt(MagazynUtils.rzedowWRegale));
+								int sufix = rand.nextInt(MagazynUtils.kolumnWRegale);
+								int c = rand.nextInt(colors.length);
+
+								String position = prefix + Integer.toString(sufix + 1);
+
+								mapaMagazynu.zmienKolorBoksu("regal2", position, colors[c]);
+								log.info("R2: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
+							}
+						});
+				btnRegal1Random = new JButton("Regal1 random");
+				btnRegal1Random.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Random rand = new Random();
+
+						char prefix = (char) (65 + rand.nextInt(MagazynUtils.rzedowWRegale));
+						int sufix = rand.nextInt(MagazynUtils.kolumnWRegale);
+						int c = rand.nextInt(colors.length);
+
+						String position = prefix + Integer.toString(sufix + 1);
+
+						mapaMagazynu.zmienKolorBoksu("regal1", position, colors[c]);
+						log.info("R1: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
+					}
+				});
+				
+				btnRegal3Random = new JButton("Regal3 random");
+				btnRegal3Random.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Random rand = new Random();
+
+						char prefix = (char) (65 + rand.nextInt(MagazynUtils.rzedowWRegale));
+						int sufix = rand.nextInt(MagazynUtils.kolumnWRegale);
+						int c = rand.nextInt(colors.length);
+
+						String position = prefix + Integer.toString(sufix + 1);
+
+						mapaMagazynu.zmienKolorBoksu("regal3", position, colors[c]);
+						log.info("R3: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
+					}
+				});
+				
+				btnRWPrawo = new JButton("R1 w prawo");
+				btnRWPrawo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mapaMagazynu.obrocWPrawo("regal1");
+					}
+				});
+				
+				
+				btnRWPrawo_1 = new JButton("R2 w prawo");
+				btnRWPrawo_1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mapaMagazynu.obrocWPrawo("regal2");
+					}
+				});
+				
+				btnRWPrawo_2 = new JButton("R3 w prawo");
+				btnRWPrawo_2.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mapaMagazynu.obrocWPrawo("regal3");
+					}
+				});
+
+				btnRWLewo = new JButton("R1 w lewo");
+				btnRWLewo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mapaMagazynu.obrocWLewo("regal1");
+					}
+				});
+				
+				btnRWLewo_1 = new JButton("R2 w lewo");
+				btnRWLewo_1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mapaMagazynu.obrocWLewo("regal2");
+					}
+				});
+				
+				btnRWLewo_2 = new JButton("R3 w lewo");
+				btnRWLewo_2.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mapaMagazynu.obrocWLewo("regal3");
+					}
+				});
+				GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+				gl_panel_1.setHorizontalGroup(
+					gl_panel_1.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap(479, Short.MAX_VALUE)
+							.addComponent(btnRWLewo)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnRWPrawo)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnRegal1Random)
+							.addContainerGap())
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addComponent(btnLeft)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+										.addComponent(btnDown)
+										.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnRight)
+									.addPreferredGap(ComponentPlacement.RELATED, 296, Short.MAX_VALUE)
+									.addComponent(btnRWLewo_2)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnRWPrawo_2))
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addGap(471)
+									.addComponent(btnRWLewo_1)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnRWPrawo_1)))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false)
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addComponent(btnRegal3Random)
+									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addComponent(btnRegal2Random)
+									.addContainerGap())))
+				);
+				gl_panel_1.setVerticalGroup(
+					gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnRegal1Random)
+								.addComponent(btnRWPrawo)
+								.addComponent(btnRWLewo))
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+									.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+										.addGroup(gl_panel_1.createSequentialGroup()
+											.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_panel_1.createSequentialGroup()
+													.addGap(44)
+													.addComponent(btnLeft))
+												.addGroup(gl_panel_1.createSequentialGroup()
+													.addGap(30)
+													.addComponent(btnUp)
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addComponent(btnDown)))
+											.addGap(14))
+										.addGroup(gl_panel_1.createSequentialGroup()
+											.addComponent(btnRight)
+											.addGap(30))))
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnRegal2Random)
+										.addComponent(btnRWPrawo_1)
+										.addComponent(btnRWLewo_1))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnRegal3Random)
+										.addComponent(btnRWPrawo_2)
+										.addComponent(btnRWLewo_2))
+									.addGap(45))))
+				);
+				panel_1.setLayout(gl_panel_1);
+				btnLeft.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mapaMagazynu.moveLeft();
+
+					}
+				});
+		
+		btnMinus = new JButton("-");
+		btnMinus.setEnabled(false);
+		btnMinus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (pietro > 0) {
+					pietro--;
+					levelTextField.setText(Integer.toString(pietro));
+					mapaMagazynu.ustawPietro(pietro);
+					
+					if(pietro == 0)
+						btnMinus.setEnabled(false);
+					if(pietro < MagazynUtils.liczbaPieter - 1)
+						btnPlus.setEnabled(true);
+				}
+			}
+		});
+		
+		
+		btnPlus = new JButton("+");
+		btnPlus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (pietro < MagazynUtils.liczbaPieter - 1) {
+					pietro++;
+					levelTextField.setText(Integer.toString(pietro));
+					mapaMagazynu.ustawPietro(pietro);
+					
+					if(pietro == MagazynUtils.liczbaPieter - 1)
+						btnPlus.setEnabled(false);
+					if(pietro > 0)
+						btnMinus.setEnabled(true);
+				}
+			}
+		});
+	
+		levelTextField = new JTextField();
+		levelTextField.setDisabledTextColor(Color.WHITE);
+		levelTextField.setColumns(10);
+		levelTextField.setText(Integer.toString(pietro));
+		
+		
+		lblPietro = new JLabel("Piętro:");
+		lblPietro.setFont(new Font("Tahoma", Font.BOLD, 13));
+				GroupLayout gl_panel = new GroupLayout(panel);
+				gl_panel.setHorizontalGroup(
+					gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblPietro)
+							.addGap(18)
+							.addComponent(btnMinus)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnPlus)
+							.addGap(16))
+				);
+				gl_panel.setVerticalGroup(
+					gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnMinus)
+								.addComponent(lblPietro)
+								.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnPlus))
+							.addContainerGap())
+				);
+				panel.setLayout(gl_panel);
+				
 
 		frame.getContentPane().setLayout(groupLayout);
 
