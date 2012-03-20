@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import javax.swing.ButtonGroup;
@@ -30,12 +31,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListDataListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
@@ -88,6 +91,7 @@ public class Magazyn {
 	
 	/* Listy konsoli/zamowien */
 	ArrayList<String> konsolaLista = new ArrayList<>();
+	private JLabel lblKonsola;
 	
 	
 	
@@ -266,7 +270,7 @@ public class Magazyn {
 				 * 
 				 * zatrzymac magazyn
 				 */
-
+				dodajWpisDoKonsoli("Magazyn został zatrzymany" + new Date().toString());
 			}
 		});
 
@@ -275,7 +279,8 @@ public class Magazyn {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				log.info("Magazyn został uruchomiony");
+				log.info("Magazyn został uruchomiony" + new Date().toString());
+				dodajWpisDoKonsoli("Magazyn został uruchomiony" + new Date().toString());
 				/*
 				 * TODO: dodac wpis do konsoli
 				 * 
@@ -331,6 +336,8 @@ public class Magazyn {
 		
 		
 		KonsolaScrollPane = new JScrollPane();
+		
+		lblKonsola = new JLabel("Konsola");
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -338,17 +345,21 @@ public class Magazyn {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 							.addGroup(groupLayout.createSequentialGroup()
 								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 585, GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(panel, 0, 0, Short.MAX_VALUE))
-							.addComponent(panel_1, 0, 0, Short.MAX_VALUE)
-							.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(10)
-							.addComponent(KonsolaScrollPane, GroupLayout.PREFERRED_SIZE, 780, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
+							.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
+							.addGroup(groupLayout.createSequentialGroup()
+								.addGap(10)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addComponent(KonsolaScrollPane, GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addComponent(lblKonsola)
+										.addGap(743))))))
+					.addGap(318)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -387,12 +398,14 @@ public class Magazyn {
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, 396, 396)))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(KonsolaScrollPane, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-							.addGap(40))
+							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblKonsola)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(KonsolaScrollPane, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblStatystyki)
 							.addGap(94)
@@ -402,7 +415,6 @@ public class Magazyn {
 							.addGap(75)))
 					.addGap(14))
 		);
-		
 		KonsolaList = new JList(konsolaLista.toArray());
 		KonsolaScrollPane.setViewportView(KonsolaList);
 		
@@ -533,21 +545,28 @@ public class Magazyn {
 							.addComponent(btnRegal1Random)
 							.addContainerGap())
 						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel_1.createSequentialGroup()
-									.addComponent(btnLeft)
-									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnDown)
-										.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnRight)
-									.addPreferredGap(ComponentPlacement.RELATED, 296, Short.MAX_VALUE)
+										.addGroup(gl_panel_1.createSequentialGroup()
+											.addGap(55)
+											.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))
+										.addGroup(gl_panel_1.createSequentialGroup()
+											.addContainerGap()
+											.addComponent(btnLeft)
+											.addGap(51)
+											.addComponent(btnRight)))
+									.addPreferredGap(ComponentPlacement.RELATED, 314, Short.MAX_VALUE))
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addGap(56)
+									.addComponent(btnDown)
+									.addPreferredGap(ComponentPlacement.RELATED)))
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+								.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
 									.addComponent(btnRWLewo_2)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(btnRWPrawo_2))
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addGap(471)
+								.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
 									.addComponent(btnRWLewo_1)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(btnRWPrawo_1)))
@@ -563,29 +582,12 @@ public class Magazyn {
 				gl_panel_1.setVerticalGroup(
 					gl_panel_1.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnRegal1Random)
-								.addComponent(btnRWPrawo)
-								.addComponent(btnRWLewo))
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel_1.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-										.addGroup(gl_panel_1.createSequentialGroup()
-											.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-												.addGroup(gl_panel_1.createSequentialGroup()
-													.addGap(44)
-													.addComponent(btnLeft))
-												.addGroup(gl_panel_1.createSequentialGroup()
-													.addGap(30)
-													.addComponent(btnUp)
-													.addPreferredGap(ComponentPlacement.RELATED)
-													.addComponent(btnDown)))
-											.addGap(14))
-										.addGroup(gl_panel_1.createSequentialGroup()
-											.addComponent(btnRight)
-											.addGap(30))))
-								.addGroup(gl_panel_1.createSequentialGroup()
+									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnRegal1Random)
+										.addComponent(btnRWPrawo)
+										.addComponent(btnRWLewo))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 										.addComponent(btnRegal2Random)
@@ -595,8 +597,17 @@ public class Magazyn {
 									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 										.addComponent(btnRegal3Random)
 										.addComponent(btnRWPrawo_2)
-										.addComponent(btnRWLewo_2))
-									.addGap(45))))
+										.addComponent(btnRWLewo_2)))
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(btnUp)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnLeft)
+										.addComponent(btnRight))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnDown)))
+							.addContainerGap(29, Short.MAX_VALUE))
 				);
 				panel_1.setLayout(gl_panel_1);
 				btnLeft.addActionListener(new ActionListener() {
@@ -737,5 +748,10 @@ public class Magazyn {
 			return nimbusStyle;
 
 		return UIManager.getCrossPlatformLookAndFeelClassName();
+	}
+	
+	/* metody do konsoli */
+	public void dodajWpisDoKonsoli(String wpis){
+		konsolaLista.add(wpis);
 	}
 }
