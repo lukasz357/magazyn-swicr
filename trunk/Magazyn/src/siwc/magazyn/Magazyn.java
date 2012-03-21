@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.Random;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -90,7 +91,7 @@ public class Magazyn {
 
 	
 	/* Listy konsoli/zamowien */
-	ArrayList<String> konsolaLista = new ArrayList<>();
+	private static DefaultListModel<String> konsolaListModel =new DefaultListModel<String>();
 	private JLabel lblKonsola;
 	
 	
@@ -114,16 +115,7 @@ public class Magazyn {
 	
 	/*temp */
 	public void tymczasowoWypelnijKonsole(){
-		konsolaLista.add("Magazyn został uruchomiony");
-		konsolaLista.add("Dodano zamowienie nr 5435345, czas odbioru 14:10");
-		konsolaLista.add("Dodano zamowienie nr 423423, czas odbioru 14:11");
-		konsolaLista.add("Dodano zamowienie nr 5434235423432345, czas odbioru 14:18");
-		konsolaLista.add("Dodano zamowienie nr 54432435345, czas odbioru 15:50");
-		konsolaLista.add("Dodano zamowienie nr 543423425345, czas odbioru 14:10");
-		konsolaLista.add("Dodano zamowienie nr 523, czas odbioru 14:15");
-		konsolaLista.add("Dodano zamowienie nr 123123, czas odbioru 18:00");
-		konsolaLista.add("Magazyn został zatrzymany");
-		
+		konsolaListModel.addElement("Magazyn trollollololo");
 	}
 
 	/**
@@ -415,7 +407,11 @@ public class Magazyn {
 							.addGap(75)))
 					.addGap(14))
 		);
-		KonsolaList = new JList(konsolaLista.toArray());
+//		KonsolaList = new JList(konsolaLista.toArray());
+		
+		KonsolaList = new JList<>();
+		KonsolaList.setModel(konsolaListModel);
+		
 		KonsolaScrollPane.setViewportView(KonsolaList);
 		
 				btnLeft = new JButton("left");
@@ -751,7 +747,7 @@ public class Magazyn {
 	}
 	
 	/* metody do konsoli */
-	public void dodajWpisDoKonsoli(String wpis){
-		konsolaLista.add(wpis);
+	public static void dodajWpisDoKonsoli(String wpis){
+		konsolaListModel.addElement(wpis);
 	}
 }
