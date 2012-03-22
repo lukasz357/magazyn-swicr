@@ -11,6 +11,22 @@ public class IOLogic {
 		magazyn.setWielkoscXMagazynu(4);
 		magazyn.setWielkoscYMagazynu(4);
 		
+		PoleTO[][] pietro1 = new PoleTO[magazyn.getWielkoscXMagazynu()][magazyn.getWielkoscYMagazynu()];
+		
+		PoleTO emptyField = new PoleTO();
+		emptyField.setId(-1); //empty field so id = -1 ?
+		emptyField.setBox(false);
+		emptyField.setPunktOdbioru(false);
+		emptyField.setTowar(null);
+		emptyField.setX(-1);
+		emptyField.setY(-1);
+		
+		for (int i=0; i < magazyn.getWielkoscXMagazynu(); i++) {
+			for (int j=0; j < magazyn.getWielkoscYMagazynu(); j++) {
+				pietro1[i][j] = emptyField;
+			}
+		}
+		
 		TowarTO skarpety = new TowarTO();
 		skarpety.setIdBoxu(1);
 		skarpety.setIlosc("200szt.");
@@ -50,42 +66,9 @@ public class IOLogic {
 		box3.setX(1);
 		box3.setY(1);
 		
-		PoleTO emptyField = new PoleTO();
-		emptyField.setId(-1); //empty field so id = -1 ?
-		emptyField.setBox(false);
-		emptyField.setPunktOdbioru(false);
-		emptyField.setTowar(null);
-		emptyField.setX(-1);
-		emptyField.setY(-1);
-		
-		PoleTO[][] pietro1 = new PoleTO[100][100];
 		pietro1[4][4] = box;
 		pietro1[3][4] = box2;
 		pietro1[1][1] = box3;
-		
-		//Box sie powtarza, chyba nie powi
-		pietro1[0][0] = emptyField;
-		pietro1[0][1] = emptyField;
-		pietro1[0][2] = emptyField;
-		pietro1[0][3] = emptyField;
-		pietro1[0][4] = emptyField;
-		pietro1[1][0] = emptyField;
-		pietro1[1][2] = emptyField;
-		pietro1[1][3] = emptyField;
-		pietro1[1][4] = emptyField;
-		pietro1[2][0] = emptyField;
-		pietro1[2][1] = emptyField;
-		pietro1[2][2] = emptyField;
-		pietro1[2][3] = emptyField;
-		pietro1[2][4] = emptyField;
-		pietro1[3][0] = emptyField;
-		pietro1[3][1] = emptyField;
-		pietro1[3][2] = emptyField;
-		pietro1[3][3] = emptyField;
-		pietro1[4][0] = emptyField;
-		pietro1[4][1] = emptyField;
-		pietro1[4][2] = emptyField;
-		pietro1[4][3] = emptyField;
 		
 		magazyn.getPietra().put(0, pietro1);
 		
