@@ -11,7 +11,7 @@ import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
 
-import siwc.magazyn.dto.BoxTO;
+import siwc.magazyn.dto.PoleTO;
 import siwc.magazyn.utils.MagazynUtils;
 
 public class RegalPanel extends JPanel {
@@ -52,7 +52,7 @@ public class RegalPanel extends JPanel {
 			for (int j = 0; j < cols; j++) {
 				String position = c + Integer.toString(j + 1);
 				mBox = level.get(position);
-				bp = new BoxPanel(j, i, new BoxTO());
+				bp = new BoxPanel(j, i, new PoleTO());
 				bp.setBackground(mBox.getBackground());
 				bp.setBorder(mBox.getBorder());
 
@@ -223,21 +223,21 @@ public class RegalPanel extends JPanel {
 			char c = (char) (65 + i);
 			for (int j = 0; j < cols; j++) {
 				if (liczbaPustychBoksow == 1 && j == 0 && i == 0) {
-					bp = new BoxPanel(j, i, new BoxTO());
+					bp = new BoxPanel(j, i, new PoleTO());
 					bp.setFree(true);
 					bp.setBackground(MagazynUtils.freeBoxBackround);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
 				} else if (liczbaPustychBoksow == 2 && (i == 0 || i == (rows - 1)) && j == cols / 2) {
-					bp = new BoxPanel(j, i, new BoxTO());
+					bp = new BoxPanel(j, i, new PoleTO());
 					bp.setFree(true);
 					bp.setBackground(MagazynUtils.freeBoxBackround);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
 				} else {
-					bp = new BoxPanel(j, i, new BoxTO());
+					bp = new BoxPanel(j, i, new PoleTO());
 					bp.setBackground(MagazynUtils.defaultBoxBackground);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					String position = c + Integer.toString(j + 1);
