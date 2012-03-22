@@ -119,14 +119,11 @@ public class RegalPanel extends JPanel {
 			levelMap.put(freeBoxKey, rightBox);
 			levelMap.put(rightBoxKey, freeBox);
 			
-		
-			
 		} else 
 			return;
 		
 		if (pietro == level)
 			pokazPietro(level);
-		
 	}
 
 
