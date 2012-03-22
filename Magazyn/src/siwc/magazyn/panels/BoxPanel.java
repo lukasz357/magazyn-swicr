@@ -13,6 +13,7 @@ public class BoxPanel extends JPanel {
 	private boolean shelf = false; 			// czy dany kwadrat magazynu jest regałem
 	private boolean entryPoint = false;		// czy jest punktem odbioru
 	private boolean movable = false; 		// czy możliwe jest przesuwanie
+	private boolean free = false;
 	private BoxTO box = null;
 	private ImageIcon icon = null;
 
@@ -76,6 +77,14 @@ public class BoxPanel extends JPanel {
 
 	public void setIcon(ImageIcon icon) {
 		this.icon = icon;
+	}
+
+	public boolean isFree() {
+		return free;
+	}
+
+	public void setFree(boolean free) {
+		this.free = free;
 	}
 
 }
