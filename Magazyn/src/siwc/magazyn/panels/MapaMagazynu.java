@@ -37,17 +37,17 @@ public class MapaMagazynu extends JPanel {
 		log.info("Rozmiar mapy: " + MagazynUtils.mapWidth + "x" + MagazynUtils.mapHeight);
 
 		regalPanel1 = new RegalPanel(regal1FreeBoxes);
-		regalPanel1.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(0, false), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
+		regalPanel1.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(0), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
 		add(regalPanel1);
 		regaly.add(regalPanel1);
 
 		regalPanel2 = new RegalPanel(regal2FreeBoxes);
-		regalPanel2.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(1, false), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
+		regalPanel2.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(1), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
 		add(regalPanel2);
 		regaly.add(regalPanel2);
 
 		regalPanel3 = new RegalPanel(regal3FreeBoxes);
-		regalPanel3.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(2, false), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
+		regalPanel3.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(2), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
 		add(regalPanel3);
 		regaly.add(regalPanel3);
 
@@ -253,5 +253,12 @@ public class MapaMagazynu extends JPanel {
 		regalPanel3.setFreeBoxes(regal3FreeBoxes);
 		regalPanel3.revalidate();
 	}
-
+	
+	public int getLiftX() {
+		return lift.getX();
+	}
+	public int getLiftY() {
+		return lift.getY();
+	}
+	
 }
