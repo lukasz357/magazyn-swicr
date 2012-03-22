@@ -260,5 +260,8 @@ public class MapaMagazynu extends JPanel {
 	public int getLiftY() {
 		return lift.getY();
 	}
+	public int getLiftLeve() {
+		return lift.getLevel();
+	}
 	
 }
