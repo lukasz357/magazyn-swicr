@@ -12,7 +12,6 @@ import javax.swing.border.LineBorder;
 import org.apache.log4j.Logger;
 
 import siwc.magazyn.utils.MagazynUtils;
-import javax.swing.SwingConstants;
 
 public class MapaMagazynu extends JPanel {
 	private static final long serialVersionUID = -8459627889558824665L;
