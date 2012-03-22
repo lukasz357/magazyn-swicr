@@ -60,7 +60,7 @@ public class Magazyn {
 	private JMenu mnZmienStyl;
 	private JFileChooser fileChooser;
 	private JLabel lblNewLabel = new JLabel("Magazyn");
-	private MapaMagazynu mapaMagazynu;
+	private MapaMagazynu mapa;
 	private JButton btnRandomRegal1;
 	private JButton btnRandomRegal2;
 	private JButton btnUp;
@@ -90,16 +90,15 @@ public class Magazyn {
 	private JScrollPane KonsolaScrollPane;
 	private JList KonsolaList;
 
-	
 	/* Listy konsoli/zamowien */
-	private static DefaultListModel<String> konsolaListModel =new DefaultListModel<String>();
+	private static DefaultListModel<String> konsolaListModel = new DefaultListModel<String>();
 	private JLabel lblKonsola;
 	private JLabel lblR;
 	private JLabel lblR_1;
 	private JLabel lblR_2;
 	private JButton liftUp;
 	private JButton liftDown;
-	
+
 	private int pietro = 0;
 	private JRadioButton regal1_rb1;
 	private JRadioButton regal1_rb2;
@@ -113,7 +112,7 @@ public class Magazyn {
 	private JTextField textFieldRegal1;
 	private JTextField textFieldRegal2;
 	private JTextField textFieldRegal3;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -130,9 +129,9 @@ public class Magazyn {
 			}
 		});
 	}
-	
-	/*temp */
-	public void tymczasowoWypelnijKonsole(){
+
+	/* temp */
+	public void tymczasowoWypelnijKonsole() {
 		konsolaListModel.addElement("Magazyn trollollololo");
 	}
 
@@ -158,7 +157,6 @@ public class Magazyn {
 		if (MagazynUtils.screenSize.getWidth() <= 1366)
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-
 		frame.setResizable(false);
 		// frame.setBounds(50, 50, MagazynUtils.frameWidth, MagazynUtils.frameHeight);
 		log.info("Rozmiar okna: " + MagazynUtils.frameWidth + "x" + MagazynUtils.frameHeight + "\t" + frame.getWidth() + "x" + frame.getHeight());
@@ -172,6 +170,7 @@ public class Magazyn {
 				// }
 				// TODO
 				frame.dispose();
+				System.exit(0);
 			}
 
 		});
@@ -243,7 +242,7 @@ public class Magazyn {
 				int result = JOptionPane.showConfirmDialog(frame, "Zamknąć program?", "Zamknąc?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (result == JOptionPane.OK_OPTION) {
-					frame.dispose();
+					System.exit(0);
 				}
 			}
 		});
@@ -256,9 +255,9 @@ public class Magazyn {
 		mnZmienStyl = new JMenu("Zmień styl");
 		mnOkno.add(mnZmienStyl);
 
-		mapaMagazynu = new MapaMagazynu();
+		mapa = new MapaMagazynu();
 
-		mapaMagazynu.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		mapa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		/* STOP MAGAZYNU */
 		btnStop = new JButton("STOP");
@@ -301,13 +300,10 @@ public class Magazyn {
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
-
 				/*
 				 * TODO
 				 * 
-				 * dodaj zamowienie 
-				 * zaloguj w konsoli
+				 * dodaj zamowienie zaloguj w konsoli
 				 */
 				log.info("Dodano zamówienie");
 			}
@@ -318,127 +314,80 @@ public class Magazyn {
 		btnEdytuj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				
-
 				/*
 				 * TODO
 				 * 
-				 * edytuj zamowienie 
-				 * zaloguj w konsoli
+				 * edytuj zamowienie zaloguj w konsoli
 				 */
 				log.info("Edytowano zamówienie zamówienie");
 			}
 		});
-		
+
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		
+
 		panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Panel testowy", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		
-		
-		
+
 		KonsolaScrollPane = new JScrollPane();
-		
+
 		lblKonsola = new JLabel("Konsola");
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 585, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(panel, 0, 0, Short.MAX_VALUE))
-							.addComponent(mapaMagazynu, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addGap(10)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-									.addComponent(KonsolaScrollPane, GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE)
-									.addGroup(groupLayout.createSequentialGroup()
-										.addComponent(lblKonsola)
-										.addGap(743))))))
-					.addGap(318)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnDodaj)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(btnEdytuj))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblZamwienia)
-									.addGap(74))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnStop, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)))
-							.addContainerGap())
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblStatystyki)
-							.addGap(39))))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(49)
-							.addComponent(lblZamwienia)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnDodaj)
-								.addComponent(btnEdytuj)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(mapaMagazynu, GroupLayout.PREFERRED_SIZE, 396, 396)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(lblKonsola)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(KonsolaScrollPane, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblStatystyki)
-							.addGap(94)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE, false)
-								.addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnStop, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-							.addGap(75)))
-					.addGap(14))
-		);
-//		KonsolaList = new JList(konsolaLista.toArray());
-		
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
+				groupLayout.createSequentialGroup().addContainerGap().addGroup(
+						groupLayout.createParallelGroup(Alignment.LEADING).addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(
+								groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
+										groupLayout.createSequentialGroup().addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 585, GroupLayout.PREFERRED_SIZE).addPreferredGap(
+												ComponentPlacement.RELATED).addComponent(panel, 0, 0, Short.MAX_VALUE)).addComponent(mapa, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE).addGroup(
+										groupLayout.createSequentialGroup().addGap(10).addGroup(
+												groupLayout.createParallelGroup(Alignment.LEADING).addComponent(KonsolaScrollPane, GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE).addGroup(
+														groupLayout.createSequentialGroup().addComponent(lblKonsola).addGap(743)))))).addGap(318).addGroup(
+						groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(
+								groupLayout.createSequentialGroup().addGroup(
+										groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(
+												groupLayout.createSequentialGroup().addComponent(btnDodaj).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnEdytuj)).addGroup(
+												groupLayout.createSequentialGroup().addComponent(lblZamwienia).addGap(74)).addGroup(
+												groupLayout.createSequentialGroup().addComponent(btnStop, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE).addPreferredGap(
+														ComponentPlacement.UNRELATED).addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))).addContainerGap())
+								.addGroup(groupLayout.createSequentialGroup().addComponent(lblStatystyki).addGap(39)))));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
+				groupLayout.createSequentialGroup().addContainerGap().addGroup(
+						groupLayout.createParallelGroup(Alignment.TRAILING, false).addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(panel,
+								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addGroup(
+						groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
+								groupLayout.createSequentialGroup().addGap(49).addComponent(lblZamwienia).addPreferredGap(ComponentPlacement.RELATED).addGroup(
+										groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnDodaj).addComponent(btnEdytuj))).addGroup(
+								groupLayout.createSequentialGroup().addPreferredGap(ComponentPlacement.UNRELATED).addComponent(mapa, GroupLayout.PREFERRED_SIZE, 396, 396))).addPreferredGap(
+						ComponentPlacement.RELATED).addGroup(
+						groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(
+								groupLayout.createSequentialGroup().addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED,
+										GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(lblKonsola).addPreferredGap(ComponentPlacement.RELATED).addComponent(KonsolaScrollPane,
+										GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED)).addGroup(
+								groupLayout.createSequentialGroup().addComponent(lblStatystyki).addGap(94).addGroup(
+										groupLayout.createParallelGroup(Alignment.BASELINE, false).addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE).addComponent(
+												btnStop, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)).addGap(75))).addGap(14)));
+		// KonsolaList = new JList(konsolaLista.toArray());
+
 		KonsolaList = new JList<>();
 		KonsolaList.setModel(konsolaListModel);
-		
+
 		KonsolaScrollPane.setViewportView(KonsolaList);
-		
+
 		btnLeft = new JButton("left");
 
 		btnUp = new JButton("up");
 		btnUp.setMnemonic(KeyEvent.VK_UP);
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.moveLiftUp();
+				mapa.moveLiftUp();
 			}
 		});
 
 		btnRight = new JButton("right");
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.moveLiftRight();
+				mapa.moveLiftRight();
 			}
 		});
 
@@ -446,7 +395,7 @@ public class Magazyn {
 		btnDown.setMnemonic(KeyEvent.VK_DOWN);
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.moveLiftDown();
+				mapa.moveLiftDown();
 
 			}
 		});
@@ -461,105 +410,113 @@ public class Magazyn {
 		lblR_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
 
 		textFieldRegal1 = new JTextField();
+		textFieldRegal1.setText("5");
 		textFieldRegal1.setColumns(10);
 
 		textFieldRegal2 = new JTextField();
+		textFieldRegal2.setText("6");
 		textFieldRegal2.setColumns(10);
 
 		textFieldRegal3 = new JTextField();
+		textFieldRegal3.setText("7");
 		textFieldRegal3.setColumns(10);
 
-		
 		liftUp = new JButton("góra");
 		liftUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.liftUp();
+				mapa.liftUp();
 			}
 		});
 
 		liftDown = new JButton("dół");
 		liftDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.lifDown();
+				mapa.lifDown();
 			}
 		});
-		//Przyciski do liczby wolnych boxow w regale
+		// Przyciski do liczby wolnych boxow w regale
 		ButtonGroup regal1ButtonGroup = new ButtonGroup();
-		
+
 		regal1_rb1 = new JRadioButton("1");
 		regal1_rb1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal1.setEnabled(false);
+				mapa.setRegal1FreeBoxes(1);
 			}
 		});
-		regal1_rb1.setSelected(mapaMagazynu.getRegal1FreeBoxes() == 1);
+		regal1_rb1.setSelected(mapa.getRegal1FreeBoxes() == 1);
 
 		regal1_rb2 = new JRadioButton("2");
 		regal1_rb2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal1.setEnabled(true);
+				mapa.setRegal1FreeBoxes(2);
 			}
 		});
-		regal1_rb2.setSelected(mapaMagazynu.getRegal1FreeBoxes() == 2);
-		
+		regal1_rb2.setSelected(mapa.getRegal1FreeBoxes() == 2);
+
 		regal1ButtonGroup.add(regal1_rb1);
 		regal1ButtonGroup.add(regal1_rb2);
-		
+
 		chckBoxRegal1 = new JCheckBox("Dolny regał");
 		chckBoxRegal1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		chckBoxRegal1.setEnabled(mapaMagazynu.getRegal1FreeBoxes() == 2);
-		
+		chckBoxRegal1.setEnabled(mapa.getRegal1FreeBoxes() == 2);
+
 		ButtonGroup regal2ButtonGroup = new ButtonGroup();
-		
+
 		regal2_rb1 = new JRadioButton("1");
 		regal2_rb1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal2.setEnabled(false);
-			}
-		});
-		regal2_rb1.setSelected(mapaMagazynu.getRegal2FreeBoxes() == 1);
-		
-		regal2_rb2 = new JRadioButton("2");
-		regal2_rb2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				chckBoxRegal2.setEnabled(true);
-			}
-		});
-		regal2_rb2.setSelected(mapaMagazynu.getRegal2FreeBoxes() == 2);
-		
-		regal2ButtonGroup.add(regal2_rb1);
-		regal2ButtonGroup.add(regal2_rb2);
-		
-		chckBoxRegal2 = new JCheckBox("Dolny regał");
-		chckBoxRegal2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+				mapa.setRegal2FreeBoxes(1);
 				
 			}
 		});
-		chckBoxRegal2.setEnabled(mapaMagazynu.getRegal2FreeBoxes() == 2);
-		
+		regal2_rb1.setSelected(mapa.getRegal2FreeBoxes() == 1);
+
+		regal2_rb2 = new JRadioButton("2");
+		regal2_rb2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				chckBoxRegal2.setEnabled(true);
+				mapa.setRegal2FreeBoxes(2);
+			}
+		});
+		regal2_rb2.setSelected(mapa.getRegal2FreeBoxes() == 2);
+
+		regal2ButtonGroup.add(regal2_rb1);
+		regal2ButtonGroup.add(regal2_rb2);
+
+		chckBoxRegal2 = new JCheckBox("Dolny regał");
+		chckBoxRegal2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		chckBoxRegal2.setEnabled(mapa.getRegal2FreeBoxes() == 2);
+
 		ButtonGroup regal3ButtonGroup = new ButtonGroup();
-		
+
 		regal3_rb1 = new JRadioButton("1");
 		regal3_rb1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal3.setEnabled(false);
+				mapa.setRegal3FreeBoxes(1);
 			}
 		});
-		regal3_rb1.setSelected(mapaMagazynu.getRegal3FreeBoxes() == 1);
-		
+		regal3_rb1.setSelected(mapa.getRegal3FreeBoxes() == 1);
+
 		regal3_rb2 = new JRadioButton("2");
 		regal3_rb2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal3.setEnabled(true);
+				mapa.setRegal3FreeBoxes(2);
 			}
 		});
-		regal3_rb2.setSelected(mapaMagazynu.getRegal3FreeBoxes() == 2);
-		
+		regal3_rb2.setSelected(mapa.getRegal3FreeBoxes() == 2);
+
 		regal3ButtonGroup.add(regal3_rb1);
 		regal3ButtonGroup.add(regal3_rb2);
 
@@ -568,9 +525,8 @@ public class Magazyn {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		chckBoxRegal3.setEnabled(mapaMagazynu.getRegal3FreeBoxes() == 2);
-	
-		
+		chckBoxRegal3.setEnabled(mapa.getRegal3FreeBoxes() == 2);
+
 		// TODO MOCK ZMAIAN W BOXACH - do wywalenia soon
 		final Color[] colors = new Color[4];
 		colors[0] = Color.WHITE;
@@ -589,10 +545,10 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapaMagazynu.zmienKolorBoksu("regal2", position, colors[c]);
+				mapa.zmienKolorBoksu("regal2", position, colors[c]);
 			}
 		});
-		
+
 		btnRandomRegal1 = new JButton("random");
 		btnRandomRegal1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -604,7 +560,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapaMagazynu.zmienKolorBoksu("regal1", position, colors[c]);
+				mapa.zmienKolorBoksu("regal1", position, colors[c]);
 			}
 		});
 
@@ -619,7 +575,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapaMagazynu.zmienKolorBoksu("regal3", position, colors[c]);
+				mapa.zmienKolorBoksu("regal3", position, colors[c]);
 				log.info("R3: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
 			}
 		});
@@ -627,179 +583,200 @@ public class Magazyn {
 		btnRightRegal1 = new JButton("prawo");
 		btnRightRegal1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.obrocWPrawo("regal1", pietro);
+				String text = textFieldRegal1.getText().equals("") ? "1" : textFieldRegal1.getText();
+				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				Thread t = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+
+						for (int i = 0; i < numbers; i++) {
+							MagazynUtils.sleep(1000);
+							mapa.obrocWPrawo("regal1", pietro, chckBoxRegal1.isSelected());
+						}
+
+					}
+
+				});
+				t.start();
 			}
 		});
 
 		btnRightRegal2 = new JButton("prawo");
 		btnRightRegal2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.obrocWPrawo("regal2", pietro);
+				String text = textFieldRegal2.getText().equals("") ? "1" : textFieldRegal2.getText();
+				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				Thread t = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+
+						for (int i = 0; i < numbers; i++) {
+							MagazynUtils.sleep(1000);
+							mapa.obrocWPrawo("regal2", pietro,chckBoxRegal2.isSelected());
+						}
+
+					}
+
+				});
+				t.start();
 			}
 		});
 
 		btnRightRegal3 = new JButton("prawo");
 		btnRightRegal3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.obrocWPrawo("regal3", pietro);
+				String text = textFieldRegal3.getText().equals("") ? "1" : textFieldRegal3.getText();
+				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				Thread t = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+
+						for (int i = 0; i < numbers; i++) {
+							MagazynUtils.sleep(1000);
+							mapa.obrocWPrawo("regal3", pietro, chckBoxRegal3.isSelected());
+						}
+
+					}
+
+				});
+				t.start();
+				
 			}
 		});
 
 		btnLeftRegal1 = new JButton("lewo");
 		btnLeftRegal1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.obrocWLewo("regal1", pietro);
+				String text = textFieldRegal1.getText().equals("") ? "1" : textFieldRegal1.getText();
+				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				Thread t = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+
+						for (int i = 0; i < numbers; i++) {
+							MagazynUtils.sleep(1000);
+							mapa.obrocWLewo("regal1", pietro, chckBoxRegal1.isSelected());
+						}
+
+					}
+
+				});
+				t.start();
 			}
 		});
 
 		btnLeftRegal2 = new JButton("lewo");
 		btnLeftRegal2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.obrocWLewo("regal2", pietro);
+
+				String text = textFieldRegal2.getText().equals("") ? "1" : textFieldRegal2.getText();
+				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				Thread t = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+
+						for (int i = 0; i < numbers; i++) {
+							MagazynUtils.sleep(1000);
+							mapa.obrocWLewo("regal2", pietro, chckBoxRegal2.isSelected());
+						}
+
+					}
+
+				});
+				t.start();
 			}
 		});
 
 		btnLeftRegal3 = new JButton("lewo");
 		btnLeftRegal3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapaMagazynu.obrocWLewo("regal3", pietro);
-			}
-		});
-	
-				GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-				gl_panel_1.setHorizontalGroup(
-					gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addGap(55)
-									.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addContainerGap()
-									.addComponent(btnLeft)
-									.addGap(51)
-									.addComponent(btnRight))
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addGap(56)
-									.addComponent(btnDown)))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(liftDown, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(liftUp, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-									.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
-										.addComponent(lblR_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-									.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
-										.addComponent(lblR, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addComponent(lblR_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false)
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-										.addComponent(regal1_rb1)
-										.addComponent(regal2_rb1))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-										.addComponent(regal1_rb2)
-										.addComponent(regal2_rb2)))
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addComponent(regal3_rb1)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(regal3_rb2)))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addComponent(chckBoxRegal1)
-								.addComponent(chckBoxRegal2)
-								.addComponent(chckBoxRegal3))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-										.addComponent(btnLeftRegal3)
-										.addComponent(btnLeftRegal2))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-										.addGroup(gl_panel_1.createSequentialGroup()
-											.addComponent(btnRightRegal2)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(btnRandomRegal2))
-										.addGroup(gl_panel_1.createSequentialGroup()
-											.addComponent(btnRightRegal3)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(btnRandomRegal3))))
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addComponent(btnLeftRegal1)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnRightRegal1)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(btnRandomRegal1)))
-							.addContainerGap())
-				);
-				gl_panel_1.setVerticalGroup(
-					gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-										.addComponent(btnRandomRegal1)
-										.addComponent(btnRightRegal1)
-										.addComponent(btnLeftRegal1)
-										.addComponent(chckBoxRegal1)
-										.addComponent(regal1_rb2)
-										.addComponent(regal1_rb1)
-										.addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblR))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-										.addComponent(btnRandomRegal2)
-										.addComponent(btnRightRegal2)
-										.addComponent(btnLeftRegal2)
-										.addComponent(chckBoxRegal2)
-										.addComponent(regal2_rb2)
-										.addComponent(regal2_rb1)
-										.addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblR_1))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-										.addComponent(btnRandomRegal3)
-										.addComponent(btnRightRegal3)
-										.addComponent(btnLeftRegal3)
-										.addComponent(chckBoxRegal3)
-										.addComponent(regal3_rb2)
-										.addComponent(regal3_rb1)
-										.addComponent(lblR_2)
-										.addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addContainerGap()
-									.addComponent(btnUp)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-										.addComponent(btnLeft)
-										.addComponent(btnRight)
-										.addComponent(liftUp))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-										.addComponent(btnDown)
-										.addComponent(liftDown))))
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				);
-				panel_1.setLayout(gl_panel_1);
-				btnLeft.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						mapaMagazynu.moveLiftLeft();
+
+				String text = textFieldRegal3.getText().equals("") ? "1" : textFieldRegal3.getText();
+				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				Thread t = new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+
+						for (int i = 0; i < numbers; i++) {
+							MagazynUtils.sleep(1000);
+							mapa.obrocWLewo("regal3", pietro, chckBoxRegal3.isSelected());
+						}
 
 					}
+
 				});
-		
+				t.start();
+			}
+		});
+
+		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(
+				gl_panel_1.createSequentialGroup().addGroup(
+						gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
+								gl_panel_1.createSequentialGroup().addGap(55).addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)).addGroup(
+								gl_panel_1.createSequentialGroup().addContainerGap().addComponent(btnLeft).addGap(51).addComponent(btnRight)).addGroup(
+								gl_panel_1.createSequentialGroup().addGap(56).addComponent(btnDown))).addPreferredGap(ComponentPlacement.RELATED).addGroup(
+						gl_panel_1.createParallelGroup(Alignment.LEADING, false).addComponent(liftDown, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(liftUp,
+								GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addPreferredGap(ComponentPlacement.RELATED, 125, Short.MAX_VALUE).addGroup(
+						gl_panel_1.createParallelGroup(Alignment.LEADING, false).addGroup(
+								gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
+										Alignment.TRAILING,
+										gl_panel_1.createSequentialGroup().addComponent(lblR_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)).addGroup(
+										Alignment.TRAILING,
+										gl_panel_1.createSequentialGroup().addComponent(lblR, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))).addGroup(
+								gl_panel_1.createSequentialGroup().addComponent(lblR_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED,
+										GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))).addPreferredGap(
+						ComponentPlacement.UNRELATED).addGroup(
+						gl_panel_1.createParallelGroup(Alignment.TRAILING, false).addGroup(
+								gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(regal1_rb1).addComponent(regal2_rb1)).addPreferredGap(
+										ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(regal1_rb2).addComponent(regal2_rb2))).addGroup(
+								gl_panel_1.createSequentialGroup().addComponent(regal3_rb1).addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(
+										regal3_rb2))).addPreferredGap(ComponentPlacement.RELATED).addGroup(
+						gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(chckBoxRegal1).addComponent(chckBoxRegal2).addComponent(chckBoxRegal3)).addPreferredGap(
+						ComponentPlacement.RELATED).addGroup(
+						gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(
+								gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addComponent(btnLeftRegal3).addComponent(btnLeftRegal2))
+										.addPreferredGap(ComponentPlacement.RELATED).addGroup(
+												gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(
+														gl_panel_1.createSequentialGroup().addComponent(btnRightRegal2).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnRandomRegal2))
+														.addGroup(
+																gl_panel_1.createSequentialGroup().addComponent(btnRightRegal3).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(
+																		btnRandomRegal3)))).addGroup(
+								gl_panel_1.createSequentialGroup().addComponent(btnLeftRegal1).addPreferredGap(ComponentPlacement.RELATED).addComponent(btnRightRegal1).addPreferredGap(
+										ComponentPlacement.UNRELATED).addComponent(btnRandomRegal1))).addContainerGap()));
+		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
+				gl_panel_1.createSequentialGroup().addGroup(
+						gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
+								gl_panel_1.createSequentialGroup().addGroup(
+										gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal1).addComponent(btnRightRegal1).addComponent(btnLeftRegal1).addComponent(
+												chckBoxRegal1).addComponent(regal1_rb2).addComponent(regal1_rb1).addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE).addComponent(lblR)).addPreferredGap(ComponentPlacement.RELATED).addGroup(
+										gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal2).addComponent(btnRightRegal2).addComponent(btnLeftRegal2).addComponent(
+												chckBoxRegal2).addComponent(regal2_rb2).addComponent(regal2_rb1).addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE).addComponent(lblR_1)).addPreferredGap(ComponentPlacement.RELATED).addGroup(
+										gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal3).addComponent(btnRightRegal3).addComponent(btnLeftRegal3).addComponent(
+												chckBoxRegal3).addComponent(regal3_rb2).addComponent(regal3_rb1).addComponent(lblR_2).addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))).addGroup(
+								gl_panel_1.createSequentialGroup().addContainerGap().addComponent(btnUp).addPreferredGap(ComponentPlacement.RELATED).addGroup(
+										gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnLeft).addComponent(btnRight).addComponent(liftUp)).addPreferredGap(
+										ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnDown).addComponent(liftDown)))).addContainerGap(
+						GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		panel_1.setLayout(gl_panel_1);
+		btnLeft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mapa.moveLiftLeft();
+
+			}
+		});
+
 		btnMinus = new JButton("-");
 		btnMinus.setEnabled(false);
 		btnMinus.addActionListener(new ActionListener() {
@@ -807,7 +784,7 @@ public class Magazyn {
 				if (pietro > 0) {
 					pietro--;
 					levelTextField.setText(Integer.toString(pietro));
-					mapaMagazynu.pokazPietro(pietro);
+					mapa.pokazPietro(pietro);
 
 					if (pietro == 0)
 						btnMinus.setEnabled(false);
@@ -823,7 +800,7 @@ public class Magazyn {
 				if (pietro < MagazynUtils.liczbaPieter - 1) {
 					pietro++;
 					levelTextField.setText(Integer.toString(pietro));
-					mapaMagazynu.pokazPietro(pietro);
+					mapa.pokazPietro(pietro);
 
 					if (pietro == MagazynUtils.liczbaPieter - 1)
 						btnPlus.setEnabled(false);
@@ -838,37 +815,19 @@ public class Magazyn {
 		levelTextField.setText(Integer.toString(pietro));
 		levelTextField.setEditable(false);
 		levelTextField.setBackground(Color.WHITE);
-		
 
 		lblPietro = new JLabel("Piętro:");
 		lblPietro.setFont(new Font("Tahoma", Font.BOLD, 13));
-				GroupLayout gl_panel = new GroupLayout(panel);
-				gl_panel.setHorizontalGroup(
-					gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(lblPietro)
-							.addGap(18)
-							.addComponent(btnMinus)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnPlus)
-							.addGap(16))
-				);
-				gl_panel.setVerticalGroup(
-					gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnMinus)
-								.addComponent(lblPietro)
-								.addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnPlus))
-							.addContainerGap())
-				);
-				panel.setLayout(gl_panel);
-				
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(
+				gl_panel.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(lblPietro).addGap(18).addComponent(btnMinus).addPreferredGap(
+						ComponentPlacement.RELATED).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED).addComponent(
+						btnPlus).addGap(16)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(
+				gl_panel.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(
+						gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(btnMinus).addComponent(lblPietro).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(btnPlus)).addContainerGap()));
+		panel.setLayout(gl_panel);
 
 		frame.getContentPane().setLayout(groupLayout);
 
@@ -932,9 +891,10 @@ public class Magazyn {
 
 		return UIManager.getCrossPlatformLookAndFeelClassName();
 	}
-	
+
 	/* metody do konsoli */
-	public static void dodajWpisDoKonsoli(String wpis){
+	public static void dodajWpisDoKonsoli(String wpis) {
 		konsolaListModel.addElement(wpis);
 	}
+
 }
