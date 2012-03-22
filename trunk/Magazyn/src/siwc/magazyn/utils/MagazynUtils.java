@@ -14,14 +14,14 @@ public class MagazynUtils {
 	public static Dimension screenSize = toolkit.getScreenSize();
 
 	public static Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds(); // maxymalne
-	public static int frameWidth = maxBounds.getWidth() > 1366 ?  1366 :(int) maxBounds.getWidth();
+	public static int frameWidth = maxBounds.getWidth() > 1366 ? 1366 : (int) maxBounds.getWidth();
 	public static int frameHeight = maxBounds.getWidth() > 1366 ? 750 : (int) maxBounds.getHeight();
-	// public static int frameWidth = (int) ((int) screenSize.getWidth()*0.75);
-	// public static int frameHeight = (int) ((int) screenSize.getHeight()*0.75);
+
 
 	// box
 	public static int boxSize = 18 * frameWidth / 1366;
-	public static Color defaultBackground = Color.GRAY;
+	public static Color defaultBoxBackground = Color.GRAY;
+	public static Color freeBoxBackround = Color.BLUE;
 
 	// Regal
 	public static int liczbaRegalow = 3; // TODO - nie wykorzystywane chwilowo ;-)
@@ -59,7 +59,7 @@ public class MagazynUtils {
 		int width = 0;
 
 		width += regalX;
-		
+
 		for (int i = 0; i < kolumnWRegale; i++)
 			width += liftSizeX;
 
@@ -80,5 +80,4 @@ public class MagazynUtils {
 
 		return pos;
 	}
-
 }
