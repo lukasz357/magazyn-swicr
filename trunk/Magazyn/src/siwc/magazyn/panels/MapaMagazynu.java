@@ -214,7 +214,7 @@ public class MapaMagazynu extends JPanel {
 
 	public void liftUp() {
 		int level = lift.getLevel();
-		if (level < MagazynUtils.liczbaPieter) {
+		if (level < MagazynUtils.liczbaPieter - 1) {
 			lift.setLevel(++level);
 			lift.ustawPoziom();
 		}
