@@ -3,7 +3,7 @@ package siwc.magazyn.panels;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import siwc.magazyn.dto.BoxTO;
+import siwc.magazyn.dto.PoleTO;
 
 public class BoxPanel extends JPanel {
 	private static final long serialVersionUID = 7627361909398731419L;
@@ -14,10 +14,10 @@ public class BoxPanel extends JPanel {
 	private boolean entryPoint = false;		// czy jest punktem odbioru
 	private boolean movable = false; 		// czy możliwe jest przesuwanie
 	private boolean free = false;
-	private BoxTO box = null;
+	private PoleTO box = null;
 	private ImageIcon icon = null;
 
-	public BoxPanel(int x, int y, BoxTO b) {
+	public BoxPanel(int x, int y, PoleTO b) {
 		positionX = x;
 		positionY = y;
 		box = b;
@@ -63,11 +63,11 @@ public class BoxPanel extends JPanel {
 		this.movable = movable;
 	}
 
-	public BoxTO getBox() {
+	public PoleTO getBox() {
 		return box;
 	}
 
-	public void setBox(BoxTO box) {
+	public void setBox(PoleTO box) {
 		this.box = box;
 	}
 
