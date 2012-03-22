@@ -70,6 +70,7 @@ public class MagazynUtils {
 	}
 
 	public static int getRegalY(int numerRegalu) { // nie wiem jak to nazwac :D ale ma to liczyc wartosc Y do setbounds(...) ;-)
+		//CO TO ZA KOMENTARZE? Nie rozumiem co to setBounds! Gdzie dokumentacja?
 		int pos = 0;
 		pos += liftSizeY;
 

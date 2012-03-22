@@ -7,6 +7,8 @@ import siwc.magazyn.panels.MapaMagazynu;
 
 public class Algorithm {
 
+	//TODO pobierac aktualna pozycje wozka z mapy a nie z magazynu
+	
 	MagazynTO magazyn;
 	
 	public Algorithm(MagazynTO magazyn, int wozekStartX, int wozekStartY) {
