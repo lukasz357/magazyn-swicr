@@ -43,7 +43,7 @@ public class MagazynUtils {
 	public static int mapHeight = getMapHeight();
 	public static int mapWidth = getMapWidth();
 
-	public static int boxMovingSleepTime = 250;
+	public static int boxMovingSleepTime = 100;
 
 	private static int getMapHeight() {
 		int height = 0;
@@ -69,11 +69,9 @@ public class MagazynUtils {
 		return width;
 	}
 
-	public static int getRegalY(int numerRegalu, boolean numbers) { // nie wiem jak to nazwac :D ale ma to liczyc wartosc Y do setbounds(...) ;-)
+	public static int getRegalY(int numerRegalu) { // nie wiem jak to nazwac :D ale ma to liczyc wartosc Y do setbounds(...) ;-)
 		int pos = 0;
 		pos += liftSizeY;
-		if (numbers && numerRegalu > 0)
-			pos += boxSize;
 
 		for (int i = 0; i < numerRegalu; i++) {
 			pos += regalHeight;
