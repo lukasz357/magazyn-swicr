@@ -1,8 +1,12 @@
 package siwc.magazyn.panels;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import siwc.magazyn.utils.MagazynUtils;
 
@@ -19,9 +23,12 @@ public class LiftPanel extends JPanel {
 	private int y = 0;
 	private int dx = MagazynUtils.liftStepX;
 	private int dy = MagazynUtils.liftStepY;
+	private int level = 0;
+	private Font font = new Font("Tahoma", Font.BOLD, 12); 
 
 	public LiftPanel() {
-
+		setLayout(new BorderLayout(0, 0));
+		ustawPoziom();
 	}
 
 	public void moveUp(Rectangle2D bounds) {
@@ -79,6 +86,24 @@ public class LiftPanel extends JPanel {
 
 	public void setDy(int dy) {
 		this.dy = dy;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
+	public void ustawPoziom() {
+		removeAll();
+		JLabel levelLabel = new JLabel(Integer.toString(level));
+		levelLabel.setFont(font);
+		levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		add(levelLabel);
+		setBounds(x, y, XSIZE, YSIZE);
+		revalidate();
 	}
 
 }

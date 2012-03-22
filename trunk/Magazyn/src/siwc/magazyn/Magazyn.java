@@ -93,6 +93,11 @@ public class Magazyn {
 	/* Listy konsoli/zamowien */
 	private static DefaultListModel<String> konsolaListModel =new DefaultListModel<String>();
 	private JLabel lblKonsola;
+	private JLabel lblR;
+	private JLabel lblR_1;
+	private JLabel lblR_2;
+	private JButton liftUp;
+	private JButton liftDown;
 	
 	
 	
@@ -440,7 +445,7 @@ public class Magazyn {
 							}
 						});
 				
-						btnRegal2Random = new JButton("Regal2 random");
+						btnRegal2Random = new JButton("random");
 						btnRegal2Random.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								Random rand = new Random();
@@ -455,7 +460,7 @@ public class Magazyn {
 								log.info("R2: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
 							}
 						});
-				btnRegal1Random = new JButton("Regal1 random");
+				btnRegal1Random = new JButton("random");
 				btnRegal1Random.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Random rand = new Random();
@@ -471,7 +476,7 @@ public class Magazyn {
 					}
 				});
 				
-				btnRegal3Random = new JButton("Regal3 random");
+				btnRegal3Random = new JButton("random");
 				btnRegal3Random.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Random rand = new Random();
@@ -487,7 +492,7 @@ public class Magazyn {
 					}
 				});
 				
-				btnRWPrawo = new JButton("R1 w prawo");
+				btnRWPrawo = new JButton("prawo");
 				btnRWPrawo.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						mapaMagazynu.obrocWPrawo("regal1");
@@ -495,85 +500,114 @@ public class Magazyn {
 				});
 				
 				
-				btnRWPrawo_1 = new JButton("R2 w prawo");
+				btnRWPrawo_1 = new JButton("prawo");
 				btnRWPrawo_1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						mapaMagazynu.obrocWPrawo("regal2");
 					}
 				});
 				
-				btnRWPrawo_2 = new JButton("R3 w prawo");
+				btnRWPrawo_2 = new JButton("prawo");
 				btnRWPrawo_2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						mapaMagazynu.obrocWPrawo("regal3");
 					}
 				});
 
-				btnRWLewo = new JButton("R1 w lewo");
+				btnRWLewo = new JButton("lewo");
 				btnRWLewo.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						mapaMagazynu.obrocWLewo("regal1");
 					}
 				});
 				
-				btnRWLewo_1 = new JButton("R2 w lewo");
+				btnRWLewo_1 = new JButton("lewo");
 				btnRWLewo_1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						mapaMagazynu.obrocWLewo("regal2");
 					}
 				});
 				
-				btnRWLewo_2 = new JButton("R3 w lewo");
+				btnRWLewo_2 = new JButton("lewo");
 				btnRWLewo_2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						mapaMagazynu.obrocWLewo("regal3");
+					}
+				});
+				
+				lblR = new JLabel("R1");
+				lblR.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+				
+				lblR_1 = new JLabel("R2");
+				lblR_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+				
+				lblR_2 = new JLabel("R3");
+				lblR_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
+				
+				liftUp = new JButton("góra");
+				liftUp.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mapaMagazynu.liftUp();
+					}
+				});
+				
+				liftDown = new JButton("dół");
+				liftDown.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mapaMagazynu.lifDown();
 					}
 				});
 				GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 				gl_panel_1.setHorizontalGroup(
 					gl_panel_1.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap(479, Short.MAX_VALUE)
-							.addComponent(btnRWLewo)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnRWPrawo)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnRegal1Random)
-							.addContainerGap())
-						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel_1.createSequentialGroup()
-									.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_panel_1.createSequentialGroup()
-											.addGap(55)
-											.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_panel_1.createSequentialGroup()
-											.addContainerGap()
-											.addComponent(btnLeft)
-											.addGap(51)
-											.addComponent(btnRight)))
-									.addPreferredGap(ComponentPlacement.RELATED, 314, Short.MAX_VALUE))
+									.addGap(55)
+									.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(btnLeft)
+									.addGap(51)
+									.addComponent(btnRight))
 								.addGroup(gl_panel_1.createSequentialGroup()
 									.addGap(56)
-									.addComponent(btnDown)
-									.addPreferredGap(ComponentPlacement.RELATED)))
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
-									.addComponent(btnRWLewo_2)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnRWPrawo_2))
-								.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
-									.addComponent(btnRWLewo_1)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnRWPrawo_1)))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(btnDown)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(liftDown, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(liftUp, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
 								.addGroup(gl_panel_1.createSequentialGroup()
-									.addComponent(btnRegal3Random)
-									.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+										.addGroup(gl_panel_1.createSequentialGroup()
+											.addComponent(lblR_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(btnRWLewo_2))
+										.addGroup(gl_panel_1.createSequentialGroup()
+											.addComponent(lblR_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(btnRWLewo_1)))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+										.addGroup(gl_panel_1.createSequentialGroup()
+											.addComponent(btnRWPrawo_1)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(btnRegal2Random))
+										.addGroup(gl_panel_1.createSequentialGroup()
+											.addComponent(btnRWPrawo_2)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(btnRegal3Random))))
 								.addGroup(gl_panel_1.createSequentialGroup()
-									.addComponent(btnRegal2Random)
-									.addContainerGap())))
+									.addComponent(lblR, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnRWLewo)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnRWPrawo)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(btnRegal1Random)))
+							.addContainerGap())
 				);
 				gl_panel_1.setVerticalGroup(
 					gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -583,27 +617,33 @@ public class Magazyn {
 									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 										.addComponent(btnRegal1Random)
 										.addComponent(btnRWPrawo)
-										.addComponent(btnRWLewo))
+										.addComponent(btnRWLewo)
+										.addComponent(lblR))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 										.addComponent(btnRegal2Random)
 										.addComponent(btnRWPrawo_1)
-										.addComponent(btnRWLewo_1))
+										.addComponent(btnRWLewo_1)
+										.addComponent(lblR_1))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 										.addComponent(btnRegal3Random)
 										.addComponent(btnRWPrawo_2)
-										.addComponent(btnRWLewo_2)))
+										.addComponent(btnRWLewo_2)
+										.addComponent(lblR_2)))
 								.addGroup(gl_panel_1.createSequentialGroup()
 									.addContainerGap()
 									.addComponent(btnUp)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
 										.addComponent(btnLeft)
-										.addComponent(btnRight))
+										.addComponent(btnRight)
+										.addComponent(liftUp))
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnDown)))
-							.addContainerGap(29, Short.MAX_VALUE))
+									.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnDown)
+										.addComponent(liftDown))))
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 				);
 				panel_1.setLayout(gl_panel_1);
 				btnLeft.addActionListener(new ActionListener() {
@@ -620,7 +660,7 @@ public class Magazyn {
 				if (pietro > 0) {
 					pietro--;
 					levelTextField.setText(Integer.toString(pietro));
-					mapaMagazynu.ustawPietro(pietro);
+					mapaMagazynu.pokazPietro(pietro);
 					
 					if(pietro == 0)
 						btnMinus.setEnabled(false);
@@ -637,7 +677,7 @@ public class Magazyn {
 				if (pietro < MagazynUtils.liczbaPieter - 1) {
 					pietro++;
 					levelTextField.setText(Integer.toString(pietro));
-					mapaMagazynu.ustawPietro(pietro);
+					mapaMagazynu.pokazPietro(pietro);
 					
 					if(pietro == MagazynUtils.liczbaPieter - 1)
 						btnPlus.setEnabled(false);

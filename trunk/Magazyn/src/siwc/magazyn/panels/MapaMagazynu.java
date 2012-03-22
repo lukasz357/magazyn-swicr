@@ -12,6 +12,7 @@ import javax.swing.border.LineBorder;
 import org.apache.log4j.Logger;
 
 import siwc.magazyn.utils.MagazynUtils;
+import javax.swing.SwingConstants;
 
 public class MapaMagazynu extends JPanel {
 	private static final long serialVersionUID = -8459627889558824665L;
@@ -68,7 +69,7 @@ public class MapaMagazynu extends JPanel {
 			regalPanel1.zmienKolorBoksu(position, c);
 		} else if (r.equals("regal2")) {
 			regalPanel2.zmienKolorBoksu(position, c);
-		} else if(r.equals("regal3")) {
+		} else if (r.equals("regal3")) {
 			regalPanel3.zmienKolorBoksu(position, c);
 		}
 	}
@@ -88,13 +89,13 @@ public class MapaMagazynu extends JPanel {
 				isEnteringShelf = true;
 			}
 		}
-		//punkt odbioru
-//		if (xAktualne <= odbior.getBounds().getMaxX() && lift.getX() >= odbior.getBounds().getMinX() && lift.getY() >= odbior.getBounds().getMaxY())
-//			isEnteringReceivePoint = true;
+		// punkt odbioru
+		// if (xAktualne <= odbior.getBounds().getMaxX() && lift.getX() >= odbior.getBounds().getMinX() && lift.getY() >= odbior.getBounds().getMaxY())
+		// isEnteringReceivePoint = true;
 
 		if (isEnteringShelf) {
 			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
-		} else if(isEnteringReceivePoint) {
+		} else if (isEnteringReceivePoint) {
 			System.err.println("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
 		} else {
 			lift.moveUp(this.getBounds());
@@ -114,8 +115,8 @@ public class MapaMagazynu extends JPanel {
 			}
 		}
 		// punkt odbioru
-//		if (xAktualne <= odbior.getBounds().getMaxX() && lift.getX() >= odbior.getBounds().getMinX() && yPo >= odbior.getBounds().getMinY())
-//			isEnteringReceivePoint = true;
+		// if (xAktualne <= odbior.getBounds().getMaxX() && lift.getX() >= odbior.getBounds().getMinX() && yPo >= odbior.getBounds().getMinY())
+		// isEnteringReceivePoint = true;
 
 		if (isEnteringShelf) {
 			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
@@ -141,11 +142,10 @@ public class MapaMagazynu extends JPanel {
 				isEnteringShelf = true;
 			}
 		}
-		
-		//zle dziala
-//		if ((lift.getY() +lift.getYsize() <= odbior.getBounds().getMaxY() || lift.getY() >= odbior.getBounds().getMinY()) && lift.getX() == odbior.getBounds().getMaxX())
-//			isEnteringReceivePoint = true;
 
+		// zle dziala
+		// if ((lift.getY() +lift.getYsize() <= odbior.getBounds().getMaxY() || lift.getY() >= odbior.getBounds().getMinY()) && lift.getX() == odbior.getBounds().getMaxX())
+		// isEnteringReceivePoint = true;
 
 		if (isEnteringShelf) {
 			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
@@ -177,32 +177,47 @@ public class MapaMagazynu extends JPanel {
 		}
 	}
 
-	public void ustawPietro(int pietro) {
+	public void pokazPietro(int pietro) {
 		for (RegalPanel r : regaly)
-			r.ustawPietro(pietro);
+			r.pokazPietro(pietro);
 
 	}
 
 	public void obrocWPrawo(String regal) {
-		if(regal.equals("regal1")) {
+		if (regal.equals("regal1")) {
 			regalPanel1.obrocWPrawo();
-		} else if(regal.equals("regal2")) {
+		} else if (regal.equals("regal2")) {
 			regalPanel2.obrocWPrawo();
-		} else if(regal.equals("regal3")) {
+		} else if (regal.equals("regal3")) {
 			regalPanel3.obrocWPrawo();
 		}
 
-		
 	}
 
 	public void obrocWLewo(String regal) {
-		if(regal.equals("regal1")) {
+		if (regal.equals("regal1")) {
 			regalPanel1.obrocWLewo();
-		} else if(regal.equals("regal2")) {
+		} else if (regal.equals("regal2")) {
 			regalPanel2.obrocWLewo();
-		} else if(regal.equals("regal3")) {
+		} else if (regal.equals("regal3")) {
 			regalPanel3.obrocWLewo();
-		}		
+		}
+	}
+
+	public void lifDown() {
+		int level = lift.getLevel();
+		if (level > 0) {
+			lift.setLevel(--level);
+			lift.ustawPoziom();
+		}
+	}
+
+	public void liftUp() {
+		int level = lift.getLevel();
+		if (level < MagazynUtils.liczbaPieter) {
+			lift.setLevel(++level);
+			lift.ustawPoziom();
+		}
 	}
 
 }
