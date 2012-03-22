@@ -109,7 +109,7 @@ public class RegalPanel extends JPanel {
 		visibleBoxes.get(position).revalidate();
 	}
 
-	public void ustawPietro(int level) {
+	public void pokazPietro(int level) {
 		this.pietro = level;
 		TreeMap<String, BoxPanel> levelMap = getLevelMap();
 
@@ -174,7 +174,7 @@ public class RegalPanel extends JPanel {
 				actual = right;
 			}
 		}
-		ustawPietro(pietro);
+		pokazPietro(pietro);
 	}
 
 	public void obrocWLewo() {
@@ -224,7 +224,7 @@ public class RegalPanel extends JPanel {
 			}
 
 		}
-		ustawPietro(pietro);
+		pokazPietro(pietro);
 
 	}
 
