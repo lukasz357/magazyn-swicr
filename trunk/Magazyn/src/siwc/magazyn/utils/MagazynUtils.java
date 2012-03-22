@@ -43,6 +43,8 @@ public class MagazynUtils {
 	public static int mapHeight = getMapHeight();
 	public static int mapWidth = getMapWidth();
 
+	public static int boxMovingSleepTime = 250;
+
 	private static int getMapHeight() {
 		int height = 0;
 		height += liftSizeY;
@@ -85,7 +87,6 @@ public class MagazynUtils {
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

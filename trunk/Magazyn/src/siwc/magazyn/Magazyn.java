@@ -589,10 +589,10 @@ public class Magazyn {
 
 					@Override
 					public void run() {
-
+						boolean bottom =  chckBoxRegal1.isSelected();
 						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(1000);
-							mapa.obrocWPrawo("regal1", pietro, chckBoxRegal1.isSelected());
+							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
+							mapa.przesunBoxWPrawo("regal1", pietro, bottom);
 						}
 
 					}
@@ -611,10 +611,10 @@ public class Magazyn {
 
 					@Override
 					public void run() {
-
+						boolean bottom =  chckBoxRegal2.isSelected();
 						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(1000);
-							mapa.obrocWPrawo("regal2", pietro,chckBoxRegal2.isSelected());
+							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
+							mapa.przesunBoxWPrawo("regal2", pietro, bottom);
 						}
 
 					}
@@ -633,10 +633,10 @@ public class Magazyn {
 
 					@Override
 					public void run() {
-
+						boolean bottom =  chckBoxRegal3.isSelected();
 						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(1000);
-							mapa.obrocWPrawo("regal3", pietro, chckBoxRegal3.isSelected());
+							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
+							mapa.przesunBoxWPrawo("regal3", pietro, bottom);
 						}
 
 					}
@@ -656,10 +656,10 @@ public class Magazyn {
 
 					@Override
 					public void run() {
-
+						boolean bottom =  chckBoxRegal1.isSelected();
 						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(1000);
-							mapa.obrocWLewo("regal1", pietro, chckBoxRegal1.isSelected());
+							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
+							mapa.przesunBoxWLewo("regal1", pietro, bottom);
 						}
 
 					}
@@ -676,13 +676,13 @@ public class Magazyn {
 				String text = textFieldRegal2.getText().equals("") ? "1" : textFieldRegal2.getText();
 				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
 				Thread t = new Thread(new Runnable() {
-
+					
 					@Override
 					public void run() {
-
-						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(1000);
-							mapa.obrocWLewo("regal2", pietro, chckBoxRegal2.isSelected());
+						boolean bottom =  chckBoxRegal2.isSelected();
+						for (int i = 0; i < numbers ; i++) {
+							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
+							mapa.przesunBoxWLewo("regal2", pietro, bottom);
 						}
 
 					}
@@ -702,10 +702,10 @@ public class Magazyn {
 
 					@Override
 					public void run() {
-
+						boolean bottom =  chckBoxRegal3.isSelected();
 						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(1000);
-							mapa.obrocWLewo("regal3", pietro, chckBoxRegal3.isSelected());
+							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
+							mapa.przesunBoxWLewo("regal3", pietro, bottom);
 						}
 
 					}
