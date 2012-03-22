@@ -187,7 +187,7 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public void obrocWPrawo(String regal, int level,  boolean czyDolny) {
+	public void przesunBoxWPrawo(String regal, int level,  boolean czyDolny) {
 		if (regal.equals("regal1")) {
 			regalPanel1.moveBoxRight(level, czyDolny);
 		} else if (regal.equals("regal2")) {
@@ -198,7 +198,7 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public void obrocWLewo(String regal, int level, boolean czyDolny) {
+	public void przesunBoxWLewo(String regal, int level, boolean czyDolny) {
 		if (regal.equals("regal1")) {
 			regalPanel1.moveBoxLeft(level, czyDolny);
 		} else if (regal.equals("regal2")) {

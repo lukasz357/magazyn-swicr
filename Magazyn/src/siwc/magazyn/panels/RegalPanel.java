@@ -65,7 +65,8 @@ public class RegalPanel extends JPanel {
 
 	public void zmienKolorBoksu(String position, Color c) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap();
-
+		if(levelMap.get(position).isFree())
+			return;
 		levelMap.get(position).setBackground(c);
 
 		visibleBoxes.get(position).setBackground(levelMap.get(position).getBackground());
@@ -78,6 +79,8 @@ public class RegalPanel extends JPanel {
 
 		if (levelMap != null) {
 			for (String k : visibleBoxes.keySet()) {
+				if(visibleBoxes.get(k) == null || levelMap.get(k) == null) 
+					System.out.println("null " + k + " " + (visibleBoxes.get(k) == null) + " " + (levelMap.get(k) == null) );
 				visibleBoxes.get(k).setBackground(levelMap.get(k).getBackground());
 				visibleBoxes.get(k).revalidate();
 			}
@@ -86,123 +89,79 @@ public class RegalPanel extends JPanel {
 
 	public void moveBoxRight(int level, boolean bottom) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
-		String freeBoxKey;
-		String rightBoxKey;
+
 		if (liczbaPustychBoksow == 1) {
-			freeBoxKey = getFreeBoxKey(levelMap);
-			rightBoxKey = getRightBoxKey(levelMap);
-		} else if (liczbaPustychBoksow == 2 && bottom == false) {
-			freeBoxKey = getFreeBoxKey(levelMap, bottom);
-			rightBoxKey = getRightBoxKey(levelMap, bottom);
-		} else if (liczbaPustychBoksow == 2 && bottom == true) {
-			freeBoxKey = getFreeBoxKey(levelMap, bottom);
-			rightBoxKey = getRightBoxKey(levelMap, bottom);
 			
-		}
+			String freeBoxKey = getFreeBoxKey(levelMap);
+			if(freeBoxKey == null) 
+				return;
+			String rightBoxKey = getRightBoxKey(freeBoxKey);
+			if(rightBoxKey == null )
+				return;
+			
+			BoxPanel freeBox = levelMap.get(freeBoxKey);
+			BoxPanel rightBox = levelMap.get(rightBoxKey);
+			
+			levelMap.put(freeBoxKey, rightBox);
+			levelMap.put(rightBoxKey, freeBox);
+
+		} else if (liczbaPustychBoksow == 2) {
+			
+			String freeBoxKey = getFreeBoxKey(levelMap, bottom);
+			if(freeBoxKey == null) 
+				return;
+			String rightBoxKey = getRightBoxKey(freeBoxKey, bottom);
+			if(rightBoxKey == null )
+				return;
+			
+			BoxPanel freeBox = levelMap.get(freeBoxKey);
+			BoxPanel rightBox = levelMap.get(rightBoxKey);
+			levelMap.put(freeBoxKey, rightBox);
+			levelMap.put(rightBoxKey, freeBox);
+			
 		
-		if (levelMap != null) {
-			BoxPanel actual = null;
-			BoxPanel right = null;
-
-			// A
-			actual = levelMap.get("A1");
-			for (int i = 1; i < cols; i++) {
-				String rightKey = "A" + Integer.toString(i + 1);
-
-				right = levelMap.get(rightKey);
-				levelMap.put(rightKey, actual);
-
-				actual = right;
-
-			}
-			// ostatnia kolumna
-			for (int i = 0; i < rows - 1; i++) {
-				String rightKey = (char) (65 + i + 1) + Integer.toString(cols);
-
-				right = levelMap.get(rightKey);
-				levelMap.put(rightKey, actual);
-
-				actual = right;
-			}
-			// D
-			for (int i = cols; i > 1; i--) {
-				String rightKey = "D" + Integer.toString(i - 1);
-
-				right = levelMap.get(rightKey);
-				levelMap.put(rightKey, actual);
-
-				actual = right;
-			}
-			// pierwsza kolumna
-			for (int i = rows - 2; i >= 0; i--) {
-				String rightKey = (char) (65 + i) + Integer.toString(1);
-
-				right = levelMap.get(rightKey);
-				levelMap.put(rightKey, actual);
-
-				actual = right;
-			}
-		}
+			
+		} else 
+			return;
+		
 		if (pietro == level)
 			pokazPietro(level);
+		
 	}
 
 
 
-	public void moveBoxLeft(int level, boolean czyDolny) {
+	public void moveBoxLeft(int level, boolean bottom) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
 		if (liczbaPustychBoksow == 1) {
-
-		} else if (liczbaPustychBoksow == 2 && czyDolny == false) {
-
-		} else if (liczbaPustychBoksow == 2 && czyDolny == true) {
-
-		}
-		if (levelMap != null) {
-			BoxPanel actual = null;
-			BoxPanel left = null;
-
-			// pierwsza kolumna
-			actual = levelMap.get("A1");
-			for (int i = 1; i < rows; i++) {
-				String leftKey = (char) (65 + i) + Integer.toString(1);
-
-				left = levelMap.get(leftKey);
-				levelMap.put(leftKey, actual);
-
-				actual = left;
-			}
-
-			// D
-			for (int i = 1; i < cols; i++) {
-				String leftKey = "D" + Integer.toString(i + 1);
-
-				left = levelMap.get(leftKey);
-				levelMap.put(leftKey, actual);
-
-				actual = left;
-			}
-
-			// ostatnia kolumna
-			for (int i = rows - 2; i >= 0; i--) {
-				String leftKey = (char) (65 + i) + Integer.toString(cols);
-
-				left = levelMap.get(leftKey);
-				levelMap.put(leftKey, actual);
-
-				actual = left;
-			}
-			// A
-			for (int i = cols; i > 1; i--) {
-				String leftKey = "A" + Integer.toString(i - 1);
-
-				left = levelMap.get(leftKey);
-				levelMap.put(leftKey, actual);
-
-				actual = left;
-			}
-
-		}
+			String freeBoxKey = getFreeBoxKey(levelMap);
+			if(freeBoxKey == null) 
+				return;
+			String rightBoxKey = getLeftBoxKey(freeBoxKey);
+			if(rightBoxKey == null) 
+				return;
+			
+			BoxPanel freeBox = levelMap.get(freeBoxKey);
+			BoxPanel rightBox = levelMap.get(rightBoxKey);
+			levelMap.put(freeBoxKey, rightBox);
+			levelMap.put(rightBoxKey, freeBox);
+			
+		} else if (liczbaPustychBoksow == 2) {
+			String freeBoxKey = getFreeBoxKey(levelMap, bottom);
+			if(freeBoxKey == null) 
+				return;
+			String rightBoxKey = getLeftBoxKey(freeBoxKey, bottom);
+			if(rightBoxKey == null) 
+				return;
+			
+			BoxPanel freeBox = levelMap.get(freeBoxKey);
+			BoxPanel rightBox = levelMap.get(rightBoxKey);
+			levelMap.put(freeBoxKey, rightBox);
+			levelMap.put(rightBoxKey, freeBox);
+			
+		} else 
+			return;
+		
 		if (pietro == level)
 			pokazPietro(level);
 	}
@@ -299,31 +258,124 @@ public class RegalPanel extends JPanel {
 	}
 
 	private String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap, boolean bottom) {
-		if(bottom == false) {
-			for(int i=1; i <= MagazynUtils.kolumnWRegale; i++) {
-				if(levelMap.get("A" + i).isFree()) 
+		if (bottom == false) {
+			for (int i = 1; i <= MagazynUtils.kolumnWRegale; i++) {
+				if (levelMap.get("A" + i).isFree())
 					return "A" + i;
 			}
-		} else if(bottom == true) {
-			for(int i=1; i <= MagazynUtils.kolumnWRegale; i++) {
-				char letter = (char) (MagazynUtils.rzedowWRegale + 65);
-				if(levelMap.get(letter + i).isFree()) 
-					return "" + i;
+		} else if (bottom == true) {
+			for (int i = 1; i <= MagazynUtils.kolumnWRegale; i++) {
+				String letter = Character.toString((char) (65 + MagazynUtils.rzedowWRegale - 1));
+				if (levelMap.get(letter + i).isFree())
+					return letter + i;
 			}
 		}
 		return null;
 	}
 
 
-	private String getRightBoxKey(TreeMap<String, BoxPanel> levelMap) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	private String getRightBoxKey(TreeMap<String, BoxPanel> levelMap, boolean bottom) {
-		// TODO Auto-generated method stub
+	private String getRightBoxKey(String freeKey) {
+		String letter = Character.toString(freeKey.charAt(0));
+		int number = Integer.parseInt(freeKey.substring(1));
+
+		if (number == MagazynUtils.kolumnWRegale && "ABC".contains(letter)) {
+
+			letter = Character.toString((char) (freeKey.charAt(0) + 1));
+			return letter + number;
+
+		} else if (number == 1 && "BCD".contains(letter)) {
+			
+			letter = Character.toString((char) (freeKey.charAt(0) - 1));
+			return letter + number;
+		
+		} else if (letter.equals("D")) {
+			return letter + (number - 1);
+		
+		} else if (letter.equals("A")) {
+			return letter + (number+1);
+		}
 		
 		return null;
 	}
+	
+	
+	private String getRightBoxKey(String freeKey, boolean bottom) {
+		String letter = Character.toString(freeKey.charAt(0));
+		int number = Integer.parseInt(freeKey.substring(1));
+		
+		if(bottom == false && letter.equals("A") && number < MagazynUtils.kolumnWRegale) {
+			return letter + (number + 1);
+		} else if(bottom == true && letter.equals("D") && number < MagazynUtils.kolumnWRegale) {
+			return letter + (number + 1);
+		} 
+		
+		return null;
+	}
+	
+	private String getLeftBoxKey(String freeKey) {
+		String letter = Character.toString(freeKey.charAt(0));
+		int number = Integer.parseInt(freeKey.substring(1));
+
+		if (number == 1 && "ABC".contains(letter)) {
+
+			letter = Character.toString((char) (freeKey.charAt(0) + 1));
+			return letter + number;
+
+		} else if (number == MagazynUtils.kolumnWRegale && "BCD".contains(letter)) {
+			
+			letter = Character.toString((char) (freeKey.charAt(0)  - 1));
+			return letter + number;
+		
+		} else if (letter.equals("D")) {
+			return letter + (number + 1);
+		
+		} else if (letter.equals("A")) {
+			return letter + (number-1);
+		}
+		
+		return null;
+	}
+	
+	
+	private String getLeftBoxKey(String freeKey, boolean bottom) {
+		String letter = Character.toString(freeKey.charAt(0));
+		int number = Integer.parseInt(freeKey.substring(1));
+		
+		if(bottom == false && letter.equals("A") && number > 1) {
+			return letter + (number - 1);
+		} else if(bottom == true && letter.equals("D") && number > 1) {
+			return letter + (number - 1);
+		} 
+		
+		return null;
+	}
+	
+//	public static void main(String ... args) {
+//		RegalPanel r = new RegalPanel(2);
+//		r.dodajBoxy(r.pietro0);
+////		r.moveBoxRight(0,false);
+//		
+//		System.out.println();
+//		System.out.println(r.getLeftBoxKey("A15"));
+//		System.out.println(r.getLeftBoxKey("A30"));
+//		System.out.println(r.getLeftBoxKey("B30"));
+//		System.out.println(r.getLeftBoxKey("D30"));
+//		System.out.println(r.getLeftBoxKey("D15"));
+//		System.out.println(r.getLeftBoxKey("D0"));
+//		System.out.println(r.getLeftBoxKey("C0"));
+//		System.out.println(r.getLeftBoxKey("B0"));
+//		System.out.println(r.getLeftBoxKey("A0"));
+//		
+//		System.out.println();
+//		System.out.println(r.getLeftBoxKey("A15", true));
+//		System.out.println(r.getLeftBoxKey("A30", false));
+//		System.out.println(r.getLeftBoxKey("B30", false));
+//		System.out.println(r.getLeftBoxKey("D30", true));
+//		System.out.println(r.getLeftBoxKey("D15",false));
+//		System.out.println(r.getLeftBoxKey("D5", true));
+//
+//		System.out.println(r.getLeftBoxKey("A0",false));
+//		System.out.println(r.getLeftBoxKey("D1",true));
+//		System.out.println(r.getLeftBoxKey("A1",false));
+//	}
 }
