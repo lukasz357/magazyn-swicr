@@ -187,24 +187,24 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public void obrocWPrawo(String regal, int level) {
+	public void obrocWPrawo(String regal, int level,  boolean czyDolny) {
 		if (regal.equals("regal1")) {
-			regalPanel1.moveBoxRight(level);
+			regalPanel1.moveBoxRight(level, czyDolny);
 		} else if (regal.equals("regal2")) {
-			regalPanel2.moveBoxRight(level);
+			regalPanel2.moveBoxRight(level, czyDolny);
 		} else if (regal.equals("regal3")) {
-			regalPanel3.moveBoxRight(level);
+			regalPanel3.moveBoxRight(level, czyDolny);
 		}
 
 	}
 
-	public void obrocWLewo(String regal, int level) {
+	public void obrocWLewo(String regal, int level, boolean czyDolny) {
 		if (regal.equals("regal1")) {
-			regalPanel1.moveBoxLeft(level);
+			regalPanel1.moveBoxLeft(level, czyDolny);
 		} else if (regal.equals("regal2")) {
-			regalPanel2.moveBoxLeft(level);
+			regalPanel2.moveBoxLeft(level, czyDolny);
 		} else if (regal.equals("regal3")) {
-			regalPanel3.moveBoxLeft(level);
+			regalPanel3.moveBoxLeft(level, czyDolny);
 		}
 	}
 
@@ -224,21 +224,25 @@ public class MapaMagazynu extends JPanel {
 		}
 	}
 
-	public int getRegal2FreeBoxes() {
-		return regal2FreeBoxes;
-	}
-
-	public void setRegal2FreeBoxes(int regal2FreeBoxes) {
-		this.regal2FreeBoxes = regal2FreeBoxes;
-	}
-
 	public int getRegal1FreeBoxes() {
 		return regal1FreeBoxes;
 	}
 
 	public void setRegal1FreeBoxes(int regal1FreeBoxes) {
 		this.regal1FreeBoxes = regal1FreeBoxes;
+		regalPanel1.setFreeBoxes(regal1FreeBoxes);
 	}
+	
+
+	public int getRegal2FreeBoxes() {
+		return regal2FreeBoxes;
+	}
+
+	public void setRegal2FreeBoxes(int regal2FreeBoxes) {
+		this.regal2FreeBoxes = regal2FreeBoxes;
+		regalPanel2.setFreeBoxes(regal2FreeBoxes);
+	}
+
 
 	public int getRegal3FreeBoxes() {
 		return regal3FreeBoxes;
@@ -246,6 +250,8 @@ public class MapaMagazynu extends JPanel {
 
 	public void setRegal3FreeBoxes(int regal3FreeBoxes) {
 		this.regal3FreeBoxes = regal3FreeBoxes;
+		regalPanel3.setFreeBoxes(regal3FreeBoxes);
+		regalPanel3.revalidate();
 	}
 
 }

@@ -23,7 +23,7 @@ public class RegalPanel extends JPanel {
 	private int cols = MagazynUtils.kolumnWRegale;
 	private int pietro = 0;
 	private int liczbaPustychBoksow;
-	
+
 	private TreeMap<String, BoxPanel> visibleBoxes = new TreeMap<>();
 
 	private TreeMap<String, BoxPanel> pietro0 = new TreeMap<>();
@@ -31,7 +31,6 @@ public class RegalPanel extends JPanel {
 	private TreeMap<String, BoxPanel> pietro2 = new TreeMap<>();
 	private TreeMap<String, BoxPanel> pietro3 = new TreeMap<>();
 	private TreeMap<String, BoxPanel> pietro4 = new TreeMap<>();
-
 
 	public RegalPanel(int liczbaPustychBoksow) {
 		this.liczbaPustychBoksow = liczbaPustychBoksow;
@@ -43,7 +42,6 @@ public class RegalPanel extends JPanel {
 		dodajBoxy(pietro2);
 		dodajBoxy(pietro3);
 		dodajBoxy(pietro4);
-		
 
 		TreeMap<String, BoxPanel> level = getLevelMap();
 		BoxPanel bp;
@@ -58,7 +56,6 @@ public class RegalPanel extends JPanel {
 				bp.setBackground(mBox.getBackground());
 				bp.setBorder(mBox.getBorder());
 
-				
 				visibleBoxes.put(position, bp);
 				add(bp);
 			}
@@ -87,8 +84,21 @@ public class RegalPanel extends JPanel {
 		}
 	}
 
-	public void moveBoxRight(int level) {
+	public void moveBoxRight(int level, boolean bottom) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
+		String freeBoxKey;
+		String rightBoxKey;
+		if (liczbaPustychBoksow == 1) {
+			freeBoxKey = getFreeBoxKey(levelMap);
+			rightBoxKey = getRightBoxKey(levelMap);
+		} else if (liczbaPustychBoksow == 2 && bottom == false) {
+			freeBoxKey = getFreeBoxKey(levelMap, bottom);
+			rightBoxKey = getRightBoxKey(levelMap, bottom);
+		} else if (liczbaPustychBoksow == 2 && bottom == true) {
+			freeBoxKey = getFreeBoxKey(levelMap, bottom);
+			rightBoxKey = getRightBoxKey(levelMap, bottom);
+			
+		}
 		
 		if (levelMap != null) {
 			BoxPanel actual = null;
@@ -133,17 +143,21 @@ public class RegalPanel extends JPanel {
 				actual = right;
 			}
 		}
-		if(pietro == level)
+		if (pietro == level)
 			pokazPietro(level);
 	}
 
-	public void moveBoxLeft(int level) {
+
+
+	public void moveBoxLeft(int level, boolean czyDolny) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
-//		if(liczbaPustychBoksow == 1) { 
-//			
-//		} else if(liczbaPustychBoksow == 2) {
-//			
-//		}
+		if (liczbaPustychBoksow == 1) {
+
+		} else if (liczbaPustychBoksow == 2 && czyDolny == false) {
+
+		} else if (liczbaPustychBoksow == 2 && czyDolny == true) {
+
+		}
 		if (levelMap != null) {
 			BoxPanel actual = null;
 			BoxPanel left = null;
@@ -189,9 +203,28 @@ public class RegalPanel extends JPanel {
 			}
 
 		}
-		if(pietro == level)
+		if (pietro == level)
 			pokazPietro(level);
 	}
+	
+
+	public void setFreeBoxes(int freeBoxes) {
+		liczbaPustychBoksow = freeBoxes;
+		pietro0.clear();
+		pietro1.clear();
+		pietro2.clear();
+		pietro3.clear();
+		pietro4.clear();
+
+		dodajBoxy(pietro0);
+		dodajBoxy(pietro1);
+		dodajBoxy(pietro2);
+		dodajBoxy(pietro3);
+		dodajBoxy(pietro4);
+
+		pokazPietro(pietro);
+	}
+	
 
 	private TreeMap<String, BoxPanel> getLevelMap() {
 		switch (pietro) {
@@ -208,7 +241,7 @@ public class RegalPanel extends JPanel {
 		}
 		return null;
 	}
-	
+
 	private TreeMap<String, BoxPanel> getLevelMap(int pietro) {
 		switch (pietro) {
 		case 0:
@@ -225,20 +258,19 @@ public class RegalPanel extends JPanel {
 		return null;
 	}
 
-
 	private void dodajBoxy(TreeMap<String, BoxPanel> level) {
 		BoxPanel bp;
 		for (int i = 0; i < rows; i++) {
 			char c = (char) (65 + i);
 			for (int j = 0; j < cols; j++) {
-				if(liczbaPustychBoksow == 1 && j == 0 && i == 0) {
+				if (liczbaPustychBoksow == 1 && j == 0 && i == 0) {
 					bp = new BoxPanel(j, i, new BoxTO());
 					bp.setFree(true);
 					bp.setBackground(MagazynUtils.freeBoxBackround);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
-				} else if(liczbaPustychBoksow == 2 && (i == 0 || i == (rows-1)) && j == cols/2) {
+				} else if (liczbaPustychBoksow == 2 && (i == 0 || i == (rows - 1)) && j == cols / 2) {
 					bp = new BoxPanel(j, i, new BoxTO());
 					bp.setFree(true);
 					bp.setBackground(MagazynUtils.freeBoxBackround);
@@ -257,4 +289,41 @@ public class RegalPanel extends JPanel {
 
 	}
 
+	private String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap) {
+		for(String k : levelMap.keySet()) {
+			if(levelMap.get(k).isFree())
+				return k;
+		}
+		return null;
+			
+	}
+
+	private String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap, boolean bottom) {
+		if(bottom == false) {
+			for(int i=1; i <= MagazynUtils.kolumnWRegale; i++) {
+				if(levelMap.get("A" + i).isFree()) 
+					return "A" + i;
+			}
+		} else if(bottom == true) {
+			for(int i=1; i <= MagazynUtils.kolumnWRegale; i++) {
+				char letter = (char) (MagazynUtils.rzedowWRegale + 65);
+				if(levelMap.get(letter + i).isFree()) 
+					return "" + i;
+			}
+		}
+		return null;
+	}
+
+
+	private String getRightBoxKey(TreeMap<String, BoxPanel> levelMap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	private String getRightBoxKey(TreeMap<String, BoxPanel> levelMap, boolean bottom) {
+		// TODO Auto-generated method stub
+		
+		return null;
+	}
 }
