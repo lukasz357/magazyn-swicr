@@ -82,12 +82,10 @@ public class IOLogic {
 		pietro1[3][1] = emptyField;
 		pietro1[3][2] = emptyField;
 		pietro1[3][3] = emptyField;
-		pietro1[3][4] = emptyField;
 		pietro1[4][0] = emptyField;
 		pietro1[4][1] = emptyField;
 		pietro1[4][2] = emptyField;
 		pietro1[4][3] = emptyField;
-		pietro1[4][4] = emptyField;
 		
 		magazyn.getPietra().put(0, pietro1);
 		
