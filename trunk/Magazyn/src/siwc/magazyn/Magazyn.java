@@ -120,8 +120,8 @@ public class Magazyn {
 	private JPanel panelLegenda;
 	private JLabel lblLiczbaZamowienTekst;
 	private static JLabel lblLiczbaZamowien;
-	
-	/*statystyki */
+
+	/* statystyki */
 	private static int liczbaZamowien = 0;
 	private static int liczbaZamowienZrealizowany = 0;
 	private static int liczbaMiejscZajetych = 0;
@@ -132,7 +132,7 @@ public class Magazyn {
 	private JLabel lblIloscWszystkichMiejscTekst;
 	private static JLabel lblLiczbaMiejscZajetych;
 	private JLabel lblSredniCzasRealizacjiTekst;
-	private JLabel lblWszystkieZamowienia;
+	private static JLabel lblWszystkieMiejsca;
 	private JLabel lblMiejscaZajete;
 	private JLabel lblSredniCzasRealizacji;
 
@@ -292,8 +292,7 @@ public class Magazyn {
 				log.info("Magazyn został zatrzymany");
 
 				/*
-				 * TODO:
-				 * zatrzymac magazyn()
+				 * TODO: zatrzymac magazyn()
 				 */
 				dodajWpisDoKonsoli("Magazyn został zatrzymany" + new Date().toString());
 			}
@@ -361,61 +360,61 @@ public class Magazyn {
 
 		lblKonsola = new JLabel("Konsola");
 		lblKonsola.setBounds(20, 599, 37, 14);
-		
+
 		panelStatystyki = new JPanel();
 		panelStatystyki.setBounds(820, 72, 234, 356);
 		panelStatystyki.setBorder(new TitledBorder(null, "Statystyki", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		
+
 		panelLegenda = new JPanel();
 		panelLegenda.setBounds(830, 439, 114, 148);
 		panelLegenda.setBorder(new TitledBorder(null, "Legenda", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelStatystyki.setLayout(null);
-		
+
 		lblLiczbaZamowienTekst = new JLabel("Liczba zamówień :");
 		lblLiczbaZamowienTekst.setBounds(10, 34, 94, 14);
 		panelStatystyki.add(lblLiczbaZamowienTekst);
-		
+
 		lblLiczbaZamowien = new JLabel("0");
 		lblLiczbaZamowien.setFont(new Font("Tahoma", Font.BOLD, 11));
-//		lblLiczbaZamowien.set
+		// lblLiczbaZamowien.set
 		lblLiczbaZamowien.setBounds(205, 34, 19, 14);
 		panelStatystyki.add(lblLiczbaZamowien);
-		
+
 		lblLiczbaZamwienZrealizowanychTekst = new JLabel("Liczba zamówien zrealizowanych :");
 		lblLiczbaZamwienZrealizowanychTekst.setBounds(10, 59, 165, 14);
 		panelStatystyki.add(lblLiczbaZamwienZrealizowanychTekst);
-		
+
 		lblLiczbaZamowienZrealizowanych = new JLabel("0");
 		lblLiczbaZamowienZrealizowanych.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblLiczbaZamowienZrealizowanych.setBounds(205, 59, 19, 14);
 		panelStatystyki.add(lblLiczbaZamowienZrealizowanych);
-		
+
 		lblIloPrzedmiotwTekst = new JLabel("Ilość przedmiotów :");
 		lblIloPrzedmiotwTekst.setBounds(10, 84, 165, 14);
 		panelStatystyki.add(lblIloPrzedmiotwTekst);
-		
+
 		lblLbliloscprzedmiotow = new JLabel("0");
 		lblLbliloscprzedmiotow.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblLbliloscprzedmiotow.setBounds(205, 84, 19, 14);
 		panelStatystyki.add(lblLbliloscprzedmiotow);
-		
+
 		lblIloscWszystkichMiejscTekst = new JLabel("Wszystkie miejsca :");
 		lblIloscWszystkichMiejscTekst.setBounds(10, 109, 134, 14);
 		panelStatystyki.add(lblIloscWszystkichMiejscTekst);
-		
+
 		lblLiczbaMiejscZajetych = new JLabel("Miejsca Zajęte :");
 		lblLiczbaMiejscZajetych.setBounds(10, 134, 94, 14);
 		panelStatystyki.add(lblLiczbaMiejscZajetych);
-		
+
 		lblSredniCzasRealizacjiTekst = new JLabel("Średni czas realizacji :");
 		lblSredniCzasRealizacjiTekst.setBounds(10, 159, 165, 14);
 		panelStatystyki.add(lblSredniCzasRealizacjiTekst);
-		
-		lblWszystkieZamowienia = new JLabel("0");
-		lblWszystkieZamowienia.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblWszystkieZamowienia.setBounds(205, 109, 19, 14);
-		panelStatystyki.add(lblWszystkieZamowienia);
-		
+
+		lblWszystkieMiejsca = new JLabel("0");
+		lblWszystkieMiejsca.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblWszystkieMiejsca.setBounds(205, 109, 19, 14);
+		panelStatystyki.add(lblWszystkieMiejsca);
+
 		lblMiejscaZajete = new JLabel("0");
 		lblMiejscaZajete.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblMiejscaZajete.setBounds(205, 134, 19, 14);
@@ -525,7 +524,7 @@ public class Magazyn {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal2.setEnabled(false);
 				mapa.setRegal2FreeBoxes(1);
-				
+
 			}
 		});
 		regal2_rb1.setSelected(mapa.getRegal2FreeBoxes() == 1);
@@ -637,12 +636,12 @@ public class Magazyn {
 		btnRightRegal1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String text = textFieldRegal1.getText().equals("") ? "1" : textFieldRegal1.getText();
-				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
 				Thread t = new Thread(new Runnable() {
 
 					@Override
 					public void run() {
-						boolean bottom =  chckBoxRegal1.isSelected();
+						boolean bottom = chckBoxRegal1.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 							mapa.przesunBoxWPrawo("regal1", pietro, bottom);
@@ -659,12 +658,12 @@ public class Magazyn {
 		btnRightRegal2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String text = textFieldRegal2.getText().equals("") ? "1" : textFieldRegal2.getText();
-				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
 				Thread t = new Thread(new Runnable() {
 
 					@Override
 					public void run() {
-						boolean bottom =  chckBoxRegal2.isSelected();
+						boolean bottom = chckBoxRegal2.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 							mapa.przesunBoxWPrawo("regal2", pietro, bottom);
@@ -681,12 +680,12 @@ public class Magazyn {
 		btnRightRegal3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String text = textFieldRegal3.getText().equals("") ? "1" : textFieldRegal3.getText();
-				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
 				Thread t = new Thread(new Runnable() {
 
 					@Override
 					public void run() {
-						boolean bottom =  chckBoxRegal3.isSelected();
+						boolean bottom = chckBoxRegal3.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 							mapa.przesunBoxWPrawo("regal3", pietro, bottom);
@@ -696,7 +695,7 @@ public class Magazyn {
 
 				});
 				t.start();
-				
+
 			}
 		});
 
@@ -704,12 +703,12 @@ public class Magazyn {
 		btnLeftRegal1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String text = textFieldRegal1.getText().equals("") ? "1" : textFieldRegal1.getText();
-				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
 				Thread t = new Thread(new Runnable() {
 
 					@Override
 					public void run() {
-						boolean bottom =  chckBoxRegal1.isSelected();
+						boolean bottom = chckBoxRegal1.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 							mapa.przesunBoxWLewo("regal1", pietro, bottom);
@@ -727,13 +726,13 @@ public class Magazyn {
 			public void actionPerformed(ActionEvent e) {
 
 				String text = textFieldRegal2.getText().equals("") ? "1" : textFieldRegal2.getText();
-				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
 				Thread t = new Thread(new Runnable() {
-					
+
 					@Override
 					public void run() {
-						boolean bottom =  chckBoxRegal2.isSelected();
-						for (int i = 0; i < numbers ; i++) {
+						boolean bottom = chckBoxRegal2.isSelected();
+						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 							mapa.przesunBoxWLewo("regal2", pietro, bottom);
 						}
@@ -750,12 +749,12 @@ public class Magazyn {
 			public void actionPerformed(ActionEvent e) {
 
 				String text = textFieldRegal3.getText().equals("") ? "1" : textFieldRegal3.getText();
-				final int numbers  = Integer.parseInt(text) == 0 ? 1: Integer.parseInt(text);
+				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
 				Thread t = new Thread(new Runnable() {
 
 					@Override
 					public void run() {
-						boolean bottom =  chckBoxRegal3.isSelected();
+						boolean bottom = chckBoxRegal3.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 							mapa.przesunBoxWLewo("regal3", pietro, bottom);
@@ -770,58 +769,26 @@ public class Magazyn {
 
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(
-				gl_panel_1.createSequentialGroup().addGroup(
-						gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
-								gl_panel_1.createSequentialGroup().addGap(55).addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)).addGroup(
-								gl_panel_1.createSequentialGroup().addContainerGap().addComponent(btnLeft).addGap(51).addComponent(btnRight)).addGroup(
-								gl_panel_1.createSequentialGroup().addGap(56).addComponent(btnDown))).addPreferredGap(ComponentPlacement.RELATED).addGroup(
-						gl_panel_1.createParallelGroup(Alignment.LEADING, false).addComponent(liftDown, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(liftUp,
-								GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addPreferredGap(ComponentPlacement.RELATED, 125, Short.MAX_VALUE).addGroup(
-						gl_panel_1.createParallelGroup(Alignment.LEADING, false).addGroup(
-								gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
-										Alignment.TRAILING,
-										gl_panel_1.createSequentialGroup().addComponent(lblR_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)).addGroup(
-										Alignment.TRAILING,
-										gl_panel_1.createSequentialGroup().addComponent(lblR, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))).addGroup(
-								gl_panel_1.createSequentialGroup().addComponent(lblR_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED,
-										GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))).addPreferredGap(
-						ComponentPlacement.UNRELATED).addGroup(
-						gl_panel_1.createParallelGroup(Alignment.TRAILING, false).addGroup(
-								gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(regal1_rb1).addComponent(regal2_rb1)).addPreferredGap(
-										ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(regal1_rb2).addComponent(regal2_rb2))).addGroup(
-								gl_panel_1.createSequentialGroup().addComponent(regal3_rb1).addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(
-										regal3_rb2))).addPreferredGap(ComponentPlacement.RELATED).addGroup(
-						gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(chckBoxRegal1).addComponent(chckBoxRegal2).addComponent(chckBoxRegal3)).addPreferredGap(
-						ComponentPlacement.RELATED).addGroup(
-						gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(
-								gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addComponent(btnLeftRegal3).addComponent(btnLeftRegal2))
-										.addPreferredGap(ComponentPlacement.RELATED).addGroup(
-												gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(
-														gl_panel_1.createSequentialGroup().addComponent(btnRightRegal2).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnRandomRegal2))
-														.addGroup(
-																gl_panel_1.createSequentialGroup().addComponent(btnRightRegal3).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(
-																		btnRandomRegal3)))).addGroup(
-								gl_panel_1.createSequentialGroup().addComponent(btnLeftRegal1).addPreferredGap(ComponentPlacement.RELATED).addComponent(btnRightRegal1).addPreferredGap(
-										ComponentPlacement.UNRELATED).addComponent(btnRandomRegal1))).addContainerGap()));
+				gl_panel_1
+						.createSequentialGroup()
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_1.createSequentialGroup().addGap(55).addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)).addGroup(gl_panel_1.createSequentialGroup().addContainerGap().addComponent(btnLeft).addGap(51).addComponent(btnRight)).addGroup(gl_panel_1.createSequentialGroup().addGap(56).addComponent(btnDown)))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false).addComponent(liftDown, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(liftUp, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addPreferredGap(ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+						.addGroup(
+								gl_panel_1.createParallelGroup(Alignment.LEADING, false).addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup().addComponent(lblR_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED).addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)).addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup().addComponent(lblR, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED).addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+										.addGroup(gl_panel_1.createSequentialGroup().addComponent(lblR_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))).addPreferredGap(ComponentPlacement.UNRELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false).addGroup(gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(regal1_rb1).addComponent(regal2_rb1)).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(regal1_rb2).addComponent(regal2_rb2))).addGroup(gl_panel_1.createSequentialGroup().addComponent(regal3_rb1).addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(regal3_rb2))).addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(chckBoxRegal1).addComponent(chckBoxRegal2).addComponent(chckBoxRegal3)).addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addComponent(btnLeftRegal3).addComponent(btnLeftRegal2)).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel_1.createSequentialGroup().addComponent(btnRightRegal2).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnRandomRegal2)).addGroup(gl_panel_1.createSequentialGroup().addComponent(btnRightRegal3).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnRandomRegal3)))).addGroup(gl_panel_1.createSequentialGroup().addComponent(btnLeftRegal1).addPreferredGap(ComponentPlacement.RELATED).addComponent(btnRightRegal1).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnRandomRegal1))).addContainerGap()));
 		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
-				gl_panel_1.createSequentialGroup().addGroup(
-						gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
-								gl_panel_1.createSequentialGroup().addGroup(
-										gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal1).addComponent(btnRightRegal1).addComponent(btnLeftRegal1).addComponent(
-												chckBoxRegal1).addComponent(regal1_rb2).addComponent(regal1_rb1).addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE).addComponent(lblR)).addPreferredGap(ComponentPlacement.RELATED).addGroup(
-										gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal2).addComponent(btnRightRegal2).addComponent(btnLeftRegal2).addComponent(
-												chckBoxRegal2).addComponent(regal2_rb2).addComponent(regal2_rb1).addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE).addComponent(lblR_1)).addPreferredGap(ComponentPlacement.RELATED).addGroup(
-										gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal3).addComponent(btnRightRegal3).addComponent(btnLeftRegal3).addComponent(
-												chckBoxRegal3).addComponent(regal3_rb2).addComponent(regal3_rb1).addComponent(lblR_2).addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))).addGroup(
-								gl_panel_1.createSequentialGroup().addContainerGap().addComponent(btnUp).addPreferredGap(ComponentPlacement.RELATED).addGroup(
-										gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnLeft).addComponent(btnRight).addComponent(liftUp)).addPreferredGap(
-										ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnDown).addComponent(liftDown)))).addContainerGap(
-						GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+				gl_panel_1
+						.createSequentialGroup()
+						.addGroup(
+								gl_panel_1
+										.createParallelGroup(Alignment.LEADING)
+										.addGroup(
+												gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal1).addComponent(btnRightRegal1).addComponent(btnLeftRegal1).addComponent(chckBoxRegal1).addComponent(regal1_rb2).addComponent(regal1_rb1).addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblR)).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal2).addComponent(btnRightRegal2).addComponent(btnLeftRegal2).addComponent(chckBoxRegal2).addComponent(regal2_rb2).addComponent(regal2_rb1).addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblR_1)).addPreferredGap(ComponentPlacement.RELATED)
+														.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal3).addComponent(btnRightRegal3).addComponent(btnLeftRegal3).addComponent(chckBoxRegal3).addComponent(regal3_rb2).addComponent(regal3_rb1).addComponent(lblR_2).addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))).addGroup(gl_panel_1.createSequentialGroup().addContainerGap().addComponent(btnUp).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnLeft).addComponent(btnRight).addComponent(liftUp)).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnDown).addComponent(liftDown)))).addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		panel_1.setLayout(gl_panel_1);
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -872,14 +839,8 @@ public class Magazyn {
 		lblPietro = new JLabel("Piętro:");
 		lblPietro.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(
-				gl_panel.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(lblPietro).addGap(18).addComponent(btnMinus).addPreferredGap(
-						ComponentPlacement.RELATED).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED).addComponent(
-						btnPlus).addGap(16)));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(
-				gl_panel.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(
-						gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(btnMinus).addComponent(lblPietro).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(btnPlus)).addContainerGap()));
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(lblPietro).addGap(18).addComponent(btnMinus).addPreferredGap(ComponentPlacement.RELATED).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED).addComponent(btnPlus).addGap(16)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(btnMinus).addComponent(lblPietro).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(btnPlus)).addContainerGap()));
 		panel.setLayout(gl_panel);
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(panel_1);
@@ -889,7 +850,7 @@ public class Magazyn {
 		frame.getContentPane().add(KonsolaScrollPane);
 		frame.getContentPane().add(lblKonsola);
 		frame.getContentPane().add(panelStatystyki);
-		
+
 		lblSredniCzasRealizacji = new JLabel("0");
 		lblSredniCzasRealizacji.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSredniCzasRealizacji.setBounds(205, 159, 19, 14);
@@ -966,31 +927,53 @@ public class Magazyn {
 	public static void dodajWpisDoKonsoli(String wpis) {
 		konsolaListModel.addElement(wpis);
 	}
-	
-	/*metody do statystyk */
-	
-	/*liczba zamowien */
-	public static void zwiekszLiczbeZamowien(){
-		liczbaZamowien ++;
+
+	/* metody do statystyk */
+
+	/* liczba zamowien */
+	public static void zwiekszLiczbeZamowien() {
+		liczbaZamowien++;
 		lblLiczbaZamowien.setText(String.valueOf(liczbaZamowien));
 	}
-	
-	public static void zmniejszLiczbeZamowien(){
-		liczbaZamowien --;
+
+	public static void zmniejszLiczbeZamowien() {
+		liczbaZamowien--;
 		lblLiczbaZamowien.setText(String.valueOf(liczbaZamowien));
 	}
-	
-	/*liczba zamowien zrealizowanych */
-	public static void zwiekszLiczbeZamowienZrealizowanych(){
-		liczbaZamowienZrealizowany ++;
+
+	/* liczba zamowien zrealizowanych */
+	public static void zwiekszLiczbeZamowienZrealizowanych() {
+		liczbaZamowienZrealizowany++;
 		lblLiczbaZamowienZrealizowanych.setText(String.valueOf(liczbaZamowienZrealizowany));
 	}
-	
-	public static void zmniejszLiczbeZamowienZrealizowanych(){
-		liczbaZamowienZrealizowany --;
+
+	public static void zmniejszLiczbeZamowienZrealizowanych() {
+		liczbaZamowienZrealizowany--;
 		lblLiczbaZamowienZrealizowanych.setText(String.valueOf(liczbaZamowienZrealizowany));
 	}
+
+	/* liczba miejsc zajetych */
+
+	public static void zwiekszLiczbeMiejscZajetych() {
+		liczbaMiejscZajetych++;
+		lblLiczbaMiejscZajetych.setText(String.valueOf(liczbaMiejscZajetych) );
+	}
+
+	public static void zmniejszLiczbeMiejscZajetych() {
+		liczbaMiejscZajetych--;
+		lblLiczbaMiejscZajetych.setText(String.valueOf(liczbaMiejscZajetych) );
+	}
+
+	/* ilosc przedmiotow */
+	public static void ustawLiczbePrzedmiotow(int liczbaPrzedmiotow) {
+		lblLbliloscprzedmiotow.setText(String.valueOf(liczbaPrzedmiotow));
+	}
 	
-	/*liczba miejsc zajetych */
+	/* liczba wszystkich miejsc */
+	public static void ustawLiczbeWszystkichMiejsc(int liczbaWszystkichMiejsc){
+		lblWszystkieMiejsca.setText(String.valueOf(liczbaWszystkichMiejsc));
+	}
 	
+	
+
 }
