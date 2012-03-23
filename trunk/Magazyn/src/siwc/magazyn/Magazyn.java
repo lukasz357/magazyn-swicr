@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.ButtonGroup;
@@ -46,14 +47,6 @@ import org.apache.log4j.PropertyConfigurator;
 
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.utils.MagazynUtils;
-import javax.swing.border.LineBorder;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.factories.FormFactory;
-import com.jgoodies.forms.layout.RowSpec;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
@@ -78,7 +71,6 @@ public class Magazyn {
 
 	private JButton btnStop;
 	private JButton btnStart;
-	private JLabel lblZamwienia;
 	private JButton btnDodaj;
 	private JButton btnEdytuj;
 	private JPanel panel;
@@ -96,6 +88,7 @@ public class Magazyn {
 
 	/* Listy konsoli/zamowien */
 	private static DefaultListModel<String> konsolaListModel = new DefaultListModel<String>();
+	private static DefaultListModel<String> zamowieniaListModel = new DefaultListModel<String>();
 	private JLabel lblKonsola;
 	private JLabel lblR;
 	private JLabel lblR_1;
@@ -135,6 +128,15 @@ public class Magazyn {
 	private static JLabel lblWszystkieMiejsca;
 	private JLabel lblMiejscaZajete;
 	private JLabel lblSredniCzasRealizacji;
+	private JLabel lblPustaPka;
+	private JLabel lblPkaTransferowa;
+	private JPanel panel_2;
+	private JPanel panel_3;
+	private JPanel panel_4;
+	private JLabel lblWzek;
+	private JPanel panel_5;
+	private JScrollPane scrollPaneListaZamowien;
+	private static JList listZamowienia;
 
 	/**
 	 * Launch the application.
@@ -314,38 +316,9 @@ public class Magazyn {
 			}
 		});
 
-		lblZamwienia = new JLabel("Zamówienia");
-		lblZamwienia.setBounds(1220, 110, 56, 14);
-
 		/* DODAJ ZAMOWIENIE */
-		btnDodaj = new JButton("Dodaj");
-		btnDodaj.setBounds(1216, 130, 61, 23);
-		btnDodaj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				/*
-				 * TODO
-				 * 
-				 * dodaj zamowienie zaloguj w konsoli
-				 */
-				log.info("Dodano zamówienie");
-			}
-		});
 
 		/* EDYTUJ ZAMOWIENIE */
-		btnEdytuj = new JButton("Edytuj");
-		btnEdytuj.setBounds(1287, 130, 63, 23);
-		btnEdytuj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				/*
-				 * TODO
-				 * 
-				 * edytuj zamowienie zaloguj w konsoli
-				 */
-				log.info("Edytowano zamówienie zamówienie");
-			}
-		});
 
 		panel = new JPanel();
 		panel.setBounds(599, 11, 203, 50);
@@ -366,7 +339,7 @@ public class Magazyn {
 		panelStatystyki.setBorder(new TitledBorder(null, "Statystyki", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		panelLegenda = new JPanel();
-		panelLegenda.setBounds(830, 439, 114, 148);
+		panelLegenda.setBounds(830, 439, 185, 148);
 		panelLegenda.setBorder(new TitledBorder(null, "Legenda", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelStatystyki.setLayout(null);
 
@@ -855,12 +828,79 @@ public class Magazyn {
 		lblSredniCzasRealizacji.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSredniCzasRealizacji.setBounds(205, 159, 19, 14);
 		panelStatystyki.add(lblSredniCzasRealizacji);
-		frame.getContentPane().add(btnDodaj);
-		frame.getContentPane().add(btnEdytuj);
-		frame.getContentPane().add(lblZamwienia);
 		frame.getContentPane().add(panelLegenda);
+		panelLegenda.setLayout(null);
+
+		lblPustaPka = new JLabel("pusta półka");
+		lblPustaPka.setBounds(62, 22, 70, 14);
+		panelLegenda.add(lblPustaPka);
+
+		lblPkaTransferowa = new JLabel("półka transferowa");
+		lblPkaTransferowa.setBounds(62, 41, 102, 14);
+		panelLegenda.add(lblPkaTransferowa);
+
+		panel_2 = new JPanel();
+		panel_2.setBackground(Color.GRAY);
+		panel_2.setBounds(10, 22, 17, 14);
+		panelLegenda.add(panel_2);
+
+		panel_3 = new JPanel();
+		panel_3.setBackground(Color.BLUE);
+		panel_3.setBounds(10, 41, 17, 14);
+		panelLegenda.add(panel_3);
+
+		panel_4 = new JPanel();
+		panel_4.setBackground(Color.RED);
+		panel_4.setBounds(10, 61, 17, 38);
+		panelLegenda.add(panel_4);
+
+		lblWzek = new JLabel("wózek");
+		lblWzek.setBounds(62, 66, 46, 14);
+		panelLegenda.add(lblWzek);
 		frame.getContentPane().add(btnStop);
 		frame.getContentPane().add(btnStart);
+
+		panel_5 = new JPanel();
+		panel_5.setBorder(new TitledBorder(null, "Zam\u00F3wienia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_5.setBounds(1138, 72, 212, 341);
+		frame.getContentPane().add(panel_5);
+		panel_5.setLayout(null);
+		btnDodaj = new JButton("Dodaj");
+		btnDodaj.setBounds(10, 23, 61, 23);
+		panel_5.add(btnDodaj);
+		btnEdytuj = new JButton("Edytuj");
+		btnEdytuj.setBounds(81, 23, 63, 23);
+		panel_5.add(btnEdytuj);
+
+		scrollPaneListaZamowien = new JScrollPane();
+		scrollPaneListaZamowien.setBounds(10, 69, 192, 261);
+		panel_5.add(scrollPaneListaZamowien);
+
+		listZamowienia = new JList();
+		listZamowienia.setModel(zamowieniaListModel);
+		scrollPaneListaZamowien.setViewportView(listZamowienia);
+		btnEdytuj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				/*
+				 * TODO
+				 * 
+				 * edytuj zamowienie zaloguj w konsoli
+				 */
+				log.info("Edytowano zamówienie zamówienie");
+			}
+		});
+		btnDodaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				/*
+				 * TODO
+				 * 
+				 * dodaj zamowienie zaloguj w konsoli
+				 */
+				log.info("Dodano zamówienie");
+			}
+		});
 
 		ButtonGroup styleGroup = new ButtonGroup();
 		JRadioButtonMenuItem styleRadioMenu;
@@ -935,7 +975,7 @@ public class Magazyn {
 		liczbaZamowien++;
 		lblLiczbaZamowien.setText(String.valueOf(liczbaZamowien));
 	}
- 
+
 	public static void zmniejszLiczbeZamowien() {
 		liczbaZamowien--;
 		lblLiczbaZamowien.setText(String.valueOf(liczbaZamowien));
@@ -956,24 +996,34 @@ public class Magazyn {
 
 	public static void zwiekszLiczbeMiejscZajetych() {
 		liczbaMiejscZajetych++;
-		lblLiczbaMiejscZajetych.setText(String.valueOf(liczbaMiejscZajetych) );
+		lblLiczbaMiejscZajetych.setText(String.valueOf(liczbaMiejscZajetych));
 	}
 
 	public static void zmniejszLiczbeMiejscZajetych() {
 		liczbaMiejscZajetych--;
-		lblLiczbaMiejscZajetych.setText(String.valueOf(liczbaMiejscZajetych) );
+		lblLiczbaMiejscZajetych.setText(String.valueOf(liczbaMiejscZajetych));
 	}
 
 	/* ilosc przedmiotow */
 	public static void ustawLiczbePrzedmiotow(int liczbaPrzedmiotow) {
 		lblLbliloscprzedmiotow.setText(String.valueOf(liczbaPrzedmiotow));
 	}
-	
+
 	/* liczba wszystkich miejsc */
-	public static void ustawLiczbeWszystkichMiejsc(int liczbaWszystkichMiejsc){
+	public static void ustawLiczbeWszystkichMiejsc(int liczbaWszystkichMiejsc) {
 		lblWszystkieMiejsca.setText(String.valueOf(liczbaWszystkichMiejsc));
 	}
-	
-	
 
+	/* Dodaj zamowienia */
+	public static void dodajZamowienia(List<String> listaZamowien) {
+
+		if (listaZamowien != null){
+			for (String s : listaZamowien) {
+				zamowieniaListModel.addElement(s);
+			}
+			listZamowienia.setModel(zamowieniaListModel);
+		}else{
+			log.error("przekazana pusta lista zamowien");
+		}
+	}
 }
