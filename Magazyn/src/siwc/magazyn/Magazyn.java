@@ -935,7 +935,7 @@ public class Magazyn {
 		liczbaZamowien++;
 		lblLiczbaZamowien.setText(String.valueOf(liczbaZamowien));
 	}
-
+ 
 	public static void zmniejszLiczbeZamowien() {
 		liczbaZamowien--;
 		lblLiczbaZamowien.setText(String.valueOf(liczbaZamowien));
