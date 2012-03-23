@@ -46,6 +46,14 @@ import org.apache.log4j.PropertyConfigurator;
 
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.utils.MagazynUtils;
+import javax.swing.border.LineBorder;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
@@ -70,7 +78,6 @@ public class Magazyn {
 
 	private JButton btnStop;
 	private JButton btnStart;
-	private JLabel lblStatystyki;
 	private JLabel lblZamwienia;
 	private JButton btnDodaj;
 	private JButton btnEdytuj;
@@ -109,6 +116,25 @@ public class Magazyn {
 	private JTextField textFieldRegal1;
 	private JTextField textFieldRegal2;
 	private JTextField textFieldRegal3;
+	private JPanel panelStatystyki;
+	private JPanel panelLegenda;
+	private JLabel lblLiczbaZamowienTekst;
+	private static JLabel lblLiczbaZamowien;
+	
+	/*statystyki */
+	private static int liczbaZamowien = 0;
+	private static int liczbaZamowienZrealizowany = 0;
+	private static int liczbaMiejscZajetych = 0;
+	private JLabel lblLiczbaZamwienZrealizowanychTekst;
+	private static JLabel lblLiczbaZamowienZrealizowanych;
+	private JLabel lblIloPrzedmiotwTekst;
+	private static JLabel lblLbliloscprzedmiotow;
+	private JLabel lblIloscWszystkichMiejscTekst;
+	private static JLabel lblLiczbaMiejscZajetych;
+	private JLabel lblSredniCzasRealizacjiTekst;
+	private JLabel lblWszystkieZamowienia;
+	private JLabel lblMiejscaZajete;
+	private JLabel lblSredniCzasRealizacji;
 
 	/**
 	 * Launch the application.
@@ -144,6 +170,7 @@ public class Magazyn {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		lblNewLabel.setBounds(10, 11, 585, 50);
 		lblNewLabel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 16));
@@ -253,21 +280,20 @@ public class Magazyn {
 		mnOkno.add(mnZmienStyl);
 
 		mapa = new MapaMagazynu();
+		mapa.setBounds(10, 72, 792, 396);
 
 		mapa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		/* STOP MAGAZYNU */
 		btnStop = new JButton("STOP");
+		btnStop.setBounds(1120, 575, 115, 40);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				log.info("Magazyn został zatrzymany");
 
 				/*
 				 * TODO:
-				 * 
-				 * dodac wpis do konsoli
-				 * 
-				 * zatrzymac magazyn
+				 * zatrzymac magazyn()
 				 */
 				dodajWpisDoKonsoli("Magazyn został zatrzymany" + new Date().toString());
 			}
@@ -275,6 +301,7 @@ public class Magazyn {
 
 		/* START MAGAZYNU */
 		btnStart = new JButton("START");
+		btnStart.setBounds(1245, 579, 105, 32);
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -288,12 +315,12 @@ public class Magazyn {
 			}
 		});
 
-		lblStatystyki = new JLabel("Statystyki");
-
 		lblZamwienia = new JLabel("Zamówienia");
+		lblZamwienia.setBounds(1220, 110, 56, 14);
 
 		/* DODAJ ZAMOWIENIE */
 		btnDodaj = new JButton("Dodaj");
+		btnDodaj.setBounds(1216, 130, 61, 23);
 		btnDodaj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -308,6 +335,7 @@ public class Magazyn {
 
 		/* EDYTUJ ZAMOWIENIE */
 		btnEdytuj = new JButton("Edytuj");
+		btnEdytuj.setBounds(1287, 130, 63, 23);
 		btnEdytuj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -321,49 +349,77 @@ public class Magazyn {
 		});
 
 		panel = new JPanel();
+		panel.setBounds(599, 11, 203, 50);
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		panel_1 = new JPanel();
+		panel_1.setBounds(10, 474, 792, 119);
 		panel_1.setBorder(new TitledBorder(null, "Panel testowy", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		KonsolaScrollPane = new JScrollPane();
+		KonsolaScrollPane.setBounds(20, 619, 782, 71);
 
 		lblKonsola = new JLabel("Konsola");
-
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-				groupLayout.createSequentialGroup().addContainerGap().addGroup(
-						groupLayout.createParallelGroup(Alignment.LEADING).addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(
-								groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-										groupLayout.createSequentialGroup().addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 585, GroupLayout.PREFERRED_SIZE).addPreferredGap(
-												ComponentPlacement.RELATED).addComponent(panel, 0, 0, Short.MAX_VALUE)).addComponent(mapa, GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE).addGroup(
-										groupLayout.createSequentialGroup().addGap(10).addGroup(
-												groupLayout.createParallelGroup(Alignment.LEADING).addComponent(KonsolaScrollPane, GroupLayout.DEFAULT_SIZE, 782, Short.MAX_VALUE).addGroup(
-														groupLayout.createSequentialGroup().addComponent(lblKonsola).addGap(743)))))).addGap(318).addGroup(
-						groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(
-								groupLayout.createSequentialGroup().addGroup(
-										groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(
-												groupLayout.createSequentialGroup().addComponent(btnDodaj).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnEdytuj)).addGroup(
-												groupLayout.createSequentialGroup().addComponent(lblZamwienia).addGap(74)).addGroup(
-												groupLayout.createSequentialGroup().addComponent(btnStop, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE).addPreferredGap(
-														ComponentPlacement.UNRELATED).addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE))).addContainerGap())
-								.addGroup(groupLayout.createSequentialGroup().addComponent(lblStatystyki).addGap(39)))));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-				groupLayout.createSequentialGroup().addContainerGap().addGroup(
-						groupLayout.createParallelGroup(Alignment.TRAILING, false).addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addComponent(panel,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addGroup(
-						groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-								groupLayout.createSequentialGroup().addGap(49).addComponent(lblZamwienia).addPreferredGap(ComponentPlacement.RELATED).addGroup(
-										groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnDodaj).addComponent(btnEdytuj))).addGroup(
-								groupLayout.createSequentialGroup().addPreferredGap(ComponentPlacement.UNRELATED).addComponent(mapa, GroupLayout.PREFERRED_SIZE, 396, 396))).addPreferredGap(
-						ComponentPlacement.RELATED).addGroup(
-						groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(
-								groupLayout.createSequentialGroup().addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED,
-										GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(lblKonsola).addPreferredGap(ComponentPlacement.RELATED).addComponent(KonsolaScrollPane,
-										GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED)).addGroup(
-								groupLayout.createSequentialGroup().addComponent(lblStatystyki).addGap(94).addGroup(
-										groupLayout.createParallelGroup(Alignment.BASELINE, false).addComponent(btnStart, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE).addComponent(
-												btnStop, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)).addGap(75))).addGap(14)));
+		lblKonsola.setBounds(20, 599, 37, 14);
+		
+		panelStatystyki = new JPanel();
+		panelStatystyki.setBounds(820, 72, 234, 356);
+		panelStatystyki.setBorder(new TitledBorder(null, "Statystyki", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		
+		panelLegenda = new JPanel();
+		panelLegenda.setBounds(830, 439, 114, 148);
+		panelLegenda.setBorder(new TitledBorder(null, "Legenda", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelStatystyki.setLayout(null);
+		
+		lblLiczbaZamowienTekst = new JLabel("Liczba zamówień :");
+		lblLiczbaZamowienTekst.setBounds(10, 34, 94, 14);
+		panelStatystyki.add(lblLiczbaZamowienTekst);
+		
+		lblLiczbaZamowien = new JLabel("0");
+		lblLiczbaZamowien.setFont(new Font("Tahoma", Font.BOLD, 11));
+//		lblLiczbaZamowien.set
+		lblLiczbaZamowien.setBounds(205, 34, 19, 14);
+		panelStatystyki.add(lblLiczbaZamowien);
+		
+		lblLiczbaZamwienZrealizowanychTekst = new JLabel("Liczba zamówien zrealizowanych :");
+		lblLiczbaZamwienZrealizowanychTekst.setBounds(10, 59, 165, 14);
+		panelStatystyki.add(lblLiczbaZamwienZrealizowanychTekst);
+		
+		lblLiczbaZamowienZrealizowanych = new JLabel("0");
+		lblLiczbaZamowienZrealizowanych.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblLiczbaZamowienZrealizowanych.setBounds(205, 59, 19, 14);
+		panelStatystyki.add(lblLiczbaZamowienZrealizowanych);
+		
+		lblIloPrzedmiotwTekst = new JLabel("Ilość przedmiotów :");
+		lblIloPrzedmiotwTekst.setBounds(10, 84, 165, 14);
+		panelStatystyki.add(lblIloPrzedmiotwTekst);
+		
+		lblLbliloscprzedmiotow = new JLabel("0");
+		lblLbliloscprzedmiotow.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblLbliloscprzedmiotow.setBounds(205, 84, 19, 14);
+		panelStatystyki.add(lblLbliloscprzedmiotow);
+		
+		lblIloscWszystkichMiejscTekst = new JLabel("Wszystkie miejsca :");
+		lblIloscWszystkichMiejscTekst.setBounds(10, 109, 134, 14);
+		panelStatystyki.add(lblIloscWszystkichMiejscTekst);
+		
+		lblLiczbaMiejscZajetych = new JLabel("Miejsca Zajęte :");
+		lblLiczbaMiejscZajetych.setBounds(10, 134, 94, 14);
+		panelStatystyki.add(lblLiczbaMiejscZajetych);
+		
+		lblSredniCzasRealizacjiTekst = new JLabel("Średni czas realizacji :");
+		lblSredniCzasRealizacjiTekst.setBounds(10, 159, 165, 14);
+		panelStatystyki.add(lblSredniCzasRealizacjiTekst);
+		
+		lblWszystkieZamowienia = new JLabel("0");
+		lblWszystkieZamowienia.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblWszystkieZamowienia.setBounds(205, 109, 19, 14);
+		panelStatystyki.add(lblWszystkieZamowienia);
+		
+		lblMiejscaZajete = new JLabel("0");
+		lblMiejscaZajete.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblMiejscaZajete.setBounds(205, 134, 19, 14);
+		panelStatystyki.add(lblMiejscaZajete);
 		// KonsolaList = new JList(konsolaLista.toArray());
 
 		KonsolaList = new JList<>();
@@ -825,8 +881,25 @@ public class Magazyn {
 						gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(btnMinus).addComponent(lblPietro).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE,
 								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(btnPlus)).addContainerGap()));
 		panel.setLayout(gl_panel);
-
-		frame.getContentPane().setLayout(groupLayout);
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().add(panel_1);
+		frame.getContentPane().add(lblNewLabel);
+		frame.getContentPane().add(panel);
+		frame.getContentPane().add(mapa);
+		frame.getContentPane().add(KonsolaScrollPane);
+		frame.getContentPane().add(lblKonsola);
+		frame.getContentPane().add(panelStatystyki);
+		
+		lblSredniCzasRealizacji = new JLabel("0");
+		lblSredniCzasRealizacji.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblSredniCzasRealizacji.setBounds(205, 159, 19, 14);
+		panelStatystyki.add(lblSredniCzasRealizacji);
+		frame.getContentPane().add(btnDodaj);
+		frame.getContentPane().add(btnEdytuj);
+		frame.getContentPane().add(lblZamwienia);
+		frame.getContentPane().add(panelLegenda);
+		frame.getContentPane().add(btnStop);
+		frame.getContentPane().add(btnStart);
 
 		ButtonGroup styleGroup = new ButtonGroup();
 		JRadioButtonMenuItem styleRadioMenu;
@@ -893,5 +966,31 @@ public class Magazyn {
 	public static void dodajWpisDoKonsoli(String wpis) {
 		konsolaListModel.addElement(wpis);
 	}
-
+	
+	/*metody do statystyk */
+	
+	/*liczba zamowien */
+	public static void zwiekszLiczbeZamowien(){
+		liczbaZamowien ++;
+		lblLiczbaZamowien.setText(String.valueOf(liczbaZamowien));
+	}
+	
+	public static void zmniejszLiczbeZamowien(){
+		liczbaZamowien --;
+		lblLiczbaZamowien.setText(String.valueOf(liczbaZamowien));
+	}
+	
+	/*liczba zamowien zrealizowanych */
+	public static void zwiekszLiczbeZamowienZrealizowanych(){
+		liczbaZamowienZrealizowany ++;
+		lblLiczbaZamowienZrealizowanych.setText(String.valueOf(liczbaZamowienZrealizowany));
+	}
+	
+	public static void zmniejszLiczbeZamowienZrealizowanych(){
+		liczbaZamowienZrealizowany --;
+		lblLiczbaZamowienZrealizowanych.setText(String.valueOf(liczbaZamowienZrealizowany));
+	}
+	
+	/*liczba miejsc zajetych */
+	
 }
