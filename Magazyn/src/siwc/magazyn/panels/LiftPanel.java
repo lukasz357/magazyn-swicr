@@ -11,12 +11,8 @@ import javax.swing.SwingConstants;
 import siwc.magazyn.utils.MagazynUtils;
 
 public class LiftPanel extends JPanel {
-
-	/**
-	 * Create the panel.
-	 */
-
 	private static final long serialVersionUID = 3581127790689918702L;
+	
 	private final int XSIZE = MagazynUtils.boxSize;
 	private final int YSIZE = MagazynUtils.boxSize * 2;
 	private int x = 0;

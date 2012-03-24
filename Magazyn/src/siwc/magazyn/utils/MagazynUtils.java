@@ -22,6 +22,9 @@ public class MagazynUtils {
 	public static int boxSize = 18 * frameWidth / 1366;
 	public static Color defaultBoxBackground = Color.GRAY;
 	public static Color freeBoxBackround = Color.BLUE;
+	public static Color liftBackground = Color.RED;
+	public static Color busyBoxBackground = Color.YELLOW;
+	
 
 	// Regal
 	public static int liczbaRegalow = 3; // TODO - nie wykorzystywane chwilowo ;-)
@@ -44,6 +47,8 @@ public class MagazynUtils {
 	public static int mapWidth = getMapWidth();
 
 	public static int boxMovingSleepTime = 100;
+
+
 
 	private static int getMapHeight() {
 		int height = 0;
