@@ -35,6 +35,8 @@ public class MagazynUtils {
 	public static int rzedowWRegale = 4;
 	public static int regalWidth = boxSize * kolumnWRegale;
 	public static int regalHeight = boxSize * rzedowWRegale;
+	
+	@Deprecated
 	public static int regalY = -1; // kazdy regla ma inna!
 	public static int regalX = boxSize * 4;
 	public static int liczbaPieter = 5;
