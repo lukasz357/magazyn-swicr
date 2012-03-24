@@ -17,38 +17,39 @@ public class MapaMagazynu extends JPanel {
 	private static final long serialVersionUID = -8459627889558824665L;
 
 	private Logger log = Logger.getLogger(MapaMagazynu.class);
-	private RegalPanel regalPanel1;
-	private RegalPanel regalPanel2;
-	private RegalPanel regalPanel3;
-	private ArrayList<RegalPanel> regaly = new ArrayList<>();
+	private ArrayList<RegalPanel> regaly;
 	private LiftPanel lift;
 	private JPanel odbior;
 
-	private int regal1FreeBoxes = 1;
-	private int regal2FreeBoxes = 2;
-	private int regal3FreeBoxes = 1;
-
 	public MapaMagazynu() {
+		regaly = new ArrayList<>();
+
+		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++) {
+			regaly.add(new RegalPanel(MagazynUtils.defaultFreeBoxes));
+		}
+
+		initialize();
+
+	}
+
+	public MapaMagazynu(ArrayList<RegalPanel> regaly) {
+		this.regaly = regaly;
+		initialize();
+	}
+
+	public void initialize() {
+
 		setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		setSize(MagazynUtils.mapWidth, MagazynUtils.mapHeight);
 		setBackground(Color.WHITE);
 		setLayout(null);
 		log.info("Rozmiar mapy: " + MagazynUtils.mapWidth + "x" + MagazynUtils.mapHeight);
 
-		regalPanel1 = new RegalPanel(regal1FreeBoxes);
-		regalPanel1.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(0), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
-		add(regalPanel1);
-		regaly.add(regalPanel1);
-
-		regalPanel2 = new RegalPanel(regal2FreeBoxes);
-		regalPanel2.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(1), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
-		add(regalPanel2);
-		regaly.add(regalPanel2);
-
-		regalPanel3 = new RegalPanel(regal3FreeBoxes);
-		regalPanel3.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalY(2), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
-		add(regalPanel3);
-		regaly.add(regalPanel3);
+		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++) {
+			RegalPanel regal = regaly.get(i);
+			regal.setBounds(MagazynUtils.regalX, getRegalYPosition(i), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
+			add(regal);
+		}
 
 		lift = new LiftPanel();
 		lift.setBackground(MagazynUtils.liftBackground);
@@ -69,11 +70,11 @@ public class MapaMagazynu extends JPanel {
 
 	public void zmienKolorBoksu(String r, String position, Color c) {
 		if (r.equals("regal1")) {
-			regalPanel1.zmienKolorBoksu(position, c);
+			regaly.get(0).zmienKolorBoksu(position, c);
 		} else if (r.equals("regal2")) {
-			regalPanel2.zmienKolorBoksu(position, c);
+			regaly.get(1).zmienKolorBoksu(position, c);
 		} else if (r.equals("regal3")) {
-			regalPanel3.zmienKolorBoksu(position, c);
+			regaly.get(2).zmienKolorBoksu(position, c);
 		}
 	}
 
@@ -137,8 +138,6 @@ public class MapaMagazynu extends JPanel {
 		double yAktualne = lift.getY();
 		boolean isEnteringShelf = false;
 		boolean isEnteringReceivePoint = false;
-		System.out.println("xPo = " + xPo);
-		System.out.println("regal 3 = " + regalPanel3.getBounds().getMaxX());
 
 		for (RegalPanel it : regaly) {
 			if ((yAktualne >= (it.getBounds().getMinY() - MagazynUtils.liftStepY)) && (yAktualne < it.getBounds().getMaxY()) && (xPo == it.getBounds().getMaxX())) {
@@ -186,25 +185,15 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public void przesunBoxWPrawo(String regal, int level,  boolean czyDolny) {
-		if (regal.equals("regal1")) {
-			regalPanel1.moveBoxRight(level, czyDolny);
-		} else if (regal.equals("regal2")) {
-			regalPanel2.moveBoxRight(level, czyDolny);
-		} else if (regal.equals("regal3")) {
-			regalPanel3.moveBoxRight(level, czyDolny);
-		}
+	public void przesunBoxWPrawo(String regal, int level, boolean czyDolny) {
+		int regalIndex = Integer.parseInt(regal.substring(5))-1;
+		regaly.get(regalIndex).moveBoxRight(level, czyDolny);
 
 	}
 
 	public void przesunBoxWLewo(String regal, int level, boolean czyDolny) {
-		if (regal.equals("regal1")) {
-			regalPanel1.moveBoxLeft(level, czyDolny);
-		} else if (regal.equals("regal2")) {
-			regalPanel2.moveBoxLeft(level, czyDolny);
-		} else if (regal.equals("regal3")) {
-			regalPanel3.moveBoxLeft(level, czyDolny);
-		}
+		int regalIndex = Integer.parseInt(regal.substring(5))-1;
+		regaly.get(regalIndex).moveBoxLeft(level, czyDolny);
 	}
 
 	public void lifDown() {
@@ -223,44 +212,36 @@ public class MapaMagazynu extends JPanel {
 		}
 	}
 
-	public int getRegal1FreeBoxes() {
-		return regal1FreeBoxes;
+	public void setRegalFreeBoxes(int nrRegalu, int freeBoxes) {
+		regaly.get(nrRegalu).setFreeBoxes(freeBoxes);
 	}
 
-	public void setRegal1FreeBoxes(int regal1FreeBoxes) {
-		this.regal1FreeBoxes = regal1FreeBoxes;
-		regalPanel1.setFreeBoxes(regal1FreeBoxes);
-	}
-	
-
-	public int getRegal2FreeBoxes() {
-		return regal2FreeBoxes;
+	public int getRegalFreeBoxes(int nrRegalu) {
+		return regaly.get(nrRegalu).getFreeBoxes();
 	}
 
-	public void setRegal2FreeBoxes(int regal2FreeBoxes) {
-		this.regal2FreeBoxes = regal2FreeBoxes;
-		regalPanel2.setFreeBoxes(regal2FreeBoxes);
-	}
-
-
-	public int getRegal3FreeBoxes() {
-		return regal3FreeBoxes;
-	}
-
-	public void setRegal3FreeBoxes(int regal3FreeBoxes) {
-		this.regal3FreeBoxes = regal3FreeBoxes;
-		regalPanel3.setFreeBoxes(regal3FreeBoxes);
-		regalPanel3.revalidate();
-	}
-	
 	public int getLiftX() {
 		return lift.getX();
 	}
+
 	public int getLiftY() {
 		return lift.getY();
 	}
+
 	public int getLiftLeve() {
 		return lift.getLevel();
 	}
-	
+
+	private static int getRegalYPosition(int numerRegalu) {
+		int pos = 0;
+		pos += MagazynUtils.liftSizeY;
+
+		for (int i = 0; i < numerRegalu; i++) {
+			pos += MagazynUtils.regalHeight;
+			pos += MagazynUtils.liftSizeY;
+		}
+
+		return pos;
+	}
+
 }

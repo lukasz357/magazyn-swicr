@@ -10,8 +10,9 @@ public class Algorithm {
 	//TODO pobierac aktualna pozycje wozka z mapy a nie z magazynu
 	
 	MagazynTO magazyn;
-	
-	public Algorithm(MagazynTO magazyn, int wozekStartX, int wozekStartY) {
+	MapaMagazynu mapa;
+
+	public Algorithm(MagazynTO magazyn,  int wozekStartX, int wozekStartY) {
 		this.magazyn = magazyn;
 	}
 	
@@ -21,7 +22,6 @@ public class Algorithm {
 			PoleTO pole = znajdzPierwszeLepszeWolnePole();
 			
 			if (pole != null) {
-				MapaMagazynu mapa = new MapaMagazynu();
 				while(magazyn.getxWozka() - pole.getX() > 1 && magazyn.getyWozka() - pole.getY() > 1) {
 					if (magazyn.getxWozka() - pole.getX() < 0) {
 						int xWozka = magazyn.getxWozka();
@@ -91,5 +91,8 @@ public class Algorithm {
 				}
 			}
 			return null;
+	}
+	void setMapa(MapaMagazynu mapa) {
+		this.mapa = mapa;
 	}
 }
