@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.TreeMap;
 
-import javax.swing.Box;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
@@ -17,6 +15,7 @@ import siwc.magazyn.utils.MagazynUtils;
 public class RegalPanel extends JPanel {
 	private static final long serialVersionUID = 3160205159810161295L;
 
+	@SuppressWarnings("unused")
 	private Logger log = Logger.getLogger(RegalPanel.class);
 
 	private int rows = MagazynUtils.rzedowWRegale;
@@ -181,6 +180,9 @@ public class RegalPanel extends JPanel {
 		pokazPietro(pietro);
 	}
 	
+	public int getFreeBoxes() {
+		return liczbaPustychBoksow;
+	}
 
 	private TreeMap<String, BoxPanel> getLevelMap() {
 		switch (pietro) {
@@ -346,6 +348,8 @@ public class RegalPanel extends JPanel {
 		
 		return null;
 	}
+
+
 	
 //	public static void main(String ... args) {
 //		RegalPanel r = new RegalPanel(2);

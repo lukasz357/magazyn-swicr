@@ -208,6 +208,7 @@ public class Magazyn {
 		FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Plik tekstowy (*.txt)", "txt");
 		fileChooser.setFileFilter(txtFilter);
 		fileChooser.addChoosableFileFilter(txtFilter);
+		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Plik CSV (*.csv)", "csv"));
 		fileChooser.setMultiSelectionEnabled(false);
 		fileChooser.setAcceptAllFileFilterUsed(true);
 
@@ -468,19 +469,19 @@ public class Magazyn {
 		regal1_rb1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal1.setEnabled(false);
-				mapa.setRegal1FreeBoxes(1);
+				mapa.setRegalFreeBoxes(0, 1);
 			}
 		});
-		regal1_rb1.setSelected(mapa.getRegal1FreeBoxes() == 1);
+		regal1_rb1.setSelected(mapa.getRegalFreeBoxes(0) == 1);
 
 		regal1_rb2 = new JRadioButton("2");
 		regal1_rb2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal1.setEnabled(true);
-				mapa.setRegal1FreeBoxes(2);
+				mapa.setRegalFreeBoxes(0, 2);
 			}
 		});
-		regal1_rb2.setSelected(mapa.getRegal1FreeBoxes() == 2);
+		regal1_rb2.setSelected(mapa.getRegalFreeBoxes(0) == 2);
 
 		regal1ButtonGroup.add(regal1_rb1);
 		regal1ButtonGroup.add(regal1_rb2);
@@ -490,7 +491,7 @@ public class Magazyn {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		chckBoxRegal1.setEnabled(mapa.getRegal1FreeBoxes() == 2);
+		chckBoxRegal1.setEnabled(mapa.getRegalFreeBoxes(0) == 2);
 
 		ButtonGroup regal2ButtonGroup = new ButtonGroup();
 
@@ -498,20 +499,20 @@ public class Magazyn {
 		regal2_rb1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal2.setEnabled(false);
-				mapa.setRegal2FreeBoxes(1);
+				mapa.setRegalFreeBoxes(1, 1);
 
 			}
 		});
-		regal2_rb1.setSelected(mapa.getRegal2FreeBoxes() == 1);
+		regal2_rb1.setSelected(mapa.getRegalFreeBoxes(1) == 1);
 
 		regal2_rb2 = new JRadioButton("2");
 		regal2_rb2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal2.setEnabled(true);
-				mapa.setRegal2FreeBoxes(2);
+				mapa.setRegalFreeBoxes(1, 2);
 			}
 		});
-		regal2_rb2.setSelected(mapa.getRegal2FreeBoxes() == 2);
+		regal2_rb2.setSelected(mapa.getRegalFreeBoxes(1) == 2);
 
 		regal2ButtonGroup.add(regal2_rb1);
 		regal2ButtonGroup.add(regal2_rb2);
@@ -522,7 +523,7 @@ public class Magazyn {
 
 			}
 		});
-		chckBoxRegal2.setEnabled(mapa.getRegal2FreeBoxes() == 2);
+		chckBoxRegal2.setEnabled(mapa.getRegalFreeBoxes(1) == 2);
 
 		ButtonGroup regal3ButtonGroup = new ButtonGroup();
 
@@ -530,19 +531,19 @@ public class Magazyn {
 		regal3_rb1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal3.setEnabled(false);
-				mapa.setRegal3FreeBoxes(1);
+				mapa.setRegalFreeBoxes(2, 1);
 			}
 		});
-		regal3_rb1.setSelected(mapa.getRegal3FreeBoxes() == 1);
+		regal3_rb1.setSelected(mapa.getRegalFreeBoxes(2) == 1);
 
 		regal3_rb2 = new JRadioButton("2");
 		regal3_rb2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal3.setEnabled(true);
-				mapa.setRegal3FreeBoxes(2);
+				mapa.setRegalFreeBoxes(2, 2);
 			}
 		});
-		regal3_rb2.setSelected(mapa.getRegal3FreeBoxes() == 2);
+		regal3_rb2.setSelected(mapa.getRegalFreeBoxes(2) == 2);
 
 		regal3ButtonGroup.add(regal3_rb1);
 		regal3ButtonGroup.add(regal3_rb2);
@@ -552,7 +553,7 @@ public class Magazyn {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		chckBoxRegal3.setEnabled(mapa.getRegal3FreeBoxes() == 2);
+		chckBoxRegal3.setEnabled(mapa.getRegalFreeBoxes(2) == 2);
 
 		// TODO MOCK ZMAIAN W BOXACH - do wywalenia soon
 		final Color[] colors = new Color[4];

@@ -1,11 +1,26 @@
 package siwc.magazyn.logic;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.TreeMap;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import org.apache.log4j.Logger;
+
 import siwc.magazyn.dto.MagazynTO;
 import siwc.magazyn.dto.PoleTO;
 import siwc.magazyn.dto.TowarTO;
+import siwc.magazyn.panels.RegalPanel;
+import siwc.magazyn.utils.MagazynUtils;
 
 public class IOLogic {
-
+	private Logger log = Logger.getLogger(IOLogic.class);
+	
 	public MagazynTO getMagazynFromFile() {
 		MagazynTO magazyn = new MagazynTO();
 		magazyn.setWielkoscXMagazynu(4);
@@ -76,8 +91,84 @@ public class IOLogic {
 		
 	}
 	
+	public ArrayList<RegalPanel> readFileAsRegalPanelArray(File file) {
+		ArrayList<RegalPanel> regaly = new ArrayList<>();
+
+		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++)
+			regaly.add(new RegalPanel(1));
+
+		FileReader fr = null;
+		BufferedReader br = null;
+		try {
+			fr = new FileReader(file);
+			br = new BufferedReader(fr);
+
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (line.startsWith("#") || line.equals("")) // komentarz - pusta linia
+					continue;
+
+				String[] tLine = null;
+				if (line.contains(";"))
+					tLine = line.split(";");
+				else if (line.contains(","))
+					tLine = line.split(",");
+				if (tLine == null || tLine.length < MagazynUtils.liczbaKolumnPlikuZamowien - 1) {
+					log.error("Problem przy wczytywaniu pliku!");
+					return null;
+				}
+				// dla pliku: REGAL;PIETRO;POZYCJA;NAZWA;PRODUCENT;KOD TOWARU
+				String regal = tLine[0];
+				String pietro = tLine[1];
+				String pozycja = tLine[2];
+				String nazwa = tLine[3];
+				String producent = tLine[4];
+				String kodTowaru = tLine[6];
+
+				// TODO 
+
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return regaly;
+	}
+
+	public MagazynTO convertToMagazynTO(ArrayList<RegalPanel> regaly) {
+		MagazynTO magazyn = new MagazynTO();
+		magazyn.setWielkoscXMagazynu(MagazynUtils.kolumnWRegale);
+		magazyn.setWielkoscYMagazynu(MagazynUtils.rzedowWRegale);
+
+		TreeMap<Integer, PoleTO[][]> pietra = new TreeMap<>();
+		for (int i = 0; i < MagazynUtils.liczbaPieter; i++) {
+			pietra.put(i, new PoleTO[magazyn.getWielkoscXMagazynu()][magazyn.getWielkoscYMagazynu()]);
+		}
+		//TODO
+		return magazyn;
+	}
+	
+
 	public String saveMagazynToFile() {
 		return "Wszystko ok";
 	}
+	
+	public static void main(String ... strings ) {
+		JFileChooser fileChooser = new JFileChooser();
+		FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Plik tekstowy (*.txt)", "txt");
+		fileChooser.setFileFilter(txtFilter);
+		fileChooser.addChoosableFileFilter(txtFilter);
+		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Plik CSV (*.csv)", "csv"));
+		fileChooser.setMultiSelectionEnabled(false);
+		fileChooser.setAcceptAllFileFilterUsed(true);
+		
+		int result = fileChooser.showOpenDialog(null);
+		if(result == JFileChooser.APPROVE_OPTION) {
+			System.out.println(fileChooser.getSelectedFile());
+		}
+	}
+	
+
 	
 }

@@ -3,6 +3,7 @@ package siwc.magazyn.utils;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
+import java.awt.LayoutManager;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 
@@ -24,6 +25,8 @@ public class MagazynUtils {
 	public static Color freeBoxBackround = Color.BLUE;
 	public static Color liftBackground = Color.RED;
 	public static Color busyBoxBackground = Color.YELLOW;
+	public static int boxMovingSleepTime = 100;
+	public static int defaultFreeBoxes = 1;
 	
 
 	// Regal
@@ -46,7 +49,8 @@ public class MagazynUtils {
 	public static int mapHeight = getMapHeight();
 	public static int mapWidth = getMapWidth();
 
-	public static int boxMovingSleepTime = 100;
+	//pliki
+	public static int liczbaKolumnPlikuZamowien = 6;
 
 
 
@@ -72,19 +76,6 @@ public class MagazynUtils {
 
 		width += regalX;
 		return width;
-	}
-
-	public static int getRegalY(int numerRegalu) { // nie wiem jak to nazwac :D ale ma to liczyc wartosc Y do setbounds(...) ;-)
-		//CO TO ZA KOMENTARZE? Nie rozumiem co to setBounds! Gdzie dokumentacja?
-		int pos = 0;
-		pos += liftSizeY;
-
-		for (int i = 0; i < numerRegalu; i++) {
-			pos += regalHeight;
-			pos += liftSizeY;
-		}
-
-		return pos;
 	}
 	
 	public static void sleep(int time) {
