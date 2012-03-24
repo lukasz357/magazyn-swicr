@@ -31,12 +31,12 @@ public class MagazynUtils {
 
 	// Regal
 	public static int liczbaRegalow = 3; // TODO - nie wykorzystywane chwilowo ;-)
-	public static int kolumnWRegale = 30;
+	public static int kolumnWRegale = 38;
 	public static int rzedowWRegale = 4;
 	public static int regalWidth = boxSize * kolumnWRegale;
 	public static int regalHeight = boxSize * rzedowWRegale;
-	public static int regalY = -1;
-	public static int regalX = boxSize * 7;
+	public static int regalY = -1; // kazdy regla ma inna!
+	public static int regalX = boxSize * 4;
 	public static int liczbaPieter = 5;
 
 	// wozek
@@ -44,6 +44,10 @@ public class MagazynUtils {
 	public static int liftSizeY = boxSize * 2;
 	public static int liftStepX = boxSize;
 	public static int liftStepY = boxSize;
+	
+	// odbior
+	public static int odbiorWidth = 4 * boxSize;
+	public static int odbiorHeight = liftSizeY;
 
 	// Mapa
 	public static int mapHeight = getMapHeight();
@@ -74,7 +78,7 @@ public class MagazynUtils {
 		for (int i = 0; i < kolumnWRegale; i++)
 			width += liftSizeX;
 
-		width += regalX;
+		width += 2*boxSize;
 		return width;
 	}
 	

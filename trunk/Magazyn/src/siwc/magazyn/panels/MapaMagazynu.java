@@ -63,7 +63,7 @@ public class MapaMagazynu extends JPanel {
 		label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		odbior.add(label, BorderLayout.CENTER);
 		int odbiorPozycjaY = MagazynUtils.mapHeight - MagazynUtils.liftSizeY;
-		odbior.setBounds(0, odbiorPozycjaY, 4 * MagazynUtils.liftSizeX, MagazynUtils.liftSizeY);
+		odbior.setBounds(0, odbiorPozycjaY, MagazynUtils.odbiorWidth, MagazynUtils.odbiorHeight);
 		add(odbior);
 
 	}
