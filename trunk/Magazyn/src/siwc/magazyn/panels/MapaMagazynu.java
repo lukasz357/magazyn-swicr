@@ -51,7 +51,7 @@ public class MapaMagazynu extends JPanel {
 		regaly.add(regalPanel3);
 
 		lift = new LiftPanel();
-		lift.setBackground(Color.red);
+		lift.setBackground(MagazynUtils.liftBackground);
 		lift.setBounds(lift.getX(), lift.getY(), lift.getXsize(), lift.getYsize());
 		add(lift);
 

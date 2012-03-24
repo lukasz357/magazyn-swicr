@@ -132,11 +132,13 @@ public class Magazyn {
 	private JLabel lblPkaTransferowa;
 	private JPanel panel_2;
 	private JPanel panel_3;
-	private JPanel panel_4;
-	private JLabel lblWzek;
 	private JPanel panel_5;
+	private JLabel lblWzek;
+	private JPanel panel_6;
 	private JScrollPane scrollPaneListaZamowien;
 	private static JList listZamowienia;
+	private JPanel panel_4;
+	private JLabel lblBoksZajety;
 
 	/**
 	 * Launch the application.
@@ -339,7 +341,7 @@ public class Magazyn {
 		panelStatystyki.setBorder(new TitledBorder(null, "Statystyki", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		panelLegenda = new JPanel();
-		panelLegenda.setBounds(830, 439, 185, 148);
+		panelLegenda.setBounds(820, 439, 234, 148);
 		panelLegenda.setBorder(new TitledBorder(null, "Legenda", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelStatystyki.setLayout(null);
 
@@ -831,50 +833,62 @@ public class Magazyn {
 		frame.getContentPane().add(panelLegenda);
 		panelLegenda.setLayout(null);
 
-		lblPustaPka = new JLabel("pusta półka");
-		lblPustaPka.setBounds(62, 22, 70, 14);
+		lblPustaPka = new JLabel("boks wolny");
+		lblPustaPka.setBounds(38, 22, 70, 14);
 		panelLegenda.add(lblPustaPka);
 
-		lblPkaTransferowa = new JLabel("półka transferowa");
-		lblPkaTransferowa.setBounds(62, 41, 102, 14);
+		lblPkaTransferowa = new JLabel("boks do przesuwania");
+		lblPkaTransferowa.setBounds(38, 47, 102, 14);
 		panelLegenda.add(lblPkaTransferowa);
 
 		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(10, 22, 17, 14);
+		panel_2.setBackground(MagazynUtils.defaultBoxBackground);
+		panel_2.setBounds(10, 20, MagazynUtils.boxSize, MagazynUtils.boxSize);
 		panelLegenda.add(panel_2);
 
 		panel_3 = new JPanel();
-		panel_3.setBackground(Color.BLUE);
-		panel_3.setBounds(10, 41, 17, 14);
+		panel_3.setBackground(MagazynUtils.freeBoxBackround);
+		panel_3.setBounds(10, (int) (panel_2.getBounds().getY() + MagazynUtils.boxSize + 5), MagazynUtils.boxSize, MagazynUtils.boxSize);
 		panelLegenda.add(panel_3);
-
+		
 		panel_4 = new JPanel();
-		panel_4.setBackground(Color.RED);
-		panel_4.setBounds(10, 61, 17, 38);
+		panel_4.setBackground(MagazynUtils.busyBoxBackground);
+		panel_4.setBounds(10, (int) (panel_3.getBounds().getY() + MagazynUtils.boxSize + 5), MagazynUtils.boxSize, MagazynUtils.boxSize);
 		panelLegenda.add(panel_4);
+		
+		lblBoksZajety = new JLabel("boks zajęty");
+		lblBoksZajety.setBounds(38, 70, 89, 14);
+		panelLegenda.add(lblBoksZajety);
+		
+		panel_5 = new JPanel();
+		panel_5.setBackground(MagazynUtils.liftBackground);
+		panel_5.setBounds(10, (int) (panel_4.getBounds().getY() + MagazynUtils.boxSize + 5), MagazynUtils.liftSizeX, MagazynUtils.liftSizeY);
+		panelLegenda.add(panel_5);
 
 		lblWzek = new JLabel("wózek");
-		lblWzek.setBounds(62, 66, 46, 14);
+		lblWzek.setBounds(38, 99, 46, 14);
 		panelLegenda.add(lblWzek);
+		
+		
+		
 		frame.getContentPane().add(btnStop);
 		frame.getContentPane().add(btnStart);
 
-		panel_5 = new JPanel();
-		panel_5.setBorder(new TitledBorder(null, "Zam\u00F3wienia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_5.setBounds(1138, 72, 212, 341);
-		frame.getContentPane().add(panel_5);
-		panel_5.setLayout(null);
+		panel_6 = new JPanel();
+		panel_6.setBorder(new TitledBorder(null, "Zam\u00F3wienia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_6.setBounds(1138, 72, 212, 341);
+		frame.getContentPane().add(panel_6);
+		panel_6.setLayout(null);
 		btnDodaj = new JButton("Dodaj");
 		btnDodaj.setBounds(10, 23, 61, 23);
-		panel_5.add(btnDodaj);
+		panel_6.add(btnDodaj);
 		btnEdytuj = new JButton("Edytuj");
 		btnEdytuj.setBounds(81, 23, 63, 23);
-		panel_5.add(btnEdytuj);
+		panel_6.add(btnEdytuj);
 
 		scrollPaneListaZamowien = new JScrollPane();
 		scrollPaneListaZamowien.setBounds(10, 69, 192, 261);
-		panel_5.add(scrollPaneListaZamowien);
+		panel_6.add(scrollPaneListaZamowien);
 
 		listZamowienia = new JList();
 		listZamowienia.setModel(zamowieniaListModel);
