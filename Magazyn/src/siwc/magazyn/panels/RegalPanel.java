@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.TreeMap;
 
+import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
 
 import siwc.magazyn.dto.PoleTO;
+import siwc.magazyn.dto.TowarTO;
 import siwc.magazyn.utils.MagazynUtils;
 
 public class RegalPanel extends JPanel {
@@ -18,6 +20,8 @@ public class RegalPanel extends JPanel {
 	@SuppressWarnings("unused")
 	private Logger log = Logger.getLogger(RegalPanel.class);
 
+	private int regalID;
+	
 	private int rows = MagazynUtils.rzedowWRegale;
 	private int cols = MagazynUtils.kolumnWRegale;
 	private int pietro = 0;
@@ -50,6 +54,7 @@ public class RegalPanel extends JPanel {
 			char c = (char) (65 + i);
 			for (int j = 0; j < cols; j++) {
 				String position = c + Integer.toString(j + 1);
+//				System.out.println("Position: "+position);
 				mBox = level.get(position);
 				bp = new BoxPanel(j, i, new PoleTO());
 				bp.setBackground(mBox.getBackground());
@@ -60,6 +65,11 @@ public class RegalPanel extends JPanel {
 			}
 		}
 
+	}
+	
+	public RegalPanel(int liczbaPustychBoksow, int id){
+		this(liczbaPustychBoksow);
+		setRegalID(id);
 	}
 
 	public void zmienKolorBoksu(String position, Color c) {
@@ -347,6 +357,77 @@ public class RegalPanel extends JPanel {
 		} 
 		
 		return null;
+	}
+
+	public TowarTO getTowarByLevelAndPosition(int level, String position){
+		TreeMap<String, BoxPanel> levelMap = null;
+		BoxPanel boxPanel = null;
+		PoleTO box = null;
+		TowarTO towar = null;
+		
+		if((levelMap = getLevelMap(level)) != null) {
+			if((boxPanel = levelMap.get(position)) != null){
+				if((box = boxPanel.getBox()) != null) {
+					return box.getTowar();
+				}
+				else
+					log.error("Nie istnieje żaden towar na pietrze: "+level+" na pozycji: "+position);
+			}
+			else
+				log.error("Nie znaleziono pozycji o podanym numerze: "+position);
+		}
+		else
+			log.error("Nie znaleziono pietra o podanym numerze: "+level);
+		
+		return towar;
+	}
+	
+	public int getRegalID() {
+		return regalID;
+	}
+
+	public void setRegalID(int regalID) {
+		this.regalID = regalID;
+	}
+
+	public TreeMap<String, BoxPanel> getPietro0() {
+		return pietro0;
+	}
+
+	public void setPietro0(TreeMap<String, BoxPanel> pietro0) {
+		this.pietro0 = pietro0;
+	}
+
+	public TreeMap<String, BoxPanel> getPietro1() {
+		return pietro1;
+	}
+
+	public void setPietro1(TreeMap<String, BoxPanel> pietro1) {
+		this.pietro1 = pietro1;
+	}
+
+	public TreeMap<String, BoxPanel> getPietro2() {
+		return pietro2;
+	}
+
+	public void setPietro2(TreeMap<String, BoxPanel> pietro2) {
+		this.pietro2 = pietro2;
+	}
+
+	public TreeMap<String, BoxPanel> getPietro3() {
+		return pietro3;
+	}
+
+	public void setPietro3(TreeMap<String, BoxPanel> pietro3) {
+		this.pietro3 = pietro3;
+	}
+
+	public TreeMap<String, BoxPanel> getPietro4() {
+		return pietro4;
+	}
+
+	public void setPietro4(TreeMap<String, BoxPanel> pietro4) {
+		this.pietro4 = pietro4;
 	}
 
 
