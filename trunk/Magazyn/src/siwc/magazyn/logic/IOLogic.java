@@ -95,16 +95,15 @@ public class IOLogic {
 		ArrayList<RegalPanel> regaly = new ArrayList<>();
 
 		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++)
-			regaly.add(new RegalPanel(1));
-
+			regaly.add(new RegalPanel(1, i+1));
 		FileReader fr = null;
-		BufferedReader br = null;
+		BufferedReader in = null;
 		try {
 			fr = new FileReader(file);
-			br = new BufferedReader(fr);
+			in = new BufferedReader(fr);
 
 			String line;
-			while ((line = br.readLine()) != null) {
+			while ((line = in.readLine()) != null) {
 				if (line.startsWith("#") || line.equals("")) // komentarz - pusta linia
 					continue;
 
@@ -114,20 +113,33 @@ public class IOLogic {
 				else if (line.contains(","))
 					tLine = line.split(",");
 				if (tLine == null || tLine.length < MagazynUtils.liczbaKolumnPlikuZamowien - 1) {
-					log.error("Problem przy wczytywaniu pliku!");
+					log.error("Problem przy wczytywaniu przedmiotów z pliku!");
 					return null;
 				}
-				// dla pliku: REGAL;PIETRO;POZYCJA;NAZWA;PRODUCENT;KOD TOWARU
-				String regal = tLine[0];
-				String pietro = tLine[1];
-				String pozycja = tLine[2];
-				String nazwa = tLine[3];
-				String producent = tLine[4];
-				String kodTowaru = tLine[6];
+				// dla pliku: REGAL;PIETRO;POZYCJA_X; POZYCJA_Y;NAZWA;PRODUCENT;KOD TOWARU
+				try{
+					int regalID = Integer.parseInt(tLine[0]);
+					int pietro = Integer.parseInt(tLine[1]);
+					String pozycja = tLine[2];
+					String nazwa = tLine[4];
+					String producent = tLine[5];
+					String kodTowaru = tLine[6];
+					
+					RegalPanel rp = regaly.get(regalID - 1);
+					TowarTO towar = rp.getTowarByLevelAndPosition(pietro, pozycja);
+					if(towar != null) {
+						towar.setNazwa(nazwa);
+						towar.setProducent(producent);
+						towar.setKodTowaru(kodTowaru);
+					}
 
-				// TODO 
-
+					System.out.println("ID: "+regalID + "|pietro: "+pietro+"|pozycja: "+pozycja+"|nazwa: "+nazwa+"|producent: "+producent+"|kodTowaru: "+kodTowaru);
+				}catch(NumberFormatException e){
+					log.error("Problem podczas parsowania identyfikatora regalu lub pozycji");
+					e.printStackTrace();
+				}
 			}
+			in.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -155,6 +167,7 @@ public class IOLogic {
 	}
 	
 	public static void main(String ... strings ) {
+		IOLogic lg = new IOLogic();
 		JFileChooser fileChooser = new JFileChooser();
 		FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Plik tekstowy (*.txt)", "txt");
 		fileChooser.setFileFilter(txtFilter);
@@ -165,7 +178,8 @@ public class IOLogic {
 		
 		int result = fileChooser.showOpenDialog(null);
 		if(result == JFileChooser.APPROVE_OPTION) {
-			System.out.println(fileChooser.getSelectedFile());
+//			System.out.println(fileChooser.getSelectedFile());
+			lg.readFileAsRegalPanelArray(fileChooser.getSelectedFile());
 		}
 	}
 	
