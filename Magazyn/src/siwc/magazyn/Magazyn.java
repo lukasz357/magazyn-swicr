@@ -71,7 +71,7 @@ public class Magazyn {
 
 	private JButton btnStop;
 	private JButton btnStart;
-	private JButton btnDodaj;
+	private JButton btnWczytajZamowienia;
 	private JButton btnEdytuj;
 	private JPanel panel;
 	private JLabel lblPietro;
@@ -89,6 +89,7 @@ public class Magazyn {
 	/* Listy konsoli/zamowien */
 	private static DefaultListModel<String> konsolaListModel = new DefaultListModel<String>();
 	private static DefaultListModel<String> zamowieniaListModel = new DefaultListModel<String>();
+	private static DefaultListModel<String> produktyListModel = new DefaultListModel<String>();
 	private JLabel lblKonsola;
 	private JLabel lblR;
 	private JLabel lblR_1;
@@ -139,6 +140,10 @@ public class Magazyn {
 	private static JList listZamowienia;
 	private JPanel panel_4;
 	private JLabel lblBoksZajety;
+	private JPanel panel_7_produkty;
+	private JButton btnWczytajProdukty;
+	private JScrollPane scrollPaneProdukty;
+	private static JList listProdukty;
 
 	/**
 	 * Launch the application.
@@ -291,7 +296,7 @@ public class Magazyn {
 
 		/* STOP MAGAZYNU */
 		btnStop = new JButton("STOP");
-		btnStop.setBounds(1120, 575, 115, 40);
+		btnStop.setBounds(1103, 650, 115, 40);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				log.info("Magazyn został zatrzymany");
@@ -305,7 +310,7 @@ public class Magazyn {
 
 		/* START MAGAZYNU */
 		btnStart = new JButton("START");
-		btnStart.setBounds(1245, 579, 105, 32);
+		btnStart.setBounds(1228, 650, 109, 40);
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -877,14 +882,14 @@ public class Magazyn {
 
 		panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Zam\u00F3wienia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_6.setBounds(1138, 72, 212, 341);
+		panel_6.setBounds(1138, 11, 212, 336);
 		frame.getContentPane().add(panel_6);
 		panel_6.setLayout(null);
-		btnDodaj = new JButton("Dodaj");
-		btnDodaj.setBounds(10, 23, 61, 23);
-		panel_6.add(btnDodaj);
+		btnWczytajZamowienia = new JButton("Wczytaj");
+		btnWczytajZamowienia.setBounds(58, 23, 71, 23);
+		panel_6.add(btnWczytajZamowienia);
 		btnEdytuj = new JButton("Edytuj");
-		btnEdytuj.setBounds(81, 23, 63, 23);
+		btnEdytuj.setBounds(139, 23, 63, 23);
 		panel_6.add(btnEdytuj);
 
 		scrollPaneListaZamowien = new JScrollPane();
@@ -894,6 +899,40 @@ public class Magazyn {
 		listZamowienia = new JList();
 		listZamowienia.setModel(zamowieniaListModel);
 		scrollPaneListaZamowien.setViewportView(listZamowienia);
+		
+		panel_7_produkty = new JPanel();
+		panel_7_produkty.setBorder(new TitledBorder(null, "Produkty", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_7_produkty.setBounds(1138, 358, 212, 268);
+		frame.getContentPane().add(panel_7_produkty);
+		panel_7_produkty.setLayout(null);
+		
+		/* wczytaj produkty */
+		btnWczytajProdukty = new JButton("Wczytaj");
+		btnWczytajProdukty.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				log.info("wczytywanie produktów");
+				
+				int result = fileChooser.showOpenDialog(frame);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					log.info("Wybrano: " + fileChooser.getSelectedFile());
+					
+				}
+				
+				
+				
+				dodajWpisDoKonsoli("Wczytano produkty z pliku : " + fileChooser.getSelectedFile());
+			}
+		});
+		
+		btnWczytajProdukty.setBounds(113, 33, 89, 23);
+		panel_7_produkty.add(btnWczytajProdukty);
+		
+		scrollPaneProdukty = new JScrollPane();
+		scrollPaneProdukty.setBounds(10, 67, 192, 190);
+		panel_7_produkty.add(scrollPaneProdukty);
+		
+		listProdukty = new JList();
+		scrollPaneProdukty.setViewportView(listProdukty);
 		btnEdytuj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -905,7 +944,7 @@ public class Magazyn {
 				log.info("Edytowano zamówienie zamówienie");
 			}
 		});
-		btnDodaj.addActionListener(new ActionListener() {
+		btnWczytajZamowienia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				/*
@@ -913,7 +952,14 @@ public class Magazyn {
 				 * 
 				 * dodaj zamowienie zaloguj w konsoli
 				 */
-				log.info("Dodano zamówienie");
+				int result = fileChooser.showOpenDialog(frame);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					log.info("Wybrano: " + fileChooser.getSelectedFile());
+					
+				}
+				log.info("Wczytano zamówienia");
+				
+				dodajWpisDoKonsoli("Wczytano zamówienia z pliku :" + fileChooser.getSelectedFile());
 			}
 		});
 
@@ -1041,4 +1087,17 @@ public class Magazyn {
 			log.error("przekazana pusta lista zamowien");
 		}
 	}
+	
+	/* produkty */
+	public static void dodajProdukty(List<String> listaProduktow){
+		if(listaProduktow != null){
+			for(String s: listaProduktow)
+				produktyListModel.addElement(s);
+			listProdukty.setModel(produktyListModel);
+		}else{
+			log.error("pusta lista produktow");
+		}
+		
+	}
+	
 }
