@@ -116,14 +116,14 @@ public class IOLogic {
 					log.error("Problem przy wczytywaniu przedmiotów z pliku!");
 					return null;
 				}
-				// dla pliku: REGAL;PIETRO;POZYCJA_X; POZYCJA_Y;NAZWA;PRODUCENT;KOD TOWARU
+				// dla pliku: REGAL;PIETRO;POZYCJA(np A4);NAZWA;PRODUCENT;KOD TOWARU
 				try{
 					int regalID = Integer.parseInt(tLine[0]);
 					int pietro = Integer.parseInt(tLine[1]);
 					String pozycja = tLine[2];
-					String nazwa = tLine[4];
-					String producent = tLine[5];
-					String kodTowaru = tLine[6];
+					String nazwa = tLine[3];
+					String producent = tLine[4];
+					String kodTowaru = tLine[5];
 					
 					RegalPanel rp = regaly.get(regalID - 1);
 					TowarTO towar = rp.getTowarByLevelAndPosition(pietro, pozycja);
