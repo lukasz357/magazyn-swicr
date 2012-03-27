@@ -135,7 +135,7 @@ public class IOLogic {
 
 					System.out.println("ID: "+regalID + "|pietro: "+pietro+"|pozycja: "+pozycja+"|nazwa: "+nazwa+"|producent: "+producent+"|kodTowaru: "+kodTowaru);
 				}catch(NumberFormatException e){
-					log.error("Problem podczas parsowania identyfikatora regalu lub pozycji");
+					log.error("Problem podczas parsowania identyfikatora regalu lub pietra");
 					e.printStackTrace();
 				}
 			}
