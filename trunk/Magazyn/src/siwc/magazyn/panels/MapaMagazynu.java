@@ -47,7 +47,7 @@ public class MapaMagazynu extends JPanel {
 
 		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++) {
 			RegalPanel regal = regaly.get(i);
-			regal.setBounds(MagazynUtils.regalX, getRegalYPosition(i), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
+			regal.setBounds(MagazynUtils.regalX, MagazynUtils.getRegalYPosition(i), MagazynUtils.regalWidth, MagazynUtils.regalHeight);
 			add(regal);
 		}
 
@@ -230,18 +230,6 @@ public class MapaMagazynu extends JPanel {
 
 	public int getLiftLeve() {
 		return lift.getLevel();
-	}
-
-	public static int getRegalYPosition(int numerRegalu) {
-		int pos = 0;
-		pos += MagazynUtils.liftSizeY;
-
-		for (int i = 0; i < numerRegalu; i++) {
-			pos += MagazynUtils.regalHeight;
-			pos += MagazynUtils.liftSizeY;
-		}
-
-		return pos;
 	}
 
 }

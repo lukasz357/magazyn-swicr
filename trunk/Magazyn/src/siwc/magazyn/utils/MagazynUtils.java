@@ -91,4 +91,16 @@ public class MagazynUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	public static int getRegalYPosition(int numerRegalu) {
+		int pos = 0;
+		pos += MagazynUtils.liftSizeY;
+
+		for (int i = 0; i < numerRegalu; i++) {
+			pos += MagazynUtils.regalHeight;
+			pos += MagazynUtils.liftSizeY;
+		}
+
+		return pos;
+	}
 }
