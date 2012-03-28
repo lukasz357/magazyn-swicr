@@ -16,7 +16,6 @@ import siwc.magazyn.dto.MagazynTO;
 import siwc.magazyn.dto.PoleTO;
 import siwc.magazyn.dto.TowarTO;
 import siwc.magazyn.panels.BoxPanel;
-import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.utils.MagazynUtils;
 
@@ -140,7 +139,6 @@ public class IOLogic {
 						log.error("Niezgodność identyfikatora regalu. Brak regalu o ID: "+regalID);
 					}
 
-//					System.out.println("ID: "+regalID + "|pietro: "+pietro+"|pozycja: "+pozycja+"|nazwa: "+nazwa+"|producent: "+producent+"|kodTowaru: "+kodTowaru);
 				}catch(NumberFormatException e){
 					log.error("Problem podczas parsowania identyfikatora regalu lub pietra");
 					e.printStackTrace();
@@ -204,7 +202,6 @@ public class IOLogic {
 		
 		int result = fileChooser.showOpenDialog(null);
 		if(result == JFileChooser.APPROVE_OPTION) {
-//			System.out.println(fileChooser.getSelectedFile());
 			ArrayList<RegalPanel> l = lg.readFileAsRegalPanelArray(fileChooser.getSelectedFile());
 			lg.convertToMagazynTO(l);
 		}

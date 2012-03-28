@@ -3,7 +3,6 @@ package siwc.magazyn.utils;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
-import java.awt.LayoutManager;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 
