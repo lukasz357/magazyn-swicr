@@ -232,7 +232,7 @@ public class MapaMagazynu extends JPanel {
 		return lift.getLevel();
 	}
 
-	private static int getRegalYPosition(int numerRegalu) {
+	public static int getRegalYPosition(int numerRegalu) {
 		int pos = 0;
 		pos += MagazynUtils.liftSizeY;
 
