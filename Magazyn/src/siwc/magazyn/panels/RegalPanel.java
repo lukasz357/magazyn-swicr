@@ -228,11 +228,13 @@ public class RegalPanel extends JPanel {
 		return null;
 	}
 
-	public ArrayList<PoleTO> getFieldMapAsArrayList(int pietro){
-		ArrayList<PoleTO> arrayList = new ArrayList<>();
+	public ArrayList<BoxPanel> getLevelMapAsArrayList(int pietro){
+		ArrayList<BoxPanel> arrayList = new ArrayList<>();
 		TreeMap<String, BoxPanel> level = getLevelMap(pietro);
+		System.out.println("In getLevelMapAsArrayList\n");
 		for (Map.Entry<String, BoxPanel> t : level.entrySet()) {
-			arrayList.add(t.getValue().getBox());
+			System.out.println("X: "+t.getValue().getX()+" Y: "+t.getValue().getY());
+			arrayList.add(t.getValue());
 		}
 		return arrayList;
 	}

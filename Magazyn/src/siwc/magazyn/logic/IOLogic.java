@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import siwc.magazyn.dto.MagazynTO;
 import siwc.magazyn.dto.PoleTO;
 import siwc.magazyn.dto.TowarTO;
+import siwc.magazyn.panels.BoxPanel;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.utils.MagazynUtils;
@@ -139,7 +140,7 @@ public class IOLogic {
 						log.error("Niezgodność identyfikatora regalu. Brak regalu o ID: "+regalID);
 					}
 
-					System.out.println("ID: "+regalID + "|pietro: "+pietro+"|pozycja: "+pozycja+"|nazwa: "+nazwa+"|producent: "+producent+"|kodTowaru: "+kodTowaru);
+//					System.out.println("ID: "+regalID + "|pietro: "+pietro+"|pozycja: "+pozycja+"|nazwa: "+nazwa+"|producent: "+producent+"|kodTowaru: "+kodTowaru);
 				}catch(NumberFormatException e){
 					log.error("Problem podczas parsowania identyfikatora regalu lub pietra");
 					e.printStackTrace();
@@ -156,8 +157,8 @@ public class IOLogic {
 
 	public MagazynTO convertToMagazynTO(ArrayList<RegalPanel> regaly) {
 		MagazynTO magazyn = new MagazynTO();
-		magazyn.setWielkoscXMagazynu(MagazynUtils.kolumnWRegale);
-		magazyn.setWielkoscYMagazynu(MagazynUtils.liczbaRegalow * MagazynUtils.rzedowWRegale);
+		magazyn.setWielkoscXMagazynu(MagazynUtils.liczbaRegalow * MagazynUtils.rzedowWRegale);
+		magazyn.setWielkoscYMagazynu(MagazynUtils.kolumnWRegale);
 
 		TreeMap<Integer, PoleTO[][]> pietra = new TreeMap<>();
 		int k, l, m, x, y;
@@ -165,8 +166,9 @@ public class IOLogic {
 			PoleTO[][]pietro = new PoleTO[magazyn.getWielkoscXMagazynu()][magazyn.getWielkoscYMagazynu()];
 			ArrayList<PoleTO> list = new ArrayList<>();
 			for(int j = 0; j < MagazynUtils.liczbaRegalow; j++){
-				for(PoleTO pole : regaly.get(j).getFieldMapAsArrayList(i)){
-					x = pole.getX(); y = pole.getY();
+				for(BoxPanel bp : regaly.get(j).getLevelMapAsArrayList(i)){
+					x = bp.getX(); y = bp.getY();
+//					System.out.println("X: "+x+" Y: "+y);
 					list.add(new PoleTO(x+MagazynUtils.regalX,y+MapaMagazynu.getRegalYPosition(j)));
 				}
 			}
@@ -174,7 +176,9 @@ public class IOLogic {
 			for(k = 0; k < MagazynUtils.rzedowWRegale; k++){
 				for(l = 0; l < MagazynUtils.kolumnWRegale; l++){
 					pietro[k][l] = list.get(m++);
+//					System.out.println(pietro[k][l].getX()+":"+pietro[k][l].getY()+";");
 				}
+//				System.out.println("\n");
 			}
 			pietra.put(i, pietro);
 		}
@@ -200,7 +204,8 @@ public class IOLogic {
 		int result = fileChooser.showOpenDialog(null);
 		if(result == JFileChooser.APPROVE_OPTION) {
 //			System.out.println(fileChooser.getSelectedFile());
-			lg.readFileAsRegalPanelArray(fileChooser.getSelectedFile());
+			ArrayList<RegalPanel> l = lg.readFileAsRegalPanelArray(fileChooser.getSelectedFile());
+			lg.convertToMagazynTO(l);
 		}
 	}
 	
