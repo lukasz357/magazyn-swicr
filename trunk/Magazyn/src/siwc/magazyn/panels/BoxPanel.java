@@ -18,8 +18,8 @@ public class BoxPanel extends JPanel {
 	private ImageIcon icon = null;
 
 	public BoxPanel(int x, int y, PoleTO b) {
-		System.out.println("W konstruktorze BoxPanel()");
-		System.out.println("X:"+ x+" Y: "+y);
+//		System.out.println("W konstruktorze BoxPanel()");
+//		System.out.println("X:"+ x+" Y: "+y);
 		positionX = x;
 		positionY = y;
 		box = b;
