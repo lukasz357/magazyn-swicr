@@ -30,7 +30,7 @@ public class MagazynUtils {
 	
 
 	// Regal
-	public static int liczbaRegalow = 3; // TODO - nie wykorzystywane chwilowo ;-)
+	public static int liczbaRegalow = 3; 
 	public static int kolumnWRegale = 38;
 	public static int rzedowWRegale = 4;
 	public static int regalWidth = boxSize * kolumnWRegale;

@@ -2,6 +2,8 @@ package siwc.magazyn.panels;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
 import javax.swing.Box;
@@ -210,7 +212,7 @@ public class RegalPanel extends JPanel {
 		return null;
 	}
 
-	private TreeMap<String, BoxPanel> getLevelMap(int pietro) {
+	public TreeMap<String, BoxPanel> getLevelMap(int pietro) {
 		switch (pietro) {
 		case 0:
 			return pietro0;
@@ -226,6 +228,14 @@ public class RegalPanel extends JPanel {
 		return null;
 	}
 
+	public ArrayList<PoleTO> getFieldMapAsArrayList(int pietro){
+		ArrayList<PoleTO> arrayList = new ArrayList<>();
+		TreeMap<String, BoxPanel> level = getLevelMap(pietro);
+		for (Map.Entry<String, BoxPanel> t : level.entrySet()) {
+			arrayList.add(t.getValue().getBox());
+		}
+		return arrayList;
+	}
 	private void dodajBoxy(TreeMap<String, BoxPanel> level) {
 		BoxPanel bp;
 		for (int i = 0; i < rows; i++) {

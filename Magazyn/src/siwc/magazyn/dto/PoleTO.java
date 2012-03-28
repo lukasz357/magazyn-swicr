@@ -11,7 +11,11 @@ public class PoleTO {
 	boolean isPunktOdbioru;
 	boolean isBox;
 	
-	
+	public PoleTO(int x, int y) {
+		this.x = x; this.y = y;
+	}
+	public PoleTO() {
+	}
 	public Integer getId() {
 		return id;
 	}
