@@ -2,12 +2,9 @@ package siwc.magazyn.panels;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import java.util.TreeMap;
 
-import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
@@ -20,7 +17,6 @@ import siwc.magazyn.utils.MagazynUtils;
 public class RegalPanel extends JPanel {
 	private static final long serialVersionUID = 3160205159810161295L;
 
-	@SuppressWarnings("unused")
 	private Logger log = Logger.getLogger(RegalPanel.class);
 
 	private int regalID;
@@ -230,13 +226,6 @@ public class RegalPanel extends JPanel {
 	}
 
 	public Collection<BoxPanel> getLevelMapAsArrayList(int pietro){
-//		ArrayList<BoxPanel> arrayList = new ArrayList<>();
-//		TreeMap<String, BoxPanel> level = getLevelMap(pietro);
-//		System.out.println("In getLevelMapAsArrayList\n");
-//		for (Map.Entry<String, BoxPanel> t : level.entrySet()) {
-////			System.out.println("X: "+t.getValue().getX()+" Y: "+t.getValue().getY());
-//			arrayList.add(t.getValue());
-//		}
 		return getLevelMap(pietro).values();
 	}
 	private void dodajBoxy(TreeMap<String, BoxPanel> level) {
