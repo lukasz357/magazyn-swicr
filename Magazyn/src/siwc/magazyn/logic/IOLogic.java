@@ -169,7 +169,7 @@ public class IOLogic {
 				for(BoxPanel bp : regaly.get(j).getLevelMapAsArrayList(i)){
 					x = bp.getX(); y = bp.getY();
 //					System.out.println("X: "+x+" Y: "+y);
-					list.add(new PoleTO(x+MagazynUtils.regalX,y+MapaMagazynu.getRegalYPosition(j)));
+					list.add(new PoleTO(x+MagazynUtils.regalX,y+MagazynUtils.getRegalYPosition(j)));
 				}
 			}
 			k = 0; l = 0; m= 0;
