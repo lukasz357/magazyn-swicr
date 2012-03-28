@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import siwc.magazyn.dto.MagazynTO;
 import siwc.magazyn.dto.PoleTO;
 import siwc.magazyn.dto.TowarTO;
+import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.utils.MagazynUtils;
 
@@ -116,7 +117,7 @@ public class IOLogic {
 					log.error("Problem przy wczytywaniu przedmiotów z pliku!");
 					return null;
 				}
-				// dla pliku: REGAL;PIETRO;POZYCJA(np A4);NAZWA;PRODUCENT;KOD TOWARU
+				// dla pliku: REGAL(1;PIETRO;POZYCJA(np A4);NAZWA;PRODUCENT;KOD TOWARU
 				try{
 					int regalID = Integer.parseInt(tLine[0]);
 					int pietro = Integer.parseInt(tLine[1]);
@@ -126,11 +127,16 @@ public class IOLogic {
 					String kodTowaru = tLine[5];
 					
 					RegalPanel rp = regaly.get(regalID - 1);
-					TowarTO towar = rp.getTowarByLevelAndPosition(pietro, pozycja);
-					if(towar != null) {
-						towar.setNazwa(nazwa);
-						towar.setProducent(producent);
-						towar.setKodTowaru(kodTowaru);
+					if(rp.getRegalID() == regalID){
+						TowarTO towar = rp.getTowarByLevelAndPosition(pietro, pozycja);
+						if(towar != null) {
+							towar.setNazwa(nazwa);
+							towar.setProducent(producent);
+							towar.setKodTowaru(kodTowaru);
+						}
+					}
+					else{
+						log.error("Niezgodność identyfikatora regalu. Brak regalu o ID: "+regalID);
 					}
 
 					System.out.println("ID: "+regalID + "|pietro: "+pietro+"|pozycja: "+pozycja+"|nazwa: "+nazwa+"|producent: "+producent+"|kodTowaru: "+kodTowaru);
@@ -151,13 +157,28 @@ public class IOLogic {
 	public MagazynTO convertToMagazynTO(ArrayList<RegalPanel> regaly) {
 		MagazynTO magazyn = new MagazynTO();
 		magazyn.setWielkoscXMagazynu(MagazynUtils.kolumnWRegale);
-		magazyn.setWielkoscYMagazynu(MagazynUtils.rzedowWRegale);
+		magazyn.setWielkoscYMagazynu(MagazynUtils.liczbaRegalow * MagazynUtils.rzedowWRegale);
 
 		TreeMap<Integer, PoleTO[][]> pietra = new TreeMap<>();
+		int k, l, m, x, y;
 		for (int i = 0; i < MagazynUtils.liczbaPieter; i++) {
-			pietra.put(i, new PoleTO[magazyn.getWielkoscXMagazynu()][magazyn.getWielkoscYMagazynu()]);
+			PoleTO[][]pietro = new PoleTO[magazyn.getWielkoscXMagazynu()][magazyn.getWielkoscYMagazynu()];
+			ArrayList<PoleTO> list = new ArrayList<>();
+			for(int j = 0; j < MagazynUtils.liczbaRegalow; j++){
+				for(PoleTO pole : regaly.get(j).getFieldMapAsArrayList(i)){
+					x = pole.getX(); y = pole.getY();
+					list.add(new PoleTO(x+MagazynUtils.regalX,y+MapaMagazynu.getRegalYPosition(j)));
+				}
+			}
+			k = 0; l = 0; m= 0;
+			for(k = 0; k < MagazynUtils.rzedowWRegale; k++){
+				for(l = 0; l < MagazynUtils.kolumnWRegale; l++){
+					pietro[k][l] = list.get(m++);
+				}
+			}
+			pietra.put(i, pietro);
 		}
-		//TODO
+		magazyn.setPietra(pietra);
 		return magazyn;
 	}
 	
