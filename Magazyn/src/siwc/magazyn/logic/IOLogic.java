@@ -166,19 +166,20 @@ public class IOLogic {
 			PoleTO[][]pietro = new PoleTO[magazyn.getWielkoscXMagazynu()][magazyn.getWielkoscYMagazynu()];
 			ArrayList<PoleTO> list = new ArrayList<>();
 			for(int j = 0; j < MagazynUtils.liczbaRegalow; j++){
-				for(BoxPanel bp : regaly.get(j).getLevelMapAsArrayList(i)){
-					x = bp.getX(); y = bp.getY();
-//					System.out.println("X: "+x+" Y: "+y);
+				ArrayList<BoxPanel>regalLevel = new ArrayList<>(regaly.get(j).getLevelMapAsArrayList(i));
+				for(BoxPanel bp : regalLevel){
+					x = bp.getPositionX(); y = bp.getPositionY();
 					list.add(new PoleTO(x+MagazynUtils.regalX,y+MagazynUtils.getRegalYPosition(j)));
 				}
 			}
 			k = 0; l = 0; m= 0;
-			for(k = 0; k < MagazynUtils.rzedowWRegale; k++){
-				for(l = 0; l < MagazynUtils.kolumnWRegale; l++){
+			System.out.println("==============PIETRO NR "+i+"==============");
+			for(k = 0; k < magazyn.getWielkoscXMagazynu(); k++){
+				for(l = 0; l < magazyn.getWielkoscYMagazynu(); l++){
 					pietro[k][l] = list.get(m++);
-//					System.out.println(pietro[k][l].getX()+":"+pietro[k][l].getY()+";");
+					System.out.print(pietro[k][l].getX()+":"+pietro[k][l].getY()+";");
 				}
-//				System.out.println("\n");
+				System.out.print("\n");
 			}
 			pietra.put(i, pietro);
 		}
