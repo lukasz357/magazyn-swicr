@@ -2,6 +2,7 @@ package siwc.magazyn.panels;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeMap;
 
@@ -18,8 +19,6 @@ public class RegalPanel extends JPanel {
 	private static final long serialVersionUID = 3160205159810161295L;
 
 	private Logger log = Logger.getLogger(RegalPanel.class);
-
-	private int regalID;
 	
 	private int rows = MagazynUtils.rzedowWRegale;
 	private int cols = MagazynUtils.kolumnWRegale;
@@ -66,11 +65,6 @@ public class RegalPanel extends JPanel {
 
 	}
 	
-	public RegalPanel(int liczbaPustychBoksow, int id){
-		this(liczbaPustychBoksow);
-		setRegalID(id);
-	}
-
 	public void zmienKolorBoksu(String position, Color c) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap();
 		if(levelMap.get(position).isFree())
@@ -225,8 +219,17 @@ public class RegalPanel extends JPanel {
 		return null;
 	}
 
-	public Collection<BoxPanel> getLevelMapAsArrayList(int pietro){
-		return getLevelMap(pietro).values();
+	public ArrayList<BoxPanel> getLevelMapAsArrayList(int pietro){
+		ArrayList<BoxPanel> list = new ArrayList<>();
+		TreeMap<String, BoxPanel> map = getLevelMap(pietro);
+		
+		for(String k: map.keySet()) {
+			System.out.println(k);
+			list.add(map.get(k));
+		}
+		
+		return list;
+		
 	}
 	private void dodajBoxy(TreeMap<String, BoxPanel> level) {
 		BoxPanel bp;
@@ -361,36 +364,31 @@ public class RegalPanel extends JPanel {
 		return null;
 	}
 
-	public TowarTO getTowarByLevelAndPosition(int level, String position){
+	public TowarTO getTowar(int level, String position){
 		TreeMap<String, BoxPanel> levelMap = null;
 		BoxPanel boxPanel = null;
 		PoleTO box = null;
-		TowarTO towar = null;
 		
-		if((levelMap = getLevelMap(level)) != null) {
-			if((boxPanel = levelMap.get(position)) != null){
-				if((box = boxPanel.getBox()) != null) {
-					return box.getTowar();
-				}
-				else
-					log.error("Nie istnieje żaden towar na pietrze: "+level+" na pozycji: "+position);
-			}
-			else
-				log.error("Nie znaleziono pozycji o podanym numerze: "+position);
-		}
-		else
+		levelMap = getLevelMap(level);
+		if(levelMap == null) {
 			log.error("Nie znaleziono pietra o podanym numerze: "+level);
+			return null;
+		}
 		
-		return towar;
+		boxPanel = levelMap.get(position);
+		if(boxPanel == null) {
+			log.error("Nie znaleziono pozycji o podanym numerze: "+position);
+			return null;
+		}
+		
+		box = boxPanel.getBox();
+		if(box == null) {
+			log.error("Nie istnieje żaden towar na pietrze: "+level+" na pozycji: "+position);
+			return null;
+		}
+		return box.getTowar();
 	}
 	
-	public int getRegalID() {
-		return regalID;
-	}
-
-	public void setRegalID(int regalID) {
-		this.regalID = regalID;
-	}
 
 	public TreeMap<String, BoxPanel> getPietro0() {
 		return pietro0;
