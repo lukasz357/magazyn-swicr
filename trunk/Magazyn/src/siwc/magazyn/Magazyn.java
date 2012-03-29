@@ -46,7 +46,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import siwc.magazyn.dto.TowarTO;
 import siwc.magazyn.logic.IOLogic;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
@@ -234,7 +233,7 @@ public class Magazyn {
 			regaly.add(new RegalPanel(MagazynUtils.defaultFreeBoxes));
 		}
 		
-		mapa = new MapaMagazynu();
+		mapa = new MapaMagazynu(regaly);
 		mapa.setBounds(10, 72, 792, 396);
 
 		mapa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));		
@@ -245,11 +244,11 @@ public class Magazyn {
 				int result = fileChooser.showOpenDialog(frame);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
-					log.info("Wybrano: " + fileChooser.getSelectedFile());
 					IOLogic logic = new IOLogic();
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly);
 					logic.convertToMagazynTO(regaly);
+
 
 //					saveFile.setEnabled(true);
 //					saveAsFile.setEnabled(true);
@@ -265,6 +264,7 @@ public class Magazyn {
 		saveFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO - ogarnac forme zapisywania
+
 				int result = fileChooser.showSaveDialog(frame);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
@@ -594,7 +594,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapa.zmienKolorBoksu("regal2", position, colors[c]);
+				mapa.zmienKolorBoksu(3, position, colors[c]);
 			}
 		});
 
@@ -609,7 +609,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapa.zmienKolorBoksu("regal1", position, colors[c]);
+				mapa.zmienKolorBoksu(3, position, colors[c]);
 			}
 		});
 
@@ -624,7 +624,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapa.zmienKolorBoksu("regal3", position, colors[c]);
+				mapa.zmienKolorBoksu(3, position, colors[c]);
 				log.info("R3: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
 			}
 		});
