@@ -46,6 +46,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import siwc.magazyn.dto.MagazynTO;
 import siwc.magazyn.logic.IOLogic;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
@@ -240,6 +241,8 @@ public class Magazyn {
 		
 		openFile = new JMenuItem("Otwórz plik");
 		openFile.addActionListener(new ActionListener() {
+			private MagazynTO magazyn;
+
 			public void actionPerformed(ActionEvent e) {
 				int result = fileChooser.showOpenDialog(frame);
 
@@ -247,9 +250,16 @@ public class Magazyn {
 					IOLogic logic = new IOLogic();
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly);
-					logic.convertToMagazynTO(regaly);
+					magazyn = logic.convertToMagazynTO(regaly);
 
-
+					
+					for (int y=0; y < magazyn.getWielkoscYMagazynu(); y++) {
+						for (int x=0; x < magazyn.getWielkoscXMagazynu(); x++) {
+							System.out.print("" + magazyn.getPietra().get(1)[y][x].getId());
+						}
+						System.out.println();
+					}
+					
 //					saveFile.setEnabled(true);
 //					saveAsFile.setEnabled(true);
 				}
@@ -594,7 +604,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapa.zmienKolorBoksu(3, position, colors[c]);
+				mapa.zmienKolorBoksu(1, position, colors[c]);
 			}
 		});
 
@@ -609,7 +619,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapa.zmienKolorBoksu(3, position, colors[c]);
+				mapa.zmienKolorBoksu(0, position, colors[c]);
 			}
 		});
 
@@ -624,7 +634,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapa.zmienKolorBoksu(3, position, colors[c]);
+				mapa.zmienKolorBoksu(2, position, colors[c]);
 				log.info("R3: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
 			}
 		});

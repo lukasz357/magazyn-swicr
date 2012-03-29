@@ -6,6 +6,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 
+import siwc.magazyn.dto.PoleTO;
+
 public class MagazynUtils {
 	public static final String frameTitle = "Magazyn";
 
@@ -58,7 +60,9 @@ public class MagazynUtils {
 
 	//pliki
 	public static int liczbaKolumnPlikuZamowien = 6;
-
+	
+	//MagazynTO
+	public static PoleTO emptyField = initializeEmptyfield(); // by byyla ta sama referencja, nie wiem czy to potrzebne 
 	
 
 
@@ -73,6 +77,17 @@ public class MagazynUtils {
 
 		return height * frameWidth / 1366;
 
+	}
+
+	private static PoleTO initializeEmptyfield() {
+		PoleTO empty = new PoleTO();
+		empty.setId(-1); //empty field so id = -1 ?
+		empty.setBox(false);
+		empty.setPunktOdbioru(false);
+		empty.setTowar(null);
+		empty.setX(-1);
+		empty.setY(-1);
+		return empty;
 	}
 
 	private static int getMapWidth() {
