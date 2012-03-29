@@ -46,16 +46,20 @@ public class MagazynUtils {
 	public static int liftStepX = boxSize;
 	public static int liftStepY = boxSize;
 	
-	// odbior
-	public static int odbiorWidth = 4 * boxSize;
-	public static int odbiorHeight = liftSizeY;
-
 	// Mapa
 	public static int mapHeight = getMapHeight();
 	public static int mapWidth = getMapWidth();
+	
+	// odbior
+	public static int odbiorX = 0;
+	public static int odbiorY = mapHeight - liftSizeY;
+	public static int odbiorWidth = 4 * boxSize;
+	public static int odbiorHeight = liftSizeY;
 
 	//pliki
 	public static int liczbaKolumnPlikuZamowien = 6;
+
+	
 
 
 
@@ -101,5 +105,11 @@ public class MagazynUtils {
 		}
 
 		return pos;
+	}
+	public static int getRow(String position) {
+		return position.charAt(0) - 65;
+	}
+	public static int getColumn(String position) {
+		return Integer.parseInt(position.substring(1));
 	}
 }

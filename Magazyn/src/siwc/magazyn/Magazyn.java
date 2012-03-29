@@ -9,6 +9,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -45,7 +46,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import siwc.magazyn.dto.TowarTO;
+import siwc.magazyn.logic.IOLogic;
 import siwc.magazyn.panels.MapaMagazynu;
+import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.utils.MagazynUtils;
 
 public class Magazyn {
@@ -143,6 +147,7 @@ public class Magazyn {
 	private JPanel panel_7_produkty;
 	private JButton btnWczytajProdukty;
 	private JScrollPane scrollPaneProdukty;
+	private ArrayList<RegalPanel> regaly;
 	private static JList listProdukty;
 
 	/**
@@ -222,16 +227,32 @@ public class Magazyn {
 
 		JMenu menuPlik = new JMenu("Plik");
 		menuBar.add(menuPlik);
+		
+		regaly = new ArrayList<>();
 
+		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++) {
+			regaly.add(new RegalPanel(MagazynUtils.defaultFreeBoxes));
+		}
+		
+		mapa = new MapaMagazynu();
+		mapa.setBounds(10, 72, 792, 396);
+
+		mapa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));		
+		
 		openFile = new JMenuItem("Otwórz plik");
 		openFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int result = fileChooser.showOpenDialog(frame);
+
 				if (result == JFileChooser.APPROVE_OPTION) {
 					log.info("Wybrano: " + fileChooser.getSelectedFile());
+					IOLogic logic = new IOLogic();
+					
+					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly);
+					logic.convertToMagazynTO(regaly);
 
-					saveFile.setEnabled(true);
-					saveAsFile.setEnabled(true);
+//					saveFile.setEnabled(true);
+//					saveAsFile.setEnabled(true);
 				}
 			}
 		});
@@ -288,11 +309,6 @@ public class Magazyn {
 
 		mnZmienStyl = new JMenu("Zmień styl");
 		mnOkno.add(mnZmienStyl);
-
-		mapa = new MapaMagazynu();
-		mapa.setBounds(10, 72, 792, 396);
-
-		mapa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		/* STOP MAGAZYNU */
 		btnStop = new JButton("STOP");

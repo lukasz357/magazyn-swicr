@@ -21,8 +21,8 @@ import siwc.magazyn.utils.MagazynUtils;
 
 public class IOLogic {
 	private Logger log = Logger.getLogger(IOLogic.class);
-	
-	public MagazynTO getMagazynFromFile() {
+	@Deprecated 
+	public MagazynTO getMagazynFromFile() { // bo konwertowane jest z mapy marcina ;d
 		MagazynTO magazyn = new MagazynTO();
 		magazyn.setWielkoscXMagazynu(4);
 		magazyn.setWielkoscYMagazynu(4);
@@ -92,11 +92,8 @@ public class IOLogic {
 		
 	}
 	
-	public ArrayList<RegalPanel> readFileAsRegalPanelArray(File file) {
-		ArrayList<RegalPanel> regaly = new ArrayList<>();
-
-		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++)
-			regaly.add(new RegalPanel(1, i+1));
+	public ArrayList<RegalPanel> readFileToRegalPanelArray(File file, ArrayList<RegalPanel> regaly) {
+		
 		FileReader fr = null;
 		BufferedReader in = null;
 		try {
@@ -113,38 +110,44 @@ public class IOLogic {
 					tLine = line.split(";");
 				else if (line.contains(","))
 					tLine = line.split(",");
+				
 				if (tLine == null || tLine.length < MagazynUtils.liczbaKolumnPlikuZamowien - 1) {
 					log.error("Problem przy wczytywaniu przedmiotów z pliku!");
+					in.close();
+					fr.close();
 					return null;
 				}
-				// dla pliku: REGAL(1;PIETRO;POZYCJA(np A4);NAZWA;PRODUCENT;KOD TOWARU
+				
 				try{
-					int regalID = Integer.parseInt(tLine[0]);
-					int pietro = Integer.parseInt(tLine[1]);
-					String pozycja = tLine[2];
-					String nazwa = tLine[3];
-					String producent = tLine[4];
-					String kodTowaru = tLine[5];
+					int regalID = Integer.parseInt(tLine[0].trim())-1;
+					int pietro = Integer.parseInt(tLine[1].trim());
+					String pozycja = tLine[2].trim().toUpperCase();
+					String nazwa = tLine[3].trim();
+					String producent = tLine[4].trim();
+					String kodTowaru = tLine[5].trim();
 					
-					RegalPanel rp = regaly.get(regalID - 1);
-					if(rp.getRegalID() == regalID){
-						TowarTO towar = rp.getTowarByLevelAndPosition(pietro, pozycja);
-						if(towar != null) {
-							towar.setNazwa(nazwa);
-							towar.setProducent(producent);
-							towar.setKodTowaru(kodTowaru);
-						}
-					}
-					else{
-						log.error("Niezgodność identyfikatora regalu. Brak regalu o ID: "+regalID);
+					if(regalID >= MagazynUtils.liczbaRegalow || pietro >= MagazynUtils.liczbaPieter) 
+						continue;
+					if( MagazynUtils.getRow(pozycja) >= MagazynUtils.rzedowWRegale || MagazynUtils.getColumn(pozycja) >= MagazynUtils.kolumnWRegale )
+						continue;
+					
+					RegalPanel rp = regaly.get(regalID);
+					
+					
+					TowarTO towar = rp.getTowar(pietro, pozycja);
+					if (towar != null) {
+						towar.setNazwa(nazwa);
+						towar.setProducent(producent);
+						towar.setKodTowaru(kodTowaru);
 					}
 
 				}catch(NumberFormatException e){
-					log.error("Problem podczas parsowania identyfikatora regalu lub pietra");
 					e.printStackTrace();
 				}
 			}
+			
 			in.close();
+			fr.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -155,58 +158,53 @@ public class IOLogic {
 
 	public MagazynTO convertToMagazynTO(ArrayList<RegalPanel> regaly) {
 		MagazynTO magazyn = new MagazynTO();
-		magazyn.setWielkoscXMagazynu(MagazynUtils.liczbaRegalow * MagazynUtils.rzedowWRegale);
-		magazyn.setWielkoscYMagazynu(MagazynUtils.kolumnWRegale);
-
+		magazyn.setWielkoscXMagazynu(MagazynUtils.mapWidth / MagazynUtils.boxSize);
+		magazyn.setWielkoscYMagazynu(MagazynUtils.mapHeight / MagazynUtils.boxSize);
+		
 		TreeMap<Integer, PoleTO[][]> pietra = new TreeMap<>();
-		int k, l, m, x, y;
+
 		for (int i = 0; i < MagazynUtils.liczbaPieter; i++) {
-			PoleTO[][]pietro = new PoleTO[magazyn.getWielkoscXMagazynu()][magazyn.getWielkoscYMagazynu()];
-			ArrayList<PoleTO> list = new ArrayList<>();
-			for(int j = 0; j < MagazynUtils.liczbaRegalow; j++){
-				ArrayList<BoxPanel>regalLevel = new ArrayList<>(regaly.get(j).getLevelMapAsArrayList(i));
-				for(BoxPanel bp : regalLevel){
-					x = bp.getPositionX(); y = bp.getPositionY();
-					list.add(new PoleTO(x+MagazynUtils.regalX,y+MagazynUtils.getRegalYPosition(j)));
+			PoleTO[][] pietro = new PoleTO[magazyn.getWielkoscYMagazynu()][magazyn.getWielkoscXMagazynu()];
+
+			for(int j=0; j<MagazynUtils.liczbaRegalow; j++) {
+				RegalPanel regal = regaly.get(j);
+				int xRegalu = MagazynUtils.regalX/MagazynUtils.boxSize;
+				int yRegalu = MagazynUtils.getRegalYPosition(j)/MagazynUtils.boxSize;
+
+				TreeMap<String, BoxPanel> levelMap = regal.getLevelMap(i);
+
+				for(String k: levelMap.keySet()) {
+					
+					int x = xRegalu + Integer.parseInt(k.substring(1)) -1;
+					int y = yRegalu + (k.charAt(0)-65);
+					
+					pietro[y][x] = levelMap.get(k).getBox();
+					pietro[y][x].setBox(true);
+					
 				}
 			}
-			k = 0; l = 0; m= 0;
-			System.out.println("==============PIETRO NR "+i+"==============");
-			for(k = 0; k < magazyn.getWielkoscXMagazynu(); k++){
-				for(l = 0; l < magazyn.getWielkoscYMagazynu(); l++){
-					pietro[k][l] = list.get(m++);
-					System.out.print(pietro[k][l].getX()+":"+pietro[k][l].getY()+";");
+			//punkt odbioru
+
+			int odbiorX = MagazynUtils.odbiorX/MagazynUtils.boxSize;
+			int odbiorY = MagazynUtils.odbiorY/MagazynUtils.boxSize;
+			int odbiorSizeX =odbiorX + MagazynUtils.odbiorWidth/MagazynUtils.boxSize;
+			int odbiorSizeY = odbiorY + MagazynUtils.odbiorHeight/MagazynUtils.boxSize;
+			
+			for(int y = odbiorY; y<odbiorSizeY; y++) {
+				for(int x = odbiorX; x<odbiorSizeX; x++) {
+					PoleTO p = new PoleTO(x, y);
+					p.setPunktOdbioru(true);
+	
+					pietro[y][x] = p;
 				}
-				System.out.print("\n");
 			}
 			pietra.put(i, pietro);
 		}
 		magazyn.setPietra(pietra);
 		return magazyn;
 	}
-	
 
 	public String saveMagazynToFile() {
 		return "Wszystko ok";
 	}
-	
-	public static void main(String ... strings ) {
-		IOLogic lg = new IOLogic();
-		JFileChooser fileChooser = new JFileChooser();
-		FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Plik tekstowy (*.txt)", "txt");
-		fileChooser.setFileFilter(txtFilter);
-		fileChooser.addChoosableFileFilter(txtFilter);
-		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Plik CSV (*.csv)", "csv"));
-		fileChooser.setMultiSelectionEnabled(false);
-		fileChooser.setAcceptAllFileFilterUsed(true);
-		
-		int result = fileChooser.showOpenDialog(null);
-		if(result == JFileChooser.APPROVE_OPTION) {
-			ArrayList<RegalPanel> l = lg.readFileAsRegalPanelArray(fileChooser.getSelectedFile());
-			lg.convertToMagazynTO(l);
-		}
-	}
-	
-
-	
 }

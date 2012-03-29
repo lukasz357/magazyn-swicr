@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import siwc.magazyn.dto.PoleTO;
+import siwc.magazyn.dto.TowarTO;
 
 public class BoxPanel extends JPanel {
 	private static final long serialVersionUID = 7627361909398731419L;
@@ -21,6 +22,7 @@ public class BoxPanel extends JPanel {
 		positionX = x;
 		positionY = y;
 		box = b;
+		box.setTowar(new TowarTO());
 	}
 
 	public int getPositionX() {
