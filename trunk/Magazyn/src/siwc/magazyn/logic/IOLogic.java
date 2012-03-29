@@ -166,6 +166,13 @@ public class IOLogic {
 		for (int i = 0; i < MagazynUtils.liczbaPieter; i++) {
 			PoleTO[][] pietro = new PoleTO[magazyn.getWielkoscYMagazynu()][magazyn.getWielkoscXMagazynu()];
 
+			
+			for (int y=0; y < magazyn.getWielkoscYMagazynu(); y++) {
+				for (int x=0; x < magazyn.getWielkoscXMagazynu(); x++) {
+					pietro[y][x] = MagazynUtils.emptyField;
+				}
+			}
+			
 			for(int j=0; j<MagazynUtils.liczbaRegalow; j++) {
 				RegalPanel regal = regaly.get(j);
 				int xRegalu = MagazynUtils.regalX/MagazynUtils.boxSize;
@@ -175,7 +182,7 @@ public class IOLogic {
 
 				for(String k: levelMap.keySet()) {
 					
-					int x = xRegalu + MagazynUtils.convertToColumn(k);
+					int x = xRegalu + MagazynUtils.convertToColumn(k)-1;
 					int y = yRegalu + MagazynUtils.convertToRow(k);
 					
 					pietro[y][x] = levelMap.get(k).getPole();
