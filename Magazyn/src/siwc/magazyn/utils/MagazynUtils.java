@@ -106,10 +106,10 @@ public class MagazynUtils {
 
 		return pos;
 	}
-	public static int getRow(String position) {
+	public static int convertToRow(String position) {
 		return position.charAt(0) - 65;
 	}
-	public static int getColumn(String position) {
+	public static int convertToColumn(String position) {
 		return Integer.parseInt(position.substring(1));
 	}
 }

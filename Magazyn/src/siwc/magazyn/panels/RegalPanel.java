@@ -3,7 +3,6 @@ package siwc.magazyn.panels;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.TreeMap;
 
 import javax.swing.JPanel;
@@ -18,6 +17,7 @@ import siwc.magazyn.utils.MagazynUtils;
 public class RegalPanel extends JPanel {
 	private static final long serialVersionUID = 3160205159810161295L;
 
+	@SuppressWarnings("unused")
 	private Logger log = Logger.getLogger(RegalPanel.class);
 	
 	private int rows = MagazynUtils.rzedowWRegale;
@@ -188,19 +188,7 @@ public class RegalPanel extends JPanel {
 	}
 
 	private TreeMap<String, BoxPanel> getLevelMap() {
-		switch (pietro) {
-		case 0:
-			return pietro0;
-		case 1:
-			return pietro1;
-		case 2:
-			return pietro2;
-		case 3:
-			return pietro3;
-		case 4:
-			return pietro4;
-		}
-		return null;
+		return getLevelMap(pietro);
 	}
 
 	public TreeMap<String, BoxPanel> getLevelMap(int pietro) {
@@ -240,6 +228,7 @@ public class RegalPanel extends JPanel {
 					bp = new BoxPanel(j, i, new PoleTO());
 					bp.setFree(true);
 					bp.setBackground(MagazynUtils.freeBoxBackround);
+					bp.setMovable(true);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
@@ -247,6 +236,7 @@ public class RegalPanel extends JPanel {
 					bp = new BoxPanel(j, i, new PoleTO());
 					bp.setFree(true);
 					bp.setBackground(MagazynUtils.freeBoxBackround);
+					bp.setMovable(true);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
@@ -365,99 +355,18 @@ public class RegalPanel extends JPanel {
 	}
 
 	public TowarTO getTowar(int level, String position){
-		TreeMap<String, BoxPanel> levelMap = null;
-		BoxPanel boxPanel = null;
-		PoleTO box = null;
-		
-		levelMap = getLevelMap(level);
-		if(levelMap == null) {
-			log.error("Nie znaleziono pietra o podanym numerze: "+level);
-			return null;
-		}
-		
-		boxPanel = levelMap.get(position);
-		if(boxPanel == null) {
-			log.error("Nie znaleziono pozycji o podanym numerze: "+position);
-			return null;
-		}
-		
-		box = boxPanel.getBox();
-		if(box == null) {
-			log.error("Nie istnieje żaden towar na pietrze: "+level+" na pozycji: "+position);
-			return null;
-		}
-		return box.getTowar();
+		return getLevelMap(level).get(position).getPole().getTowar();
 	}
 	
-
-	public TreeMap<String, BoxPanel> getPietro0() {
-		return pietro0;
+	public void zmienKolorBoksu(int level, String position, Color color) {
+		if(this.pietro == level) 
+			zmienKolorBoksu(position, color);
+		else
+			getLevelMap(level).get(position).setBackground(color);
 	}
-
-	public void setPietro0(TreeMap<String, BoxPanel> pietro0) {
-		this.pietro0 = pietro0;
-	}
-
-	public TreeMap<String, BoxPanel> getPietro1() {
-		return pietro1;
-	}
-
-	public void setPietro1(TreeMap<String, BoxPanel> pietro1) {
-		this.pietro1 = pietro1;
-	}
-
-	public TreeMap<String, BoxPanel> getPietro2() {
-		return pietro2;
-	}
-
-	public void setPietro2(TreeMap<String, BoxPanel> pietro2) {
-		this.pietro2 = pietro2;
-	}
-
-	public TreeMap<String, BoxPanel> getPietro3() {
-		return pietro3;
-	}
-
-	public void setPietro3(TreeMap<String, BoxPanel> pietro3) {
-		this.pietro3 = pietro3;
-	}
-
-	public TreeMap<String, BoxPanel> getPietro4() {
-		return pietro4;
-	}
-
-	public void setPietro4(TreeMap<String, BoxPanel> pietro4) {
-		this.pietro4 = pietro4;
-	}
-
-
 	
-//	public static void main(String ... args) {
-//		RegalPanel r = new RegalPanel(2);
-//		r.dodajBoxy(r.pietro0);
-////		r.moveBoxRight(0,false);
-//		
-//		System.out.println();
-//		System.out.println(r.getLeftBoxKey("A15"));
-//		System.out.println(r.getLeftBoxKey("A30"));
-//		System.out.println(r.getLeftBoxKey("B30"));
-//		System.out.println(r.getLeftBoxKey("D30"));
-//		System.out.println(r.getLeftBoxKey("D15"));
-//		System.out.println(r.getLeftBoxKey("D0"));
-//		System.out.println(r.getLeftBoxKey("C0"));
-//		System.out.println(r.getLeftBoxKey("B0"));
-//		System.out.println(r.getLeftBoxKey("A0"));
-//		
-//		System.out.println();
-//		System.out.println(r.getLeftBoxKey("A15", true));
-//		System.out.println(r.getLeftBoxKey("A30", false));
-//		System.out.println(r.getLeftBoxKey("B30", false));
-//		System.out.println(r.getLeftBoxKey("D30", true));
-//		System.out.println(r.getLeftBoxKey("D15",false));
-//		System.out.println(r.getLeftBoxKey("D5", true));
-//
-//		System.out.println(r.getLeftBoxKey("A0",false));
-//		System.out.println(r.getLeftBoxKey("D1",true));
-//		System.out.println(r.getLeftBoxKey("A1",false));
-//	}
+	public boolean isMovable(int level, String position) {
+		return getLevelMap(level).get(position).isMovable();
+	}
+	
 }

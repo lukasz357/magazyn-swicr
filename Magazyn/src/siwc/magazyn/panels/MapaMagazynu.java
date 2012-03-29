@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -68,14 +69,10 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public void zmienKolorBoksu(String r, String position, Color c) {
-		if (r.equals("regal1")) {
-			regaly.get(0).zmienKolorBoksu(position, c);
-		} else if (r.equals("regal2")) {
-			regaly.get(1).zmienKolorBoksu(position, c);
-		} else if (r.equals("regal3")) {
-			regaly.get(2).zmienKolorBoksu(position, c);
-		}
+	public void zmienKolorBoksu(int numer, String position, Color c) {
+			regaly.get(numer).zmienKolorBoksu(position, c);
+			regaly.get(numer).zmienKolorBoksu(position, c);
+			regaly.get(numer).zmienKolorBoksu(position, c);
 	}
 
 	public void moveLiftUp() {

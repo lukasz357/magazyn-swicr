@@ -15,14 +15,14 @@ public class BoxPanel extends JPanel {
 	private boolean entryPoint = false;		// czy jest punktem odbioru
 	private boolean movable = false; 		// czy możliwe jest przesuwanie
 	private boolean free = false;
-	private PoleTO box = null;
+	private PoleTO pole = null;
 	private ImageIcon icon = null;
 
 	public BoxPanel(int x, int y, PoleTO b) {
 		positionX = x;
 		positionY = y;
-		box = b;
-		box.setTowar(new TowarTO());
+		pole = b;
+		pole.setTowar(new TowarTO());
 	}
 
 	public int getPositionX() {
@@ -65,12 +65,12 @@ public class BoxPanel extends JPanel {
 		this.movable = movable;
 	}
 
-	public PoleTO getBox() {
-		return box;
+	public PoleTO getPole() {
+		return pole;
 	}
 
 	public void setBox(PoleTO box) {
-		this.box = box;
+		this.pole = box;
 	}
 
 	public ImageIcon getIcon() {

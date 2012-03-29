@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.apache.log4j.Logger;
 
 import siwc.magazyn.dto.MagazynTO;
@@ -128,11 +125,14 @@ public class IOLogic {
 					
 					if(regalID >= MagazynUtils.liczbaRegalow || pietro >= MagazynUtils.liczbaPieter) 
 						continue;
-					if( MagazynUtils.getRow(pozycja) >= MagazynUtils.rzedowWRegale || MagazynUtils.getColumn(pozycja) >= MagazynUtils.kolumnWRegale )
+					if( MagazynUtils.convertToRow(pozycja) >= MagazynUtils.rzedowWRegale || MagazynUtils.convertToColumn(pozycja) >= MagazynUtils.kolumnWRegale )
 						continue;
 					
 					RegalPanel rp = regaly.get(regalID);
+					if(rp.isMovable(pietro, pozycja))
+						continue;
 					
+					rp.zmienKolorBoksu(pietro, pozycja, MagazynUtils.busyBoxBackground);
 					
 					TowarTO towar = rp.getTowar(pietro, pozycja);
 					if (towar != null) {
@@ -175,10 +175,10 @@ public class IOLogic {
 
 				for(String k: levelMap.keySet()) {
 					
-					int x = xRegalu + Integer.parseInt(k.substring(1)) -1;
-					int y = yRegalu + (k.charAt(0)-65);
+					int x = xRegalu + MagazynUtils.convertToColumn(k);
+					int y = yRegalu + MagazynUtils.convertToRow(k);
 					
-					pietro[y][x] = levelMap.get(k).getBox();
+					pietro[y][x] = levelMap.get(k).getPole();
 					pietro[y][x].setBox(true);
 					
 				}
