@@ -251,17 +251,9 @@ public class Magazyn {
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly);
 					magazyn = logic.convertToMagazynTO(regaly);
-
-					
-					for (int y=0; y < magazyn.getWielkoscYMagazynu(); y++) {
-						for (int x=0; x < magazyn.getWielkoscXMagazynu(); x++) {
-							System.out.print("" + magazyn.getPietra().get(1)[y][x].getId());
-						}
-						System.out.println();
-					}
-					
-//					saveFile.setEnabled(true);
-//					saveAsFile.setEnabled(true);
+				
+					saveFile.setEnabled(true);
+					saveAsFile.setEnabled(true);
 				}
 			}
 		});
@@ -273,13 +265,14 @@ public class Magazyn {
 		saveFile.setEnabled(false);
 		saveFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO - ogarnac forme zapisywania
-
-				int result = fileChooser.showSaveDialog(frame);
-
-				if (result == JFileChooser.APPROVE_OPTION) {
-					log.info("Zapisz jako: " + fileChooser.getSelectedFile().getName());
+				if (fileChooser.getSelectedFile() == null) {
+					int result = fileChooser.showSaveDialog(frame);
+					if (result != JFileChooser.APPROVE_OPTION)
+						return;
 				}
+				IOLogic logic = new IOLogic();
+				logic.saveToFile(fileChooser.getSelectedFile(), regaly);
+
 			}
 		});
 		saveFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
@@ -289,11 +282,12 @@ public class Magazyn {
 		saveAsFile.setEnabled(false);
 		saveAsFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO - ogarnac forme zapisywania
+
 				int result = fileChooser.showSaveDialog(frame);
 				if (result == JFileChooser.APPROVE_OPTION) {
-					log.info("Zapisz jako: " + fileChooser.getSelectedFile().getName());
-				}
+					IOLogic logic = new IOLogic();
+					logic.saveToFile(fileChooser.getSelectedFile(), regaly);
+				}		
 			}
 		});
 		saveAsFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));

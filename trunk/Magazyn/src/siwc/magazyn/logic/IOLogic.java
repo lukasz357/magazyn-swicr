@@ -214,4 +214,9 @@ public class IOLogic {
 	public String saveMagazynToFile() {
 		return "Wszystko ok";
 	}
+
+	public void saveToFile(File file, ArrayList<RegalPanel> regaly) {
+		log.info("zaimplementuj zapisywanie w iologic");
+		
+	}
 }
