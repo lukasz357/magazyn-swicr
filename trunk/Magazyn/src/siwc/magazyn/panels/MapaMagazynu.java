@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -118,7 +117,7 @@ public class MapaMagazynu extends JPanel {
 		// punkt odbioru
 		// if (xAktualne <= odbior.getBounds().getMaxX() && lift.getX() >= odbior.getBounds().getMinX() && yPo >= odbior.getBounds().getMinY())
 		// isEnteringReceivePoint = true;
-
+		
 		if (isEnteringShelf) {
 			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
 		} else if (isEnteringReceivePoint) {
@@ -157,7 +156,7 @@ public class MapaMagazynu extends JPanel {
 	}
 
 	public void moveLiftRight() {
-
+		log.info("MOVE LIFT RIGHT Przesuwam w prawo");
 		int xPo = lift.getX() + lift.getXsize();
 		double yAktualne = lift.getY();
 		boolean isEnteringShelf = false;
@@ -227,6 +226,10 @@ public class MapaMagazynu extends JPanel {
 
 	public int getLiftLeve() {
 		return lift.getLevel();
+	}
+
+	public LiftPanel getLift() {
+		return lift;
 	}
 
 }
