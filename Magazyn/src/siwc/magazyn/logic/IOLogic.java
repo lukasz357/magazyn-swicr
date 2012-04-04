@@ -145,6 +145,8 @@ public class IOLogic {
 						towar.setKodTowaru(kodTowaru);
 						towar.setIlosc(ilosc);
 					}
+					
+					rp.zmienToolTipTextBoxu(pietro, pozycja, "<html>"+pozycja+"<br>"+towar.getOpis());
 					if(towaryNaMagazynie.containsKey(kodTowaru)){
 						int staraLiczbaPaczek = towaryNaMagazynie.get(kodTowaru).getIlePaczek();
 						towaryNaMagazynie.get(kodTowaru).setIlePaczek(staraLiczbaPaczek + 1) ;

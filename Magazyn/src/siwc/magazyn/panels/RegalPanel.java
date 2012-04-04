@@ -74,7 +74,14 @@ public class RegalPanel extends JPanel {
 		visibleBoxes.get(position).setBackground(levelMap.get(position).getBackground());
 		visibleBoxes.get(position).revalidate();
 	}
-
+	public void zmienToolTipText(String position, String text) {
+		TreeMap<String, BoxPanel> levelMap = getLevelMap();
+		if(levelMap.get(position).isFree())
+			return;
+		levelMap.get(position).setToolTipText(text);
+		visibleBoxes.get(position).setToolTipText(levelMap.get(position).getToolTipText());
+		visibleBoxes.get(position).revalidate();
+	}
 	public void pokazPietro(int level) {
 		this.pietro = level;
 		TreeMap<String, BoxPanel> levelMap = getLevelMap();
@@ -230,6 +237,7 @@ public class RegalPanel extends JPanel {
 					bp.setBackground(MagazynUtils.freeBoxBackround);
 					bp.setMovable(true);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
+					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
 				} else if (liczbaPustychBoksow == 2 && (i == 0 || i == (rows - 1)) && j == cols / 2) {
@@ -365,6 +373,12 @@ public class RegalPanel extends JPanel {
 			getLevelMap(level).get(position).setBackground(color);
 	}
 	
+	public void zmienToolTipTextBoxu(int level, String position, String text) {
+		if(this.pietro == level) 
+			zmienToolTipText(position, text);
+		else
+			getLevelMap(level).get(position).setToolTipText(text);
+	}
 	public boolean isMovable(int level, String position) {
 		return getLevelMap(level).get(position).isMovable();
 	}
