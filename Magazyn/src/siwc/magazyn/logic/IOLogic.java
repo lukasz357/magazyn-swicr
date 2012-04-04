@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
@@ -18,6 +19,7 @@ import siwc.magazyn.utils.MagazynUtils;
 
 public class IOLogic {
 	private Logger log = Logger.getLogger(IOLogic.class);
+	private HashMap<String, TowarTO> wszystkieTowary;
 	@Deprecated 
 	public MagazynTO getMagazynFromFile() { // bo konwertowane jest z mapy marcina ;d
 		MagazynTO magazyn = new MagazynTO();
@@ -89,7 +91,7 @@ public class IOLogic {
 		
 	}
 	
-	public ArrayList<RegalPanel> readFileToRegalPanelArray(File file, ArrayList<RegalPanel> regaly) {
+	public String readFileToRegalPanelArray(File file, ArrayList<RegalPanel> regaly, HashMap<String, TowarTO> towaryNaMagazynie) {
 		
 		FileReader fr = null;
 		BufferedReader in = null;
@@ -142,6 +144,13 @@ public class IOLogic {
 						towar.setKodTowaru(kodTowaru);
 						towar.setIlosc(ilosc);
 					}
+					if(towaryNaMagazynie.containsKey(kodTowaru)){
+						int staraIlosc = towaryNaMagazynie.get(kodTowaru).getIlosc();
+						towaryNaMagazynie.get(kodTowaru).setIlosc(staraIlosc + ilosc) ;
+					}
+					else {
+						towaryNaMagazynie.put(kodTowaru, new TowarTO(towar));
+					}
 
 				}catch(NumberFormatException e){
 					e.printStackTrace();
@@ -155,7 +164,8 @@ public class IOLogic {
 			e.printStackTrace();
 		}
 
-		return regaly;
+//		return regaly;
+		return "OK";
 	}
 
 	public MagazynTO convertToMagazynTO(ArrayList<RegalPanel> regaly) {

@@ -10,6 +10,17 @@ public class TowarTO {
 	String kodTowaru;
 	
 
+	public TowarTO(){
+		
+	}
+	
+	public TowarTO(TowarTO towar) {
+		this.nazwa = towar.getNazwa();
+		this.producent = towar.getProducent();
+		this.ilosc = towar.getIlosc();
+		this.kodTowaru = towar.getKodTowaru();
+	}
+
 	public String getNazwa() {
 		return nazwa;
 	}
