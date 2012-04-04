@@ -53,6 +53,7 @@ import siwc.magazyn.logic.IOLogic;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.utils.MagazynUtils;
+import net.miginfocom.swing.MigLayout;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
@@ -193,12 +194,12 @@ public class Magazyn {
 		lblNewLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 16));
 		frame = new JFrame();
 		frame.setTitle(MagazynUtils.frameTitle);
-		frame.setSize(MagazynUtils.frameWidth, MagazynUtils.frameHeight);
+		frame.setSize(1303, 893);
 
 		if (MagazynUtils.screenSize.getWidth() <= 1366)
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-		frame.setResizable(false);
+		frame.setResizable(true);
 		// frame.setBounds(50, 50, MagazynUtils.frameWidth, MagazynUtils.frameHeight);
 		log.info("Rozmiar okna: " + MagazynUtils.frameWidth + "x" + MagazynUtils.frameHeight + "\t" + frame.getWidth() + "x" + frame.getHeight());
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -320,7 +321,7 @@ public class Magazyn {
 
 		/* STOP MAGAZYNU */
 		btnStop = new JButton("STOP");
-		btnStop.setBounds(1103, 650, 115, 40);
+		btnStop.setBounds(1043, 677, 115, 40);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				log.info("Magazyn został zatrzymany");
@@ -334,7 +335,7 @@ public class Magazyn {
 
 		/* START MAGAZYNU */
 		btnStart = new JButton("START");
-		btnStart.setBounds(1228, 650, 109, 40);
+		btnStart.setBounds(905, 677, 109, 40);
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -367,11 +368,11 @@ public class Magazyn {
 		lblKonsola.setBounds(20, 599, 37, 14);
 
 		panelStatystyki = new JPanel();
-		panelStatystyki.setBounds(820, 72, 203, 183);
+		panelStatystyki.setBounds(812, 385, 212, 183);
 		panelStatystyki.setBorder(new TitledBorder(null, "Statystyki", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		panelLegenda = new JPanel();
-		panelLegenda.setBounds(830, 599, 203, 148);
+		panelLegenda.setBounds(1044, 385, 212, 183);
 		panelLegenda.setBorder(new TitledBorder(null, "Legenda", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelStatystyki.setLayout(null);
 
@@ -906,29 +907,47 @@ public class Magazyn {
 
 		panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Zam\u00F3wienia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_6.setBounds(1030, 31, 212, 336);
+		panel_6.setBounds(1034, 31, 212, 336);
 		frame.getContentPane().add(panel_6);
-		panel_6.setLayout(null);
 		btnWczytajZamowienia = new JButton("Wczytaj");
-		btnWczytajZamowienia.setBounds(58, 23, 71, 23);
-		panel_6.add(btnWczytajZamowienia);
 		btnEdytuj = new JButton("Edytuj");
-		btnEdytuj.setBounds(139, 23, 63, 23);
-		panel_6.add(btnEdytuj);
 
 		scrollPaneListaZamowien = new JScrollPane();
-		scrollPaneListaZamowien.setBounds(10, 69, 192, 261);
-		panel_6.add(scrollPaneListaZamowien);
 
 		listZamowienia = new JList();
 		listZamowienia.setModel(zamowieniaListModel);
 		scrollPaneListaZamowien.setViewportView(listZamowienia);
+		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
+		gl_panel_6.setHorizontalGroup(
+			gl_panel_6.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_6.createParallelGroup(Alignment.TRAILING, false)
+					.addGroup(Alignment.LEADING, gl_panel_6.createSequentialGroup()
+						.addGap(4)
+						.addComponent(scrollPaneListaZamowien, 0, 0, Short.MAX_VALUE))
+					.addGroup(Alignment.LEADING, gl_panel_6.createSequentialGroup()
+						.addGap(52)
+						.addComponent(btnWczytajZamowienia)
+						.addGap(10)
+						.addComponent(btnEdytuj)))
+		);
+		gl_panel_6.setVerticalGroup(
+			gl_panel_6.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_6.createSequentialGroup()
+					.addGap(7)
+					.addGroup(gl_panel_6.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnWczytajZamowienia)
+						.addComponent(btnEdytuj))
+					.addGap(18)
+					.addComponent(scrollPaneListaZamowien, GroupLayout.PREFERRED_SIZE, 266, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		panel_6.setLayout(gl_panel_6);
 		
 		panel_7_produkty = new JPanel();
 		panel_7_produkty.setBorder(new TitledBorder(null, "Produkty", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_7_produkty.setBounds(812, 266, 212, 268);
+		panel_7_produkty.setBounds(812, 31, 212, 336);
+
 		frame.getContentPane().add(panel_7_produkty);
-		panel_7_produkty.setLayout(null);
 		
 		/* wczytaj produkty */
 		btnWczytajProdukty = new JButton("Wczytaj");
@@ -948,15 +967,30 @@ public class Magazyn {
 			}
 		});
 		
-		btnWczytajProdukty.setBounds(113, 33, 89, 23);
-		panel_7_produkty.add(btnWczytajProdukty);
-		
 		scrollPaneProdukty = new JScrollPane();
-		scrollPaneProdukty.setBounds(10, 67, 192, 190);
-		panel_7_produkty.add(scrollPaneProdukty);
 		
 		listProdukty = new JList<>();
 		scrollPaneProdukty.setViewportView(listProdukty);
+		GroupLayout gl_panel_7_produkty = new GroupLayout(panel_7_produkty);
+		gl_panel_7_produkty.setHorizontalGroup(
+			gl_panel_7_produkty.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_7_produkty.createSequentialGroup()
+					.addGap(7)
+					.addComponent(scrollPaneProdukty, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
+				.addGroup(gl_panel_7_produkty.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnWczytajProdukty)
+					.addContainerGap(119, Short.MAX_VALUE))
+		);
+		gl_panel_7_produkty.setVerticalGroup(
+			gl_panel_7_produkty.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_7_produkty.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnWczytajProdukty)
+					.addGap(12)
+					.addComponent(scrollPaneProdukty, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+		);
+		panel_7_produkty.setLayout(gl_panel_7_produkty);
 		btnEdytuj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
