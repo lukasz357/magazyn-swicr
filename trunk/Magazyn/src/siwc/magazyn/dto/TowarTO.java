@@ -21,6 +21,17 @@ public class TowarTO {
 		this.kodTowaru = towar.getKodTowaru();
 	}
 
+	public String getOpis() {
+		String opis = "";//"<html>";
+		opis += "Kod towaru: "+kodTowaru+"<br>";
+		opis += "Nazwa: "+nazwa+"<br>";
+		opis += "Ilosc: "+ilosc+"<br>";
+		opis += "Producent: "+producent;
+		opis += "</html>";
+		
+		return opis;
+	}
+	
 	public String getNazwa() {
 		return nazwa;
 	}
