@@ -42,14 +42,14 @@ public class IOLogic {
 		
 		TowarTO skarpety = new TowarTO();
 		skarpety.setIdBoxu(1);
-		skarpety.setIlosc("200szt.");
+//		skarpety.setIlosc("200szt.");
 		skarpety.setKodTowaru("SKRPT001");
 		skarpety.setNazwa("Skarpety Elżbiety");
 		skarpety.setProducent("Pamiętniki z wakacji");
 		
 		TowarTO adidasy = new TowarTO();
 		adidasy.setIdBoxu(2);
-		adidasy.setIlosc("20par");
+//		adidasy.setIlosc("20par");
 		adidasy.setKodTowaru("ADDS001");
 		adidasy.setNazwa("Adidasa skarpetasa");
 		adidasy.setProducent("Gienek i spółka");
@@ -122,6 +122,7 @@ public class IOLogic {
 					String nazwa = tLine[3].trim();
 					String producent = tLine[4].trim();
 					String kodTowaru = tLine[5].trim();
+					int ilosc = Integer.parseInt(tLine[6].trim());;
 					
 					if(regalID >= MagazynUtils.liczbaRegalow || pietro >= MagazynUtils.liczbaPieter) 
 						continue;
@@ -139,6 +140,7 @@ public class IOLogic {
 						towar.setNazwa(nazwa);
 						towar.setProducent(producent);
 						towar.setKodTowaru(kodTowaru);
+						towar.setIlosc(ilosc);
 					}
 
 				}catch(NumberFormatException e){

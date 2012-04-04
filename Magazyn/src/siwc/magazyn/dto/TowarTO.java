@@ -6,7 +6,7 @@ public class TowarTO {
 	
 	String nazwa;
 	String producent;
-	String ilosc;
+	Integer ilosc;
 	String kodTowaru;
 	
 
@@ -26,11 +26,11 @@ public class TowarTO {
 		this.producent = producent;
 	}
 
-	public String getIlosc() {
+	public Integer getIlosc() {
 		return ilosc;
 	}
 
-	public void setIlosc(String ilosc) {
+	public void setIlosc(Integer ilosc) {
 		this.ilosc = ilosc;
 	}
 
@@ -49,4 +49,5 @@ public class TowarTO {
 	public void setIdBoxu(Integer idBoxu) {
 		this.idBoxu = idBoxu;
 	}
+
 }

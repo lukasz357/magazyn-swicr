@@ -1,5 +1,21 @@
-#Regal; Pietro; Pozycja; nazwa; producent; kod
+#Regal; Pietro; Pozycja; nazwa; producent; kod, ilosc w jednej paczce - potrzebne zeby sumowac do listy towarów z całego magazynu
 #trololo 3:44 
-1;2;A4; ala ma kota i ssie; ksiazkaCORP;ABCD1234
-3;2;C32;ala ma kotadq;ks;c;321
-2;0;B3;a;d;w;2
+1;1;A4;Półka stojąca; MebleCORP;PSMC;10
+1;1;A5;Półka stojąca; MebleCORP;PSMC;10
+1;1;A6;Półka stojąca; MebleCORP;PSMC;10
+1;1;A7;Półka stojąca; MebleCORP;PSMC;10
+1;1;A8;Półka stojąca; MebleCORP;PSMC;10
+1;1;A9;Półka stojąca; MebleCORP;PSMC;10
+3;2;C32;Szafka kuchenna;KuchenneCORP;SKKC;5
+3;2;C31;Szafka kuchenna;KuchenneCORP;SKKC;5
+3;2;C30;Szafka kuchenna;KuchenneCORP;SKKC;5
+3;2;C29;Szafka kuchenna;KuchenneCORP;SKKC;5
+3;2;C28;Szafka kuchenna;KuchenneCORP;SKKC;5
+3;2;C27;Szafka kuchenna;KuchenneCORP;SKKC;5
+3;2;C26;Szafka kuchenna;KuchenneCORP;SKKC;5
+2;3;B7;Drzwi debowe; DrzwiCORP;DDDC;3
+2;3;B8;Drzwi debowe; DrzwiCORP;DDDC;3
+2;3;B9;Drzwi bukowe; DrzwiCORP;DDDC;3
+2;3;B10;Drzwi bukowe; DrzwiCORP;DDDC;3
+2;3;B11;Drzwi jesionowe; DrzwiCORP;DDDC;3
+2;3;B12;Drzwi jesionowe; DrzwiCORP;DDDC;3
