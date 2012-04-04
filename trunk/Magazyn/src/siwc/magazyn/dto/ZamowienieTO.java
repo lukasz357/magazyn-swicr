@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ZamowienieTO {
 	private int numerZamowienia;
+	private int priorytet;
 	private String daneKlienta; //Imie i nazwisko
 	private List<ListTowarTO> towary = new ArrayList<>();
 	
@@ -13,6 +14,12 @@ public class ZamowienieTO {
 	}
 	public void setNumerZamowienia(int numerZamowienia) {
 		this.numerZamowienia = numerZamowienia;
+	}
+	public int getPriorytet() {
+		return priorytet;
+	}
+	public void setPriorytet(int priorytet) {
+		this.priorytet = priorytet;
 	}
 	public String getDaneKlienta() {
 		return daneKlienta;

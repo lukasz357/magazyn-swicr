@@ -1144,7 +1144,7 @@ public class Magazyn {
 			for (ZamowienieTO z : listaZamowien) {
 				for(ListTowarTO t: z.getTowary()) {
 //					System.out.println("Zamowienie: "+z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa());
-					zamowieniaListModel.addElement(z.getNumerZamowienia() + ": "+ z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa());
+					zamowieniaListModel.addElement(z.getNumerZamowienia() + ": "+ z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" (pr: "+z.getPriorytet()+")");
 				}
 			}
 			listZamowienia.setModel(zamowieniaListModel);

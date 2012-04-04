@@ -185,14 +185,21 @@ public class IOLogic {
 
 			String line, itemLine;
 			while ((line = in.readLine()) != null) {
+				String[] tLine = null;
 				if (line.startsWith("#") || line.equals("")) // komentarz - pusta linia
 					continue;
-				String daneKlienta = line;
+				if (line.contains(";"))
+					tLine = line.split(";");
+				else if (line.contains(","))
+					tLine = line.split(",");
+				String daneKlienta = tLine[0].trim();
+				int priorytet = Integer.parseInt(tLine[1].trim());
 				ZamowienieTO zamowienie = new ZamowienieTO();
 				zamowienie.setDaneKlienta(daneKlienta);
+				zamowienie.setPriorytet(priorytet);
 				zamowienie.setNumerZamowienia(index);
 				while(!(itemLine = in.readLine()).equals("$") && itemLine != null){
-					String[] tLine = null;
+					tLine = null;
 					if (itemLine.contains(";"))
 						tLine = itemLine.split(";");
 					else if (itemLine.contains(","))
