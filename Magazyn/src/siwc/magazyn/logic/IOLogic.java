@@ -10,6 +10,7 @@ import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 
+import siwc.magazyn.dto.ListTowarTO;
 import siwc.magazyn.dto.MagazynTO;
 import siwc.magazyn.dto.PoleTO;
 import siwc.magazyn.dto.TowarTO;
@@ -19,7 +20,6 @@ import siwc.magazyn.utils.MagazynUtils;
 
 public class IOLogic {
 	private Logger log = Logger.getLogger(IOLogic.class);
-	private HashMap<String, TowarTO> wszystkieTowary;
 	@Deprecated 
 	public MagazynTO getMagazynFromFile() { // bo konwertowane jest z mapy marcina ;d
 		MagazynTO magazyn = new MagazynTO();
@@ -91,7 +91,7 @@ public class IOLogic {
 		
 	}
 	
-	public String readFileToRegalPanelArray(File file, ArrayList<RegalPanel> regaly, HashMap<String, TowarTO> towaryNaMagazynie) {
+	public String readFileToRegalPanelArray(File file, ArrayList<RegalPanel> regaly, HashMap<String, ListTowarTO> towaryNaMagazynie) {
 		
 		FileReader fr = null;
 		BufferedReader in = null;
@@ -145,11 +145,11 @@ public class IOLogic {
 						towar.setIlosc(ilosc);
 					}
 					if(towaryNaMagazynie.containsKey(kodTowaru)){
-						int staraIlosc = towaryNaMagazynie.get(kodTowaru).getIlosc();
-						towaryNaMagazynie.get(kodTowaru).setIlosc(staraIlosc + ilosc) ;
+						int staraLiczbaPaczek = towaryNaMagazynie.get(kodTowaru).getIlePaczek();
+						towaryNaMagazynie.get(kodTowaru).setIlePaczek(staraLiczbaPaczek + 1) ;
 					}
 					else {
-						towaryNaMagazynie.put(kodTowaru, new TowarTO(towar));
+						towaryNaMagazynie.put(kodTowaru, new ListTowarTO(towar, 0));
 					}
 
 				}catch(NumberFormatException e){
