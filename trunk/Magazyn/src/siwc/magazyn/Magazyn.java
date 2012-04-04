@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -47,6 +48,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import siwc.magazyn.dto.MagazynTO;
+import siwc.magazyn.dto.TowarTO;
 import siwc.magazyn.logic.IOLogic;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
@@ -149,6 +151,7 @@ public class Magazyn {
 	private JScrollPane scrollPaneProdukty;
 	private ArrayList<RegalPanel> regaly;
 	private static JList listProdukty;
+	private HashMap<String, TowarTO> towaryNaMagazynie;
 
 	/**
 	 * Launch the application.
@@ -229,6 +232,7 @@ public class Magazyn {
 		menuBar.add(menuPlik);
 		
 		regaly = new ArrayList<>();
+		towaryNaMagazynie = new HashMap<>();
 
 		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++) {
 			regaly.add(new RegalPanel(MagazynUtils.defaultFreeBoxes));
@@ -249,7 +253,7 @@ public class Magazyn {
 				if (result == JFileChooser.APPROVE_OPTION) {
 					IOLogic logic = new IOLogic();
 					
-					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly);
+					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
 					magazyn = logic.convertToMagazynTO(regaly);
 				
 					saveFile.setEnabled(true);
@@ -1118,6 +1122,14 @@ public class Magazyn {
 			log.error("pusta lista produktow");
 		}
 		
+	}
+
+	public HashMap<String, TowarTO> getTowaryNaMagazynie() {
+		return towaryNaMagazynie;
+	}
+
+	public void setTowaryNaMagazynie(HashMap<String, TowarTO> towaryNaMagazynie) {
+		this.towaryNaMagazynie = towaryNaMagazynie;
 	}
 	
 }
