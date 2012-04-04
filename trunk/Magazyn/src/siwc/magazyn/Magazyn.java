@@ -47,13 +47,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import siwc.magazyn.dto.ListTowarTO;
 import siwc.magazyn.dto.MagazynTO;
-import siwc.magazyn.dto.TowarTO;
 import siwc.magazyn.logic.IOLogic;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.utils.MagazynUtils;
-import net.miginfocom.swing.MigLayout;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
@@ -152,7 +151,7 @@ public class Magazyn {
 	private JScrollPane scrollPaneProdukty;
 	private ArrayList<RegalPanel> regaly;
 	private static JList<String> listProdukty;
-	private HashMap<String, TowarTO> towaryNaMagazynie;
+	private HashMap<String, ListTowarTO> towaryNaMagazynie;
 
 	/**
 	 * Launch the application.
@@ -1147,10 +1146,10 @@ public class Magazyn {
 	}
 	
 	/* produkty */
-	public static void dodajProdukty(HashMap<String, TowarTO> listaProduktow){
+	public static void dodajProdukty(HashMap<String, ListTowarTO> listaProduktow){
 		if(listaProduktow != null){
-			for(TowarTO t: listaProduktow.values())
-				produktyListModel.addElement(t.getKodTowaru()+": "+t.getNazwa() + " - " + t.getIlosc() +" szt.");
+			for(ListTowarTO t: listaProduktow.values())
+				produktyListModel.addElement(t.getKodTowaru()+": "+t.getNazwa() + " - "+t.getIlePaczek() +" x " + t.getIlosc() +" szt.");
 			listProdukty.setModel(produktyListModel);
 		}else{
 			log.error("pusta lista produktow");
@@ -1158,11 +1157,11 @@ public class Magazyn {
 		
 	}
 
-	public HashMap<String, TowarTO> getTowaryNaMagazynie() {
+	public HashMap<String, ListTowarTO> getTowaryNaMagazynie() {
 		return towaryNaMagazynie;
 	}
 
-	public void setTowaryNaMagazynie(HashMap<String, TowarTO> towaryNaMagazynie) {
+	public void setTowaryNaMagazynie(HashMap<String, ListTowarTO> towaryNaMagazynie) {
 		this.towaryNaMagazynie = towaryNaMagazynie;
 	}
 }
