@@ -168,11 +168,15 @@ public class IOLogic {
 		return "OK";
 	}
 
-	public ArrayList<ZamowienieTO> readOrdersFromFile(File file, ArrayList<ZamowienieTO> zamowienia, HashMap<String, ListTowarTO> towaryNaMagazynie){
+	public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, HashMap<String, ListTowarTO> towaryNaMagazynie){
 		
 		FileReader fr = null;
 		BufferedReader in = null;
+		int index = 0;
 		ArrayList<ZamowienieTO> noweZam = new ArrayList<>();
+		if(zamowienia != null) {
+			index = zamowienia.size() + 1;
+		}
 		try {
 			fr = new FileReader(file);
 			in = new BufferedReader(fr);
@@ -184,6 +188,7 @@ public class IOLogic {
 				String daneKlienta = line;
 				ZamowienieTO zamowienie = new ZamowienieTO();
 				zamowienie.setDaneKlienta(daneKlienta);
+				zamowienie.setNumerZamowienia(index);
 				while(!(itemLine = in.readLine()).equals("$") && itemLine != null){
 					String[] tLine = null;
 					if (itemLine.contains(";"))
@@ -217,10 +222,9 @@ public class IOLogic {
 						e.printStackTrace();
 					}
 				}
-				zamowienia.add(zamowienie);
+				zamowienia.put(index, zamowienie);
 				noweZam.add(zamowienie);
-
-				
+				index++;
 			}
 			
 			in.close();

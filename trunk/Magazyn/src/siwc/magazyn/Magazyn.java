@@ -152,7 +152,7 @@ public class Magazyn {
 	private ArrayList<RegalPanel> regaly;
 	private static JList<String> listProdukty;
 	private HashMap<String, ListTowarTO> towaryNaMagazynie;
-	private ArrayList<ZamowienieTO> zamowienia;
+	private HashMap<Integer, ZamowienieTO> zamowienia;
 
 	/**
 	 * Launch the application.
@@ -190,7 +190,7 @@ public class Magazyn {
 	private void initialize() {
 		regaly = new ArrayList<>();
 		towaryNaMagazynie = new HashMap<>();
-		zamowienia = new ArrayList<>();
+		zamowienia = new HashMap<>();
 		
 		
 		lblNewLabel.setBounds(10, 11, 585, 50);
@@ -1143,8 +1143,8 @@ public class Magazyn {
 		if (listaZamowien != null){
 			for (ZamowienieTO z : listaZamowien) {
 				for(ListTowarTO t: z.getTowary()) {
-					System.out.println("Zamowienie: "+z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa());
-					zamowieniaListModel.addElement(z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa());
+//					System.out.println("Zamowienie: "+z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa());
+					zamowieniaListModel.addElement(z.getNumerZamowienia() + ": "+ z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa());
 				}
 			}
 			listZamowienia.setModel(zamowieniaListModel);
