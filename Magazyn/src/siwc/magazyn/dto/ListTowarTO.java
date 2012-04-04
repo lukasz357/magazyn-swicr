@@ -3,6 +3,10 @@ package siwc.magazyn.dto;
 public class ListTowarTO extends TowarTO{
 	private int ilePaczek;
 
+	public ListTowarTO(){
+		super();
+	}
+	
 	public ListTowarTO(TowarTO towar, int ilePaczek) {
 		super(towar);
 		this.ilePaczek = ilePaczek;
