@@ -150,7 +150,7 @@ public class Magazyn {
 	private JButton btnWczytajProdukty;
 	private JScrollPane scrollPaneProdukty;
 	private ArrayList<RegalPanel> regaly;
-	private static JList listProdukty;
+	private static JList<String> listProdukty;
 	private HashMap<String, TowarTO> towaryNaMagazynie;
 
 	/**
@@ -255,7 +255,7 @@ public class Magazyn {
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
 					magazyn = logic.convertToMagazynTO(regaly);
-				
+					dodajProdukty(towaryNaMagazynie);
 					saveFile.setEnabled(true);
 					saveAsFile.setEnabled(true);
 				}
@@ -367,11 +367,11 @@ public class Magazyn {
 		lblKonsola.setBounds(20, 599, 37, 14);
 
 		panelStatystyki = new JPanel();
-		panelStatystyki.setBounds(820, 72, 234, 356);
+		panelStatystyki.setBounds(820, 72, 203, 183);
 		panelStatystyki.setBorder(new TitledBorder(null, "Statystyki", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		panelLegenda = new JPanel();
-		panelLegenda.setBounds(820, 439, 234, 148);
+		panelLegenda.setBounds(830, 599, 203, 148);
 		panelLegenda.setBorder(new TitledBorder(null, "Legenda", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelStatystyki.setLayout(null);
 
@@ -382,7 +382,7 @@ public class Magazyn {
 		lblLiczbaZamowien = new JLabel("0");
 		lblLiczbaZamowien.setFont(new Font("Tahoma", Font.BOLD, 11));
 		// lblLiczbaZamowien.set
-		lblLiczbaZamowien.setBounds(205, 34, 19, 14);
+		lblLiczbaZamowien.setBounds(185, 34, 19, 14);
 		panelStatystyki.add(lblLiczbaZamowien);
 
 		lblLiczbaZamwienZrealizowanychTekst = new JLabel("Liczba zamówien zrealizowanych :");
@@ -391,7 +391,7 @@ public class Magazyn {
 
 		lblLiczbaZamowienZrealizowanych = new JLabel("0");
 		lblLiczbaZamowienZrealizowanych.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblLiczbaZamowienZrealizowanych.setBounds(205, 59, 19, 14);
+		lblLiczbaZamowienZrealizowanych.setBounds(185, 59, 19, 14);
 		panelStatystyki.add(lblLiczbaZamowienZrealizowanych);
 
 		lblIloPrzedmiotwTekst = new JLabel("Ilość przedmiotów :");
@@ -400,7 +400,7 @@ public class Magazyn {
 
 		lblLbliloscprzedmiotow = new JLabel("0");
 		lblLbliloscprzedmiotow.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblLbliloscprzedmiotow.setBounds(205, 84, 19, 14);
+		lblLbliloscprzedmiotow.setBounds(185, 84, 19, 14);
 		panelStatystyki.add(lblLbliloscprzedmiotow);
 
 		lblIloscWszystkichMiejscTekst = new JLabel("Wszystkie miejsca :");
@@ -417,12 +417,12 @@ public class Magazyn {
 
 		lblWszystkieMiejsca = new JLabel("0");
 		lblWszystkieMiejsca.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblWszystkieMiejsca.setBounds(205, 109, 19, 14);
+		lblWszystkieMiejsca.setBounds(185, 109, 19, 14);
 		panelStatystyki.add(lblWszystkieMiejsca);
 
 		lblMiejscaZajete = new JLabel("0");
 		lblMiejscaZajete.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblMiejscaZajete.setBounds(205, 134, 19, 14);
+		lblMiejscaZajete.setBounds(185, 134, 19, 14);
 		panelStatystyki.add(lblMiejscaZajete);
 		// KonsolaList = new JList(konsolaLista.toArray());
 
@@ -858,7 +858,7 @@ public class Magazyn {
 
 		lblSredniCzasRealizacji = new JLabel("0");
 		lblSredniCzasRealizacji.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblSredniCzasRealizacji.setBounds(205, 159, 19, 14);
+		lblSredniCzasRealizacji.setBounds(185, 159, 19, 14);
 		panelStatystyki.add(lblSredniCzasRealizacji);
 		frame.getContentPane().add(panelLegenda);
 		panelLegenda.setLayout(null);
@@ -906,7 +906,7 @@ public class Magazyn {
 
 		panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Zam\u00F3wienia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_6.setBounds(1138, 11, 212, 336);
+		panel_6.setBounds(1030, 31, 212, 336);
 		frame.getContentPane().add(panel_6);
 		panel_6.setLayout(null);
 		btnWczytajZamowienia = new JButton("Wczytaj");
@@ -926,7 +926,7 @@ public class Magazyn {
 		
 		panel_7_produkty = new JPanel();
 		panel_7_produkty.setBorder(new TitledBorder(null, "Produkty", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_7_produkty.setBounds(1138, 358, 212, 268);
+		panel_7_produkty.setBounds(812, 266, 212, 268);
 		frame.getContentPane().add(panel_7_produkty);
 		panel_7_produkty.setLayout(null);
 		
@@ -955,7 +955,7 @@ public class Magazyn {
 		scrollPaneProdukty.setBounds(10, 67, 192, 190);
 		panel_7_produkty.add(scrollPaneProdukty);
 		
-		listProdukty = new JList();
+		listProdukty = new JList<>();
 		scrollPaneProdukty.setViewportView(listProdukty);
 		btnEdytuj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1113,10 +1113,10 @@ public class Magazyn {
 	}
 	
 	/* produkty */
-	public static void dodajProdukty(List<String> listaProduktow){
+	public static void dodajProdukty(HashMap<String, TowarTO> listaProduktow){
 		if(listaProduktow != null){
-			for(String s: listaProduktow)
-				produktyListModel.addElement(s);
+			for(TowarTO t: listaProduktow.values())
+				produktyListModel.addElement(t.getKodTowaru()+": "+t.getNazwa() + " - " + t.getIlosc() +" szt.");
 			listProdukty.setModel(produktyListModel);
 		}else{
 			log.error("pusta lista produktow");
@@ -1131,5 +1131,4 @@ public class Magazyn {
 	public void setTowaryNaMagazynie(HashMap<String, TowarTO> towaryNaMagazynie) {
 		this.towaryNaMagazynie = towaryNaMagazynie;
 	}
-	
 }
