@@ -57,7 +57,7 @@ public class RegalPanel extends JPanel {
 				bp = new BoxPanel(j, i, new PoleTO());
 				bp.setBackground(mBox.getBackground());
 				bp.setBorder(mBox.getBorder());
-
+				bp.setToolTipText("Pusty");
 				visibleBoxes.put(position, bp);
 				add(bp);
 			}
@@ -72,6 +72,7 @@ public class RegalPanel extends JPanel {
 		levelMap.get(position).setBackground(c);
 
 		visibleBoxes.get(position).setBackground(levelMap.get(position).getBackground());
+		visibleBoxes.get(position).setToolTipText(levelMap.get(position).getToolTipText());
 		visibleBoxes.get(position).revalidate();
 	}
 	public void zmienToolTipText(String position, String text) {
@@ -91,6 +92,7 @@ public class RegalPanel extends JPanel {
 				if(visibleBoxes.get(k) == null || levelMap.get(k) == null) 
 					System.out.println("null " + k + " " + (visibleBoxes.get(k) == null) + " " + (levelMap.get(k) == null) );
 				visibleBoxes.get(k).setBackground(levelMap.get(k).getBackground());
+				visibleBoxes.get(k).setToolTipText(levelMap.get(k).getToolTipText());
 				visibleBoxes.get(k).revalidate();
 			}
 		}
@@ -246,12 +248,14 @@ public class RegalPanel extends JPanel {
 					bp.setBackground(MagazynUtils.freeBoxBackround);
 					bp.setMovable(true);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
+					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
 				} else {
 					bp = new BoxPanel(j, i, new PoleTO());
 					bp.setBackground(MagazynUtils.defaultBoxBackground);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
+					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
 				}
