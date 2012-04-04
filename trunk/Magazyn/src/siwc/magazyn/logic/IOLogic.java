@@ -14,6 +14,7 @@ import siwc.magazyn.dto.ListTowarTO;
 import siwc.magazyn.dto.MagazynTO;
 import siwc.magazyn.dto.PoleTO;
 import siwc.magazyn.dto.TowarTO;
+import siwc.magazyn.dto.ZamowienieTO;
 import siwc.magazyn.panels.BoxPanel;
 import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.utils.MagazynUtils;
@@ -110,7 +111,7 @@ public class IOLogic {
 				else if (line.contains(","))
 					tLine = line.split(",");
 				
-				if (tLine == null || tLine.length < MagazynUtils.liczbaKolumnPlikuZamowien - 1) {
+				if (tLine == null || tLine.length < MagazynUtils.liczbaKolumnPlikuProduktow - 1) {
 					log.error("Problem przy wczytywaniu przedmiotów z pliku!");
 					in.close();
 					fr.close();
@@ -164,10 +165,74 @@ public class IOLogic {
 			e.printStackTrace();
 		}
 
-//		return regaly;
 		return "OK";
 	}
 
+	public ArrayList<ZamowienieTO> readOrdersFromFile(File file, ArrayList<ZamowienieTO> zamowienia, HashMap<String, ListTowarTO> towaryNaMagazynie){
+		
+		FileReader fr = null;
+		BufferedReader in = null;
+		ArrayList<ZamowienieTO> noweZam = new ArrayList<>();
+		try {
+			fr = new FileReader(file);
+			in = new BufferedReader(fr);
+
+			String line, itemLine;
+			while ((line = in.readLine()) != null) {
+				if (line.startsWith("#") || line.equals("")) // komentarz - pusta linia
+					continue;
+				String daneKlienta = line;
+				ZamowienieTO zamowienie = new ZamowienieTO();
+				zamowienie.setDaneKlienta(daneKlienta);
+				while(!(itemLine = in.readLine()).equals("$") && itemLine != null){
+					String[] tLine = null;
+					if (itemLine.contains(";"))
+						tLine = itemLine.split(";");
+					else if (itemLine.contains(","))
+						tLine = itemLine.split(",");
+					
+					if (tLine == null) {
+						log.error("Problem przy wczytywaniu zamówień z pliku!");
+						in.close();
+						fr.close();
+						return null;
+					}
+					try{
+						ListTowarTO towar = new ListTowarTO();
+						String kodTowaru = tLine[0].trim();
+						String nazwaTowaru = tLine[1].trim();
+						int ilePaczek = Integer.parseInt(tLine[2].trim());
+						if(!towaryNaMagazynie.containsKey(kodTowaru)){
+							log.error("Nie dodano do zamowienia produktu o kodzie: "+kodTowaru);
+							continue;
+						}
+						else {
+							towar.setKodTowaru(kodTowaru);
+							towar.setNazwa(nazwaTowaru);
+							towar.setIlePaczek(ilePaczek);
+							zamowienie.getTowary().add(towar);
+						}
+
+					}catch(NumberFormatException e){
+						e.printStackTrace();
+					}
+				}
+				zamowienia.add(zamowienie);
+				noweZam.add(zamowienie);
+
+				
+			}
+			
+			in.close();
+			fr.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return noweZam;
+	}
+	
 	public MagazynTO convertToMagazynTO(ArrayList<RegalPanel> regaly) {
 		MagazynTO magazyn = new MagazynTO();
 		magazyn.setWielkoscXMagazynu(MagazynUtils.mapWidth / MagazynUtils.boxSize);

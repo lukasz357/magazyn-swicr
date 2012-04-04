@@ -59,7 +59,7 @@ public class MagazynUtils {
 	public static int odbiorHeight = liftSizeY;
 
 	//pliki
-	public static int liczbaKolumnPlikuZamowien = 6;
+	public static int liczbaKolumnPlikuProduktow = 6;
 	
 	//MagazynTO
 	public static PoleTO emptyField = initializeEmptyfield(); // by byyla ta sama referencja, nie wiem czy to potrzebne 

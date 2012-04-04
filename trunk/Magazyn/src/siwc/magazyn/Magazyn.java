@@ -12,7 +12,6 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import javax.swing.ButtonGroup;
@@ -49,6 +48,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import siwc.magazyn.dto.ListTowarTO;
 import siwc.magazyn.dto.MagazynTO;
+import siwc.magazyn.dto.ZamowienieTO;
 import siwc.magazyn.logic.IOLogic;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
@@ -143,7 +143,7 @@ public class Magazyn {
 	private JLabel lblWzek;
 	private JPanel panel_6;
 	private JScrollPane scrollPaneListaZamowien;
-	private static JList listZamowienia;
+	private static JList<String> listZamowienia;
 	private JPanel panel_4;
 	private JLabel lblBoksZajety;
 	private JPanel panel_7_produkty;
@@ -152,6 +152,7 @@ public class Magazyn {
 	private ArrayList<RegalPanel> regaly;
 	private static JList<String> listProdukty;
 	private HashMap<String, ListTowarTO> towaryNaMagazynie;
+	private ArrayList<ZamowienieTO> zamowienia;
 
 	/**
 	 * Launch the application.
@@ -187,6 +188,11 @@ public class Magazyn {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		regaly = new ArrayList<>();
+		towaryNaMagazynie = new HashMap<>();
+		zamowienia = new ArrayList<>();
+		
+		
 		lblNewLabel.setBounds(10, 11, 585, 50);
 		lblNewLabel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -230,9 +236,6 @@ public class Magazyn {
 
 		JMenu menuPlik = new JMenu("Plik");
 		menuBar.add(menuPlik);
-		
-		regaly = new ArrayList<>();
-		towaryNaMagazynie = new HashMap<>();
 
 		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++) {
 			regaly.add(new RegalPanel(MagazynUtils.defaultFreeBoxes));
@@ -952,15 +955,16 @@ public class Magazyn {
 		btnWczytajProdukty = new JButton("Wczytaj");
 		btnWczytajProdukty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				log.info("wczytywanie produktów");
-				
 				int result = fileChooser.showOpenDialog(frame);
+
 				if (result == JFileChooser.APPROVE_OPTION) {
-					log.info("Wybrano: " + fileChooser.getSelectedFile());
+					IOLogic logic = new IOLogic();
 					
+					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
+					dodajProdukty(towaryNaMagazynie);
+					saveFile.setEnabled(true);
+					saveAsFile.setEnabled(true);
 				}
-				
-				
 				
 				dodajWpisDoKonsoli("Wczytano produkty z pliku : " + fileChooser.getSelectedFile());
 			}
@@ -1003,20 +1007,21 @@ public class Magazyn {
 		});
 		btnWczytajZamowienia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				/*
-				 * TODO
-				 * 
-				 * dodaj zamowienie zaloguj w konsoli
-				 */
 				int result = fileChooser.showOpenDialog(frame);
+
 				if (result == JFileChooser.APPROVE_OPTION) {
-					log.info("Wybrano: " + fileChooser.getSelectedFile());
+					IOLogic logic = new IOLogic();
 					
+					ArrayList<ZamowienieTO> noweZam = logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, towaryNaMagazynie);
+					dodajZamowienia(noweZam);
+					saveFile.setEnabled(true);
+					saveAsFile.setEnabled(true);
 				}
+				
 				log.info("Wczytano zamówienia");
 				
 				dodajWpisDoKonsoli("Wczytano zamówienia z pliku :" + fileChooser.getSelectedFile());
+				
 			}
 		});
 
@@ -1133,11 +1138,14 @@ public class Magazyn {
 	}
 
 	/* Dodaj zamowienia */
-	public static void dodajZamowienia(List<String> listaZamowien) {
+	public static void dodajZamowienia(ArrayList<ZamowienieTO> listaZamowien) {
 
 		if (listaZamowien != null){
-			for (String s : listaZamowien) {
-				zamowieniaListModel.addElement(s);
+			for (ZamowienieTO z : listaZamowien) {
+				for(ListTowarTO t: z.getTowary()) {
+					System.out.println("Zamowienie: "+z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa());
+					zamowieniaListModel.addElement(z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa());
+				}
 			}
 			listZamowienia.setModel(zamowieniaListModel);
 		}else{
