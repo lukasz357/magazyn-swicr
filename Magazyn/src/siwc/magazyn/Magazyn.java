@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.ButtonGroup;
@@ -49,6 +50,7 @@ import org.apache.log4j.PropertyConfigurator;
 import siwc.magazyn.dto.ListTowarTO;
 import siwc.magazyn.dto.MagazynTO;
 import siwc.magazyn.dto.ZamowienieTO;
+import siwc.magazyn.logic.Algorithm;
 import siwc.magazyn.logic.IOLogic;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
@@ -153,7 +155,10 @@ public class Magazyn {
 	private static JList<String> listProdukty;
 	private HashMap<String, ListTowarTO> towaryNaMagazynie;
 	private HashMap<Integer, ZamowienieTO> zamowienia;
+	private List<ZamowienieTO> zamowieniaLista;
 
+	private MagazynTO magazyn;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -248,8 +253,6 @@ public class Magazyn {
 		
 		openFile = new JMenuItem("Otwórz plik");
 		openFile.addActionListener(new ActionListener() {
-			private MagazynTO magazyn;
-
 			public void actionPerformed(ActionEvent e) {
 				int result = fileChooser.showOpenDialog(frame);
 
@@ -343,11 +346,9 @@ public class Magazyn {
 
 				log.info("Magazyn został uruchomiony" + new Date().toString());
 				dodajWpisDoKonsoli("Magazyn został uruchomiony" + new Date().toString());
-				/*
-				 * TODO: dodac wpis do konsoli
-				 * 
-				 * uruchomic magazyn ;p
-				 */
+				log.info("Clicked");
+				Algorithm algorithm = new Algorithm(mapa, zamowieniaLista, magazyn);
+				algorithm.startAlgorithm();
 			}
 		});
 
@@ -456,7 +457,7 @@ public class Magazyn {
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mapa.moveLiftDown();
-
+				log.info("Aktualne xy wozka to: "+mapa.getLiftX()+", "+mapa.getLiftY());
 			}
 		});
 
@@ -961,6 +962,7 @@ public class Magazyn {
 					IOLogic logic = new IOLogic();
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
+					magazyn = logic.convertToMagazynTO(regaly);
 					dodajProdukty(towaryNaMagazynie);
 					saveFile.setEnabled(true);
 					saveAsFile.setEnabled(true);
@@ -1013,6 +1015,7 @@ public class Magazyn {
 					IOLogic logic = new IOLogic();
 					
 					ArrayList<ZamowienieTO> noweZam = logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, towaryNaMagazynie);
+					zamowieniaLista = noweZam;
 					dodajZamowienia(noweZam);
 					saveFile.setEnabled(true);
 					saveAsFile.setEnabled(true);
