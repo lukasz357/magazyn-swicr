@@ -19,7 +19,7 @@ public class RegalPanel extends JPanel {
 
 	@SuppressWarnings("unused")
 	private Logger log = Logger.getLogger(RegalPanel.class);
-	
+
 	private int rows = MagazynUtils.rzedowWRegale;
 	private int cols = MagazynUtils.kolumnWRegale;
 	private int pietro = 0;
