@@ -170,7 +170,7 @@ public class IOLogic {
 		return "OK";
 	}
 
-	public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, HashMap<String, ListTowarTO> towaryNaMagazynie){
+	public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, HashMap<String, ListTowarTO> towaryNaMagazynie, ArrayList<RegalPanel> regaly){
 		
 		FileReader fr = null;
 		BufferedReader in = null;
@@ -309,4 +309,10 @@ public class IOLogic {
 		log.info("zaimplementuj zapisywanie w iologic");
 		
 	}
+	
+//	public ArrayList<TowarTO>getTowaryWithCode(String kod, ArrayList<RegalPanel> regaly){
+//		ArrayList<TowarTO> towary = new ArrayList<>();
+//		regaly.get
+//		return towary;
+//	}
 }
