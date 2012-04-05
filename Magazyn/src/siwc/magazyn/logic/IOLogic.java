@@ -43,14 +43,14 @@ public class IOLogic {
 			}
 		}
 		
-		TowarTO skarpety = new TowarTO();
+		TowarTO skarpety = new TowarTO(2);
 		skarpety.setIdBoxu(1);
 //		skarpety.setIlosc("200szt.");
 		skarpety.setKodTowaru("SKRPT001");
 		skarpety.setNazwa("Skarpety Elżbiety");
 		skarpety.setProducent("Pamiętniki z wakacji");
 		
-		TowarTO adidasy = new TowarTO();
+		TowarTO adidasy = new TowarTO(3);
 		adidasy.setIdBoxu(2);
 //		adidasy.setIlosc("20par");
 		adidasy.setKodTowaru("ADDS001");

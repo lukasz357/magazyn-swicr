@@ -9,9 +9,11 @@ public class TowarTO {
 	Integer ilosc;
 	String kodTowaru;
 	
-
 	public TowarTO(){
-		
+	}
+
+	public TowarTO(int id){
+		this.idBoxu = id;
 	}
 	
 	public TowarTO(TowarTO towar) {
