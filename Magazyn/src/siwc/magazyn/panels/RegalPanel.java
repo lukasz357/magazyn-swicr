@@ -33,6 +33,8 @@ public class RegalPanel extends JPanel {
 	private TreeMap<String, BoxPanel> pietro3 = new TreeMap<>();
 	private TreeMap<String, BoxPanel> pietro4 = new TreeMap<>();
 
+	private int idPola = 0;
+
 	public RegalPanel(int liczbaPustychBoksow) {
 		this.liczbaPustychBoksow = liczbaPustychBoksow;
 		setLayout(new GridLayout(MagazynUtils.rzedowWRegale, MagazynUtils.kolumnWRegale, 0, 0));
@@ -233,8 +235,10 @@ public class RegalPanel extends JPanel {
 		for (int i = 0; i < rows; i++) {
 			char c = (char) (65 + i);
 			for (int j = 0; j < cols; j++) {
+				PoleTO p = new PoleTO();
+				p.setId(idPola++);
 				if (liczbaPustychBoksow == 1 && j == 0 && i == 0) {
-					bp = new BoxPanel(j, i, new PoleTO());
+					bp = new BoxPanel(j, i, p);
 					bp.setFree(true);
 					bp.setBackground(MagazynUtils.freeBoxBackround);
 					bp.setMovable(true);
@@ -243,7 +247,7 @@ public class RegalPanel extends JPanel {
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
 				} else if (liczbaPustychBoksow == 2 && (i == 0 || i == (rows - 1)) && j == cols / 2) {
-					bp = new BoxPanel(j, i, new PoleTO());
+					bp = new BoxPanel(j, i, p);
 					bp.setFree(true);
 					bp.setBackground(MagazynUtils.freeBoxBackround);
 					bp.setMovable(true);
@@ -252,13 +256,14 @@ public class RegalPanel extends JPanel {
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
 				} else {
-					bp = new BoxPanel(j, i, new PoleTO());
+					bp = new BoxPanel(j, i, p);
 					bp.setBackground(MagazynUtils.defaultBoxBackground);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(j + 1);
 					level.put(position, bp);
 				}
+				
 			}
 		}
 
