@@ -153,7 +153,7 @@ public class Magazyn {
 	private JScrollPane scrollPaneProdukty;
 	private ArrayList<RegalPanel> regaly;
 	private static JList<String> listProdukty;
-	private HashMap<String, ListTowarTO> towaryNaMagazynie;
+	private HashMap<String, ListTowarTO> towaryNaMagazynie; // tylko do listy po prawej stronie
 	private HashMap<Integer, ZamowienieTO> zamowienia;
 	private List<ZamowienieTO> zamowieniaLista;
 
@@ -976,22 +976,33 @@ public class Magazyn {
 		
 		listProdukty = new JList<>();
 		scrollPaneProdukty.setViewportView(listProdukty);
+		
+		JButton btnDodajProdukt = new JButton("Dodaj");
+		btnDodajProdukt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AddProductBox box = new AddProductBox(frame, true);
+			}
+		});
 		GroupLayout gl_panel_7_produkty = new GroupLayout(panel_7_produkty);
 		gl_panel_7_produkty.setHorizontalGroup(
 			gl_panel_7_produkty.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_7_produkty.createSequentialGroup()
 					.addGap(7)
 					.addComponent(scrollPaneProdukty, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
-				.addGroup(gl_panel_7_produkty.createSequentialGroup()
-					.addContainerGap()
+				.addGroup(Alignment.TRAILING, gl_panel_7_produkty.createSequentialGroup()
+					.addGap(19)
 					.addComponent(btnWczytajProdukty)
-					.addContainerGap(119, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+					.addComponent(btnDodajProdukt, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		gl_panel_7_produkty.setVerticalGroup(
 			gl_panel_7_produkty.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_7_produkty.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(btnWczytajProdukty)
+					.addGroup(gl_panel_7_produkty.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnDodajProdukt)
+						.addComponent(btnWczytajProdukty))
 					.addGap(12)
 					.addComponent(scrollPaneProdukty, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
 		);
@@ -1014,7 +1025,7 @@ public class Magazyn {
 				if (result == JFileChooser.APPROVE_OPTION) {
 					IOLogic logic = new IOLogic();
 					
-					ArrayList<ZamowienieTO> noweZam = logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, towaryNaMagazynie);
+					ArrayList<ZamowienieTO> noweZam = logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, towaryNaMagazynie, regaly);
 					zamowieniaLista = noweZam;
 					dodajZamowienia(noweZam);
 					saveFile.setEnabled(true);
