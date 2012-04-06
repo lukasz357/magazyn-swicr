@@ -17,7 +17,6 @@ import siwc.magazyn.utils.MagazynUtils;
 public class RegalPanel extends JPanel {
 	private static final long serialVersionUID = 3160205159810161295L;
 
-	@SuppressWarnings("unused")
 	private Logger log = Logger.getLogger(RegalPanel.class);
 
 	private int rows = MagazynUtils.rzedowWRegale;
