@@ -2,7 +2,7 @@ package siwc.magazyn;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 import javax.swing.JSpinner;
@@ -10,10 +10,14 @@ import javax.swing.JLabel;
 import java.awt.Rectangle;
 import java.awt.Dimension;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 
-public class AddProductBox extends javax.swing.JDialog {
+public abstract class AddProductBox extends javax.swing.JDialog {
 	private static final long serialVersionUID = -8653952429272195208L;
+	
+	public abstract void addProductActionPerformed();
 
     public AddProductBox(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -63,39 +67,40 @@ public class AddProductBox extends javax.swing.JDialog {
             }
         });
         
-        Integer [] numeryRegalow = {1, 2, 3};
-        SpinnerListModel regalyModel = new SpinnerListModel(numeryRegalow);
-        JSpinner spinnerNumerRegalu = new JSpinner(regalyModel);
+        SpinnerNumberModel regalyModel = new SpinnerNumberModel(1, 1, 3, 1);
+        spinnerNumerRegalu = new JSpinner(regalyModel);
         
-        JLabel lblNumerRegalu = new JLabel("Numer regalu:");
+        lblNumerRegalu = new JLabel("Numer regalu:");
         
-        Integer [] numeryPieter = {0, 1, 2, 3};
-        SpinnerListModel pietraModel = new SpinnerListModel(numeryPieter);
-        JSpinner spinnerNumerPietra = new JSpinner(pietraModel);
+        SpinnerNumberModel pietraModel = new SpinnerNumberModel(0, 0, 4, 1);
+        spinnerNumerPietra = new JSpinner(pietraModel);
         
-        JLabel lblNumerPietra = new JLabel("Numer pietra:");
+        lblNumerPietra = new JLabel("Numer pietra:");
         
-        JLabel lblNazwa = new JLabel("Nazwa:");
+        lblNazwa = new JLabel("Nazwa:");
         
-        textFieldPozycja = new JTextField();
-        textFieldPozycja.setColumns(10);
-        
-        JLabel lblPozycja = new JLabel("Pozycja:");
+        lblPozycja = new JLabel("Pozycja:");
         
         textFieldProducent = new JTextField();
         textFieldProducent.setColumns(10);
         
-        JLabel lblProducent = new JLabel("Producent:");
+        lblProducent = new JLabel("Producent:");
         
         textFieldKod = new JTextField();
         textFieldKod.setColumns(10);
         
-        JLabel lblKod = new JLabel("Kod:");
+        lblKod = new JLabel("Kod:");
         
         textFieldIloscWPaczce = new JTextField();
         textFieldIloscWPaczce.setColumns(10);
         
-        JLabel lblIloscWPaczce = new JLabel("Ilosc w jednej paczce:");
+        lblIloscWPaczce = new JLabel("Ilosc w jednej paczce:");
+        
+        comboBoxPositionA_C = new JComboBox<String>();
+        comboBoxPositionA_C.setModel(new DefaultComboBoxModel<String>(new String[] {"A", "B", "C"}));
+        
+        comboBoxPosition1_38 = new JComboBox<String>();
+        comboBoxPosition1_38.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38"}));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
@@ -113,22 +118,33 @@ public class AddProductBox extends javax.swing.JDialog {
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(layout.createSequentialGroup()
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(textFieldNazwa, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-        						.addComponent(spinnerNumerPietra, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(spinnerNumerPietra, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        					.addContainerGap())
+        				.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        					.addGroup(layout.createSequentialGroup()
         						.addComponent(spinnerNumerRegalu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(textFieldPozycja, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-        						.addComponent(textFieldProducent, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-        						.addComponent(textFieldKod, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-        						.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
-        							.addGap(98)
-        							.addComponent(okButton)
+        						.addContainerGap())
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addComponent(comboBoxPositionA_C, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         							.addPreferredGap(ComponentPlacement.RELATED)
-        							.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)))
-        					.addGap(32))
-        				.addGroup(layout.createSequentialGroup()
-        					.addComponent(textFieldIloscWPaczce, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-        					.addContainerGap())))
+        							.addComponent(comboBoxPosition1_38, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        							.addGap(196))
+        						.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        							.addGroup(layout.createSequentialGroup()
+        								.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        									.addComponent(textFieldNazwa, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+        									.addComponent(textFieldProducent, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+        									.addComponent(textFieldKod, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+        									.addGroup(layout.createSequentialGroup()
+        										.addGap(98)
+        										.addComponent(okButton)
+        										.addPreferredGap(ComponentPlacement.RELATED)
+        										.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)))
+        								.addGap(32))
+        							.addGroup(layout.createSequentialGroup()
+        								.addComponent(textFieldIloscWPaczce, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+        								.addContainerGap()))))))
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
@@ -139,12 +155,13 @@ public class AddProductBox extends javax.swing.JDialog {
         				.addComponent(spinnerNumerRegalu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(spinnerNumerPietra, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(lblNumerPietra))
+        				.addComponent(lblNumerPietra)
+        				.addComponent(spinnerNumerPietra, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(textFieldPozycja, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(lblPozycja))
+        				.addComponent(lblPozycja)
+        				.addComponent(comboBoxPositionA_C, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(comboBoxPosition1_38, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(textFieldNazwa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -177,8 +194,8 @@ public class AddProductBox extends javax.swing.JDialog {
     }
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {
-
-        closeAddQBox();
+        addProductActionPerformed();
+//    	closeAddQBox();       
     }
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,9 +205,19 @@ public class AddProductBox extends javax.swing.JDialog {
 
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton okButton;
-    private javax.swing.JTextField textFieldNazwa;
-    private JTextField textFieldPozycja;
-    private JTextField textFieldProducent;
-    private JTextField textFieldKod;
-    private JTextField textFieldIloscWPaczce;
+    protected javax.swing.JTextField textFieldNazwa;
+    protected JTextField textFieldProducent;
+    protected JTextField textFieldKod;
+    protected JTextField textFieldIloscWPaczce;
+    protected JLabel lblNumerRegalu;
+    protected JLabel lblNumerPietra;
+    protected JLabel lblNazwa;
+    protected JLabel lblPozycja;
+    protected JLabel lblProducent;
+    protected JLabel lblKod;
+    protected JLabel lblIloscWPaczce;
+    protected JSpinner spinnerNumerRegalu;
+    protected JSpinner spinnerNumerPietra;
+    protected JComboBox<String> comboBoxPositionA_C;
+    protected JComboBox<String> comboBoxPosition1_38;
 }

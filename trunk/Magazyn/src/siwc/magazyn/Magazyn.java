@@ -984,7 +984,30 @@ public class Magazyn {
 		JButton btnDodajProdukt = new JButton("Dodaj");
 		btnDodajProdukt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				AddProductBox box = new AddProductBox(frame, true);
+				new AddProductBox(frame, true){
+					private static final long serialVersionUID = 8696383312762375207L;
+
+					@Override
+					public void addProductActionPerformed() {
+						boolean OK = false;
+						int numerRegalu = (int) spinnerNumerRegalu.getValue();
+						int numerPietra = (int) spinnerNumerPietra.getValue();
+						String pozycja = (String)comboBoxPositionA_C.getSelectedItem()+ comboBoxPosition1_38.getSelectedItem();
+						String nazwa = textFieldNazwa.getText();
+						String producent = textFieldProducent.getText();
+						String kod = textFieldKod.getText();
+						int iloscWPaczce = -1;
+						try {
+							iloscWPaczce = Integer.parseInt(textFieldIloscWPaczce.getText());
+							OK = true;
+						}catch(NumberFormatException e){
+				            JOptionPane.showMessageDialog(frame, "Nieprawidłowa liczba",
+				                    "Błąd", JOptionPane.ERROR_MESSAGE);
+						}
+						if(OK)
+							closeAddQBox();
+					}
+				};
 			}
 		});
 		GroupLayout gl_panel_7_produkty = new GroupLayout(panel_7_produkty);
