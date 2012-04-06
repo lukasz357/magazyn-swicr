@@ -21,11 +21,11 @@ public class MapaMagazynu extends JPanel {
 	private LiftPanel lift;
 	private JPanel odbior;
 
-	public MapaMagazynu() {
+	public MapaMagazynu(int idPolaCounter) {
 		regaly = new ArrayList<>();
 
 		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++) {
-			regaly.add(new RegalPanel(MagazynUtils.defaultFreeBoxes));
+			regaly.add(new RegalPanel(MagazynUtils.defaultFreeBoxes, idPolaCounter));
 		}
 
 		initialize();
@@ -209,7 +209,7 @@ public class MapaMagazynu extends JPanel {
 	}
 
 	public void setRegalFreeBoxes(int nrRegalu, int freeBoxes) {
-		regaly.get(nrRegalu).setFreeBoxes(freeBoxes);
+		regaly.get(nrRegalu).setFreeBoxes(freeBoxes, nrRegalu);
 	}
 
 	public int getRegalFreeBoxes(int nrRegalu) {

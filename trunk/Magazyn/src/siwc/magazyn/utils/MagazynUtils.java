@@ -64,7 +64,7 @@ public class MagazynUtils {
 	//MagazynTO
 	public static PoleTO emptyField = initializeEmptyfield(); // by byyla ta sama referencja, nie wiem czy to potrzebne 
 	
-
+	public static int liczbaBoxowWRegale = kolumnWRegale * rzedowWRegale * liczbaPieter;
 
 
 	private static int getMapHeight() {

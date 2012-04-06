@@ -92,7 +92,7 @@ public class Magazyn {
 	private JButton btnLeftRegal2;
 	private JButton btnLeftRegal3;
 	private JScrollPane KonsolaScrollPane;
-	private JList KonsolaList;
+	private JList<String> KonsolaList;
 
 	/* Listy konsoli/zamowien */
 	private static DefaultListModel<String> konsolaListModel = new DefaultListModel<String>();
@@ -156,6 +156,7 @@ public class Magazyn {
 	private HashMap<String, ListTowarTO> towaryNaMagazynie; // tylko do listy po prawej stronie
 	private HashMap<Integer, ZamowienieTO> zamowienia;
 	private List<ZamowienieTO> zamowieniaLista;
+	private int idPolaCounter;
 
 	private MagazynTO magazyn;
 	
@@ -196,7 +197,7 @@ public class Magazyn {
 		regaly = new ArrayList<>();
 		towaryNaMagazynie = new HashMap<>();
 		zamowienia = new HashMap<>();
-		
+		idPolaCounter = 0;
 		
 		lblNewLabel.setBounds(10, 11, 585, 50);
 		lblNewLabel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -243,7 +244,8 @@ public class Magazyn {
 		menuBar.add(menuPlik);
 
 		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++) {
-			regaly.add(new RegalPanel(MagazynUtils.defaultFreeBoxes));
+			regaly.add(new RegalPanel(MagazynUtils.defaultFreeBoxes, idPolaCounter));
+			idPolaCounter += MagazynUtils.liczbaBoxowWRegale;
 		}
 		
 		mapa = new MapaMagazynu(regaly);
@@ -502,6 +504,7 @@ public class Magazyn {
 		regal1_rb1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal1.setEnabled(false);
+				idPolaCounter = 0;
 				mapa.setRegalFreeBoxes(0, 1);
 			}
 		});
@@ -511,6 +514,7 @@ public class Magazyn {
 		regal1_rb2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				chckBoxRegal1.setEnabled(true);
+				idPolaCounter = 760;
 				mapa.setRegalFreeBoxes(0, 2);
 			}
 		});
@@ -917,7 +921,7 @@ public class Magazyn {
 
 		scrollPaneListaZamowien = new JScrollPane();
 
-		listZamowienia = new JList();
+		listZamowienia = new JList<String>();
 		listZamowienia.setModel(zamowieniaListModel);
 		scrollPaneListaZamowien.setViewportView(listZamowienia);
 		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
