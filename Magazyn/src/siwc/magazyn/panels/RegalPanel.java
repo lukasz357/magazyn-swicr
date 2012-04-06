@@ -33,13 +33,13 @@ public class RegalPanel extends JPanel {
 	private TreeMap<String, BoxPanel> pietro3 = new TreeMap<>();
 	private TreeMap<String, BoxPanel> pietro4 = new TreeMap<>();
 
-	private int idPola = 0;
+	private int idPola;
 
-	public RegalPanel(int liczbaPustychBoksow) {
+	public RegalPanel(int liczbaPustychBoksow, int idPolaCounter) {
 		this.liczbaPustychBoksow = liczbaPustychBoksow;
 		setLayout(new GridLayout(MagazynUtils.rzedowWRegale, MagazynUtils.kolumnWRegale, 0, 0));
 		setBackground(Color.WHITE);
-
+		this.idPola = idPolaCounter;
 		dodajBoxy(pietro0);
 		dodajBoxy(pietro1);
 		dodajBoxy(pietro2);
@@ -177,7 +177,17 @@ public class RegalPanel extends JPanel {
 	}
 	
 
-	public void setFreeBoxes(int freeBoxes) {
+	public void setFreeBoxes(int freeBoxes, int nrRegalu) {
+		switch(nrRegalu){
+			case 0: 
+				idPola = 0;
+				break;
+			case 1:
+				idPola = MagazynUtils.liczbaBoxowWRegale;
+				break;
+			case 2:
+				idPola = 2 * MagazynUtils.liczbaBoxowWRegale;
+		}
 		liczbaPustychBoksow = freeBoxes;
 		pietro0.clear();
 		pietro1.clear();
@@ -237,6 +247,7 @@ public class RegalPanel extends JPanel {
 			for (int j = 0; j < cols; j++) {
 				PoleTO p = new PoleTO();
 				p.setId(idPola++);
+//				System.out.println(idPola);
 				if (liczbaPustychBoksow == 1 && j == 0 && i == 0) {
 					bp = new BoxPanel(j, i, p);
 					bp.setFree(true);
