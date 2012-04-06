@@ -187,6 +187,9 @@ public class RegalPanel extends JPanel {
 				break;
 			case 2:
 				idPola = 2 * MagazynUtils.liczbaBoxowWRegale;
+				break;
+			default:
+				log.error("Nie powinienem tu byc - Nieprawidlowy numer regalu w setFreeBoxes");
 		}
 		liczbaPustychBoksow = freeBoxes;
 		pietro0.clear();
