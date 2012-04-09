@@ -74,105 +74,101 @@ public class MapaMagazynu extends JPanel {
 			regaly.get(numer).zmienKolorBoksu(position, c);
 	}
 
-	public void moveLiftUp() {
-
-		int xAktualne = lift.getX() + lift.getXsize();
-		int yPo = lift.getY();
-		boolean isEnteringShelf = false;
-		boolean isEnteringReceivePoint = false;
-		/*
-		 * 1 - czy x nalezy do x regalu 2- czy yWindy wejdzie na dolna krawedz regalu dla kazdego regalu
-		 */
-
-		for (RegalPanel it : regaly) {
-			if (((xAktualne > it.getBounds().getMinX()) && (xAktualne <= it.getBounds().getMaxX())) && (yPo == it.getBounds().getMaxY())) {
-				isEnteringShelf = true;
-			}
-		}
-		// punkt odbioru
-		// if (xAktualne <= odbior.getBounds().getMaxX() && lift.getX() >= odbior.getBounds().getMinX() && lift.getY() >= odbior.getBounds().getMaxY())
-		// isEnteringReceivePoint = true;
-
-		if (isEnteringShelf) {
-			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
-		} else if (isEnteringReceivePoint) {
-			System.err.println("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
-		} else {
-			lift.moveUp(this.getBounds());
-			repaint();
-		}
-	}
-
-	public void moveLiftDown() {
-
-		int xAktualne = lift.getX() + lift.getXsize();
-		double yPo = lift.getY() + lift.getYsize();
-		boolean isEnteringShelf = false;
-		boolean isEnteringReceivePoint = false;
-		for (RegalPanel it : regaly) {
-			if (((xAktualne > it.getBounds().getMinX()) && (xAktualne <= it.getBounds().getMaxX() + 1)) && (yPo == it.getBounds().getMinY())) {
-				isEnteringShelf = true;
-			}
-		}
-		// punkt odbioru
-		// if (xAktualne <= odbior.getBounds().getMaxX() && lift.getX() >= odbior.getBounds().getMinX() && yPo >= odbior.getBounds().getMinY())
-		// isEnteringReceivePoint = true;
+	public void moveLiftUp() throws Exception {
+		int liftMaxX = lift.getX() + lift.getXsize();
+		int liftMinY = lift.getY();
 		
-		if (isEnteringShelf) {
-			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
-		} else if (isEnteringReceivePoint) {
-			System.err.println("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
-		} else {
-			lift.moveDown(getBounds());
-			repaint();
-		}
-	}
+		if(lift.getY() <= 0)
+			throw new Exception("argh !  Panie, co Pan robi ? Poza mape chcesz wyjechac ?!");
 
-	public void moveLiftLeft() {
-
-		int xPo = lift.getX();
-		double yAktualne = lift.getY();
-		boolean isEnteringShelf = false;
-		boolean isEnteringReceivePoint = false;
-
-		for (RegalPanel it : regaly) {
-			if ((yAktualne >= (it.getBounds().getMinY() - MagazynUtils.liftStepY)) && (yAktualne < it.getBounds().getMaxY()) && (xPo == it.getBounds().getMaxX())) {
-				isEnteringShelf = true;
+		for (RegalPanel r : regaly) {
+			if (((liftMaxX > r.getBounds().getMinX()) && (liftMaxX <= r.getBounds().getMaxX())) && (liftMinY == r.getBounds().getMaxY())) {
+				throw new Exception("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
 			}
 		}
+		double odbMaxX = odbior.getBounds().getMaxX();
+		double odbMinX = odbior.getBounds().getMinX();
+		double odbMaxY = odbior.getBounds().getMaxY();
+		if (((liftMaxX > odbMinX) && (liftMaxX <= odbMaxX)) && (liftMinY == odbMaxY))
+			throw new Exception("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
 
-		// zle dziala
-		// if ((lift.getY() +lift.getYsize() <= odbior.getBounds().getMaxY() || lift.getY() >= odbior.getBounds().getMinY()) && lift.getX() == odbior.getBounds().getMaxX())
-		// isEnteringReceivePoint = true;
+		lift.moveUp();
+		repaint();
 
-		if (isEnteringShelf) {
-			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
-		} else if (isEnteringReceivePoint) {
-			System.err.println("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
-		} else {
-			lift.moveLeft(getBounds());
-			repaint();
-		}
 	}
 
-	public void moveLiftRight() {
-		log.info("MOVE LIFT RIGHT Przesuwam w prawo");
-		int xPo = lift.getX() + lift.getXsize();
-		double yAktualne = lift.getY();
-		boolean isEnteringShelf = false;
+	public void moveLiftDown() throws Exception {
+		int liftMaxX = lift.getX() + lift.getXsize();
+		int liftMaxY = lift.getY() + lift.getYsize();
+		
+		double mapMaxY = getBounds().getMaxY();
+		double mapMinY = getBounds().getMinY();
+		if (liftMaxY >= mapMaxY - mapMinY )
+			throw new Exception("argh !  Panie, co Pan robi ? Poza mape chcesz wyjechac ?!");
 
-		for (RegalPanel it : regaly) {
-			if ((yAktualne >= (it.getBounds().getMinY() - MagazynUtils.liftStepY)) && (yAktualne < it.getBounds().getMaxY()) && (xPo == it.getBounds().getMinX())) {
-				isEnteringShelf = true;
+		for (RegalPanel r : regaly) {
+			if (((liftMaxX > r.getBounds().getMinX()) && (liftMaxX <= r.getBounds().getMaxX() + 1)) && (liftMaxY == r.getBounds().getMinY())) {
+				throw new Exception("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
 			}
 		}
+		double odbMaxX = odbior.getBounds().getMaxX();
+		double odbMinX = odbior.getBounds().getMinX();
+		double odbMinY = odbior.getBounds().getMinY();
+		if ((liftMaxX > odbMinX) && (liftMaxX <= odbMaxX+1) && liftMaxY == odbMinY)
+			throw new Exception("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
+		
+		lift.moveDown();
+		repaint();
+	}
 
-		if (isEnteringShelf) {
-			System.err.println("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
-		} else {
-			lift.moveRight(getBounds());
-			repaint();
+	public void moveLiftLeft() throws Exception {
+		int liftMinX = lift.getX();
+		int liftMinY = lift.getY();		
+		
+		if (lift.getX() <= 0)
+			throw new Exception("argh !  Panie, co Pan robi ? Poza mape chcesz wyjechac ?!");
+		
+		for (RegalPanel r : regaly) {
+			if ((liftMinY >= (r.getBounds().getMinY() - MagazynUtils.liftStepY)) && (liftMinY < r.getBounds().getMaxY()) && (liftMinX == r.getBounds().getMaxX())) {
+				throw new Exception("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
+			}
 		}
+		
+		double odbMaxX = odbior.getBounds().getMaxX();
+		double odbMinY = odbior.getBounds().getMinY();
+		double odbMaxY = odbior.getBounds().getMaxY();
+		if ((liftMinY >= odbMinY - MagazynUtils.liftStepY) && (liftMinY < odbMaxY) && (liftMinX == odbMaxX))
+			throw new Exception("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
+
+
+		lift.moveLeft();
+		repaint();
+	}
+
+	public void moveLiftRight() throws Exception {	
+		int liftMaxX = lift.getX() + lift.getXsize();
+		int liftMinY = lift.getY();
+		
+		double mapMaxX = getBounds().getMaxX();
+		double mapMinX = getBounds().getMinX();
+		
+		if (liftMaxX >= mapMaxX - mapMinX)
+			throw new Exception("argh !  Panie, co Pan robi ? Poza mape chcesz wyjechac ?!");
+
+		for (RegalPanel r : regaly) {
+			if ((liftMinY >= (r.getBounds().getMinY() - MagazynUtils.liftStepY)) && (liftMinY < r.getBounds().getMaxY()) && (liftMaxX == r.getBounds().getMinX())) {
+				throw new Exception("argh !  Panie, co Pan robi ? Na regal chce Pan wjechac ?!");
+			}
+		}
+		
+		double odbMinX = odbior.getBounds().getMinX();
+		double odbMinY = odbior.getBounds().getMinY();
+		double odbMaxY = odbior.getBounds().getMaxY();
+		if ((liftMinY >= (odbMinY - MagazynUtils.liftStepY)) && (liftMinY < odbMaxY) && (liftMaxX == odbMinX))
+			throw new Exception("argh !  Panie, co Pan robi ? Do odbioru chce Pan wjechac ?!");
+
+		lift.moveRight(getBounds());
+		repaint();
 	}
 
 	public void pokazPietro(int pietro) {

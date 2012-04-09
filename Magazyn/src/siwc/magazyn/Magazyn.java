@@ -443,14 +443,24 @@ public class Magazyn {
 		btnUp.setMnemonic(KeyEvent.VK_UP);
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapa.moveLiftUp();
+				try {
+					mapa.moveLiftUp();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
 		btnRight = new JButton("right");
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapa.moveLiftRight();
+				try {
+					mapa.moveLiftRight();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -458,8 +468,12 @@ public class Magazyn {
 		btnDown.setMnemonic(KeyEvent.VK_DOWN);
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapa.moveLiftDown();
-				log.info("Aktualne xy wozka to: "+mapa.getLiftX()+", "+mapa.getLiftY());
+				try {
+					mapa.moveLiftDown();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -805,7 +819,12 @@ public class Magazyn {
 		panel_1.setLayout(gl_panel_1);
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mapa.moveLiftLeft();
+				try {
+					mapa.moveLiftLeft();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 		});
