@@ -27,29 +27,20 @@ public class LiftPanel extends JPanel {
 		ustawPoziom();
 	}
 
-	public void moveUp(Rectangle2D bounds) {
-		// System.out.println("minX=" + bounds.getMinX() + " maxX=" + bounds.getMaxX() + " minY=" + bounds.getMinY() + " maxY=" + bounds.getMaxY());
-		if (y > 0)
-			y -= dy;
+	public void moveUp() {
+		y -= dy;
 	}
 
-	public void moveDown(Rectangle2D bounds) {
-		// System.out.println("minX=" + bounds.getMinX() + " maxX=" + bounds.getMaxX() + " minY=" + bounds.getMinY() + " maxY=" + bounds.getMaxY());
-		if (y + YSIZE + dx <= bounds.getMaxY() - bounds.getMinY() )
+	public void moveDown() {
 			y += dy;
-
 	}
 
-	public void moveLeft(Rectangle2D bounds) {
-		// System.out.println("minX=" + bounds.getMinX() + " maxX=" + bounds.getMaxX() + " minY=" + bounds.getMinY() + " maxY=" + bounds.getMaxY());
-		if (x > 0)
-			x -= dx;
+	public void moveLeft() {
+		x -= dx;
 	}
 
-	public void moveRight(Rectangle2D bounds) {
-		// System.out.println("minX=" + bounds.getMinX() + " maxX=" + bounds.getMaxX() + " minY=" + bounds.getMinY() + " maxY=" + bounds.getMaxY());
-		if (x + XSIZE + dx <= bounds.getMaxX() - bounds.getMinX())
-			x += dx;
+	public void moveRight(Rectangle2D bounds) throws Exception {
+		x += dx;
 	}
 
 	int getXsize() {

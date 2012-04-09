@@ -32,7 +32,12 @@ public class Algorithm {
 	}
 	
 	public void startAlgorithm() {
-		mapa.moveLiftRight();
+		try {
+			mapa.moveLiftRight();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if (this.zamowienia == null || this.zamowienia.size() < 1) {
 			log.info("KOLEGO! Brak zamówień!");
@@ -68,28 +73,48 @@ public class Algorithm {
 					if (magazyn.getxWozka() - pole.getX() < 0) {
 						int xWozka = magazyn.getxWozka();
 						for (int i=0; i < pole.getX() - xWozka; i++) {
-							mapa.moveLiftRight();
+							try {
+								mapa.moveLiftRight();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							magazyn.setxWozka(magazyn.getxWozka()+1);
 						}
 					}
 					if (magazyn.getxWozka() - pole.getX() > 0) {
 						int xWozka = magazyn.getxWozka();
 						for (int i=0; i < xWozka - pole.getX(); i++) {
-							mapa.moveLiftLeft();
+							try {
+								mapa.moveLiftLeft();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							magazyn.setxWozka(magazyn.getxWozka()-1);
 						}
 					}
 					if (magazyn.getyWozka() - pole.getY() < 0) {
 						int yWozka = magazyn.getyWozka();
 						for (int i=0; i < pole.getY() - yWozka; i++) {
-							mapa.moveLiftUp();
+							try {
+								mapa.moveLiftUp();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							magazyn.setyWozka(magazyn.getyWozka()+1);
 						}
 					}
 					if (magazyn.getyWozka() - pole.getY() > 0) {
 						int yWozka = magazyn.getyWozka();
 						for (int i=0; i < yWozka - pole.getY(); i++) {
-							mapa.moveLiftDown();
+							try {
+								mapa.moveLiftDown();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							magazyn.setyWozka(magazyn.getyWozka()-1);
 						}
 					}
@@ -116,7 +141,12 @@ public class Algorithm {
 					int yWozka = mapa.getLiftY();
 					for (int i=0; i < (yTo - yWozka)/18; i++) {
 						log.info("PRZESUWAM w dol");
-						mapa.moveLiftDown();
+						try {
+							mapa.moveLiftDown();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						//lift.setY(lift.getY()+1);
 					}
 				}
@@ -124,7 +154,12 @@ public class Algorithm {
 					int yWozka = mapa.getLiftY();
 					for (int i=0; i < (yWozka - yTo)/18; i++) {
 						log.info("PRZESUWAM w gore");
-						mapa.moveLiftUp();
+						try {
+							mapa.moveLiftUp();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						//lift.setY(lift.getY()-1);
 					}
 				}
@@ -133,7 +168,12 @@ public class Algorithm {
 					log.info("TU");
 					for (int i=0; i < (xTo - xWozka)/18; i++) {
 						log.info("PRZESUWAM w prawo");
-						mapa.moveLiftRight();
+						try {
+							mapa.moveLiftRight();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						//lift.setX(lift.getX()+1);
 					}
 				}
@@ -141,7 +181,12 @@ public class Algorithm {
 					int xWozka = mapa.getLiftX();
 					for (int i=0; i < (xWozka - xTo)/18; i++) {
 						log.info("PRZESUWAM w lewo");
-						mapa.moveLiftLeft();
+						try {
+							mapa.moveLiftLeft();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						//lift.setX(lift.getX()-1);
 					}
 				}
@@ -155,7 +200,12 @@ public class Algorithm {
 		int xWozka = mapa.getLiftX();
 		for (int i=0; i < (xWozka - xTo)/18; i++) {
 			log.info("PRZESUWAM w lewo");
-			mapa.moveLiftLeft();
+			try {
+				mapa.moveLiftLeft();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//lift.setX(lift.getX()-1);
 		}
 	}
