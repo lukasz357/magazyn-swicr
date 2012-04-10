@@ -49,6 +49,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import siwc.magazyn.dto.ListTowarTO;
 import siwc.magazyn.dto.MagazynTO;
+import siwc.magazyn.dto.TowarTO;
 import siwc.magazyn.dto.ZamowienieTO;
 import siwc.magazyn.logic.Algorithm;
 import siwc.magazyn.logic.IOLogic;
@@ -1008,23 +1009,79 @@ public class Magazyn {
 
 					@Override
 					public void addProductActionPerformed() {
-						boolean OK = false;
-						int numerRegalu = (int) spinnerNumerRegalu.getValue();
-						int numerPietra = (int) spinnerNumerPietra.getValue();
+						String error = "";
+						boolean OK = true;
+						int regalID = (int) spinnerNumerRegalu.getValue() - 1;
+						int pietro = (int) spinnerNumerPietra.getValue();
 						String pozycja = (String)comboBoxPositionA_C.getSelectedItem()+ comboBoxPosition1_38.getSelectedItem();
 						String nazwa = textFieldNazwa.getText();
 						String producent = textFieldProducent.getText();
-						String kod = textFieldKod.getText();
-						int iloscWPaczce = -1;
-						try {
-							iloscWPaczce = Integer.parseInt(textFieldIloscWPaczce.getText());
-							OK = true;
-						}catch(NumberFormatException e){
-				            JOptionPane.showMessageDialog(frame, "Nieprawidłowa liczba",
-				                    "Błąd", JOptionPane.ERROR_MESSAGE);
+						String kodTowaru = textFieldKod.getText();
+						
+						RegalPanel rp = regaly.get(regalID);
+						if(rp.isMovable(pietro, pozycja)){
+							error += "Box \""+pozycja+ "\" musi pozostac pusty\n";
+							OK = false;
 						}
-						if(OK)
+						
+						if(nazwa == null || nazwa.length() < 1) {
+							error += "Nie wypelniono pola \"Nazwa\"\n";
+							OK = false;
+						}
+						if(producent == null || producent.length() == 0) {
+							error += "Nie wypelniono pola \"Producent\"\n";
+							OK = false;
+						}
+						if(kodTowaru == null || kodTowaru.length() == 0) {
+							error += "Nie wypelniono pola \"Kod\"\n";
+							OK = false;
+						}
+						if(rp.getTowar(pietro, pozycja).isZarezerwowany()){
+							error +="Na wybranej pozycji znajduje się zarezerwowany towar.";
+							OK = false;
+						}
+						int ilosc = -1;
+						try {
+							ilosc = Integer.parseInt(textFieldIloscWPaczce.getText());
+						}catch(NumberFormatException e){
+							error += "Nieprawidlowa liczba w polu \"Ilosc w paczce\"\n";
+							OK = false;
+						}
+
+						if(!OK) {
+							JOptionPane.showMessageDialog(frame, error,
+		                    "Błąd", JOptionPane.ERROR_MESSAGE);
+						}
+						else{
+							rp.zmienKolorBoksu(pietro, pozycja, MagazynUtils.busyBoxBackground);
+							TowarTO towar = rp.getTowar(pietro, pozycja);
+							if (towar != null) {
+								String oldKodTowaru = towar.getKodTowaru();
+								if(oldKodTowaru != null && oldKodTowaru.length() > 0)
+									if(towaryNaMagazynie.get(oldKodTowaru).getIlePaczek() == 1)
+										towaryNaMagazynie.remove(oldKodTowaru);
+									else 
+										towaryNaMagazynie.get(oldKodTowaru).zmniejszIlosc();
+								towar.setNazwa(nazwa);
+								towar.setProducent(producent);
+								towar.setKodTowaru(kodTowaru);
+								towar.setIlosc(ilosc);
+							}
+							
+							rp.zmienToolTipTextBoxu(pietro, pozycja, "<html>"+pozycja+"<br>"+towar.getOpis());
+							if(towaryNaMagazynie.containsKey(kodTowaru)){
+								int staraLiczbaPaczek = towaryNaMagazynie.get(kodTowaru).getIlePaczek();
+								towaryNaMagazynie.get(kodTowaru).setIlePaczek(staraLiczbaPaczek + 1) ;
+							}
+							else {
+								towaryNaMagazynie.put(kodTowaru, new ListTowarTO(towar, 1));
+							}
+							IOLogic logic = new IOLogic();
+							logic.convertToMagazynTO(regaly);
+							produktyListModel.clear();
+							dodajProdukty(towaryNaMagazynie);
 							closeAddQBox();
+						}
 					}
 				};
 			}
@@ -1071,9 +1128,12 @@ public class Magazyn {
 				if (result == JFileChooser.APPROVE_OPTION) {
 					IOLogic logic = new IOLogic();
 					
-					ArrayList<ZamowienieTO> noweZam = logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, towaryNaMagazynie, regaly);
+					ArrayList<ZamowienieTO> noweZam = logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, regaly, magazyn, towaryNaMagazynie);
 					zamowieniaLista = noweZam;
 					dodajZamowienia(noweZam);
+					aktualizujProdukty(towaryNaMagazynie);
+					for(ZamowienieTO z : zamowienia.values())
+						System.out.println(z.towaryToString());
 					saveFile.setEnabled(true);
 					saveAsFile.setEnabled(true);
 				}
@@ -1202,8 +1262,7 @@ public class Magazyn {
 
 		if (listaZamowien != null){
 			for (ZamowienieTO z : listaZamowien) {
-				for(ListTowarTO t: z.getTowary()) {
-//					System.out.println("Zamowienie: "+z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa());
+				for(ListTowarTO t: z.getTowaryDoListy()) {
 					zamowieniaListModel.addElement(z.getNumerZamowienia() + ": "+ z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" (pr: "+z.getPriorytet()+")");
 				}
 			}
@@ -1223,6 +1282,13 @@ public class Magazyn {
 			log.error("pusta lista produktow");
 		}
 		
+	}
+	
+	public static void aktualizujProdukty(HashMap<String, ListTowarTO> towaryNaMagazynie) {
+		produktyListModel.clear();
+		for(ListTowarTO t : towaryNaMagazynie.values())				
+			produktyListModel.addElement(t.getKodTowaru()+": "+t.getNazwa() + " - "+t.getIlePaczek() +" x " + t.getIlosc() +" szt.");
+		listProdukty.setModel(produktyListModel);
 	}
 
 	public HashMap<String, ListTowarTO> getTowaryNaMagazynie() {

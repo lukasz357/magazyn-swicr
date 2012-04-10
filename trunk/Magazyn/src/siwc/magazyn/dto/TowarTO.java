@@ -8,12 +8,14 @@ public class TowarTO {
 	String producent;
 	Integer ilosc;
 	String kodTowaru;
+	boolean zarezerwowany;
 	
 	public TowarTO(){
 	}
 
 	public TowarTO(int id){
 		this.idBoxu = id;
+		zarezerwowany = false;
 	}
 	
 	public TowarTO(TowarTO towar) {
@@ -21,6 +23,7 @@ public class TowarTO {
 		this.producent = towar.getProducent();
 		this.ilosc = towar.getIlosc();
 		this.kodTowaru = towar.getKodTowaru();
+		this.zarezerwowany = towar.isZarezerwowany();
 	}
 
 	public String getOpis() {
@@ -72,6 +75,22 @@ public class TowarTO {
 
 	public void setIdBoxu(Integer idBoxu) {
 		this.idBoxu = idBoxu;
+	}
+
+	public boolean isZarezerwowany() {
+		return zarezerwowany;
+	}
+
+	public void setZarezerwowany(boolean zarezerwowany) {
+		this.zarezerwowany = zarezerwowany;
+	}
+
+	@Override
+	public String toString() {
+		return "TowarTO [idBoxu=" + idBoxu + ", nazwa=" + nazwa
+				+ ", producent=" + producent + ", ilosc=" + ilosc
+				+ ", kodTowaru=" + kodTowaru + ", zarezerwowany="
+				+ zarezerwowany + "]";
 	}
 
 }

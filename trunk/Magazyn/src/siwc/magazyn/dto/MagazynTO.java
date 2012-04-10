@@ -1,5 +1,6 @@
 package siwc.magazyn.dto;
 
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class MagazynTO {
@@ -13,6 +14,20 @@ public class MagazynTO {
 	int yWozka = 0;
 	int zWozka = 0;
 	
+	public ArrayList<TowarTO>getDostepneTowaryByKod(String kod) {
+		ArrayList<TowarTO> list = new ArrayList<>();
+		for(PoleTO[][] tab : pietra.values()){
+			for(int i = 0; i < getWielkoscYMagazynu(); i++)
+				for(int j = 0; j < getWielkoscXMagazynu(); j++){
+					TowarTO t = tab[i][j].getTowar();
+					if(t != null && t.getKodTowaru() != null)
+						if(t.getKodTowaru().equals(kod) && !t.isZarezerwowany())
+							list.add(tab[i][j].getTowar());
+				}
+		}
+		
+		return list;
+	}
 	public int getId() {
 		return id;
 	}
