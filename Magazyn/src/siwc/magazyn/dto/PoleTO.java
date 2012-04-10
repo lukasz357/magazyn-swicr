@@ -7,6 +7,7 @@ public class PoleTO {
 	
 	int x;
 	int y;
+	int z;
 	
 	boolean isPunktOdbioru;
 	boolean isBox;
@@ -51,6 +52,12 @@ public class PoleTO {
 	}
 	public void setBox(boolean isBox) {
 		this.isBox = isBox;
+	}
+	public int getZ() {
+		return z;
+	}
+	public void setZ(int z) {
+		this.z = z;
 	}
 	
 }

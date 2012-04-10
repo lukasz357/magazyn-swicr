@@ -15,25 +15,43 @@ import siwc.magazyn.panels.MapaMagazynu;
 
 public class Algorithm {
 
-	//TODO pobierac aktualna pozycje wozka z mapy a nie z magazynu
-	
 	private Logger log = Logger.getLogger(MapaMagazynu.class);
+	
+	private Long timeStart;
+	private Long timeEnd;
+	private Long timeStartTowar;
+	private Long timeEndTowar;
 	
 	MagazynTO magazyn;
 	MapaMagazynu mapa;
-
+	TowarTO aktualnyTowar;
+	
 	List<ZamowienieTO> zamowienia = new ArrayList<ZamowienieTO>();
+	
 	
 	public Algorithm(MapaMagazynu mapa, List<ZamowienieTO> zamowienia, MagazynTO magazyn) {
 		this.mapa = mapa;
 		this.zamowienia = zamowienia;
 		this.magazyn = magazyn;
-		log.info("CZY JEST MAGAZYN? "+magazyn);
+		log.info("CZY JEST MAGAZYN? "+magazyn != null);
 	}
+	
 	
 	public void startAlgorithm() {
 		try {
-			mapa.moveLiftRight();
+			mapa.moveLiftDown();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			mapa.moveLiftDown();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			mapa.moveLiftDown();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,95 +62,55 @@ public class Algorithm {
 			Magazyn.dodajWpisDoKonsoli("Brak zamówień do przetworzenia, stopuję algorytm " + new Date().toString());
 		}
 		else {
+			timeStartCount();
+			int index = 0;
 			for (ZamowienieTO zamowienie : this.zamowienia) {
+
+				timeStartCountTowar();
 				log.info("Przetwarzam zamowienie dla: "+zamowienie.getDaneKlienta());
 				Magazyn.dodajWpisDoKonsoli("Przetwarzam zamowienie dla: "+zamowienie.getDaneKlienta());
 				
 				for (TowarTO towar : zamowienie.getTowary()) {
+					if (index > 1)
+						break;
+					
+					timeStartCount();
 					PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
 					if (pole != null) {
 						przemiescWozek(pole.getX(), pole.getY());
 						log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
+						
+						//zabieramy na bary teraz towar i zawozimy do miejsca odbioru
+						magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].setTowar(null);
+						aktualnyTowar = towar;
+						PoleTO poleOdbioru = znajdzPierwszeLepszeWolnePoleOdbioru();
+						if (poleOdbioru == null) {
+							log.info("Brak wolnych miejsc w polu odbioru!");
+						} else {
+							przemiescWozek(poleOdbioru.getX(), poleOdbioru.getY());
+							log.info("Przed wstawieniem: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
+							magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].setTowar(towar);
+							log.info("Wstawilem towar na miejsce odbioru i jest rowny temu: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
+							aktualnyTowar = null;
+							wycofajWozek();
+						}
 					}
 					else {
 						Magazyn.dodajWpisDoKonsoli("Nie odnaleziono boxu o ID: " + towar.getIdBoxu());
 					}
+					index++;
+					timeEndCountTowar();
 				}
+				timeEndCount();
 			}
 		}
-	}
-	
-	public String dodajTowarNaPierwseLepszeWolnePole(TowarTO paczka) {
-			//TODO albo znajdz pierwsze wolne pole
-			//PoleTO pole = znajdzPolePoId(paczka.getIdBoxu());
-			PoleTO pole = znajdzPierwszeLepszeWolnePole();
-			
-			if (pole != null) {
-				while(magazyn.getxWozka() - pole.getX() > 1 && magazyn.getyWozka() - pole.getY() > 1) {
-					if (magazyn.getxWozka() - pole.getX() < 0) {
-						int xWozka = magazyn.getxWozka();
-						for (int i=0; i < pole.getX() - xWozka; i++) {
-							try {
-								mapa.moveLiftRight();
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							magazyn.setxWozka(magazyn.getxWozka()+1);
-						}
-					}
-					if (magazyn.getxWozka() - pole.getX() > 0) {
-						int xWozka = magazyn.getxWozka();
-						for (int i=0; i < xWozka - pole.getX(); i++) {
-							try {
-								mapa.moveLiftLeft();
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							magazyn.setxWozka(magazyn.getxWozka()-1);
-						}
-					}
-					if (magazyn.getyWozka() - pole.getY() < 0) {
-						int yWozka = magazyn.getyWozka();
-						for (int i=0; i < pole.getY() - yWozka; i++) {
-							try {
-								mapa.moveLiftUp();
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							magazyn.setyWozka(magazyn.getyWozka()+1);
-						}
-					}
-					if (magazyn.getyWozka() - pole.getY() > 0) {
-						int yWozka = magazyn.getyWozka();
-						for (int i=0; i < yWozka - pole.getY(); i++) {
-							try {
-								mapa.moveLiftDown();
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							magazyn.setyWozka(magazyn.getyWozka()-1);
-						}
-					}
-				}
-				
-				pole.setTowar(paczka);
-			}
-			else
-				return "Nie odnaleziono pola o ID: "+paczka.getIdBoxu();
-		//else
-			//return "Nie wiem gdzie wstawić paczkę. Nie przekazano idPola.";
-		return null;
 	}
 	
 	
 	private void przemiescWozek(int xTo, int yTo) {
 		wycofajWozek();
 		log.info("XY WOZKA: "+mapa.getLiftX()+", "+mapa.getLiftY()+" a nalezy przesunac na: "+xTo+", "+yTo);
-			while(Math.abs(mapa.getLiftX() - xTo) > 18 || Math.abs(mapa.getLiftY() - yTo) > 18) {
+			while(Math.abs(mapa.getLiftX() - xTo) > 36 || Math.abs(mapa.getLiftY() - yTo) > 36) {
 				log.info("1.: "+Math.abs(mapa.getLiftX() - xTo)+" .... 2.: "+Math.abs(mapa.getLiftY() - yTo));
 				log.info("HERE");
 				
@@ -143,8 +121,7 @@ public class Algorithm {
 						try {
 							mapa.moveLiftDown();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							log.warn("PANIE GDZIE PAN JEDZIESZ?!");
 						}
 						//lift.setY(lift.getY()+1);
 					}
@@ -156,8 +133,7 @@ public class Algorithm {
 						try {
 							mapa.moveLiftUp();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							log.warn("PANIE GDZIE PAN JEDZIESZ?!");
 						}
 						//lift.setY(lift.getY()-1);
 					}
@@ -170,8 +146,7 @@ public class Algorithm {
 						try {
 							mapa.moveLiftRight();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							log.warn("PANIE GDZIE PAN JEDZIESZ?!");
 						}
 						//lift.setX(lift.getX()+1);
 					}
@@ -183,8 +158,7 @@ public class Algorithm {
 						try {
 							mapa.moveLiftLeft();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							log.warn("PANIE GDZIE PAN JEDZIESZ?!");
 						}
 						//lift.setX(lift.getX()-1);
 					}
@@ -202,10 +176,18 @@ public class Algorithm {
 			try {
 				mapa.moveLiftLeft();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.info("Przyrznalem w polke przy cofaniu, sprobuje w dol.");
+				try {
+					mapa.moveLiftDown();
+				} catch (Exception f) {
+					log.info("Przyrznalem w polke przy cofaniu, sprobuje w gore.");
+					try {
+						mapa.moveLiftUp();
+					} catch (Exception g) {
+						log.info("Zaklinowalem sie, nie moge sie wycofac.");
+					}
+				}
 			}
-			//lift.setX(lift.getX()-1);
 		}
 	}
 	
@@ -213,14 +195,15 @@ public class Algorithm {
 		log.info("Szukam pola o ID: "+id);
 		if (id != null) {
 			
-			log.info("X MAGAZYNU: "+this.magazyn.getWielkoscXMagazynu()+" Y: "+magazyn.getWielkoscYMagazynu()+" length: "+magazyn.getPietra().get(0).length+" length2: "+magazyn.getPietra().get(0)[0].length);
+			log.info("X MAGAZYNU: "+magazyn.getWielkoscXMagazynu()+" Y: "+magazyn.getWielkoscYMagazynu()+" length: "+magazyn.getPietra().get(0).length+" length2: "+magazyn.getPietra().get(0)[0].length);
 			
-			for(int i=0; i < this.magazyn.getPietra().keySet().size(); i++) {
+			for(int i=0; i < magazyn.getPietra().keySet().size(); i++) {
 				for (int j=0; j < magazyn.getWielkoscXMagazynu(); j++) {
 					for (int k=0; k < magazyn.getWielkoscYMagazynu(); k++) {
 						if (magazyn.getPietra().get(i)[j][k].getId() == null)
-							log.info("NULL :(((((((((((((");
+							log.info("ID POLA == NULL :(((((((((((((");
 						else if (magazyn.getPietra().get(i)[j][k].getId().equals(id)) {
+							magazyn.getPietra().get(i)[j][k].setZ(i);
 							log.info("=================== ZNALAZLEM =================");
 							return magazyn.getPietra().get(i)[j][k];
 						}
@@ -238,6 +221,7 @@ public class Algorithm {
 				for (int j=0; j < magazyn.getWielkoscXMagazynu(); j++) {
 					for (int k=0; k < magazyn.getWielkoscYMagazynu(); k++) {
 						if (magazyn.getPietra().get(i)[j][k].getTowar() == null) {
+							magazyn.getPietra().get(i)[j][k].setZ(i);
 							return magazyn.getPietra().get(i)[j][k];
 						}
 					}
@@ -245,7 +229,39 @@ public class Algorithm {
 			}
 			return null;
 	}
-	void setMapa(MapaMagazynu mapa) {
-		this.mapa = mapa;
+	
+	private PoleTO znajdzPierwszeLepszeWolnePoleOdbioru() {
+		for(int i=0; i < magazyn.getPietra().keySet().size(); i++) {
+			for (int j=0; j < magazyn.getWielkoscXMagazynu(); j++) {
+				for (int k=0; k < magazyn.getWielkoscYMagazynu(); k++) {
+					if (magazyn.getPietra().get(i)[j][k].isPunktOdbioru() && magazyn.getPietra().get(i)[j][k].getTowar() == null) {
+						magazyn.getPietra().get(i)[j][k].setZ(i);
+						log.info("Znalazlem pole odbioru X: "+j+" Y: "+k+" TOWAR = "+magazyn.getPietra().get(i)[j][k].getTowar());
+						return magazyn.getPietra().get(i)[j][k];
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	private void timeStartCount() {
+		timeStart = System.currentTimeMillis();
+		log.info("Startuje mierzenie czasu: "+timeStart);
+	}
+	
+	private void timeEndCount() {
+		timeEnd = System.currentTimeMillis();
+		log.info("Stopuje mierzenie czasu: "+timeEnd+". Zmierzony czas: "+((timeEnd-timeStart)/1000F)+" sekund.");
+	}
+	
+	private void timeStartCountTowar() {
+		timeStartTowar = System.currentTimeMillis();
+		log.info("Startuje mierzenie czasu towaru: "+timeStartTowar);
+	}
+	
+	private void timeEndCountTowar() {
+		timeEndTowar = System.currentTimeMillis();
+		log.info("Stopuje mierzenie czasu towaru: "+timeEndTowar+". Zmierzony czas: "+((timeEndTowar-timeStartTowar)/1000F)+" sekund.");
 	}
 }
