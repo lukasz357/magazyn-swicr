@@ -52,7 +52,7 @@ public class ZamowienieTO {
 	public String towaryToString() {
 		String s = "";
 		for(TowarTO t: towary) {
-			s += ("Zamowienie: "+numerZamowienia+", towar - idBoxu: "+t.idBoxu+" kod towaru: "+t.kodTowaru+"\n");
+			s += ("Zamowienie: "+numerZamowienia+", towar - idBoxu: "+t.idBoxu+" kod towaru: "+t.kodTowaru+"X: \n");
 		}
 		return s;
 	}

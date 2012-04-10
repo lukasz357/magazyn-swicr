@@ -49,8 +49,7 @@ public class Algorithm {
 				Magazyn.dodajWpisDoKonsoli("Przetwarzam zamowienie dla: "+zamowienie.getDaneKlienta());
 				
 				for (TowarTO towar : zamowienie.getTowary()) {
-					//PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
-					PoleTO pole = znajdzPolePoId(1);
+					PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
 					if (pole != null) {
 						przemiescWozek(pole.getX(), pole.getY());
 						log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
@@ -211,18 +210,18 @@ public class Algorithm {
 	}
 	
 	private PoleTO znajdzPolePoId(Integer id) {
+		log.info("Szukam pola o ID: "+id);
 		if (id != null) {
-			log.info("MAGAZYN: "+this.magazyn);
-			log.info("MAGAZYN.getpietra: "+this.magazyn.getPietra());
-			log.info("MAGAZYN.getpietra.keyset: "+this.magazyn.getPietra().keySet());
+			
+			log.info("X MAGAZYNU: "+this.magazyn.getWielkoscXMagazynu()+" Y: "+magazyn.getWielkoscYMagazynu()+" length: "+magazyn.getPietra().get(0).length+" length2: "+magazyn.getPietra().get(0)[0].length);
 			
 			for(int i=0; i < this.magazyn.getPietra().keySet().size(); i++) {
 				for (int j=0; j < magazyn.getWielkoscXMagazynu(); j++) {
 					for (int k=0; k < magazyn.getWielkoscYMagazynu(); k++) {
-						log.info("MAGAZYN PIETRO: "+i+" : "+magazyn.getPietra().get(i));
-						log.info("MAGAZYN PIETRO: "+i+"element : "+j+", "+k+" : "+magazyn.getPietra().get(i)[j][k]);
-						log.info("MAGAZYN PIETRO: "+i+"element : "+j+", "+k+" ID: "+magazyn.getPietra().get(i)[j][k].getId());
-						if (magazyn.getPietra().get(i)[j][k].getId().equals(id)) {
+						if (magazyn.getPietra().get(i)[j][k].getId() == null)
+							log.info("NULL :(((((((((((((");
+						else if (magazyn.getPietra().get(i)[j][k].getId().equals(id)) {
+							log.info("=================== ZNALAZLEM =================");
 							return magazyn.getPietra().get(i)[j][k];
 						}
 					}
