@@ -11,7 +11,11 @@ public class ListTowarTO extends TowarTO{
 		super(towar);
 		this.ilePaczek = ilePaczek;
 	}
-
+	
+	public ListTowarTO(TowarTO towar) {
+		super(towar);
+		ilePaczek = 1;
+	}
 	public int getIlePaczek() {
 		return ilePaczek;
 	}
@@ -20,4 +24,11 @@ public class ListTowarTO extends TowarTO{
 		this.ilePaczek = ilePaczek;
 	}
 	
+	public void zwiekszIlosc(){
+		this.ilePaczek++;
+	}
+	
+	public void zmniejszIlosc() {
+		this.ilePaczek--;
+	}
 }

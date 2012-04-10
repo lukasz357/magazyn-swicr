@@ -144,6 +144,7 @@ public class IOLogic {
 						towar.setProducent(producent);
 						towar.setKodTowaru(kodTowaru);
 						towar.setIlosc(ilosc);
+						towar.setZarezerwowany(false);
 					}
 					
 					rp.zmienToolTipTextBoxu(pietro, pozycja, "<html>"+pozycja+"<br>"+towar.getOpis());
@@ -152,7 +153,7 @@ public class IOLogic {
 						towaryNaMagazynie.get(kodTowaru).setIlePaczek(staraLiczbaPaczek + 1) ;
 					}
 					else {
-						towaryNaMagazynie.put(kodTowaru, new ListTowarTO(towar, 0));
+						towaryNaMagazynie.put(kodTowaru, new ListTowarTO(towar, 1));
 					}
 
 				}catch(NumberFormatException e){
@@ -170,7 +171,7 @@ public class IOLogic {
 		return "OK";
 	}
 
-	public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, HashMap<String, ListTowarTO> towaryNaMagazynie, ArrayList<RegalPanel> regaly){
+	public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, ArrayList<RegalPanel> regaly, MagazynTO magazyn, HashMap<String, ListTowarTO> towaryNaMagazynie){
 		
 		FileReader fr = null;
 		BufferedReader in = null;
@@ -196,7 +197,7 @@ public class IOLogic {
 				int priorytet = Integer.parseInt(tLine[1].trim());
 				ZamowienieTO zamowienie = new ZamowienieTO();
 				zamowienie.setDaneKlienta(daneKlienta);
-				zamowienie.setPriorytet(priorytet);
+				zamowienie.setPriorytet(priorytet); 
 				zamowienie.setNumerZamowienia(index);
 				while(!(itemLine = in.readLine()).equals("$") && itemLine != null){
 					tLine = null;
@@ -212,19 +213,24 @@ public class IOLogic {
 						return null;
 					}
 					try{
-						ListTowarTO towar = new ListTowarTO();
 						String kodTowaru = tLine[0].trim();
 						String nazwaTowaru = tLine[1].trim();
 						int ilePaczek = Integer.parseInt(tLine[2].trim());
-						if(!towaryNaMagazynie.containsKey(kodTowaru)){
-							log.error("Nie dodano do zamowienia produktu o kodzie: "+kodTowaru);
+						ArrayList<TowarTO> towary = magazyn.getDostepneTowaryByKod(kodTowaru);
+						if(towary.size() < 1) {
+							log.error("Nie znaleziono towaru/ów o podanym kodzie");
+							continue;
+						}
+						else if(ilePaczek > towary.size()){
+							log.error("Brak wystarczającej ilości towaru: "+nazwaTowaru+"- jest: "+towary.size()+" zamowienie: "+ilePaczek);
 							continue;
 						}
 						else {
-							towar.setKodTowaru(kodTowaru);
-							towar.setNazwa(nazwaTowaru);
-							towar.setIlePaczek(ilePaczek);
-							zamowienie.getTowary().add(towar);
+							for(int i = 0; i < ilePaczek; i++){
+								zamowienie.getTowary().add(towary.get(i));
+								towary.get(i).setZarezerwowany(true);
+								towaryNaMagazynie.get(kodTowaru).zmniejszIlosc();
+							}
 						}
 
 					}catch(NumberFormatException e){
@@ -276,6 +282,7 @@ public class IOLogic {
 					int y = yRegalu + MagazynUtils.convertToRow(k);
 					
 					pietro[y][x] = levelMap.get(k).getPole();
+//					System.out.println(pietro[y][x].getTowar().toString());
 					pietro[y][x].setBox(true);
 					
 				}
@@ -310,9 +317,4 @@ public class IOLogic {
 		
 	}
 	
-//	public ArrayList<TowarTO>getTowaryWithCode(String kod, ArrayList<RegalPanel> regaly){
-//		ArrayList<TowarTO> towary = new ArrayList<>();
-//		regaly.get
-//		return towary;
-//	}
 }

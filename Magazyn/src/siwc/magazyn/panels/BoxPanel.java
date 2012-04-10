@@ -22,7 +22,7 @@ public class BoxPanel extends JPanel {
 		positionX = x;
 		positionY = y;
 		pole = b;
-		pole.setTowar(new TowarTO());
+		pole.setTowar(b.getId() == null ? new TowarTO(): new TowarTO(b.getId()));
 	}
 
 	public int getPositionX() {
