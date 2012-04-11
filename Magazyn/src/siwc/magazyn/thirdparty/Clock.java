@@ -22,19 +22,27 @@ package siwc.magazyn.thirdparty;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.Calendar;
+//import java.util.Calendar;
 
 ///////////////////////////////////////////////////////////// Clock
 public class Clock extends JTextField {
 	private static final long serialVersionUID = -6293204417639905310L;
 	javax.swing.Timer m_t;
 
+	private int h;
+	private int m;
+	private int s;
 	// ================================================== constructor
 	public Clock() {
 		// ... Set some attributes.
 		setColumns(6);
 		setFont(new Font("sansserif", Font.PLAIN, 48));
-
+		setEditable(false);
+		setBackground(Color.WHITE);
+		h = 0;
+		m = 0;
+		s = 0;
+		setText(Clock.formatTime(h, m, s));
 		// ... Create a 1-second timer.
 		m_t = new javax.swing.Timer(1000, new ClockTickAction());
 		m_t.start(); // Start the timer
@@ -44,11 +52,43 @@ public class Clock extends JTextField {
 	private class ClockTickAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// ... Get the current time.
-			Calendar now = Calendar.getInstance();
-			int h = now.get(Calendar.HOUR_OF_DAY);
-			int m = now.get(Calendar.MINUTE);
-			int s = now.get(Calendar.SECOND);
-			setText("" + h + ":" + m + ":" + s);
+//			Calendar now = Calendar.getInstance();
+//			int h = now.get(Calendar.HOUR_OF_DAY);
+//			int m = now.get(Calendar.MINUTE);
+//			int s = now.get(Calendar.SECOND);
+
+			s++;
+			if(s > 59){
+				s = 0;
+				m++;
+				if(m > 59){
+					m = 0;
+					h++;
+					if(h > 23){
+						h = 0;
+					}
+				}
+			}
+			
+			setText(Clock.formatTime(h, m, s));
 		}
+	}
+	
+	public static String formatTime(int h, int m, int s){
+		String hour;
+		String minute;
+		String second;
+		hour = (h >= 0 && h <= 9) ? "0"+h : ""+h;
+		minute = (m >= 0 && m <= 9) ? "0"+m : ""+m;
+		second = (s >= 0 && s <= 9) ? "0"+s : ""+s;
+		
+		return hour + ":" + minute + ":" + second;
+	}
+	
+	public void rescaleTime(int miliseconds){
+		m_t.stop();
+		
+		m_t = new javax.swing.Timer(miliseconds, new ClockTickAction());
+		m_t.start(); // Start the timer
 	}
 }

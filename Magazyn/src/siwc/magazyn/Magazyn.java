@@ -42,6 +42,8 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
@@ -57,6 +59,8 @@ import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.thirdparty.Clock;
 import siwc.magazyn.utils.MagazynUtils;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerListModel;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
@@ -78,6 +82,7 @@ public class Magazyn {
 	private JButton btnPlus;
 	private JButton btnMinus;
 	private JTextField levelTextField;
+	private JSpinner spinnerScaleTime;
 
 	private JButton btnStop;
 	private JButton btnStart;
@@ -332,7 +337,7 @@ public class Magazyn {
 
 		/* STOP MAGAZYNU */
 		btnStop = new JButton("STOP");
-		btnStop.setBounds(1043, 677, 115, 40);
+		btnStop.setBounds(1044, 697, 115, 40);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				log.info("Magazyn został zatrzymany");
@@ -346,7 +351,7 @@ public class Magazyn {
 
 		/* START MAGAZYNU */
 		btnStart = new JButton("START");
-		btnStart.setBounds(905, 677, 109, 40);
+		btnStart.setBounds(903, 697, 109, 40);
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -359,8 +364,6 @@ public class Magazyn {
 		});
 		
 		/* ZEGAR */
-		zegar = new Clock();
-		zegar.setBounds(927, 602, 200, 45);
 
 		/* DODAJ ZAMOWIENIE */
 
@@ -934,7 +937,6 @@ public class Magazyn {
 		
 		frame.getContentPane().add(btnStop);
 		frame.getContentPane().add(btnStart);
-		frame.getContentPane().add(zegar);
 
 		panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Zam\u00F3wienia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -1110,6 +1112,54 @@ public class Magazyn {
 					.addComponent(scrollPaneProdukty, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
 		);
 		panel_7_produkty.setLayout(gl_panel_7_produkty);
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setBorder(new TitledBorder(null, "Czas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_7.setBounds(812, 579, 462, 95);
+		frame.getContentPane().add(panel_7);
+		zegar = new Clock();
+		
+		spinnerScaleTime = new JSpinner();
+		spinnerScaleTime.setModel(new SpinnerListModel(new String[] {"Real", "10x", "100x"}));
+		spinnerScaleTime.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		spinnerScaleTime.addChangeListener(new ChangeListener() {
+
+	        @Override
+	        public void stateChanged(ChangeEvent e) {
+	        	String value = (String)spinnerScaleTime.getValue();
+	            if(value.equals("Real")){
+	            	zegar.rescaleTime(1000);
+	            }
+	            else if(value.equals("10x")){
+	            	zegar.rescaleTime(100);
+	            }
+	            else if(value.equals("100x")){
+	            	zegar.rescaleTime(10);
+	            }
+	            else {
+	            	log.error("Błąd przy reskalowaniu zegara");
+	            }
+	        }
+	    });
+		GroupLayout gl_panel_7 = new GroupLayout(panel_7);
+		gl_panel_7.setHorizontalGroup(
+			gl_panel_7.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_7.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(zegar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(52)
+					.addComponent(spinnerScaleTime, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(74, Short.MAX_VALUE))
+		);
+		gl_panel_7.setVerticalGroup(
+			gl_panel_7.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_7.createSequentialGroup()
+					.addGroup(gl_panel_7.createParallelGroup(Alignment.TRAILING)
+						.addComponent(spinnerScaleTime, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+						.addComponent(zegar, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		panel_7.setLayout(gl_panel_7);
 		btnDodajZamowienie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new AddOrderBox(frame, true, zamowienia, magazyn, towaryNaMagazynie) {
