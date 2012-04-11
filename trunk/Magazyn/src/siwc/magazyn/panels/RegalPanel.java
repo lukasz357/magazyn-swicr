@@ -48,13 +48,13 @@ public class RegalPanel extends JPanel {
 		TreeMap<String, BoxPanel> level = getLevelMap();
 		BoxPanel bp;
 		BoxPanel mBox;
-
-		for (int i = 0; i < cols; i++) {
-			char c = (char) (65 + i);
-			for (int j = 0; j < rows; j++) {
-				String position = c + Integer.toString(j + 1);
+		
+		for (int j = 0; j < rows; j++) {
+			for (int i = 0; i < cols; i++) {
+				char c = (char) (65 + j);
+				String position = c + Integer.toString(i + 1);
 				mBox = level.get(position);
-				bp = new BoxPanel(i, j, new PoleTO(i, j));
+				bp = new BoxPanel(j, i, new PoleTO(i, j));
 				bp.setBackground(mBox.getBackground());
 				bp.setBorder(mBox.getBorder());
 				bp.setToolTipText("Pusty");
@@ -245,8 +245,8 @@ public class RegalPanel extends JPanel {
 	private void dodajBoxy(TreeMap<String, BoxPanel> level) {
 		BoxPanel bp;
 		for (int i = 0; i < cols; i++) {
-			char c = (char) (65 + i);
 			for (int j = 0; j < rows; j++) {
+				char c = (char) (65 + j);
 				PoleTO p = new PoleTO(i, j);
 				p.setId(idPola++);
 				p.setBox(true);
@@ -258,7 +258,7 @@ public class RegalPanel extends JPanel {
 					bp.setMovable(true);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					bp.setToolTipText("Pusty");
-					String position = c + Integer.toString(j + 1);
+					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
 				} else if (liczbaPustychBoksow == 2 && (i == 0 || i == rows-1) && j == cols / 2) { // gorny lub dolny pusty box
 					bp = new BoxPanel(i, j, p);
@@ -267,7 +267,7 @@ public class RegalPanel extends JPanel {
 					bp.setMovable(true);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					bp.setToolTipText("Pusty");
-					String position = c + Integer.toString(j + 1);
+					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
 				} else if (liczbaPustychBoksow == 2 && (i == 0 || i == rows)) { // gorny lub dolny poruszajacy sie box
 					bp = new BoxPanel(i, j, p);
@@ -275,7 +275,7 @@ public class RegalPanel extends JPanel {
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					bp.setToolTipText("Pusty");
 					bp.setMovable(true);
-					String position = c + Integer.toString(j + 1);
+					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
 				} else if (liczbaPustychBoksow == 1 && (i == 0 || i == rows-1 || j == 0 || j == cols)) {
 					bp = new BoxPanel(i, j, p);
@@ -283,14 +283,14 @@ public class RegalPanel extends JPanel {
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					bp.setToolTipText("Pusty");
 					bp.setMovable(true);
-					String position = c + Integer.toString(j + 1);
+					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
 				} else {
 					bp = new BoxPanel(i, j, p);
 					bp.setBackground(MagazynUtils.defaultBoxBackground);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					bp.setToolTipText("Pusty");
-					String position = c + Integer.toString(j + 1);
+					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
 				}
 				
