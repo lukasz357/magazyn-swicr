@@ -8,6 +8,7 @@ import java.util.List;
 public class ZamowienieTO {
 	private int numerZamowienia;
 	private int priorytet;
+	private String terminRealizacji;
 	private String daneKlienta; //Imie i nazwisko
 	private List<TowarTO> towary = new ArrayList<>();
 	
@@ -55,5 +56,13 @@ public class ZamowienieTO {
 			s += ("Zamowienie: "+numerZamowienia+", towar - idBoxu: "+t.idBoxu+" kod towaru: "+t.kodTowaru+"X: \n");
 		}
 		return s;
+	}
+
+	public String getTerminRealizacji() {
+		return terminRealizacji;
+	}
+
+	public void setTerminRealizacji(String terminRealizacji) {
+		this.terminRealizacji = terminRealizacji;
 	}
 }

@@ -1236,7 +1236,7 @@ public class Magazyn {
 					public void dodajZamowieniaOKAction() {
 						zamowienia.put(index, zamowienie);
 						for(ListTowarTO t: zamowienie.getTowaryDoListy()) {
-							zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+ zamowienie.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" (pr: "+zamowienie.getPriorytet()+")");
+							zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+ zamowienie.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+zamowienie.getTerminRealizacji()+")");
 						}
 						listZamowienia.setModel(zamowieniaListModel);
 						aktualizujProdukty(towaryNaMagazynie);
@@ -1387,7 +1387,7 @@ public class Magazyn {
 		if (listaZamowien != null){
 			for (ZamowienieTO z : listaZamowien) {
 				for(ListTowarTO t: z.getTowaryDoListy()) {
-					zamowieniaListModel.addElement(z.getNumerZamowienia() + ": "+ z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" (pr: "+z.getPriorytet()+")");
+					zamowieniaListModel.addElement(z.getNumerZamowienia() + ": "+ z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+z.getTerminRealizacji()+")");
 				}
 			}
 			listZamowienia.setModel(zamowieniaListModel);

@@ -91,4 +91,8 @@ public class Clock extends JTextField {
 		m_t = new javax.swing.Timer(miliseconds, new ClockTickAction());
 		m_t.start(); // Start the timer
 	}
+	
+	public int getTimeIntValue(){
+		return h * 86400 + m * 3600 + s;
+	}
 }

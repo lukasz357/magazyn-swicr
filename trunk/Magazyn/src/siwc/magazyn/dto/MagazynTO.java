@@ -17,8 +17,8 @@ public class MagazynTO {
 	public ArrayList<TowarTO>getDostepneTowaryByKod(String kod) {
 		ArrayList<TowarTO> list = new ArrayList<>();
 		for(PoleTO[][] tab : pietra.values()){
-			for(int i = 0; i < getWielkoscYMagazynu(); i++)
-				for(int j = 0; j < getWielkoscXMagazynu(); j++){
+			for(int i = 0; i < getWielkoscXMagazynu(); i++)
+				for(int j = 0; j < getWielkoscYMagazynu(); j++){
 					TowarTO t = tab[i][j].getTowar();
 					if(t != null && t.getKodTowaru() != null)
 						if(t.getKodTowaru().equals(kod) && !t.isZarezerwowany())

@@ -171,7 +171,7 @@ public class IOLogic {
 		return "OK";
 	}
 
-	public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, ArrayList<RegalPanel> regaly, MagazynTO magazyn, HashMap<String, ListTowarTO> towaryNaMagazynie){
+public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, ArrayList<RegalPanel> regaly, MagazynTO magazyn, HashMap<String, ListTowarTO> towaryNaMagazynie){
 		
 		FileReader fr = null;
 		BufferedReader in = null;
@@ -198,9 +198,26 @@ public class IOLogic {
 				else if (line.contains(","))
 					tLine = line.split(",");
 				String daneKlienta = tLine[0].trim();
-				int priorytet = Integer.parseInt(tLine[1].trim());
+				int priorytet = -1;
+				int h = -1;
+				int m = -1;
+				int s = -1;
+				String terminRealizacji = tLine[1].trim();
+				try{
+					String [] czas = terminRealizacji.split(":");
+					if(czas.length > 3){
+						log.error("Coś nie tak przy parsowaniu terminu realizacji: "+terminRealizacji);
+					}
+					h = Integer.parseInt(czas[0]);
+					m = Integer.parseInt(czas[1]);
+					s = Integer.parseInt(czas[2]);
+				}catch(NumberFormatException e){
+					e.printStackTrace();
+				}
+				priorytet = h * 86400 + m * 3600 + s;
 				ZamowienieTO zamowienie = new ZamowienieTO();
 				zamowienie.setDaneKlienta(daneKlienta);
+				zamowienie.setTerminRealizacji(terminRealizacji);
 				zamowienie.setPriorytet(priorytet); 
 				zamowienie.setNumerZamowienia(index);
 				while(!(itemLine = in.readLine()).equals("$") && itemLine != null){
