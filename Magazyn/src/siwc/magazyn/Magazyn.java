@@ -234,10 +234,10 @@ public class Magazyn {
 		ustawStyl();
 
 		fileChooser = new JFileChooser();
-		FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Plik tekstowy (*.txt)", "txt");
+		FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Plik CSV (*.csv)", "csv");
 		fileChooser.setFileFilter(txtFilter);
 		fileChooser.addChoosableFileFilter(txtFilter);
-		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Plik CSV (*.csv)", "csv"));
+		fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Plik tekstowy (*.txt)", "txt"));
 		fileChooser.setMultiSelectionEnabled(false);
 		fileChooser.setAcceptAllFileFilterUsed(true);
 
@@ -454,7 +454,6 @@ public class Magazyn {
 				try {
 					mapa.moveLiftUp();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -466,7 +465,6 @@ public class Magazyn {
 				try {
 					mapa.moveLiftRight();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -479,7 +477,6 @@ public class Magazyn {
 				try {
 					mapa.moveLiftDown();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -830,7 +827,6 @@ public class Magazyn {
 				try {
 					mapa.moveLiftLeft();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 

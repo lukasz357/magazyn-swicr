@@ -264,12 +264,11 @@ public class IOLogic {
 		TreeMap<Integer, PoleTO[][]> pietra = new TreeMap<>();
 
 		for (int i = 0; i < MagazynUtils.liczbaPieter; i++) {
-			PoleTO[][] pietro = new PoleTO[magazyn.getWielkoscYMagazynu()][magazyn.getWielkoscXMagazynu()];
+			PoleTO[][] pietro = new PoleTO[magazyn.getWielkoscXMagazynu()][magazyn.getWielkoscYMagazynu()];
 
-			
-			for (int y=0; y < magazyn.getWielkoscYMagazynu(); y++) {
-				for (int x=0; x < magazyn.getWielkoscXMagazynu(); x++) {
-					pietro[y][x] = MagazynUtils.emptyField;
+			for (int x = 0; x < magazyn.getWielkoscXMagazynu(); x++) {
+				for (int y = 0; y < magazyn.getWielkoscYMagazynu(); y++) {
+					pietro[x][y] = new PoleTO(x, y);
 				}
 			}
 			
@@ -285,9 +284,9 @@ public class IOLogic {
 					int x = xRegalu + MagazynUtils.convertToColumn(k)-1;
 					int y = yRegalu + MagazynUtils.convertToRow(k);
 					
-					pietro[y][x] = levelMap.get(k).getPole();
+					pietro[x][y] = levelMap.get(k).getPole();
 //					System.out.println(pietro[y][x].getTowar().toString());
-					pietro[y][x].setBox(true);
+					pietro[x][y].setBox(true);
 					
 				}
 			}
@@ -303,7 +302,7 @@ public class IOLogic {
 					PoleTO p = new PoleTO(x, y);
 					p.setPunktOdbioru(true);
 	
-					pietro[y][x] = p;
+					pietro[x][y] = p;
 				}
 			}
 			pietra.put(i, pietro);

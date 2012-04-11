@@ -63,6 +63,7 @@ public class MagazynUtils {
 	
 	//MagazynTO
 	public static PoleTO emptyField = initializeEmptyfield(); // by byyla ta sama referencja, nie wiem czy to potrzebne 
+
 	
 	public static int liczbaBoxowWRegale = kolumnWRegale * rzedowWRegale * liczbaPieter;
 
@@ -84,9 +85,9 @@ public class MagazynUtils {
 		empty.setId(-1); //empty field so id = -1 ?
 		empty.setBox(false);
 		empty.setPunktOdbioru(false);
-		empty.setTowar(null);
-		empty.setX(-1);
+		empty.setTowar(null);		empty.setX(-1);
 		empty.setY(-1);
+
 		return empty;
 	}
 
