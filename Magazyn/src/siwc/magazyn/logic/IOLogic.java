@@ -129,12 +129,12 @@ public class IOLogic {
 					
 					if(regalID >= MagazynUtils.liczbaRegalow || pietro >= MagazynUtils.liczbaPieter) 
 						continue;
-					if( MagazynUtils.convertToRow(pozycja) >= MagazynUtils.rzedowWRegale || MagazynUtils.convertToColumn(pozycja) >= MagazynUtils.kolumnWRegale )
+					if( MagazynUtils.convertToRow(pozycja) >= MagazynUtils.rzedowWRegale || MagazynUtils.convertToColumn(pozycja) > MagazynUtils.kolumnWRegale )
 						continue;
-					
+					System.out.println(pietro + " " + pozycja);
 					RegalPanel rp = regaly.get(regalID);
-					if(rp.isMovable(pietro, pozycja))
-						continue;
+//					if(rp.isMovable(pietro, pozycja))
+//						continue;
 					
 					rp.zmienKolorBoksu(pietro, pozycja, MagazynUtils.busyBoxBackground);
 					
@@ -269,6 +269,7 @@ public class IOLogic {
 			for (int x = 0; x < magazyn.getWielkoscXMagazynu(); x++) {
 				for (int y = 0; y < magazyn.getWielkoscYMagazynu(); y++) {
 					pietro[x][y] = new PoleTO(x, y);
+					
 				}
 			}
 			
@@ -283,7 +284,8 @@ public class IOLogic {
 					
 					int x = xRegalu + MagazynUtils.convertToColumn(k)-1;
 					int y = yRegalu + MagazynUtils.convertToRow(k);
-					
+					if(j==0)
+					System.out.println(k + ": j=" + j + " "  + x + " " +y);
 					pietro[x][y] = levelMap.get(k).getPole();
 //					System.out.println(pietro[y][x].getTowar().toString());
 					pietro[x][y].setBox(true);
