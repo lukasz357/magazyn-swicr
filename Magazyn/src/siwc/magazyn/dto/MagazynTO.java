@@ -28,6 +28,7 @@ public class MagazynTO {
 		
 		return list;
 	}
+
 	public int getId() {
 		return id;
 	}

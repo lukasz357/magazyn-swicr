@@ -27,15 +27,15 @@ public abstract class AddProductBox extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(parent);
         getRootPane().setDefaultButton(okButton);
-        showAddQBox();
+        showAddPBox();
     }
 
-    public void closeAddQBox() {
+    public void closeAddPBox() {
         setVisible(false);
         dispose();
     }
 
-    public void showAddQBox() {
+    public void showAddPBox() {
         setVisible(true);
     }
 
@@ -70,12 +70,12 @@ public abstract class AddProductBox extends javax.swing.JDialog {
         SpinnerNumberModel regalyModel = new SpinnerNumberModel(1, 1, 3, 1);
         spinnerNumerRegalu = new JSpinner(regalyModel);
         
-        lblNumerRegalu = new JLabel("Numer regalu:");
+        lblNumerRegalu = new JLabel("Numer regału:");
         
         SpinnerNumberModel pietraModel = new SpinnerNumberModel(0, 0, 4, 1);
         spinnerNumerPietra = new JSpinner(pietraModel);
         
-        lblNumerPietra = new JLabel("Numer pietra:");
+        lblNumerPietra = new JLabel("Numer piętra:");
         
         lblNazwa = new JLabel("Nazwa:");
         
@@ -94,7 +94,7 @@ public abstract class AddProductBox extends javax.swing.JDialog {
         textFieldIloscWPaczce = new JTextField();
         textFieldIloscWPaczce.setColumns(10);
         
-        lblIloscWPaczce = new JLabel("Ilosc w jednej paczce:");
+        lblIloscWPaczce = new JLabel("Ilość w jednej paczce:");
         
         comboBoxPositionA_C = new JComboBox<String>();
         comboBoxPositionA_C.setModel(new DefaultComboBoxModel<String>(new String[] {"A", "B", "C"}));
@@ -195,12 +195,10 @@ public abstract class AddProductBox extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {
         addProductActionPerformed();
-//    	closeAddQBox();       
     }
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {
-
-        closeAddQBox();
+        closeAddPBox();
     }
 
     private javax.swing.JButton cancelButton;
