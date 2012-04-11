@@ -55,6 +55,7 @@ import siwc.magazyn.logic.Algorithm;
 import siwc.magazyn.logic.IOLogic;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
+import siwc.magazyn.thirdparty.Clock;
 import siwc.magazyn.utils.MagazynUtils;
 
 public class Magazyn {
@@ -94,6 +95,8 @@ public class Magazyn {
 	private JButton btnLeftRegal3;
 	private JScrollPane KonsolaScrollPane;
 	private JList<String> KonsolaList;
+	
+	private Clock zegar;
 
 	/* Listy konsoli/zamowien */
 	private static DefaultListModel<String> konsolaListModel = new DefaultListModel<String>();
@@ -354,6 +357,10 @@ public class Magazyn {
 				algorithm.startAlgorithm();
 			}
 		});
+		
+		/* ZEGAR */
+		zegar = new Clock();
+		zegar.setBounds(927, 602, 200, 45);
 
 		/* DODAJ ZAMOWIENIE */
 
@@ -931,6 +938,7 @@ public class Magazyn {
 		
 		frame.getContentPane().add(btnStop);
 		frame.getContentPane().add(btnStart);
+		frame.getContentPane().add(zegar);
 
 		panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Zam\u00F3wienia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
