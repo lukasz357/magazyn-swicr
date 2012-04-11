@@ -351,7 +351,7 @@ public class Magazyn {
 			public void actionPerformed(ActionEvent arg0) {
 
 				log.info("Magazyn został uruchomiony" + new Date().toString());
-				dodajWpisDoKonsoli("Magazyn został uruchomiony" + new Date().toString());
+				dodajWpisDoKonsoli("Magazyn został uruchomiony " + new Date().toString());
 				log.info("Clicked");
 				Algorithm algorithm = new Algorithm(mapa, zamowieniaLista, magazyn);
 				algorithm.startAlgorithm();
@@ -1285,7 +1285,8 @@ public class Magazyn {
 
 	/* metody do konsoli */
 	public static void dodajWpisDoKonsoli(String wpis) {
-		konsolaListModel.addElement(wpis);
+		konsolaListModel.add(0, wpis);
+//		konsolaListModel.addElement(wpis);
 	}
 
 	/* metody do statystyk */
