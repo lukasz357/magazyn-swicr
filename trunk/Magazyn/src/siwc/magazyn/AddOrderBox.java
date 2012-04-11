@@ -16,6 +16,8 @@ import siwc.magazyn.dto.ZamowienieTO;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.util.HashMap;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public abstract class AddOrderBox extends javax.swing.JDialog{
 	public abstract void dodajZamowienieAction();
@@ -45,12 +47,9 @@ public abstract class AddOrderBox extends javax.swing.JDialog{
 		
 		textFieldImieINazwisko = new JTextField();
 		
-		textFieldPriorytet = new JTextField();
-		textFieldPriorytet.setColumns(10);
-		
 		lblImieINazwisko = new JLabel("Imię i nazwisko:");
 		
-		lblPriorytet = new JLabel("Priorytet zamówienia:");
+		lblTerminRealizacji = new JLabel("Termin realizacji:");
 		
 		lblElementyZamwienia = new JLabel("Elementy zamówienia:");
 		
@@ -80,13 +79,13 @@ public abstract class AddOrderBox extends javax.swing.JDialog{
 		btnUsun.setPreferredSize(new Dimension(63, 23));
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.setPreferredSize(new Dimension(67, 25));
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dodajZamowieniaOKAction();
-				closeAddOrderBox();
 			}
 		});
-		btnOk.setMinimumSize(new Dimension(63, 23));
+		btnOk.setMinimumSize(new Dimension(67, 25));
 		btnOk.setMaximumSize(new Dimension(63, 23));
 		
 		JButton btnAnuluj = new JButton("Anuluj");
@@ -95,6 +94,14 @@ public abstract class AddOrderBox extends javax.swing.JDialog{
 				closeAddOrderBox();
 			}
 		});
+		
+		comboBoxGodzina = new JComboBox<>();
+		comboBoxGodzina.setModel(new DefaultComboBoxModel<String>(new String[] {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"}));
+		
+		comboMinuta = new JComboBox<>();
+		comboMinuta.setModel(new DefaultComboBoxModel<String>(new String[] {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"}));
+		
+		JLabel labelDwukropek = new JLabel(":");
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -102,26 +109,32 @@ public abstract class AddOrderBox extends javax.swing.JDialog{
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(btnDodaj, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnUsun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnAnuluj))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(textFieldImieINazwisko, 0, 262, Short.MAX_VALUE)
+									.addComponent(textFieldImieINazwisko, 0, 255, Short.MAX_VALUE)
 									.addGap(38))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(lblImieINazwisko)
 									.addGap(194)))
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblPriorytet)
-								.addComponent(textFieldPriorytet, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(lblTerminRealizacji)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(comboBoxGodzina, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(labelDwukropek)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(comboMinuta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(22))
 						.addComponent(lblElementyZamwienia)
-						.addComponent(scrollPaneElementy, GroupLayout.PREFERRED_SIZE, 387, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnDodaj)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnUsun))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(btnOk)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnAnuluj)))
+						.addComponent(scrollPaneElementy, GroupLayout.PREFERRED_SIZE, 387, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -130,24 +143,26 @@ public abstract class AddOrderBox extends javax.swing.JDialog{
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblImieINazwisko)
-						.addComponent(lblPriorytet))
+						.addComponent(lblTerminRealizacji))
 					.addGap(2)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(textFieldImieINazwisko, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textFieldPriorytet, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(comboBoxGodzina, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboMinuta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(labelDwukropek))
+					.addGap(13)
 					.addComponent(lblElementyZamwienia)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPaneElementy, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnDodaj)
-						.addComponent(btnUsun))
+						.addComponent(btnDodaj, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnUsun, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnOk)
+						.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnAnuluj))
-					.addContainerGap(15, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
 		listElementy = new JList<>();
@@ -155,16 +170,16 @@ public abstract class AddOrderBox extends javax.swing.JDialog{
 		getContentPane().setLayout(groupLayout);
 	}
 	protected static final long serialVersionUID = 4998454943738569292L;
-	protected JTextField textFieldPriorytet;
 	protected JTextField textFieldImieINazwisko;
 	protected JLabel lblImieINazwisko;
-	protected JLabel lblPriorytet;
+	protected JLabel lblTerminRealizacji;
 	protected JLabel lblElementyZamwienia;
 	protected JScrollPane scrollPaneElementy;
 	protected JButton btnDodaj;
 	protected JList<String> listElementy;
+	protected JComboBox<String> comboBoxGodzina;
+	protected JComboBox<String> comboMinuta;
 	protected DefaultListModel<String> listModel;
 	protected ZamowienieTO zamowienie;
 	protected int index;
-	
 }

@@ -1164,7 +1164,7 @@ public class Magazyn {
 			public void actionPerformed(ActionEvent e) {
 				new AddOrderBox(frame, true, zamowienia, magazyn, towaryNaMagazynie) {
 					private static final long serialVersionUID = 8786018651594226410L;
-
+					private String imieINazwisko = "";
 					@Override
 					public void dodajZamowienieAction() {
 						if(zamowienia != null) {
@@ -1175,71 +1175,85 @@ public class Magazyn {
 								index = 1;
 						}
 						
-						String imieINazwisko = textFieldImieINazwisko.getText();
+						imieINazwisko = textFieldImieINazwisko.getText();
 						
 						int priorytet = -1;
-						boolean OK = false;
+						int h = -1;
+						int m = -1;
+						int s = -1;
+						String terminRealizacji = comboBoxGodzina.getSelectedItem() + ":"+comboMinuta.getSelectedItem()+":00";
 						try{
-							priorytet = Integer.parseInt(textFieldPriorytet.getText());
-							OK = true;
+							String [] czas = terminRealizacji.split(":");
+							if(czas.length > 3){
+								log.error("Coś nie tak przy parsowaniu terminu realizacji: "+terminRealizacji);
+							}
+							h = Integer.parseInt(czas[0]);
+							m = Integer.parseInt(czas[1]);
+							s = Integer.parseInt(czas[2]);
+						}catch(NumberFormatException e){
+							e.printStackTrace();
 						}
-						catch(NumberFormatException e){
-							JOptionPane.showMessageDialog(frame, "Nieprawidłowa liczba w polu \"Priorytet\"",
-		                    "Błąd", JOptionPane.ERROR_MESSAGE);
-						}
-						if(OK){
-							zamowienie.setDaneKlienta(imieINazwisko);
-							zamowienie.setPriorytet(priorytet); 
-							zamowienie.setNumerZamowienia(index);
-							new SelectProductBox(frame, rootPaneCheckingEnabled, magazyn, towaryNaMagazynie) {
-								private static final long serialVersionUID = 7735927972721100415L;
-								
-								@Override
-								public void dodajTowarAction() {
-									String error = "";
-									boolean OK = true;
-									ListTowarTO towar = (ListTowarTO) comboBoxTowary.getSelectedItem();
-									String kodTowaru = towar.getKodTowaru();
-									String nazwaTowaru = towar.getNazwa();
-									int ilePaczek = -1;
-									try{
-										ilePaczek = Integer.parseInt(textFieldIlePaczek.getText());
-									}catch(NumberFormatException e){
-										OK = false;
-										error += "Nieprawidłowa liczba w polu \"Ile paczek\"";
-									}
-									ArrayList<TowarTO> towary = magazyn.getDostepneTowaryByKod(kodTowaru);
-									if(ilePaczek > towary.size()){
-										OK = false;
-										error += "Brak wystarczającej ilości towaru: "+nazwaTowaru+"- jest: "+towary.size()+" zamowienie: "+ilePaczek;
-									}
-									if(!OK) {
-										JOptionPane.showMessageDialog(frame, error,
-					                    "Błąd", JOptionPane.ERROR_MESSAGE);
-									}
-									else{
-										for(int i = 0; i < ilePaczek; i++){
-											zamowienie.getTowary().add(towary.get(i));
-											towary.get(i).setZarezerwowany(true);
-											towaryNaMagazynie.get(kodTowaru).zmniejszIlosc();
-										}
-										listModel.addElement(kodTowaru + " - "+nazwaTowaru + " - " +ilePaczek + " szt.");
-										listElementy.setModel(listModel);
-									}
-				
+						priorytet = h * 86400 + m * 3600 + s;
+						zamowienie.setDaneKlienta(imieINazwisko);
+						zamowienie.setTerminRealizacji(terminRealizacji);
+						zamowienie.setPriorytet(priorytet); 
+						zamowienie.setNumerZamowienia(index);
+						new SelectProductBox(frame, rootPaneCheckingEnabled, magazyn, towaryNaMagazynie) {
+							private static final long serialVersionUID = 7735927972721100415L;
+							
+							@Override
+							public void dodajTowarAction() {
+								String error = "";
+								boolean OK = true;
+								ListTowarTO towar = (ListTowarTO) comboBoxTowary.getSelectedItem();
+								String kodTowaru = towar.getKodTowaru();
+								String nazwaTowaru = towar.getNazwa();
+								int ilePaczek = -1;
+								try{
+									ilePaczek = Integer.parseInt(textFieldIlePaczek.getText());
+								}catch(NumberFormatException e){
+									OK = false;
+									error += "Nieprawidłowa liczba w polu \"Ile paczek\"";
 								}
-							};
-						}
+								ArrayList<TowarTO> towary = magazyn.getDostepneTowaryByKod(kodTowaru);
+								if(ilePaczek > towary.size()){
+									OK = false;
+									error += "Brak wystarczającej ilości towaru: "+nazwaTowaru+"- jest: "+towary.size()+" zamowienie: "+ilePaczek;
+								}
+								if(!OK) {
+									JOptionPane.showMessageDialog(frame, error,
+				                    "Błąd", JOptionPane.ERROR_MESSAGE);
+								}
+								else{
+									for(int i = 0; i < ilePaczek; i++){
+										zamowienie.getTowary().add(towary.get(i));
+										towary.get(i).setZarezerwowany(true);
+										towaryNaMagazynie.get(kodTowaru).zmniejszIlosc();
+									}
+									listModel.addElement(kodTowaru + " - "+nazwaTowaru + " - " +ilePaczek + " szt.");
+									listElementy.setModel(listModel);
+								}
+			
+							}
+						};
+						
 					}
 
 					@Override
 					public void dodajZamowieniaOKAction() {
-						zamowienia.put(index, zamowienie);
-						for(ListTowarTO t: zamowienie.getTowaryDoListy()) {
-							zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+ zamowienie.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+zamowienie.getTerminRealizacji()+")");
+						if(zamowienie.getTowary().size() < 1 || imieINazwisko.length() == 0){
+							JOptionPane.showMessageDialog(frame, "Musisz wypełnić: \"Imię i nazwisko\" oraz wybrać elementy zamówienia.",
+				                    "Błąd", JOptionPane.ERROR_MESSAGE);
 						}
-						listZamowienia.setModel(zamowieniaListModel);
-						aktualizujProdukty(towaryNaMagazynie);
+						else {
+							zamowienia.put(index, zamowienie);
+							for(ListTowarTO t: zamowienie.getTowaryDoListy()) {
+								zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+ zamowienie.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+zamowienie.getTerminRealizacji()+")");
+							}
+							listZamowienia.setModel(zamowieniaListModel);
+							aktualizujProdukty(towaryNaMagazynie);
+							closeAddOrderBox();
+						}
 					}
 				};
 			}
