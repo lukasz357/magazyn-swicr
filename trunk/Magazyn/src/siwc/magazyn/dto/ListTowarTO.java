@@ -31,4 +31,9 @@ public class ListTowarTO extends TowarTO{
 	public void zmniejszIlosc() {
 		this.ilePaczek--;
 	}
+	
+	@Override
+	public String toString() {
+		return kodTowaru + " - "+nazwa;
+	}
 }

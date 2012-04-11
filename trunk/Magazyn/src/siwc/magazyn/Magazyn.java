@@ -81,7 +81,7 @@ public class Magazyn {
 	private JButton btnStop;
 	private JButton btnStart;
 	private JButton btnWczytajZamowienia;
-	private JButton btnEdytuj;
+	private JButton btnDodajZamowienie;
 	private JPanel panel;
 	private JLabel lblPietro;
 	private JPanel panel_1;
@@ -937,7 +937,7 @@ public class Magazyn {
 		panel_6.setBounds(1034, 31, 212, 336);
 		frame.getContentPane().add(panel_6);
 		btnWczytajZamowienia = new JButton("Wczytaj");
-		btnEdytuj = new JButton("Edytuj");
+		btnDodajZamowienie = new JButton("Dodaj");
 
 		scrollPaneListaZamowien = new JScrollPane();
 
@@ -947,25 +947,23 @@ public class Magazyn {
 		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
 		gl_panel_6.setHorizontalGroup(
 			gl_panel_6.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_6.createParallelGroup(Alignment.TRAILING, false)
-					.addGroup(Alignment.LEADING, gl_panel_6.createSequentialGroup()
-						.addGap(4)
-						.addComponent(scrollPaneListaZamowien, 0, 0, Short.MAX_VALUE))
-					.addGroup(Alignment.LEADING, gl_panel_6.createSequentialGroup()
-						.addGap(52)
-						.addComponent(btnWczytajZamowienia)
-						.addGap(10)
-						.addComponent(btnEdytuj)))
+				.addGroup(gl_panel_6.createSequentialGroup()
+					.addGap(20)
+					.addComponent(btnWczytajZamowienia)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(btnDodajZamowienie)
+					.addGap(13))
+				.addComponent(scrollPaneListaZamowien, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
 		);
 		gl_panel_6.setVerticalGroup(
 			gl_panel_6.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_6.createSequentialGroup()
-					.addGap(7)
-					.addGroup(gl_panel_6.createParallelGroup(Alignment.LEADING)
+					.addContainerGap()
+					.addGroup(gl_panel_6.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnWczytajZamowienia)
-						.addComponent(btnEdytuj))
+						.addComponent(btnDodajZamowienie))
 					.addGap(18)
-					.addComponent(scrollPaneListaZamowien, GroupLayout.PREFERRED_SIZE, 266, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scrollPaneListaZamowien, GroupLayout.PREFERRED_SIZE, 262, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		panel_6.setLayout(gl_panel_6);
@@ -1080,7 +1078,7 @@ public class Magazyn {
 							logic.convertToMagazynTO(regaly);
 							produktyListModel.clear();
 							dodajProdukty(towaryNaMagazynie);
-							closeAddQBox();
+							closeAddPBox();
 						}
 					}
 				};
@@ -1088,16 +1086,14 @@ public class Magazyn {
 		});
 		GroupLayout gl_panel_7_produkty = new GroupLayout(panel_7_produkty);
 		gl_panel_7_produkty.setHorizontalGroup(
-			gl_panel_7_produkty.createParallelGroup(Alignment.LEADING)
+			gl_panel_7_produkty.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_7_produkty.createSequentialGroup()
-					.addGap(7)
-					.addComponent(scrollPaneProdukty, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_panel_7_produkty.createSequentialGroup()
 					.addGap(19)
 					.addComponent(btnWczytajProdukty)
 					.addPreferredGap(ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
 					.addComponent(btnDodajProdukt, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
+				.addComponent(scrollPaneProdukty, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
 		);
 		gl_panel_7_produkty.setVerticalGroup(
 			gl_panel_7_produkty.createParallelGroup(Alignment.LEADING)
@@ -1106,19 +1102,92 @@ public class Magazyn {
 					.addGroup(gl_panel_7_produkty.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnDodajProdukt)
 						.addComponent(btnWczytajProdukty))
-					.addGap(12)
-					.addComponent(scrollPaneProdukty, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(scrollPaneProdukty, GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
 		);
 		panel_7_produkty.setLayout(gl_panel_7_produkty);
-		btnEdytuj.addActionListener(new ActionListener() {
+		btnDodajZamowienie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new AddOrderBox(frame, true, zamowienia, magazyn, towaryNaMagazynie) {
+					private static final long serialVersionUID = 8786018651594226410L;
 
-				/*
-				 * TODO
-				 * 
-				 * edytuj zamowienie zaloguj w konsoli
-				 */
-				log.info("Edytowano zamówienie zamówienie");
+					@Override
+					public void dodajZamowienieAction() {
+						if(zamowienia != null) {
+							if(zamowienia.size() > 0){
+								index = getMaxKey(zamowienia) + 1;
+							}
+							else
+								index = 1;
+						}
+						
+						String imieINazwisko = textFieldImieINazwisko.getText();
+						
+						int priorytet = -1;
+						boolean OK = false;
+						try{
+							priorytet = Integer.parseInt(textFieldPriorytet.getText());
+							OK = true;
+						}
+						catch(NumberFormatException e){
+							JOptionPane.showMessageDialog(frame, "Nieprawidłowa liczba w polu \"Priorytet\"",
+		                    "Błąd", JOptionPane.ERROR_MESSAGE);
+						}
+						if(OK){
+							zamowienie.setDaneKlienta(imieINazwisko);
+							zamowienie.setPriorytet(priorytet); 
+							zamowienie.setNumerZamowienia(index);
+							new SelectProductBox(frame, rootPaneCheckingEnabled, magazyn, towaryNaMagazynie) {
+								private static final long serialVersionUID = 7735927972721100415L;
+								
+								@Override
+								public void dodajTowarAction() {
+									String error = "";
+									boolean OK = true;
+									ListTowarTO towar = (ListTowarTO) comboBoxTowary.getSelectedItem();
+									String kodTowaru = towar.getKodTowaru();
+									String nazwaTowaru = towar.getNazwa();
+									int ilePaczek = -1;
+									try{
+										ilePaczek = Integer.parseInt(textFieldIlePaczek.getText());
+									}catch(NumberFormatException e){
+										OK = false;
+										error += "Nieprawidłowa liczba w polu \"Ile paczek\"";
+									}
+									ArrayList<TowarTO> towary = magazyn.getDostepneTowaryByKod(kodTowaru);
+									if(ilePaczek > towary.size()){
+										OK = false;
+										error += "Brak wystarczającej ilości towaru: "+nazwaTowaru+"- jest: "+towary.size()+" zamowienie: "+ilePaczek;
+									}
+									if(!OK) {
+										JOptionPane.showMessageDialog(frame, error,
+					                    "Błąd", JOptionPane.ERROR_MESSAGE);
+									}
+									else{
+										for(int i = 0; i < ilePaczek; i++){
+											zamowienie.getTowary().add(towary.get(i));
+											towary.get(i).setZarezerwowany(true);
+											towaryNaMagazynie.get(kodTowaru).zmniejszIlosc();
+										}
+										listModel.addElement(kodTowaru + " - "+nazwaTowaru + " - " +ilePaczek + " szt.");
+										listElementy.setModel(listModel);
+									}
+				
+								}
+							};
+						}
+					}
+
+					@Override
+					public void dodajZamowieniaOKAction() {
+						zamowienia.put(index, zamowienie);
+						for(ListTowarTO t: zamowienie.getTowaryDoListy()) {
+							zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+ zamowienie.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" (pr: "+zamowienie.getPriorytet()+")");
+						}
+						listZamowienia.setModel(zamowieniaListModel);
+						aktualizujProdukty(towaryNaMagazynie);
+					}
+				};
 			}
 		});
 		btnWczytajZamowienia.addActionListener(new ActionListener() {
@@ -1297,5 +1366,18 @@ public class Magazyn {
 
 	public void setTowaryNaMagazynie(HashMap<String, ListTowarTO> towaryNaMagazynie) {
 		this.towaryNaMagazynie = towaryNaMagazynie;
+	}
+	
+	private Integer getMaxKey(HashMap<Integer, ZamowienieTO> zamowienia){
+		Integer max = null;
+
+		for (Integer i : zamowienia.keySet()) {
+		    if (max == null || i  > max)
+		    {
+		    	max = i;
+		    }
+		}
+		
+		return max;
 	}
 }

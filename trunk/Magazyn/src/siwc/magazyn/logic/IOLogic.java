@@ -178,7 +178,11 @@ public class IOLogic {
 		int index = 0;
 		ArrayList<ZamowienieTO> noweZam = new ArrayList<>();
 		if(zamowienia != null) {
-			index = zamowienia.size() + 1;
+			if(zamowienia.size() > 0){
+				index = getMaxKey(zamowienia) + 1;
+			}
+			else
+				index = 1;
 		}
 		try {
 			fr = new FileReader(file);
@@ -315,6 +319,19 @@ public class IOLogic {
 	public void saveToFile(File file, ArrayList<RegalPanel> regaly) {
 		log.info("zaimplementuj zapisywanie w iologic");
 		
+	}
+	
+	private Integer getMaxKey(HashMap<Integer, ZamowienieTO> zamowienia){
+		Integer max = null;
+
+		for (Integer i : zamowienia.keySet()) {
+		    if (max == null || i  > max)
+		    {
+		    	max = i;
+		    }
+		}
+		
+		return max;
 	}
 	
 }
