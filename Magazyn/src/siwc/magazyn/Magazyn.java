@@ -1250,7 +1250,6 @@ public class Magazyn {
 										t.setZarezerwowany(true);
 										lt.zmniejszIlosc();
 										if(lt.getIlePaczek()< 1){
-//											comboBoxTowary.removeItem(lt);
 											towaryNaMagazynie.remove(kodTowaru);
 										}
 									}
@@ -1265,11 +1264,12 @@ public class Magazyn {
 
 					@Override
 					public void dodajZamowieniaOKAction() {
-						if(zamowienie.getTowary().size() < 1 || imieINazwisko.length() == 0){
+						if(zamowienie.getTowary().size() < 1 || textFieldImieINazwisko.getText().length() == 0){
 							JOptionPane.showMessageDialog(frmSystemyWbudowaneI, "Musisz wypełnić: \"Imię i nazwisko\" oraz wybrać elementy zamówienia.",
 				                    "Błąd", JOptionPane.ERROR_MESSAGE);
 						}
 						else {
+							zamowienie.setDaneKlienta(textFieldImieINazwisko.getText());
 							zamowienia.put(index, zamowienie);
 							for(ListTowarTO t: zamowienie.getTowaryDoListy()) {
 								zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+ zamowienie.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+zamowienie.getTerminRealizacji()+")");
@@ -1288,7 +1288,6 @@ public class Magazyn {
 								t.setZarezerwowany(false);
 								if(towaryNaMagazynie.get(t.getKodTowaru()) == null){
 									towaryNaMagazynie.put(t.getKodTowaru(), new ListTowarTO(t));
-									
 								}
 								else
 									towaryNaMagazynie.get(t.getKodTowaru()).zwiekszIlosc();
@@ -1321,7 +1320,6 @@ public class Magazyn {
 									t.setZarezerwowany(false);
 									if(towaryNaMagazynie.get(t.getKodTowaru()) == null){
 										towaryNaMagazynie.put(t.getKodTowaru(), new ListTowarTO(t));
-										
 									}
 									else
 										towaryNaMagazynie.get(t.getKodTowaru()).zwiekszIlosc();
