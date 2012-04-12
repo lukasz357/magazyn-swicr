@@ -136,6 +136,7 @@ public class Magazyn {
 	private static int liczbaZamowien = 0;
 	private static int liczbaZamowienZrealizowany = 0;
 	private static int liczbaMiejscZajetych = 0;
+	private static int liczbaPrzedmiotow = 0;
 	private JLabel lblLiczbaZamwienZrealizowanychTekst;
 	private static JLabel lblLiczbaZamowienZrealizowanych;
 	private JLabel lblIloPrzedmiotwTekst;
@@ -1415,9 +1416,20 @@ public class Magazyn {
 	}
 
 	/* ilosc przedmiotow */
-	public static void ustawLiczbePrzedmiotow(int liczbaPrzedmiotow) {
+	public static void ustawLiczbePrzedmiotow(int lprzedm) {
+		lblLbliloscprzedmiotow.setText(String.valueOf(lprzedm));
+	}
+	
+	public static void zmniejszLiczbePrzedmiotow(){
+		liczbaPrzedmiotow --;
 		lblLbliloscprzedmiotow.setText(String.valueOf(liczbaPrzedmiotow));
 	}
+	
+	public static void zwiekszLiczbePrzedmiotow() {
+		liczbaPrzedmiotow++;
+		lblLbliloscprzedmiotow.setText(String.valueOf(liczbaPrzedmiotow));
+	}
+	
 
 	/* liczba wszystkich miejsc */
 	public static void ustawLiczbeWszystkichMiejsc(int liczbaWszystkichMiejsc) {
