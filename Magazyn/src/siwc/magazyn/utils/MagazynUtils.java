@@ -126,6 +126,6 @@ public class MagazynUtils {
 		return position.charAt(0) - 65;
 	}
 	public static int convertToColumn(String position) {
-		return Integer.parseInt(position.substring(1));
+		return Integer.parseInt(position.substring(1))-1;
 	}
 }
