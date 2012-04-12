@@ -371,13 +371,13 @@ public class Magazyn {
 						algorithm = new Algorithm(mapa, magazyn) {
 							@Override
 							public void odswiezZamowienia(int index) {
+								zamowienia.remove(index);
 								zamowieniaListModel.remove(index);
 								listZamowienia.setModel(zamowieniaListModel);
 							}
 							
 							@Override
 							public List<ZamowienieTO> getNoweZamowienia() {
-								log.info("Wielkosc listy zamowien: "+zamowienia.size());
 								return new ArrayList<ZamowienieTO>(zamowienia.values());
 							}
 						};
