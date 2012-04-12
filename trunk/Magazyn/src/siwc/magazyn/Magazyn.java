@@ -382,7 +382,7 @@ public class Magazyn {
 		panel_1.setBorder(new TitledBorder(null, "Panel testowy", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		KonsolaScrollPane = new JScrollPane();
-		KonsolaScrollPane.setBounds(20, 619, 782, 71);
+		KonsolaScrollPane.setBounds(20, 619, 782, 121);
 
 		lblKonsola = new JLabel("Konsola");
 		lblKonsola.setBounds(20, 599, 37, 14);
@@ -986,6 +986,7 @@ public class Magazyn {
 		
 		/* wczytaj produkty */
 		btnWczytajProdukty = new JButton("Wczytaj");
+		btnWczytajProdukty.setToolTipText("Wczytaj produkty z pliku");
 		btnWczytajProdukty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int result = fileChooser.showOpenDialog(frmSystemyWbudowaneI);
@@ -1002,6 +1003,8 @@ public class Magazyn {
 					if(towaryNaMagazynie.size() > 0){
 						btnDodajZamowienie.setEnabled(true);
 						btnWczytajZamowienia.setEnabled(true);
+						btnDodajZamowienie.setToolTipText("Dodaj zamówienie");
+						btnWczytajZamowienia.setToolTipText("Wczytaj zamówienia z pliku");
 					}
 				}
 			}
@@ -1013,6 +1016,7 @@ public class Magazyn {
 		scrollPaneProdukty.setViewportView(listProdukty);
 		
 		JButton btnDodajProdukt = new JButton("Dodaj");
+		btnDodajProdukt.setToolTipText("Dodaj produkt");
 		btnDodajProdukt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new AddProductBox(frmSystemyWbudowaneI, true){
@@ -1292,6 +1296,50 @@ public class Magazyn {
 						}
 					}
 
+					@Override
+					public void usunTowarAction() {
+						int [] indexy = listElementy.getSelectedIndices();
+						System.out.println("indexy.size()" + indexy.length);
+						for(int i = 0; i < indexy.length; i++){
+//							String el = indexy.length == 1 ? listModel.getElementAt(i) : listModel.getElementAt(indexy.length-1);
+							String el = listModel.getElementAt(indexy[i]);
+							String kodTowaru = el.substring(0, el.indexOf('-') -1);
+							String ileEl = el.substring(el.lastIndexOf('-')+1, el.indexOf("szt.")-1);
+							int ileElem = -1;
+							try{
+								ileElem = Integer.parseInt(ileEl.trim());
+							}catch(NumberFormatException e){
+								log.error("Nieudane parsowanie liczby: "+ileEl);
+								continue;
+							}
+							System.out.println(ileElem);
+							boolean znaleziono = false;
+							int licznik = 0;
+							for(TowarTO t : zamowienie.getTowary()){
+								if(licznik == ileElem)
+									break;
+								if(t.getKodTowaru().equals(kodTowaru)){
+									t.setZarezerwowany(false);
+									if(towaryNaMagazynie.get(t.getKodTowaru()) == null){
+										towaryNaMagazynie.put(t.getKodTowaru(), new ListTowarTO(t));
+										
+									}
+									else
+										towaryNaMagazynie.get(t.getKodTowaru()).zwiekszIlosc();
+									znaleziono = true;
+									licznik++;
+								}
+							}
+							if(!znaleziono){
+								log.error("Nie można usunąć towaru o kodzie: "+kodTowaru);
+								dodajWpisDoKonsoli("Nie można usunąć towaru o kodzie: "+kodTowaru);
+								continue;
+							}
+						}
+						
+						
+					}
+
 				};
 			}
 		});
@@ -1315,6 +1363,8 @@ public class Magazyn {
 		});
 		btnDodajZamowienie.setEnabled(false);
 		btnWczytajZamowienia.setEnabled(false);
+		btnDodajZamowienie.setToolTipText("Brak produktów na magazynie");
+		btnWczytajZamowienia.setToolTipText("Brak produktów na magazynie");
 
 		ButtonGroup styleGroup = new ButtonGroup();
 		JRadioButtonMenuItem styleRadioMenu;
