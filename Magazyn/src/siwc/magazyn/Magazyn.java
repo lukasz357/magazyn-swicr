@@ -78,12 +78,6 @@ public class Magazyn {
 	private JFileChooser fileChooser;
 	private JLabel lblNewLabel = new JLabel("Systemy wbudowane i czasu rzeczywistego - Magazyn");
 	private MapaMagazynu mapa;
-	private JButton btnRandomRegal1;
-	private JButton btnRandomRegal2;
-	private JButton btnUp;
-	private JButton btnDown;
-	private JButton btnRight;
-	private JButton btnLeft;
 	private JButton btnPlus;
 	private JButton btnMinus;
 	private JTextField levelTextField;
@@ -95,14 +89,6 @@ public class Magazyn {
 	private JButton btnDodajZamowienie;
 	private JPanel panel;
 	private JLabel lblPietro;
-	private JPanel panel_1;
-	private JButton btnRandomRegal3;
-	private JButton btnRightRegal1;
-	private JButton btnLeftRegal1;
-	private JButton btnRightRegal2;
-	private JButton btnRightRegal3;
-	private JButton btnLeftRegal2;
-	private JButton btnLeftRegal3;
 	private JRadioButton radioButton1Box;
 	private JRadioButton radioButton2Boxy;
 	private JScrollPane KonsolaScrollPane;
@@ -115,19 +101,8 @@ public class Magazyn {
 	private static DefaultListModel<String> zamowieniaListModel = new DefaultListModel<String>();
 	private static DefaultListModel<String> produktyListModel = new DefaultListModel<String>();
 	private JLabel lblKonsola;
-	private JLabel lblR;
-	private JLabel lblR_1;
-	private JLabel lblR_2;
-	private JButton liftUp;
-	private JButton liftDown;
 
 	private int pietro = 0;
-	private JCheckBox chckBoxRegal1;
-	private JCheckBox chckBoxRegal2;
-	private JCheckBox chckBoxRegal3;
-	private JTextField textFieldRegal1;
-	private JTextField textFieldRegal2;
-	private JTextField textFieldRegal3;
 	private JPanel panelStatystyki;
 	private JPanel panelLegenda;
 	private JLabel lblLiczbaZamowienTekst;
@@ -406,23 +381,19 @@ public class Magazyn {
 		panel = new JPanel();
 		panel.setBounds(599, 11, 203, 50);
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-
-		panel_1 = new JPanel();
-		panel_1.setBounds(10, 474, 792, 119);
-		panel_1.setBorder(new TitledBorder(null, "Panel testowy", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-
+		/************************************************************************************/
 		KonsolaScrollPane = new JScrollPane();
-		KonsolaScrollPane.setBounds(20, 619, 782, 121);
+		KonsolaScrollPane.setBounds(20, 590, 782, 150);
 
 		lblKonsola = new JLabel("Konsola");
-		lblKonsola.setBounds(20, 599, 37, 14);
+		lblKonsola.setBounds(20, 565, 37, 14);
 
 		panelStatystyki = new JPanel();
-		panelStatystyki.setBounds(812, 462, 212, 183);
+		panelStatystyki.setBounds(802, 462, 222, 183);
 		panelStatystyki.setBorder(new TitledBorder(null, "Statystyki", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		panelLegenda = new JPanel();
-		panelLegenda.setBounds(1034, 462, 212, 183);
+		panelLegenda.setBounds(20, 479, 772, 75);
 		panelLegenda.setBorder(new TitledBorder(null, "Legenda", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelStatystyki.setLayout(null);
 
@@ -482,408 +453,12 @@ public class Magazyn {
 
 		KonsolaScrollPane.setViewportView(KonsolaList);
 
-		btnLeft = new JButton("left");
-
-		btnUp = new JButton("up");
-		btnUp.setMnemonic(KeyEvent.VK_UP);
-		btnUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					mapa.moveLiftUp();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-
-		btnRight = new JButton("right");
-		btnRight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					mapa.moveLiftRight();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-
-		btnDown = new JButton("down");
-		btnDown.setMnemonic(KeyEvent.VK_DOWN);
-		btnDown.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					mapa.moveLiftDown();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-
-		lblR = new JLabel("R1");
-		lblR.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
-
-		lblR_1 = new JLabel("R2");
-		lblR_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
-
-		lblR_2 = new JLabel("R3");
-		lblR_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
-
-		textFieldRegal1 = new JTextField();
-		textFieldRegal1.setText("5");
-		textFieldRegal1.setColumns(10);
-
-		textFieldRegal2 = new JTextField();
-		textFieldRegal2.setText("6");
-		textFieldRegal2.setColumns(10);
-
-		textFieldRegal3 = new JTextField();
-		textFieldRegal3.setText("7");
-		textFieldRegal3.setColumns(10);
-
-		liftUp = new JButton("góra");
-		liftUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mapa.liftUp();
-			}
-		});
-
-		liftDown = new JButton("dół");
-		liftDown.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mapa.lifDown();
-			}
-		});
-
-
-		chckBoxRegal1 = new JCheckBox("Dolny regał");
-		chckBoxRegal1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		chckBoxRegal1.setEnabled(mapa.getRegalFreeBoxes(0) == 2);
-
-
-		chckBoxRegal2 = new JCheckBox("Dolny regał");
-		chckBoxRegal2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		chckBoxRegal2.setEnabled(mapa.getRegalFreeBoxes(1) == 2);
-
-
-		chckBoxRegal3 = new JCheckBox("Dolny regał");
-		chckBoxRegal3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		chckBoxRegal3.setEnabled(mapa.getRegalFreeBoxes(2) == 2);
-
 		// TODO MOCK ZMAIAN W BOXACH - do wywalenia soon
 		final Color[] colors = new Color[4];
 		colors[0] = Color.WHITE;
 		colors[1] = Color.BLACK;
 		colors[2] = Color.RED;
 		colors[3] = Color.YELLOW;
-
-		btnRandomRegal2 = new JButton("random");
-		btnRandomRegal2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Random rand = new Random();
-
-				char prefix = (char) (65 + rand.nextInt(MagazynUtils.rzedowWRegale));
-				int sufix = rand.nextInt(MagazynUtils.kolumnWRegale);
-				int c = rand.nextInt(colors.length);
-
-				String position = prefix + Integer.toString(sufix + 1);
-
-				mapa.zmienKolorBoksu(1, pietro, position, colors[c]);
-			}
-		});
-
-		btnRandomRegal1 = new JButton("random");
-		btnRandomRegal1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Random rand = new Random();
-
-				char prefix = (char) (65 + rand.nextInt(MagazynUtils.rzedowWRegale));
-				int sufix = rand.nextInt(MagazynUtils.kolumnWRegale);
-				int c = rand.nextInt(colors.length);
-
-				String position = prefix + Integer.toString(sufix + 1);
-
-				mapa.zmienKolorBoksu(0, pietro, position, colors[c]);
-			}
-		});
-
-		btnRandomRegal3 = new JButton("random");
-		btnRandomRegal3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Random rand = new Random();
-
-				char prefix = (char) (65 + rand.nextInt(MagazynUtils.rzedowWRegale));
-				int sufix = rand.nextInt(MagazynUtils.kolumnWRegale);
-				int c = rand.nextInt(colors.length);
-
-				String position = prefix + Integer.toString(sufix + 1);
-
-				mapa.zmienKolorBoksu(2, pietro, position, colors[c]);
-				log.info("R3: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
-			}
-		});
-
-		btnRightRegal1 = new JButton("prawo");
-		btnRightRegal1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String text = textFieldRegal1.getText().equals("") ? "1" : textFieldRegal1.getText();
-				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
-				Thread t = new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						boolean bottom = chckBoxRegal1.isSelected();
-						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-//							mapa.przesunBoxWPrawo(0, pietro, null, bottom);
-						}
-
-					}
-
-				});
-				t.start();
-			}
-		});
-
-		btnRightRegal2 = new JButton("prawo");
-		btnRightRegal2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String text = textFieldRegal2.getText().equals("") ? "1" : textFieldRegal2.getText();
-				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
-				Thread t = new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						boolean bottom = chckBoxRegal2.isSelected();
-						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-//							mapa.przesunBoxWPrawo(1, pietro, null, bottom);
-						}
-
-					}
-
-				});
-				t.start();
-			}
-		});
-
-		btnRightRegal3 = new JButton("prawo");
-		btnRightRegal3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String text = textFieldRegal3.getText().equals("") ? "1" : textFieldRegal3.getText();
-				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
-				Thread t = new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						boolean bottom = chckBoxRegal3.isSelected();
-						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-//							mapa.przesunBoxWPrawo(2, pietro, "", bottom);
-						}
-
-					}
-
-				});
-				t.start();
-
-			}
-		});
-
-		btnLeftRegal1 = new JButton("lewo");
-		btnLeftRegal1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String text = textFieldRegal1.getText().equals("") ? "1" : textFieldRegal1.getText();
-				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
-				Thread t = new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						boolean bottom = chckBoxRegal1.isSelected();
-						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-//							mapa.przesunBoxWLewo("regal1", pietro, bottom);
-						}
-
-					}
-
-				});
-				t.start();
-			}
-		});
-
-		btnLeftRegal2 = new JButton("lewo");
-		btnLeftRegal2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				String text = textFieldRegal2.getText().equals("") ? "1" : textFieldRegal2.getText();
-				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
-				Thread t = new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						boolean bottom = chckBoxRegal2.isSelected();
-						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-//							mapa.przesunBoxWLewo("regal2", pietro, bottom);
-						}
-
-					}
-
-				});
-				t.start();
-			}
-		});
-
-		btnLeftRegal3 = new JButton("lewo");
-		btnLeftRegal3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				String text = textFieldRegal3.getText().equals("") ? "1" : textFieldRegal3.getText();
-				final int numbers = Integer.parseInt(text) == 0 ? 1 : Integer.parseInt(text);
-				Thread t = new Thread(new Runnable() {
-
-					@Override
-					public void run() {
-						boolean bottom = chckBoxRegal3.isSelected();
-						for (int i = 0; i < numbers; i++) {
-							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-//							mapa.przesunBoxWLewo("regal3", pietro, bottom);
-						}
-
-					}
-
-				});
-				t.start();
-			}
-		});
-
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(55)
-							.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnLeft)
-							.addGap(51)
-							.addComponent(btnRight))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(56)
-							.addComponent(btnDown)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(liftDown, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(liftUp, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-							.addGroup(gl_panel_1.createSequentialGroup()
-								.addComponent(lblR_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-							.addGroup(gl_panel_1.createSequentialGroup()
-								.addComponent(lblR, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(lblR_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
-					.addGap(37)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(chckBoxRegal1)
-						.addComponent(chckBoxRegal2)
-						.addComponent(chckBoxRegal3))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnLeftRegal3)
-								.addComponent(btnLeftRegal2))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addComponent(btnRightRegal2)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(btnRandomRegal2))
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addComponent(btnRightRegal3)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(btnRandomRegal3))))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(btnLeftRegal1)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnRightRegal1)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnRandomRegal1)))
-					.addContainerGap())
-		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnRandomRegal1)
-								.addComponent(btnRightRegal1)
-								.addComponent(btnLeftRegal1)
-								.addComponent(chckBoxRegal1)
-								.addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblR))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnRandomRegal2)
-								.addComponent(btnRightRegal2)
-								.addComponent(btnLeftRegal2)
-								.addComponent(chckBoxRegal2)
-								.addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblR_1))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnRandomRegal3)
-								.addComponent(btnRightRegal3)
-								.addComponent(btnLeftRegal3)
-								.addComponent(chckBoxRegal3)
-								.addComponent(lblR_2)
-								.addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnUp)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnLeft)
-								.addComponent(btnRight)
-								.addComponent(liftUp))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnDown)
-								.addComponent(liftDown))))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		panel_1.setLayout(gl_panel_1);
-		btnLeft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					mapa.moveLiftLeft();
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-
-			}
-		});
 
 		btnMinus = new JButton("-");
 		btnMinus.setEnabled(false);
@@ -931,7 +506,6 @@ public class Magazyn {
 		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(btnMinus).addComponent(lblPietro).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(btnPlus)).addContainerGap()));
 		panel.setLayout(gl_panel);
 		frmSystemyWbudowaneI.getContentPane().setLayout(null);
-		frmSystemyWbudowaneI.getContentPane().add(panel_1);
 		frmSystemyWbudowaneI.getContentPane().add(lblNewLabel);
 		frmSystemyWbudowaneI.getContentPane().add(panel);
 		frmSystemyWbudowaneI.getContentPane().add(mapa);
@@ -947,39 +521,39 @@ public class Magazyn {
 		panelLegenda.setLayout(null);
 
 		lblPustaPka = new JLabel("boks wolny");
-		lblPustaPka.setBounds(38, 22, 70, 14);
+		lblPustaPka.setBounds(53, 50, 70, 14);
 		panelLegenda.add(lblPustaPka);
 
 		lblPkaTransferowa = new JLabel("boks do przesuwania");
-		lblPkaTransferowa.setBounds(38, 47, 102, 14);
+		lblPkaTransferowa.setBounds(161, 50, 102, 14);
 		panelLegenda.add(lblPkaTransferowa);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(MagazynUtils.defaultBoxBackground);
-		panel_2.setBounds(10, 20, MagazynUtils.boxSize, MagazynUtils.boxSize);
+		panel_2.setBounds(25, 46, MagazynUtils.boxSize, MagazynUtils.boxSize);
 		panelLegenda.add(panel_2);
 
 		panel_3 = new JPanel();
 		panel_3.setBackground(MagazynUtils.freeBoxBackround);
-		panel_3.setBounds(10, (int) (panel_2.getBounds().getY() + MagazynUtils.boxSize + 5), MagazynUtils.boxSize, MagazynUtils.boxSize);
+		panel_3.setBounds(133, 46, MagazynUtils.boxSize, MagazynUtils.boxSize);
 		panelLegenda.add(panel_3);
 		
 		panel_4 = new JPanel();
 		panel_4.setBackground(MagazynUtils.busyBoxBackground);
-		panel_4.setBounds(10, (int) (panel_3.getBounds().getY() + MagazynUtils.boxSize + 5), MagazynUtils.boxSize, MagazynUtils.boxSize);
+		panel_4.setBounds(278, 46, MagazynUtils.boxSize, MagazynUtils.boxSize);
 		panelLegenda.add(panel_4);
 		
 		lblBoksZajety = new JLabel("boks zajęty");
-		lblBoksZajety.setBounds(38, 70, 89, 14);
+		lblBoksZajety.setBounds(306, 50, 89, 14);
 		panelLegenda.add(lblBoksZajety);
 		
 		panel_5 = new JPanel();
 		panel_5.setBackground(MagazynUtils.liftBackground);
-		panel_5.setBounds(10, (int) (panel_4.getBounds().getY() + MagazynUtils.boxSize + 5), MagazynUtils.liftSizeX, MagazynUtils.liftSizeY);
+		panel_5.setBounds(377, 28, MagazynUtils.liftSizeX, MagazynUtils.liftSizeY);
 		panelLegenda.add(panel_5);
 
 		lblWzek = new JLabel("wózek");
-		lblWzek.setBounds(38, 99, 46, 14);
+		lblWzek.setBounds(431, 50, 46, 14);
 		panelLegenda.add(lblWzek);
 		
 		
