@@ -51,8 +51,8 @@ public abstract class Algorithm {
 			zamowienia = getNoweZamowienia();
 			sortujZamowienia();
 			
-			log.info("WCZYTUJE ZAMOWIENIA ===================================================================");
-			for (ZamowienieTO zamowienie : zamowienia) {
+			log.info("\n\nWCZYTUJE ZAMOWIENIA ===================================================================");
+			for (ZamowienieTO zamowienie : getNoweZamowienia()) {
 				log.info("==== "+zamowienie.getNumerZamowienia()+", "+zamowienie.getDaneKlienta());
 				for (TowarTO towar : zamowienie.getTowary()) {
 					log.info(towar.getOpis());
@@ -104,12 +104,15 @@ public abstract class Algorithm {
 							log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
 						
 	//						//zabieramy na bary teraz towar i zawozimy do miejsca odbioru
-							magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().setIlosc(magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getIlosc()-1);
-							if (magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getIlosc() == 0)
-								mapa.zmienKolorBoksu(pole.getNrRegalu(), pole.getZ(), pole.getPosition(), MagazynUtils.defaultBoxBackground);
-							
+							//magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().setIlosc(magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getIlosc()-1);
+							if (magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar() == null)
+								Magazyn.dodajWpisDoKonsoli("We wskazanym polu nie ma juz towaru: "+magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getNazwa()+" !!!");
+							mapa.zmienKolorBoksu(pole.getNrRegalu(), pole.getZ(), pole.getPosition(), MagazynUtils.defaultBoxBackground);
+							//else if (magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getIlosc() < 0) {
+							//	Magazyn.dodajWpisDoKonsoli("We wskazanym polu nie ma juz towaru: "+magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getNazwa()+" !!!");
+							//}
 							aktualnyTowar = magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar();
-							aktualnyTowar.setIlosc(1);
+							//aktualnyTowar.setIlosc(1);
 							
 							PoleTO poleOdbioru = znajdzPierwszeLepszeWolnePoleOdbioru();
 							
@@ -145,6 +148,13 @@ public abstract class Algorithm {
 	
 	private void przemiescWozek(int xTo, int yTo, int zTo) {
 		mapa.pokazPietro(zTo);
+		for (int i = mapa.getLiftLeve(); i < Math.abs(zTo-mapa.getLiftLeve()); i++) {
+			if (mapa.getLiftLeve() < zTo)
+				mapa.liftUp();
+			else
+				mapa.lifDown();
+		}
+		
 		if (Math.abs(mapa.getLiftY() - yTo) > 2)
 			yTo -= 2;
 		else
