@@ -175,14 +175,35 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public void przesunBoxWPrawo(int regal, int level, boolean czyDolny) {
-			regaly.get(regal).moveBoxRight(level, czyDolny);
+	public void przesunBoxWPrawo(int regal, int level, String destination, boolean botton) {
+			regaly.get(regal).moveBoxRight(level, false);
 
 	}
 
-	public void przesunBoxWLewo(String regal, int level, boolean czyDolny) {
-		int regalIndex = Integer.parseInt(regal.substring(5))-1;
-		regaly.get(regalIndex).moveBoxLeft(level, czyDolny);
+	public void gonZBoksemNaPozycje(int regal, int level,  String destination, boolean bottom) throws Exception {
+		RegalPanel r = regaly.get(regal);
+		if(r.getLiczbaPustychBoksow() == 1) {
+			String boxPosition = r.getFreeBoxKey(level);
+			if(!boxPosition.equals(destination)) {
+				int dstCol = MagazynUtils.convertToColumn(destination);
+				int dstRow = MagazynUtils.convertToRow(destination);
+				
+				int boxCol = MagazynUtils.convertToColumn(boxPosition);
+				int boxRow = MagazynUtils.convertToRow(boxPosition);
+				
+				if(dstCol != MagazynUtils.kolumnWRegale-1  &&  dstCol != 0 || dstRow != MagazynUtils.rzedowWRegale-1 && dstRow != 0) 
+					throw new Exception("Nie znalazlem pozycji " + destination + " :(");
+				
+				while(boxRow != dstRow && boxCol != dstCol) {
+					r.moveBoxLeft(level, bottom);
+					boxPosition = r.getFreeBoxKey(level);
+					boxCol = MagazynUtils.convertToColumn(boxPosition);
+					boxRow = MagazynUtils.convertToRow(boxPosition);
+				}			
+			}
+		} else if(r.getLiczbaPustychBoksow() == 2) {
+			throw new Exception("ic pan");
+		}
 	}
 
 	public void lifDown() {
