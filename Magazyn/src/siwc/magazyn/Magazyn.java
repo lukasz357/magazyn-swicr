@@ -337,24 +337,31 @@ public class Magazyn {
 		mnOkno.add(mnZmienStyl);
 
 		/* STOP MAGAZYNU */
+		btnStart = new JButton("START");
 		btnStop = new JButton("STOP");
 		btnStop.setBounds(1034, 656, 115, 40);
+		btnStop.setEnabled(false);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				log.info("Magazyn został zatrzymany");
 
 				algorithm.setStop(1);
+				zegar.stopClock();
+				btnStart.setEnabled(true);
+				btnStop.setEnabled(false);
 				dodajWpisDoKonsoli("Magazyn został zatrzymany" + new Date().toString());
 			}
 		});
 
 		/* START MAGAZYNU */
-		btnStart = new JButton("START");
+
 		btnStart.setBounds(903, 656, 109, 40);
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				btnStart.setEnabled(false);
+				btnStop.setEnabled(true);
 				log.info("Magazyn został uruchomiony" + new Date().toString());
+				zegar.startClock();
 				dodajWpisDoKonsoli("Magazyn został uruchomiony " + new Date().toString());
 				log.info("Clicked");
 				final 
