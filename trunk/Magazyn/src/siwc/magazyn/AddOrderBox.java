@@ -10,20 +10,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
-import siwc.magazyn.dto.ListTowarTO;
-import siwc.magazyn.dto.MagazynTO;
 import siwc.magazyn.dto.ZamowienieTO;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 public abstract class AddOrderBox extends javax.swing.JDialog{
 	public abstract void dodajZamowienieAction();
 	public abstract void dodajZamowieniaOKAction();
+	public abstract void anulujAction();
 	
-	public AddOrderBox(java.awt.Frame parent, boolean modal, HashMap<Integer, ZamowienieTO> zamowienia, MagazynTO magazyn, HashMap<String, ListTowarTO> towaryNaMagazynie){
+	public AddOrderBox(java.awt.Frame parent, boolean modal){
         super(parent, modal);
         setMinimumSize(new Dimension(440, 330));
         setBounds(new Rectangle(62, 0, 440, 330));
@@ -91,6 +89,7 @@ public abstract class AddOrderBox extends javax.swing.JDialog{
 		JButton btnAnuluj = new JButton("Anuluj");
 		btnAnuluj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				anulujAction();
 				closeAddOrderBox();
 			}
 		});

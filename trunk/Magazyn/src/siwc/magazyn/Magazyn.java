@@ -1065,7 +1065,7 @@ public class Magazyn {
 									if(towaryNaMagazynie.get(oldKodTowaru).getIlePaczek() == 1)
 										towaryNaMagazynie.remove(oldKodTowaru);
 									else 
-										towaryNaMagazynie.get(oldKodTowaru).zmniejszIlosc();
+										towaryNaMagazynie.get(oldKodTowaru).zmniejszIlosc(); 
 								towar.setNazwa(nazwa);
 								towar.setProducent(producent);
 								towar.setKodTowaru(kodTowaru);
@@ -1162,9 +1162,10 @@ public class Magazyn {
 		panel_7.setLayout(gl_panel_7);
 		btnDodajZamowienie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new AddOrderBox(frame, true, zamowienia, magazyn, towaryNaMagazynie) {
+				new AddOrderBox(frame, true) {
 					private static final long serialVersionUID = 8786018651594226410L;
 					private String imieINazwisko = "";
+					
 					@Override
 					public void dodajZamowienieAction() {
 						if(zamowienia != null) {
@@ -1198,7 +1199,7 @@ public class Magazyn {
 						zamowienie.setTerminRealizacji(terminRealizacji);
 						zamowienie.setPriorytet(priorytet); 
 						zamowienie.setNumerZamowienia(index);
-						new SelectProductBox(frame, rootPaneCheckingEnabled, magazyn, towaryNaMagazynie) {
+						new SelectProductBox(frame, rootPaneCheckingEnabled, towaryNaMagazynie) {
 							private static final long serialVersionUID = 7735927972721100415L;
 							
 							@Override
@@ -1218,7 +1219,7 @@ public class Magazyn {
 								ArrayList<TowarTO> towary = magazyn.getDostepneTowaryByKod(kodTowaru);
 								if(ilePaczek > towary.size()){
 									OK = false;
-									error += "Brak wystarczającej ilości towaru: "+nazwaTowaru+"- jest: "+towary.size()+" zamowienie: "+ilePaczek;
+									error += "Brak wystarczającej ilości towaru: "+nazwaTowaru+" - jest: "+towary.size()+" zamowienie: "+ilePaczek;
 								}
 								if(!OK) {
 									JOptionPane.showMessageDialog(frame, error,
@@ -1226,9 +1227,15 @@ public class Magazyn {
 								}
 								else{
 									for(int i = 0; i < ilePaczek; i++){
-										zamowienie.getTowary().add(towary.get(i));
-										towary.get(i).setZarezerwowany(true);
-										towaryNaMagazynie.get(kodTowaru).zmniejszIlosc();
+										TowarTO t = towary.get(i);
+										ListTowarTO lt = towaryNaMagazynie.get(kodTowaru);
+										zamowienie.getTowary().add(t);
+										t.setZarezerwowany(true);
+										lt.zmniejszIlosc();
+										if(lt.getIlePaczek()< 1){
+//											comboBoxTowary.removeItem(lt);
+											towaryNaMagazynie.remove(kodTowaru);
+										}
 									}
 									listModel.addElement(kodTowaru + " - "+nazwaTowaru + " - " +ilePaczek + " szt.");
 									listElementy.setModel(listModel);
@@ -1255,6 +1262,23 @@ public class Magazyn {
 							closeAddOrderBox();
 						}
 					}
+
+					@Override
+					public void anulujAction() {
+						List<TowarTO> towary = zamowienie.getTowary();
+						if(towary != null && towary.size() > 0){
+							for(TowarTO t : towary){
+								t.setZarezerwowany(false);
+								if(towaryNaMagazynie.get(t.getKodTowaru()) == null){
+									towaryNaMagazynie.put(t.getKodTowaru(), new ListTowarTO(t));
+									
+								}
+								else
+									towaryNaMagazynie.get(t.getKodTowaru()).zwiekszIlosc();
+							}
+						}
+					}
+
 				};
 			}
 		});

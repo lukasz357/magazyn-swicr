@@ -6,22 +6,18 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
-
-
 import siwc.magazyn.dto.ListTowarTO;
-import siwc.magazyn.dto.MagazynTO;
 
 public abstract class SelectProductBox extends javax.swing.JDialog{
 	public abstract void dodajTowarAction();
 	
 	
-	public SelectProductBox(java.awt.Frame parent, boolean modal, MagazynTO magazyn, HashMap<String, ListTowarTO> towaryNaMagazynie){
+	public SelectProductBox(java.awt.Frame parent, boolean modal, HashMap<String, ListTowarTO> towaryNaMagazynie){
         super(parent, modal);
         setMinimumSize(new Dimension(350, 145));
         setBounds(new Rectangle(62, 0, 350, 145));
