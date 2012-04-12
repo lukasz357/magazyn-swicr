@@ -23,6 +23,8 @@ public class Algorithm {
 	private Long timeStartTowar;
 	private Long timeEndTowar;
 	
+	private int jakiSleep = 100;
+	
 	MagazynTO magazyn;
 	MapaMagazynu mapa;
 	TowarTO aktualnyTowar;
@@ -61,7 +63,7 @@ public class Algorithm {
 					timeStartCount();
 					PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
 					if (pole != null) {
-						przemiescWozek(pole.getX(), pole.getY());
+						przemiescWozek(pole.getX(), pole.getY(), pole.getZ());
 						log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
 					
 //						//zabieramy na bary teraz towar i zawozimy do miejsca odbioru
@@ -71,7 +73,7 @@ public class Algorithm {
 						if (poleOdbioru == null) {
 							log.info("Brak wolnych miejsc w polu odbioru!");
 						} else {
-							przemiescWozek(poleOdbioru.getX(), poleOdbioru.getY());
+							przemiescWozek(poleOdbioru.getX(), poleOdbioru.getY(), poleOdbioru.getZ());
 							log.info("Przed wstawieniem: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
 							magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].setTowar(towar);
 							log.info("Wstawilem towar na miejsce odbioru i jest rowny temu: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
@@ -91,12 +93,13 @@ public class Algorithm {
 	}
 	
 	
-	private void przemiescWozek(int xTo, int yTo) {
+	private void przemiescWozek(int xTo, int yTo, int zTo) {
+		mapa.pokazPietro(zTo);
 		yTo -= 2;
 		wycofajWozek();
 		log.info("XY WOZKA: "+mapa.getLiftX()+", "+mapa.getLiftY()+" a nalezy przesunac na: "+xTo+", "+yTo);
 		int index=0;
-			while(Math.abs(mapa.getLiftX() - xTo) > 1 || Math.abs(mapa.getLiftY() - yTo) > 1) {
+			while(Math.abs(mapa.getLiftX() - xTo) > 0 || Math.abs(mapa.getLiftY() - yTo) > 0) {
 				if (index > 10)
 					break;
 				log.info("Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
@@ -107,9 +110,10 @@ public class Algorithm {
 						log.info("Lece w dol"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftDown();
-							MagazynUtils.sleep(200);
+							MagazynUtils.sleep(jakiSleep);
 						} catch (Exception e) {
-							log.warn("PANIE GDZIE PAN JEDZIESZ?!");
+							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
+							break;
 						}
 						//lift.setY(lift.getY()+1);
 					}
@@ -120,9 +124,10 @@ public class Algorithm {
 						log.info("Lece w gore"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftUp();
-							MagazynUtils.sleep(200);
+							MagazynUtils.sleep(jakiSleep);
 						} catch (Exception e) {
-							log.warn("PANIE GDZIE PAN JEDZIESZ?!");
+							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
+							break;
 						}
 						//lift.setY(lift.getY()-1);
 					}
@@ -133,9 +138,15 @@ public class Algorithm {
 						log.info("Lece w prawo"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftRight();
-							MagazynUtils.sleep(200);
+							MagazynUtils.sleep(jakiSleep);
 						} catch (Exception e) {
-							log.warn("PANIE GDZIE PAN JEDZIESZ?!");
+							if (index % 2 == 0)
+								yTo+=1;
+							else
+								yTo-=2;
+							log.info(">>>>>> Zmienilem wartosc Y na: "+yTo);
+							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
+							break;
 						}
 						//lift.setX(lift.getX()+1);
 					}
@@ -146,9 +157,10 @@ public class Algorithm {
 						log.info("Lece w lewo"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftLeft();
-							MagazynUtils.sleep(200);
+							MagazynUtils.sleep(jakiSleep);
 						} catch (Exception e) {
-							log.warn("PANIE GDZIE PAN JEDZIESZ?!");
+							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
+							break;
 						}
 						//lift.setX(lift.getX()-1);
 						
@@ -167,14 +179,17 @@ public class Algorithm {
 			log.info("PRZESUWAM w lewo");
 			try {
 				mapa.moveLiftLeft();
+				MagazynUtils.sleep(jakiSleep);
 			} catch (Exception e) {
 				log.info("Przyrznalem w polke przy cofaniu, sprobuje w dol.");
 				try {
 					mapa.moveLiftDown();
+					MagazynUtils.sleep(jakiSleep);
 				} catch (Exception f) {
 					log.info("Przyrznalem w polke przy cofaniu, sprobuje w gore.");
 					try {
 						mapa.moveLiftUp();
+						MagazynUtils.sleep(jakiSleep);
 					} catch (Exception g) {
 						log.info("Zaklinowalem sie, nie moge sie wycofac.");
 					}
