@@ -92,10 +92,14 @@ public abstract class Algorithm {
 						if (pole != null) {
 							Magazyn.dodajWpisDoKonsoli("Wyruszam po towar: "+towar.getNazwa());
 							przemiescWozek(pole.getX(), pole.getY(), pole.getZ());
-//							if (!pole.isMovable()) {
-//								mapa.get
-//								mapa.przes
-//							}
+							if (!pole.isMovable()) {
+								try {
+									mapa.gonZBoksem(pole.getNrRegalu(), pole.getZ());
+								} catch (Exception e) {
+									log.info("o kuhwa");
+									e.printStackTrace();
+								}
+							}
 								
 							log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
 						
