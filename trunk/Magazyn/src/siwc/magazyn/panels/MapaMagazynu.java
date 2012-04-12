@@ -68,8 +68,8 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public void zmienKolorBoksu(int numer, String position, Color c) {
-			regaly.get(numer).zmienKolorBoksu(position, c);
+	public void zmienKolorBoksu(int numer, int level, String position, Color c) {
+			regaly.get(numer).zmienKolorBoksu(level, position, c);
 	}
 
 	public void moveLiftUp() throws Exception {
