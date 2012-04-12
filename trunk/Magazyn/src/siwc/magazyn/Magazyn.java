@@ -1299,10 +1299,10 @@ public class Magazyn {
 					@Override
 					public void usunTowarAction() {
 						int [] indexy = listElementy.getSelectedIndices();
-						System.out.println("indexy.size()" + indexy.length);
+						ArrayList<String> listObjects = new ArrayList<>();
 						for(int i = 0; i < indexy.length; i++){
-//							String el = indexy.length == 1 ? listModel.getElementAt(i) : listModel.getElementAt(indexy.length-1);
 							String el = listModel.getElementAt(indexy[i]);
+							listObjects.add(el);
 							String kodTowaru = el.substring(0, el.indexOf('-') -1);
 							String ileEl = el.substring(el.lastIndexOf('-')+1, el.indexOf("szt.")-1);
 							int ileElem = -1;
@@ -1312,13 +1312,12 @@ public class Magazyn {
 								log.error("Nieudane parsowanie liczby: "+ileEl);
 								continue;
 							}
-							System.out.println(ileElem);
 							boolean znaleziono = false;
 							int licznik = 0;
 							for(TowarTO t : zamowienie.getTowary()){
 								if(licznik == ileElem)
 									break;
-								if(t.getKodTowaru().equals(kodTowaru)){
+								if(t.getKodTowaru().equals(kodTowaru) && t.isZarezerwowany()){
 									t.setZarezerwowany(false);
 									if(towaryNaMagazynie.get(t.getKodTowaru()) == null){
 										towaryNaMagazynie.put(t.getKodTowaru(), new ListTowarTO(t));
@@ -1337,7 +1336,10 @@ public class Magazyn {
 							}
 						}
 						
-						
+						for(String obj : listObjects){
+							listModel.removeElement(obj);
+						}
+						listElementy.setModel(listModel);
 					}
 
 				};
