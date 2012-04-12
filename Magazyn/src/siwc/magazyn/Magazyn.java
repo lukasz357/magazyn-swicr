@@ -343,9 +343,7 @@ public class Magazyn {
 			public void actionPerformed(ActionEvent arg0) {
 				log.info("Magazyn został zatrzymany");
 
-				/*
-				 * TODO: zatrzymac magazyn()
-				 */
+				algorithm.setStop(1);
 				dodajWpisDoKonsoli("Magazyn został zatrzymany" + new Date().toString());
 			}
 		});
@@ -364,7 +362,18 @@ public class Magazyn {
 					
 					@Override
 					public void run() {
-						algorithm = new Algorithm(mapa, zamowieniaLista, magazyn);
+						algorithm = new Algorithm(mapa, magazyn) {
+							@Override
+							public void odswiezZamowienia(int index) {
+								zamowieniaListModel.remove(index);
+								listZamowienia.setModel(zamowieniaListModel);
+							}
+							
+							@Override
+							public List<ZamowienieTO> getNoweZamowienia() {
+								return zamowieniaLista;
+							}
+						};
 						algorithm.startAlgorithm();		
 					}
 				});

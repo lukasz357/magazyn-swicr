@@ -13,8 +13,11 @@ import siwc.magazyn.dto.ZamowienieTO;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.utils.MagazynUtils;
 
-public class Algorithm {
+public abstract class Algorithm {
 
+	public abstract void odswiezZamowienia(int indexZamowienia);
+	public abstract List<ZamowienieTO> getNoweZamowienia();
+	
 	private Logger log = Logger.getLogger(MapaMagazynu.class);
 	
 	private Long timeStart;
@@ -23,6 +26,7 @@ public class Algorithm {
 	private Long timeEndTowar;
 	
 	private int jakiSleep = 2000;
+	private int stop = 0;
 	
 	MagazynTO magazyn;
 	MapaMagazynu mapa;
@@ -31,9 +35,8 @@ public class Algorithm {
 	List<ZamowienieTO> zamowienia = new ArrayList<ZamowienieTO>();
 	
 	
-	public Algorithm(MapaMagazynu mapa, List<ZamowienieTO> zamowienia, MagazynTO magazyn) {
+	public Algorithm(MapaMagazynu mapa, MagazynTO magazyn) {
 		this.mapa = mapa;
-		this.zamowienia = zamowienia;
 		this.magazyn = magazyn;
 		log.info("CZY JEST MAGAZYN? "+magazyn != null);
 	}
@@ -41,53 +44,61 @@ public class Algorithm {
 	
 	public void startAlgorithm() {
 		
-		
-		if (this.zamowienia == null || this.zamowienia.size() < 1) {
-			log.info("KOLEGO! Brak zamówień!");
-			Magazyn.dodajWpisDoKonsoli("Brak zamówień do przetworzenia, czekam...");
-		}
-		else {
-			timeStartCount();
-			for (ZamowienieTO zamowienie : this.zamowienia) {
-
-				timeStartCountTowar();
-				log.info("Przetwarzam zamowienie: "+zamowienie.toString());
-				Magazyn.dodajWpisDoKonsoli("Przetwarzam zamowienie dla: "+zamowienie.toString());
-				
-				for (TowarTO towar : zamowienie.getTowary()) {
+		while(stop == 0) {
+			zamowienia = getNoweZamowienia();
+			
+			if (this.zamowienia == null || this.zamowienia.size() < 1) {
+				log.info("KOLEGO! Brak zamówień!");
+				Magazyn.dodajWpisDoKonsoli("Brak zamówień do przetworzenia, czekam...");
+				MagazynUtils.sleep(jakiSleep);
+			}
+			else {
+				timeStartCount();
+				for (int i=0; i < this.zamowienia.size(); i++) {
+					zamowienia = getNoweZamowienia();
+					ZamowienieTO zamowienie = zamowienia.get(i);
 					
-					timeStartCount();
-					PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
-					if (pole != null) {
-						przemiescWozek(pole.getX(), pole.getY(), pole.getZ());
-						log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
+					timeStartCountTowar();
+					log.info("Przetwarzam zamowienie: "+zamowienie.toString());
+					Magazyn.dodajWpisDoKonsoli("Przetwarzam zamowienie dla: "+zamowienie.toString());
 					
-//						//zabieramy na bary teraz towar i zawozimy do miejsca odbioru
-						magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].setTowar(null);
-						mapa.zmienKolorBoksu(pole.getNrRegalu(), pole.getZ(), pole.getPosition(), MagazynUtils.defaultBoxBackground);
+					for (TowarTO towar : zamowienie.getTowary()) {
 						
-						aktualnyTowar = towar;
-						PoleTO poleOdbioru = znajdzPierwszeLepszeWolnePoleOdbioru();
+						timeStartCount();
+						PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
+						if (pole != null) {
+							przemiescWozek(pole.getX(), pole.getY(), pole.getZ());
+							log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
 						
-						if (poleOdbioru == null) {
-							log.info("Brak wolnych miejsc w polu odbioru!");
-						} else {
-							przemiescWozek(poleOdbioru.getX(), poleOdbioru.getY(), poleOdbioru.getZ());
-							log.info("Przed wstawieniem: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
-							magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].setTowar(towar);
-							log.info("Wstawilem towar na miejsce odbioru i jest rowny temu: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
-							aktualnyTowar = null;
+	//						//zabieramy na bary teraz towar i zawozimy do miejsca odbioru
+							magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].setTowar(null);
+							mapa.zmienKolorBoksu(pole.getNrRegalu(), pole.getZ(), pole.getPosition(), MagazynUtils.defaultBoxBackground);
 							
-							Magazyn.dodajWpisDoKonsoli("Towar dostarczony do punktu odbioru: "+poleOdbioru.getX()+", "+poleOdbioru.getY()+" w czasie: "+timeEndCountTowar());
-							wycofajWozek();
+							aktualnyTowar = towar;
+							PoleTO poleOdbioru = znajdzPierwszeLepszeWolnePoleOdbioru();
+							
+							if (poleOdbioru == null) {
+								log.info("Brak wolnych miejsc w polu odbioru!");
+							} else {
+								przemiescWozek(poleOdbioru.getX(), poleOdbioru.getY(), poleOdbioru.getZ());
+								log.info("Przed wstawieniem: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
+								magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].setTowar(towar);
+								log.info("Wstawilem towar na miejsce odbioru i jest rowny temu: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
+								aktualnyTowar = null;
+								
+								Magazyn.dodajWpisDoKonsoli("Towar dostarczony do punktu odbioru: "+poleOdbioru.getX()+", "+poleOdbioru.getY()+" w czasie: "+timeEndCountTowar());
+								wycofajWozek();
+							}
 						}
+						else {
+							Magazyn.dodajWpisDoKonsoli("Nie odnaleziono boxu o ID: " + towar.getIdBoxu());
+						}
+						timeEndCountTowar();
 					}
-					else {
-						Magazyn.dodajWpisDoKonsoli("Nie odnaleziono boxu o ID: " + towar.getIdBoxu());
-					}
-					timeEndCountTowar();
+					timeEndCount();
+					this.zamowienia.remove(i);
+					odswiezZamowienia(i);
 				}
-				timeEndCount();
 			}
 		}
 	}
@@ -281,5 +292,15 @@ public class Algorithm {
 
 	public void setJakiSleep(int jakiSleep) {
 		this.jakiSleep = jakiSleep;
+	}
+
+
+	public int getStop() {
+		return stop;
+	}
+
+
+	public void setStop(int stop) {
+		this.stop = stop;
 	}
 }
