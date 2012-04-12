@@ -1551,4 +1551,20 @@ public class Magazyn {
 		
 		return max;
 	}
+
+	public void setPietro(int pietro) {   
+		if (pietro > 0 && pietro < MagazynUtils.liczbaPieter - 1) {   
+			this.pietro = pietro;      
+			levelTextField.setText(Integer.toString(pietro));   
+			mapa.pokazPietro(pietro);          
+			if (pietro == 0)          
+				btnMinus.setEnabled(false);       
+			else            
+				btnMinus.setEnabled(true);       
+				if (pietro < MagazynUtils.liczbaPieter - 1)   
+					btnPlus.setEnabled(true);       
+				else            
+					btnPlus.setEnabled(false);    
+			}      
+		}
 }
