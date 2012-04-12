@@ -186,16 +186,10 @@ public class Magazyn {
 		});
 	}
 
-	/* temp */
-	public void tymczasowoWypelnijKonsole() {
-		konsolaListModel.addElement("Magazyn trollollololo");
-	}
-
 	/**
 	 * Create the application.
 	 */
 	public Magazyn() {
-		tymczasowoWypelnijKonsole();
 		initialize();
 	}
 
