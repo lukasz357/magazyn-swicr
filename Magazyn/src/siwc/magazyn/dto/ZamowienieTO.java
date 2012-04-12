@@ -65,4 +65,9 @@ public class ZamowienieTO {
 	public void setTerminRealizacji(String terminRealizacji) {
 		this.terminRealizacji = terminRealizacji;
 	}
+	
+	@Override
+	public String toString() {
+		return "Zamówienie numer: "+numerZamowienia+", priorytet: "+priorytet+", termin realizacji: "+terminRealizacji+", dane klienta: "+daneKlienta+".";
+	}
 }
