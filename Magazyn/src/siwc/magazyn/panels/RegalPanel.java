@@ -422,4 +422,8 @@ public class RegalPanel extends JPanel {
 		return getLevelMap(level).get(position).isMovable();
 	}
 	
+	public Color getBoxColor(int level, String position){
+		return getLevelMap(level).get(position).getBackground();
+	}
+	
 }

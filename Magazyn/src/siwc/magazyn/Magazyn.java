@@ -988,9 +988,12 @@ public class Magazyn {
 					dodajProdukty(towaryNaMagazynie);
 					saveFile.setEnabled(true);
 					saveAsFile.setEnabled(true);
+					dodajWpisDoKonsoli("Wczytano produkty z pliku : " + fileChooser.getSelectedFile());
+					if(towaryNaMagazynie.size() > 0){
+						btnDodajZamowienie.setEnabled(true);
+						btnWczytajZamowienia.setEnabled(true);
+					}
 				}
-				
-				dodajWpisDoKonsoli("Wczytano produkty z pliku : " + fileChooser.getSelectedFile());
 			}
 		});
 		
@@ -1017,7 +1020,7 @@ public class Magazyn {
 						String kodTowaru = textFieldKod.getText();
 						
 						RegalPanel rp = regaly.get(regalID);
-						if(rp.isMovable(pietro, pozycja)){
+						if(rp.getBoxColor(pietro, pozycja).equals(MagazynUtils.freeBoxBackround)){
 							error += "Box \""+pozycja+ "\" musi pozostac pusty\n";
 							OK = false;
 						}
@@ -1078,7 +1081,13 @@ public class Magazyn {
 							logic.convertToMagazynTO(regaly);
 							produktyListModel.clear();
 							dodajProdukty(towaryNaMagazynie);
+							dodajWpisDoKonsoli("Dodano produkt: "+kodTowaru + " - "+nazwa + " 1 x "+ilosc);
 							closeAddPBox();
+							
+							if(towaryNaMagazynie.size() > 0){
+								btnDodajZamowienie.setEnabled(true);
+								btnWczytajZamowienia.setEnabled(true);
+							}
 						}
 					}
 				};
@@ -1287,18 +1296,15 @@ public class Magazyn {
 					zamowieniaLista = noweZam;
 					dodajZamowienia(noweZam);
 					aktualizujProdukty(towaryNaMagazynie);
-//					for(ZamowienieTO z : zamowienia.values())
-//						System.out.println(z.towaryToString());
 					saveFile.setEnabled(true);
 					saveAsFile.setEnabled(true);
+					log.info("Wczytano zamówienia");			
+					dodajWpisDoKonsoli("Wczytano zamówienia z pliku :" + fileChooser.getSelectedFile());
 				}
-				
-				log.info("Wczytano zamówienia");
-				
-				dodajWpisDoKonsoli("Wczytano zamówienia z pliku :" + fileChooser.getSelectedFile());
-				
 			}
 		});
+		btnDodajZamowienie.setEnabled(false);
+		btnWczytajZamowienia.setEnabled(false);
 
 		ButtonGroup styleGroup = new ButtonGroup();
 		JRadioButtonMenuItem styleRadioMenu;

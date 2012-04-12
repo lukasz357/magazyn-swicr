@@ -133,8 +133,8 @@ public class IOLogic {
 						continue;
 //					System.out.println(pietro + " " + pozycja);
 					RegalPanel rp = regaly.get(regalID);
-//					if(rp.isMovable(pietro, pozycja))
-//						continue;
+					if(rp.getBoxColor(pietro, pozycja).equals(MagazynUtils.freeBoxBackround))
+						continue;
 					
 					rp.zmienKolorBoksu(pietro, pozycja, MagazynUtils.busyBoxBackground);
 					
