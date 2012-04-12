@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -159,7 +162,7 @@ public class Magazyn {
 	private JLabel lblWzek;
 	private JPanel panel_6;
 	private JScrollPane scrollPaneListaZamowien;
-	private static JList<String> listZamowienia;
+	private static MyList listZamowienia;
 	private JPanel panel_4;
 	private JLabel lblBoksZajety;
 	private JPanel panel_7_produkty;
@@ -981,14 +984,45 @@ public class Magazyn {
 
 		scrollPaneListaZamowien = new JScrollPane();
 
-		listZamowienia = new JList<String>();
+		listZamowienia = new MyList();
 		listZamowienia.setModel(zamowieniaListModel);
 		scrollPaneListaZamowien.setViewportView(listZamowienia);
 		
 		JButton btnUsunZamowienia = new JButton("Usuń");
 		btnUsunZamowienia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int [] indexy = listZamowienia.getSelectedIndices();
+				ArrayList<String> listObjects = new ArrayList<>();
+				for(int i = 0; i < indexy.length; i++){
+					String el = zamowieniaListModel.getElementAt(indexy[i]);
+					listObjects.add(el);
+					String idZam = el.substring(0, el.indexOf(':'));
+					int idZamowienia = -1;
+					try{
+						idZamowienia = Integer.parseInt(idZam.trim());
+					}catch(NumberFormatException ex){
+						log.error("Nieudane parsowanie identyfikatora zamówienia: "+idZamowienia);
+						continue;
+					}
+					ZamowienieTO zamowienie = zamowienia.get(idZamowienia);
+					List<TowarTO> towary = zamowienie.getTowary();
+					if(towary != null && towary.size() > 0){
+						for(TowarTO t : towary){
+							t.setZarezerwowany(false);
+							if(towaryNaMagazynie.get(t.getKodTowaru()) == null){
+								towaryNaMagazynie.put(t.getKodTowaru(), new ListTowarTO(t));
+							}
+							else
+								towaryNaMagazynie.get(t.getKodTowaru()).zwiekszIlosc();
+						}
+					}
+				}
 				
+				for(String obj : listObjects){
+					zamowieniaListModel.removeElement(obj);
+				}
+				listZamowienia.setModel(zamowieniaListModel);
+				aktualizujProdukty(towaryNaMagazynie);
 			}
 		});
 		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
@@ -1336,9 +1370,10 @@ public class Magazyn {
 						else {
 							zamowienie.setDaneKlienta(textFieldImieINazwisko.getText());
 							zamowienia.put(index, zamowienie);
-							for(ListTowarTO t: zamowienie.getTowaryDoListy()) {
-								zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+ zamowienie.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+zamowienie.getTerminRealizacji()+")");
-							}
+							zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+zamowienie.getDaneKlienta() + " - "+zamowienie.getTowary().size() + " el." + " ("+zamowienie.getTerminRealizacji()+")");
+//							for(ListTowarTO t: zamowienie.getTowaryDoListy()) {
+//								zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+ zamowienie.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+zamowienie.getTerminRealizacji()+")");
+//							}
 							listZamowienia.setModel(zamowieniaListModel);
 							aktualizujProdukty(towaryNaMagazynie);
 							closeAddOrderBox();
@@ -1624,9 +1659,10 @@ public class Magazyn {
 
 		if (listaZamowien != null){
 			for (ZamowienieTO z : listaZamowien) {
-				for(ListTowarTO t: z.getTowaryDoListy()) {
-					zamowieniaListModel.addElement(z.getNumerZamowienia() + ": "+ z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+z.getTerminRealizacji()+")");
-				}
+				zamowieniaListModel.addElement(z.getNumerZamowienia() + ": "+z.getDaneKlienta() + " - "+z.getTowary().size() + " el." + " ("+z.getTerminRealizacji()+")");
+//				for(ListTowarTO t: z.getTowaryDoListy()) {
+//					zamowieniaListModel.addElement("ID:"+ z.getNumerZamowienia() + " - "+ z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+z.getTerminRealizacji()+")");
+//				}
 			}
 			listZamowienia.setModel(zamowieniaListModel);
 		}else{
@@ -1689,4 +1725,48 @@ public class Magazyn {
 					btnPlus.setEnabled(false);    
 			}      
 		}
+
+	
+	class MyList extends JList<String> {
+		private static final long serialVersionUID = -7810572755518819881L;
+
+		public MyList() {
+	        super();
+
+		// Attach a mouse motion adapter to let us know the mouse is over an item and to show the tip.
+		addMouseMotionListener( new MouseMotionAdapter() {
+			public void mouseMoved( MouseEvent e) {
+				MyList theList = (MyList) e.getSource();
+				ListModel<String> model = theList.getModel();
+				int index = theList.locationToIndex(e.getPoint());
+				if (index > -1) {
+					theList.setToolTipText(null);
+					String el = model.getElementAt(index);
+					String idZam = el.substring(0, el.indexOf(':'));
+					int idZamowienia = -1;
+					try{
+						idZamowienia = Integer.parseInt(idZam.trim());
+					}catch(NumberFormatException ex){
+						log.error("Nieudane parsowanie identyfikatora zamówienia: "+idZamowienia);
+					}
+					ZamowienieTO zamowienie = zamowienia.get(idZamowienia);
+					String text = "<html>Elementy zamówienia:<br>";
+					int idx = 1;
+					for(ListTowarTO t : zamowienie.getTowaryDoListy()){
+						text += idx+". "+t.getKodTowaru() + ": " + t.getNazwa() + " - " + t.getIlePaczek() + " x " + t.getIlosc() + " szt.<br>";
+						idx++;
+					}
+					text += "</html>";
+					theList.setToolTipText(text);
+				}
+			}
+		});
+	    }
+
+	    // Expose the getToolTipText event of our JList
+	    public String getToolTipText(MouseEvent e){
+	        return super.getToolTipText();
+	    }
+
+	}
 }
