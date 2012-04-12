@@ -1287,8 +1287,8 @@ public class Magazyn {
 					zamowieniaLista = noweZam;
 					dodajZamowienia(noweZam);
 					aktualizujProdukty(towaryNaMagazynie);
-					for(ZamowienieTO z : zamowienia.values())
-						System.out.println(z.towaryToString());
+//					for(ZamowienieTO z : zamowienia.values())
+//						System.out.println(z.towaryToString());
 					saveFile.setEnabled(true);
 					saveAsFile.setEnabled(true);
 				}
