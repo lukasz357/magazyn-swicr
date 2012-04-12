@@ -148,7 +148,7 @@ public abstract class Algorithm {
 	
 	private void przemiescWozek(int xTo, int yTo, int zTo) {
 		mapa.pokazPietro(zTo);
-		for (int i = mapa.getLiftLeve(); i < Math.abs(zTo-mapa.getLiftLeve()); i++) {
+		for (int i = 0; i < Math.abs(zTo-mapa.getLiftLeve()); i++) {
 			if (mapa.getLiftLeve() < zTo)
 				mapa.liftUp();
 			else
