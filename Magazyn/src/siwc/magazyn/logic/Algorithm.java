@@ -38,7 +38,6 @@ public abstract class Algorithm {
 	public Algorithm(MapaMagazynu mapa, MagazynTO magazyn) {
 		this.mapa = mapa;
 		this.magazyn = magazyn;
-		log.info("CZY JEST MAGAZYN? "+magazyn != null);
 	}
 	
 	
@@ -47,6 +46,14 @@ public abstract class Algorithm {
 		while(stop == 0) {
 			zamowienia = getNoweZamowienia();
 			
+			log.info("WCZYTUJE ZAMOWIENIA ===================================================================");
+			for (ZamowienieTO zamowienie : zamowienia) {
+				log.info("==== "+zamowienie.getNumerZamowienia()+", "+zamowienie.getDaneKlienta());
+				for (TowarTO towar : zamowienie.getTowary()) {
+					log.info(towar.getOpis());
+				}
+			}
+			
 			if (this.zamowienia == null || this.zamowienia.size() < 1) {
 				log.info("KOLEGO! Brak zamówień!");
 				Magazyn.dodajWpisDoKonsoli("Brak zamówień do przetworzenia, czekam...");
@@ -54,20 +61,19 @@ public abstract class Algorithm {
 			}
 			else {
 				timeStartCount();
-				for (int i=0; i < this.zamowienia.size(); i++) {
+				int size = zamowienia.size();
+				for (int i=0; i < size; i++) {
 					
 					//todo posortowac zamowienia wg priorytetu
-					ZamowienieTO zamowienie = zamowienia.get(i);
+					ZamowienieTO zamowienie = zamowienia.get(0);
 					
 					timeStartCount();
 					log.info("Przetwarzam zamowienie: "+zamowienie.toString());
 					Magazyn.dodajWpisDoKonsoli("=== Przetwarzam: "+zamowienie.toString());
 					
 					for (TowarTO towar : zamowienie.getTowary()) {
-						log.info(towar.getOpis());
-					}
-					
-					for (TowarTO towar : zamowienie.getTowary()) {
+						if (stop != 0)
+							break;
 						
 						timeStartCountTowar();
 						PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
@@ -111,7 +117,6 @@ public abstract class Algorithm {
 						timeEndCountTowar();
 					}
 					Magazyn.dodajWpisDoKonsoli("Zamówienie przetworzone w czasie: "+timeEndCount());
-					this.zamowienia.remove(i);
 					odswiezZamowienia(i);
 				}
 			}
@@ -121,24 +126,27 @@ public abstract class Algorithm {
 	
 	private void przemiescWozek(int xTo, int yTo, int zTo) {
 		mapa.pokazPietro(zTo);
-		yTo -= 2;
+		if (Math.abs(mapa.getLiftY() - yTo) > 2)
+			yTo -= 2;
+		else
+			yTo += 2;
 		wycofajWozek();
 		log.info("XY WOZKA: "+mapa.getLiftX()+", "+mapa.getLiftY()+" a nalezy przesunac na: "+xTo+", "+yTo);
 		int index=0;
 			while(Math.abs(mapa.getLiftX() - xTo) > 2 || Math.abs(mapa.getLiftY() - yTo) > 2) {
 				if (index > 10)
 					break;
-				log.info("Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
+				//log.info("Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 				
 				if (mapa.getLiftY() - yTo < 0) {
 					int yWozka = mapa.getLiftY();
 					for (int i=0; i < (yTo - yWozka); i++) {
-						log.info("Lece w dol"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
+						//log.info("Lece w dol"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftDown();
 							MagazynUtils.sleep(jakiSleep);
 						} catch (Exception e) {
-							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
+							//log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
 						}
 					}
@@ -146,12 +154,12 @@ public abstract class Algorithm {
 				else if (mapa.getLiftY() - yTo > 0) {
 					int yWozka = mapa.getLiftY();
 					for (int i=0; i < (yWozka - yTo); i++) {
-						log.info("Lece w gore"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
+						//log.info("Lece w gore"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftUp();
 							MagazynUtils.sleep(jakiSleep);
 						} catch (Exception e) {
-							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
+							//log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
 						}
 					}
@@ -159,17 +167,18 @@ public abstract class Algorithm {
 				else if (mapa.getLiftX() - xTo < 0) {
 					int xWozka = mapa.getLiftX();
 					for (int i=0; i < (xTo - xWozka); i++) {
-						log.info("Lece w prawo"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
+						//log.info("Lece w prawo"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftRight();
 							MagazynUtils.sleep(jakiSleep);
 						} catch (Exception e) {
-							if (mapa.getLiftY()-yTo < 0)
+							log.info("Mapa liftY: "+mapa.getLiftY()+" yto: "+yTo);
+							if (mapa.getLiftY()-yTo <= 0)
 								yTo-=1;
 							else
 								yTo+=1;
 							log.info(">>>>>> Zmienilem wartosc Y na: "+yTo);
-							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
+							//log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
 						}
 					}
@@ -177,12 +186,12 @@ public abstract class Algorithm {
 				else if (mapa.getLiftX() - xTo > 0) {
 					int xWozka = mapa.getLiftX();
 					for (int i=0; i < (xWozka - xTo); i++) {
-						log.info("Lece w lewo"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
+						//log.info("Lece w lewo"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftLeft();
 							MagazynUtils.sleep(jakiSleep);
 						} catch (Exception e) {
-							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
+							//log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
 						}
 					}
