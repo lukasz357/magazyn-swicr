@@ -20,6 +20,7 @@ public abstract class AddOrderBox extends javax.swing.JDialog{
 	public abstract void dodajZamowienieAction();
 	public abstract void dodajZamowieniaOKAction();
 	public abstract void anulujAction();
+	public abstract void usunTowarAction();
 	
 	public AddOrderBox(java.awt.Frame parent, boolean modal){
         super(parent, modal);
@@ -68,10 +69,9 @@ public abstract class AddOrderBox extends javax.swing.JDialog{
 		btnDodaj.setPreferredSize(new Dimension(63, 23));
 		
 		JButton btnUsun = new JButton("Usuń");
-		btnUsun.setEnabled(false);
 		btnUsun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				usunTowarAction();
 			}
 		});
 		btnUsun.setPreferredSize(new Dimension(63, 23));
