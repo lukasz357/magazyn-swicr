@@ -383,6 +383,11 @@ public class Magazyn {
 							public int getTimeIntValue() {
 								return zegar.getTimeIntValue();
 							}
+
+							@Override
+							public void zwiekszLiczbeZamowienZrealizowanych() {
+								Magazyn.zwiekszLiczbeZamowienZrealizowanych();
+							}
 						};
 						algorithm.startAlgorithm();		
 					}
