@@ -35,7 +35,7 @@ public class RegalPanel extends JPanel {
 	private int idPola;
 
 	public RegalPanel(int liczbaPustychBoksow, int idPolaCounter) {
-		this.liczbaPustychBoksow = liczbaPustychBoksow;
+		this.setLiczbaPustychBoksow(liczbaPustychBoksow);
 		setLayout(new GridLayout(MagazynUtils.rzedowWRegale, MagazynUtils.kolumnWRegale, 0, 0));
 		setBackground(Color.WHITE);
 		this.idPola = idPolaCounter;
@@ -101,7 +101,7 @@ public class RegalPanel extends JPanel {
 	public void moveBoxRight(int level, boolean bottom) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
 
-		if (liczbaPustychBoksow == 1) {
+		if (getLiczbaPustychBoksow() == 1) {
 			
 			String freeBoxKey = getFreeBoxKey(levelMap);
 			if(freeBoxKey == null) 
@@ -116,7 +116,7 @@ public class RegalPanel extends JPanel {
 			levelMap.put(freeBoxKey, rightBox);
 			levelMap.put(rightBoxKey, freeBox);
 
-		} else if (liczbaPustychBoksow == 2) {
+		} else if (getLiczbaPustychBoksow() == 2) {
 			
 			String freeBoxKey = getFreeBoxKey(levelMap, bottom);
 			if(freeBoxKey == null) 
@@ -141,7 +141,7 @@ public class RegalPanel extends JPanel {
 
 	public void moveBoxLeft(int level, boolean bottom) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
-		if (liczbaPustychBoksow == 1) {
+		if (getLiczbaPustychBoksow() == 1) {
 			String freeBoxKey = getFreeBoxKey(levelMap);
 			if(freeBoxKey == null) 
 				return;
@@ -154,7 +154,7 @@ public class RegalPanel extends JPanel {
 			levelMap.put(freeBoxKey, rightBox);
 			levelMap.put(rightBoxKey, freeBox);
 			
-		} else if (liczbaPustychBoksow == 2) {
+		} else if (getLiczbaPustychBoksow() == 2) {
 			String freeBoxKey = getFreeBoxKey(levelMap, bottom);
 			if(freeBoxKey == null) 
 				return;
@@ -190,7 +190,7 @@ public class RegalPanel extends JPanel {
 				log.error("Nie powinienem tu byc - Nieprawidlowy numer regalu w setFreeBoxes");
 		}
 		
-		liczbaPustychBoksow = freeBoxes;
+		setLiczbaPustychBoksow(freeBoxes);
 		pietro0.clear();
 		pietro1.clear();
 		pietro2.clear();
@@ -207,7 +207,7 @@ public class RegalPanel extends JPanel {
 	}
 	
 	public int getFreeBoxes() {
-		return liczbaPustychBoksow;
+		return getLiczbaPustychBoksow();
 	}
 
 	private TreeMap<String, BoxPanel> getLevelMap() {
@@ -251,7 +251,7 @@ public class RegalPanel extends JPanel {
 				p.setId(idPola++);
 				p.setBox(true);
 //				System.out.println(idPola);
-				if (liczbaPustychBoksow == 1 && j == 0 && i == 0) { // gorny pusty box
+				if (getLiczbaPustychBoksow() == 1 && j == 0 && i == 0) { // gorny pusty box
 					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setFree(true);
@@ -260,7 +260,7 @@ public class RegalPanel extends JPanel {
 					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
-				} else if (liczbaPustychBoksow == 2 && (i == 0 || i == rows-1) && j == cols / 2) { // gorny lub dolny pusty box
+				} else if (getLiczbaPustychBoksow() == 2 && (i == 0 || i == rows-1) && j == cols / 2) { // gorny lub dolny pusty box
 					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setFree(true);
@@ -269,7 +269,7 @@ public class RegalPanel extends JPanel {
 					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
-				} else if (liczbaPustychBoksow == 2 && (i == 0 || i == rows)) { // gorny lub dolny poruszajacy sie box
+				} else if (getLiczbaPustychBoksow() == 2 && (i == 0 || i == rows)) { // gorny lub dolny poruszajacy sie box
 					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setBackground(MagazynUtils.defaultBoxBackground);
@@ -277,7 +277,7 @@ public class RegalPanel extends JPanel {
 					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
-				} else if (liczbaPustychBoksow == 1 && (i == 0 || i == rows-1 || j == 0 || j == cols)) {
+				} else if (getLiczbaPustychBoksow() == 1 && (i == 0 || i == rows-1 || j == 0 || j == cols)) {
 					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setBackground(MagazynUtils.defaultBoxBackground);
@@ -421,6 +421,14 @@ public class RegalPanel extends JPanel {
 	
 	public Color getBoxColor(int level, String position){
 		return getLevelMap(level).get(position).getBackground();
+	}
+
+	public int getLiczbaPustychBoksow() {
+		return liczbaPustychBoksow;
+	}
+
+	public void setLiczbaPustychBoksow(int liczbaPustychBoksow) {
+		this.liczbaPustychBoksow = liczbaPustychBoksow;
 	}
 	
 }
