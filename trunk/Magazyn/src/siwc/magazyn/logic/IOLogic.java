@@ -131,7 +131,7 @@ public class IOLogic {
 						continue;
 					if( MagazynUtils.convertToRow(pozycja) >= MagazynUtils.rzedowWRegale || MagazynUtils.convertToColumn(pozycja) > MagazynUtils.kolumnWRegale )
 						continue;
-					System.out.println(pietro + " " + pozycja);
+//					System.out.println(pietro + " " + pozycja);
 					RegalPanel rp = regaly.get(regalID);
 //					if(rp.isMovable(pietro, pozycja))
 //						continue;
@@ -301,8 +301,8 @@ public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, Za
 					
 					int x = xRegalu + MagazynUtils.convertToColumn(k)-1;
 					int y = yRegalu + MagazynUtils.convertToRow(k);
-					if(j==0)
-					System.out.println(k + ": j=" + j + " "  + x + " " +y);
+//					if(j==0)
+//						System.out.println(k + ": j=" + j + " "  + x + " " +y);
 					pietro[x][y] = levelMap.get(k).getPole();
 //					System.out.println(pietro[y][x].getTowar().toString());
 					pietro[x][y].setBox(true);
