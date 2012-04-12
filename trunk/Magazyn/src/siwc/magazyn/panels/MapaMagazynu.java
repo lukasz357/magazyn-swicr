@@ -224,5 +224,9 @@ public class MapaMagazynu extends JPanel {
 	public LiftPanel getLift() {
 		return lift;
 	}
+	
+	public int getLiczbaPustychBoksow(int regal) {
+		return regaly.get(regal).getLiczbaPustychBoksow();
+	}
 
 }
