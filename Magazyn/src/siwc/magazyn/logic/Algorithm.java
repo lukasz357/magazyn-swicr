@@ -55,14 +55,17 @@ public abstract class Algorithm {
 			else {
 				timeStartCount();
 				for (int i=0; i < this.zamowienia.size(); i++) {
-					zamowienia = getNoweZamowienia();
-					//todo posortowac zamowienia wg priorytetu
 					
+					//todo posortowac zamowienia wg priorytetu
 					ZamowienieTO zamowienie = zamowienia.get(i);
 					
 					timeStartCount();
 					log.info("Przetwarzam zamowienie: "+zamowienie.toString());
-					Magazyn.dodajWpisDoKonsoli("Przetwarzam zamowienie dla: "+zamowienie.toString());
+					Magazyn.dodajWpisDoKonsoli("=== Przetwarzam: "+zamowienie.toString());
+					
+					for (TowarTO towar : zamowienie.getTowary()) {
+						log.info(towar.getOpis());
+					}
 					
 					for (TowarTO towar : zamowienie.getTowary()) {
 						
@@ -70,8 +73,12 @@ public abstract class Algorithm {
 						PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
 						
 						if (pole != null) {
+							Magazyn.dodajWpisDoKonsoli("Wyruszam po towar: "+towar.getNazwa());
 							przemiescWozek(pole.getX(), pole.getY(), pole.getZ());
-							//if (pole.get)
+//							if (!pole.isMovable()) {
+//								mapa.get
+//								mapa.przes
+//							}
 								
 							log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
 						
@@ -134,7 +141,6 @@ public abstract class Algorithm {
 							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
 						}
-						//lift.setY(lift.getY()+1);
 					}
 				}
 				else if (mapa.getLiftY() - yTo > 0) {
@@ -148,7 +154,6 @@ public abstract class Algorithm {
 							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
 						}
-						//lift.setY(lift.getY()-1);
 					}
 				}
 				else if (mapa.getLiftX() - xTo < 0) {
@@ -167,7 +172,6 @@ public abstract class Algorithm {
 							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
 						}
-						//lift.setX(lift.getX()+1);
 					}
 				}
 				else if (mapa.getLiftX() - xTo > 0) {
@@ -181,8 +185,6 @@ public abstract class Algorithm {
 							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
 						}
-						//lift.setX(lift.getX()-1);
-						
 					}
 				}
 				
@@ -195,7 +197,6 @@ public abstract class Algorithm {
 		int xTo = 0;
 		int xWozka = mapa.getLiftX();
 		for (int i=0; i < (xWozka - xTo); i++) {
-			log.info("PRZESUWAM w lewo");
 			try {
 				mapa.moveLiftLeft();
 				MagazynUtils.sleep(jakiSleep);
