@@ -353,8 +353,17 @@ public class Magazyn {
 				log.info("Magazyn został uruchomiony" + new Date().toString());
 				dodajWpisDoKonsoli("Magazyn został uruchomiony " + new Date().toString());
 				log.info("Clicked");
-				Algorithm algorithm = new Algorithm(mapa, zamowieniaLista, magazyn);
-				algorithm.startAlgorithm();
+				final 
+				Thread t = new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						Algorithm algorithm = new Algorithm(mapa, zamowieniaLista, magazyn);
+						algorithm.startAlgorithm();		
+					}
+				});
+				t.start();
+				
 			}
 		});
 		
