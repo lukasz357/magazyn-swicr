@@ -1243,36 +1243,43 @@ public class Magazyn {
 	        	String value = (String)spinnerScaleTime.getValue();
 	            if(value.equals("Real")){
 	            	zegar.rescaleTime(1000);
+	            	MagazynUtils.boxMovingSleepTime = 1200;
 	            	if(algorithm != null)
 	            		algorithm.setJakiSleep(1200);
 	            }
 	            else if(value.equals("10x")){
 	            	zegar.rescaleTime(100);
+	            	MagazynUtils.boxMovingSleepTime = 120;
 	            	if(algorithm != null)
 	            		algorithm.setJakiSleep(120);
 	            }
 	            else if(value.equals("20x")){
 	            	zegar.rescaleTime(50);
+	            	MagazynUtils.boxMovingSleepTime = 60;
 	            	if(algorithm != null)
 	            		algorithm.setJakiSleep(60);
 	            }
 	            else if(value.equals("30x")){
-	            	zegar.rescaleTime(50);
+	            	zegar.rescaleTime(33);
+	            	MagazynUtils.boxMovingSleepTime = 40;
 	            	if(algorithm != null)
 	            		algorithm.setJakiSleep(40);
 	            }
 	            else if(value.equals("50x")){
 	            	zegar.rescaleTime(20);
+	            	MagazynUtils.boxMovingSleepTime = 24;
 	            	if(algorithm != null)
 	            		algorithm.setJakiSleep(24);
 	            }
 	            else if(value.equals("100x")){
 	            	zegar.rescaleTime(10);
+	            	MagazynUtils.boxMovingSleepTime = 12;
 	            	if(algorithm != null)
 	            		algorithm.setJakiSleep(12);
 	            }
 	            else if(value.equals("1000x")){
 	            	zegar.rescaleTime(1);
+	            	MagazynUtils.boxMovingSleepTime = 1;
 	            	if(algorithm != null)
 	            		algorithm.setJakiSleep(1);
 	            }
