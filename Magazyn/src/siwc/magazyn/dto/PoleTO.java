@@ -13,6 +13,7 @@ public class PoleTO {
 	
 	boolean isPunktOdbioru;
 	boolean isBox;
+	private boolean isMovable;
 	
 	public PoleTO(int x, int y) {
 		this.x = x; this.y = y;
@@ -72,6 +73,12 @@ public class PoleTO {
 	}
 	public void setNrRegalu(int nrRegalu) {
 		this.nrRegalu = nrRegalu;
+	}
+	public boolean isMovable() {
+		return isMovable;
+	}
+	public void setMovable(boolean isMovable) {
+		this.isMovable = isMovable;
 	}
 	
 }

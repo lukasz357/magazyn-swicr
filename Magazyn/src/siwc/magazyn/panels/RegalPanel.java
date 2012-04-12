@@ -252,37 +252,37 @@ public class RegalPanel extends JPanel {
 				p.setBox(true);
 //				System.out.println(idPola);
 				if (liczbaPustychBoksow == 1 && j == 0 && i == 0) { // gorny pusty box
+					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setFree(true);
 					bp.setBackground(MagazynUtils.freeBoxBackround);
-					bp.setMovable(true);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
 				} else if (liczbaPustychBoksow == 2 && (i == 0 || i == rows-1) && j == cols / 2) { // gorny lub dolny pusty box
+					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setFree(true);
 					bp.setBackground(MagazynUtils.freeBoxBackround);
-					bp.setMovable(true);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
 				} else if (liczbaPustychBoksow == 2 && (i == 0 || i == rows)) { // gorny lub dolny poruszajacy sie box
+					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setBackground(MagazynUtils.defaultBoxBackground);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					bp.setToolTipText("Pusty");
-					bp.setMovable(true);
 					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
 				} else if (liczbaPustychBoksow == 1 && (i == 0 || i == rows-1 || j == 0 || j == cols)) {
+					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setBackground(MagazynUtils.defaultBoxBackground);
 					bp.setBorder(new LineBorder(new Color(192, 192, 192), 1, false));
 					bp.setToolTipText("Pusty");
-					bp.setMovable(true);
 					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
 				} else {
@@ -417,9 +417,6 @@ public class RegalPanel extends JPanel {
 			zmienToolTipText(position, text);
 		else
 			getLevelMap(level).get(position).setToolTipText(text);
-	}
-	public boolean isMovable(int level, String position) {
-		return getLevelMap(level).get(position).isMovable();
 	}
 	
 	public Color getBoxColor(int level, String position){
