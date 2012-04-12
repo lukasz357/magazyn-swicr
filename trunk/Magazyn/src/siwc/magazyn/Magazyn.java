@@ -704,7 +704,7 @@ public class Magazyn {
 						boolean bottom = chckBoxRegal1.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-							mapa.przesunBoxWPrawo("regal1", pietro, bottom);
+							mapa.przesunBoxWPrawo(0, pietro, bottom);
 						}
 
 					}
@@ -726,7 +726,7 @@ public class Magazyn {
 						boolean bottom = chckBoxRegal2.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-							mapa.przesunBoxWPrawo("regal2", pietro, bottom);
+							mapa.przesunBoxWPrawo(1, pietro, bottom);
 						}
 
 					}
@@ -748,7 +748,7 @@ public class Magazyn {
 						boolean bottom = chckBoxRegal3.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-							mapa.przesunBoxWPrawo("regal3", pietro, bottom);
+							mapa.przesunBoxWPrawo(2, pietro, bottom);
 						}
 
 					}
