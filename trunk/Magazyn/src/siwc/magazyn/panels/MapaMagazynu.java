@@ -213,11 +213,11 @@ public class MapaMagazynu extends JPanel {
 	}
 
 	public int getLiftX() {
-		return lift.getX();
+		return lift.getX()/18;
 	}
 
 	public int getLiftY() {
-		return lift.getY();
+		return lift.getY()/18;
 	}
 
 	public int getLiftLeve() {
