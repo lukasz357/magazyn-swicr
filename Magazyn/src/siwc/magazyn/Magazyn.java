@@ -229,7 +229,7 @@ public class Magazyn {
 			idPolaCounter += MagazynUtils.liczbaBoxowWRegale;
 		}
 		
-		mapa = new MapaMagazynu(regaly);
+		mapa = new MapaMagazynu(this, regaly);
 		mapa.setBounds(10, 72, 792, 396);
 
 		mapa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));		
@@ -1310,8 +1310,7 @@ public class Magazyn {
 	public void setPietro(int pietro) {   
 		if (pietro > 0 && pietro < MagazynUtils.liczbaPieter - 1) {   
 			this.pietro = pietro;      
-			levelTextField.setText(Integer.toString(pietro));   
-			mapa.pokazPietro(pietro);          
+			levelTextField.setText(Integer.toString(pietro));            
 			if (pietro == 0)          
 				btnMinus.setEnabled(false);       
 			else            
@@ -1364,6 +1363,5 @@ public class Magazyn {
 	    public String getToolTipText(MouseEvent e){
 	        return super.getToolTipText();
 	    }
-
 	}
 }
