@@ -369,16 +369,22 @@ public class Magazyn {
 					@Override
 					public void run() {
 						algorithm = new Algorithm(mapa, magazyn) {
+							
 							@Override
-							public void odswiezZamowienia(int index) {
-								zamowienia.remove(index);
-								zamowieniaListModel.remove(index);
+							public void odswiezZamowienia(ZamowienieTO zamowienie) {
+								zamowienia.remove(zamowienie);
+								zamowieniaListModel.removeElement(zamowienie);
 								listZamowienia.setModel(zamowieniaListModel);
 							}
 							
 							@Override
 							public List<ZamowienieTO> getNoweZamowienia() {
 								return new ArrayList<ZamowienieTO>(zamowienia.values());
+							}
+							
+							@Override
+							public int getTimeIntValue() {
+								return zegar.getTimeIntValue();
 							}
 						};
 						algorithm.startAlgorithm();		
@@ -1179,7 +1185,7 @@ public class Magazyn {
 		zegar.setFont(new Font("SansSerif", Font.PLAIN, 30));
 		
 		spinnerScaleTime = new JSpinner();
-		spinnerScaleTime.setModel(new SpinnerListModel(new String[] {"Real", "10x", "100x"}));
+		spinnerScaleTime.setModel(new SpinnerListModel(new String[] {"Real", "10x", "20x", "30x", "100x"}));
 		spinnerScaleTime.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		spinnerScaleTime.getEditor().setEnabled(false);
 		spinnerScaleTime.addChangeListener(new ChangeListener() {
@@ -1190,17 +1196,27 @@ public class Magazyn {
 	            if(value.equals("Real")){
 	            	zegar.rescaleTime(1000);
 	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(2000);
+	            		algorithm.setJakiSleep(1200);
 	            }
 	            else if(value.equals("10x")){
 	            	zegar.rescaleTime(100);
 	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(200);
+	            		algorithm.setJakiSleep(120);
+	            }
+	            else if(value.equals("20x")){
+	            	zegar.rescaleTime(50);
+	            	if(algorithm != null)
+	            		algorithm.setJakiSleep(60);
+	            }
+	            else if(value.equals("30x")){
+	            	zegar.rescaleTime(50);
+	            	if(algorithm != null)
+	            		algorithm.setJakiSleep(40);
 	            }
 	            else if(value.equals("100x")){
 	            	zegar.rescaleTime(10);
 	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(20);
+	            		algorithm.setJakiSleep(12);
 	            }
 	            else {
 	            	log.error("Błąd przy reskalowaniu zegara");

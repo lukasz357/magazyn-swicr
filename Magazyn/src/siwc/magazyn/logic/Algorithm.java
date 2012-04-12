@@ -1,6 +1,8 @@
 package siwc.magazyn.logic;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -15,8 +17,9 @@ import siwc.magazyn.utils.MagazynUtils;
 
 public abstract class Algorithm {
 
-	public abstract void odswiezZamowienia(int indexZamowienia);
+	public abstract void odswiezZamowienia(ZamowienieTO zamowienie);
 	public abstract List<ZamowienieTO> getNoweZamowienia();
+	public abstract int getTimeIntValue();
 	
 	private Logger log = Logger.getLogger(MapaMagazynu.class);
 	
@@ -25,7 +28,8 @@ public abstract class Algorithm {
 	private Long timeStartTowar;
 	private Long timeEndTowar;
 	
-	private int jakiSleep = 2000;
+	private int jakiSleep = 1200;
+	private int buforNaRealizacjeZamowienia = 4000;//ile minut przed potrzebnym czasem zaczac wykonywac zamowienie
 	private int stop = 0;
 	
 	MagazynTO magazyn;
@@ -45,6 +49,7 @@ public abstract class Algorithm {
 		
 		while(stop == 0) {
 			zamowienia = getNoweZamowienia();
+			sortujZamowienia();
 			
 			log.info("WCZYTUJE ZAMOWIENIA ===================================================================");
 			for (ZamowienieTO zamowienie : zamowienia) {
@@ -66,6 +71,12 @@ public abstract class Algorithm {
 					
 					//todo posortowac zamowienia wg priorytetu
 					ZamowienieTO zamowienie = zamowienia.get(0);
+					
+					log.info("getpriorytet: "+zamowienie.getPriorytet()+" time: "+getTimeIntValue()+" sleep: "+(zamowienie.getPriorytet() - (getTimeIntValue()+(buforNaRealizacjeZamowienia*zamowienie.getTowary().size()))));
+					if (zamowienie.getPriorytet() - (getTimeIntValue()+(buforNaRealizacjeZamowienia*zamowienie.getTowary().size())) > 0) {
+						Magazyn.dodajWpisDoKonsoli("Nic do zrobienia, czekam: "+(zamowienie.getPriorytet() - (getTimeIntValue()+(buforNaRealizacjeZamowienia*zamowienie.getTowary().size()))));
+						MagazynUtils.sleep(zamowienie.getPriorytet() - (getTimeIntValue()+(buforNaRealizacjeZamowienia*zamowienie.getTowary().size())));
+					}
 					
 					timeStartCount();
 					log.info("Przetwarzam zamowienie: "+zamowienie.toString());
@@ -100,6 +111,9 @@ public abstract class Algorithm {
 							
 							if (poleOdbioru == null) {
 								log.info("Brak wolnych miejsc w polu odbioru!");
+								Magazyn.dodajWpisDoKonsoli("Brak wolnych miejsc w polu odbioru!");
+								stop=1;
+								break;
 							} else {
 								przemiescWozek(poleOdbioru.getX(), poleOdbioru.getY(), poleOdbioru.getZ());
 								log.info("Przed wstawieniem: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
@@ -117,7 +131,8 @@ public abstract class Algorithm {
 						timeEndCountTowar();
 					}
 					Magazyn.dodajWpisDoKonsoli("Zamówienie przetworzone w czasie: "+timeEndCount());
-					odswiezZamowienia(i);
+					odswiezZamowienia(zamowienie);
+					zamowienia.remove(0);
 				}
 			}
 		}
@@ -271,7 +286,7 @@ public abstract class Algorithm {
 				for (int k=0; k < magazyn.getWielkoscYMagazynu(); k++) {
 					if (magazyn.getPietra().get(i)[j][k].isPunktOdbioru() && magazyn.getPietra().get(i)[j][k].getTowar() == null) {
 						magazyn.getPietra().get(i)[j][k].setZ(i);
-						log.info("Znalazlem pole odbioru X: "+j+" Y: "+k+" TOWAR = "+magazyn.getPietra().get(i)[j][k].getTowar());
+						log.info("Znalazlem pole odbioru X: "+j+" Y: "+k+" Z: "+i+" TOWAR = "+magazyn.getPietra().get(i)[j][k].getTowar());
 						return magazyn.getPietra().get(i)[j][k];
 					}
 				}
@@ -320,5 +335,17 @@ public abstract class Algorithm {
 
 	public void setStop(int stop) {
 		this.stop = stop;
+	}
+	
+	private void sortujZamowienia() {
+		Collections.sort(zamowienia, new Comparator<ZamowienieTO>() {
+			@Override
+			public int compare(ZamowienieTO o1, ZamowienieTO o2) {
+				Integer l1 = o1.getPriorytet() - getTimeIntValue();
+				Integer l2 = o2.getPriorytet() - getTimeIntValue();
+				
+				return l1.compareTo(l2);
+			}
+		});
 	}
 }
