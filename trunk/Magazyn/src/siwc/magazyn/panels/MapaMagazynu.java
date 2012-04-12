@@ -182,13 +182,15 @@ public class MapaMagazynu extends JPanel {
 			String boxPosition = r.getFreeBoxKey(level);
 			String destination = null;
 			int boxSize = MagazynUtils.boxSize;
-			int dstCol = lift.getX() / boxSize - MagazynUtils.regalX;
+			int dstCol = lift.getX() / boxSize - MagazynUtils.regalX/boxSize;
 			int dstRow = lift.getY() / boxSize;
-
-			if (dstRow + 2 == MagazynUtils.getRegalYPosition(regal) / boxSize) // winda od gory
-				destination = "A";
-			else if ((dstRow - MagazynUtils.kolumnWRegale - 1) == (MagazynUtils.getRegalYPosition(regal) / boxSize)) {
-				destination = "D";
+			int goraRegalu = MagazynUtils.getRegalYPosition(regal) / boxSize;
+			int dolRegalu = (MagazynUtils.getRegalYPosition(regal) / boxSize)+MagazynUtils.rzedowWRegale;
+			System.out.println("Regal: " + regal + " gora: " + goraRegalu + " dol: " + dolRegalu	 );
+			if (dstRow + 2 == goraRegalu) // winda od gory
+				destination = "A" + (dstCol+1);
+			else if (dstRow == dolRegalu) {
+				destination = "D" + (dstCol+1);
 			} else
 				throw new Exception("Cos zle poszlo");
 
@@ -198,9 +200,8 @@ public class MapaMagazynu extends JPanel {
 			int boxCol = MagazynUtils.convertToColumn(boxPosition);
 			int boxRow = MagazynUtils.convertToRow(boxPosition);
 			if (!boxPosition.equals(destination)) {
-				if (dstCol != MagazynUtils.kolumnWRegale - 1 && dstCol != 0 || dstRow != MagazynUtils.rzedowWRegale - 1 && dstRow != 0)
-					throw new Exception("Nie znalazlem pozycji " + destination + " :(");
 				boolean czyIscWLewo = czyIscWLewo(dstRow, dstCol, boxRow, boxCol);
+				System.out.println(czyIscWLewo);
 				if (czyIscWLewo) {
 					while (boxRow != dstRow && boxCol != dstCol) {
 						r.moveBoxLeft(level, false);
@@ -218,6 +219,7 @@ public class MapaMagazynu extends JPanel {
 				}
 			}
 		} else if (r.getLiczbaPustychBoksow() == 2) {
+			System.out.println("LOL 2 BOKSY");
 			String boxPosition = r.getFreeBoxKey(level);
 			String destination = null;
 			int boxSize = MagazynUtils.boxSize;
