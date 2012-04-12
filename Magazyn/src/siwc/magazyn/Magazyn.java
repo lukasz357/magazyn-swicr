@@ -122,15 +122,9 @@ public class Magazyn {
 	private JButton liftDown;
 
 	private int pietro = 0;
-	private JRadioButton regal1_rb1;
-	private JRadioButton regal1_rb2;
 	private JCheckBox chckBoxRegal1;
 	private JCheckBox chckBoxRegal2;
-	private JRadioButton regal2_rb2;
-	private JRadioButton regal2_rb1;
 	private JCheckBox chckBoxRegal3;
-	private JRadioButton regal3_rb2;
-	private JRadioButton regal3_rb1;
 	private JTextField textFieldRegal1;
 	private JTextField textFieldRegal2;
 	private JTextField textFieldRegal3;
@@ -554,31 +548,7 @@ public class Magazyn {
 				mapa.lifDown();
 			}
 		});
-		// Przyciski do liczby wolnych boxow w regale
-		ButtonGroup regal1ButtonGroup = new ButtonGroup();
 
-		regal1_rb1 = new JRadioButton("1");
-		regal1_rb1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chckBoxRegal1.setEnabled(false);
-				idPolaCounter = 0;
-				mapa.setRegalFreeBoxes(0, 1);
-			}
-		});
-		regal1_rb1.setSelected(mapa.getRegalFreeBoxes(0) == 1);
-
-		regal1_rb2 = new JRadioButton("2");
-		regal1_rb2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chckBoxRegal1.setEnabled(true);
-				idPolaCounter = 760;
-				mapa.setRegalFreeBoxes(0, 2);
-			}
-		});
-		regal1_rb2.setSelected(mapa.getRegalFreeBoxes(0) == 2);
-
-		regal1ButtonGroup.add(regal1_rb1);
-		regal1ButtonGroup.add(regal1_rb2);
 
 		chckBoxRegal1 = new JCheckBox("Dolny regał");
 		chckBoxRegal1.addActionListener(new ActionListener() {
@@ -587,29 +557,6 @@ public class Magazyn {
 		});
 		chckBoxRegal1.setEnabled(mapa.getRegalFreeBoxes(0) == 2);
 
-		ButtonGroup regal2ButtonGroup = new ButtonGroup();
-
-		regal2_rb1 = new JRadioButton("1");
-		regal2_rb1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chckBoxRegal2.setEnabled(false);
-				mapa.setRegalFreeBoxes(1, 1);
-
-			}
-		});
-		regal2_rb1.setSelected(mapa.getRegalFreeBoxes(1) == 1);
-
-		regal2_rb2 = new JRadioButton("2");
-		regal2_rb2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chckBoxRegal2.setEnabled(true);
-				mapa.setRegalFreeBoxes(1, 2);
-			}
-		});
-		regal2_rb2.setSelected(mapa.getRegalFreeBoxes(1) == 2);
-
-		regal2ButtonGroup.add(regal2_rb1);
-		regal2ButtonGroup.add(regal2_rb2);
 
 		chckBoxRegal2 = new JCheckBox("Dolny regał");
 		chckBoxRegal2.addActionListener(new ActionListener() {
@@ -619,28 +566,6 @@ public class Magazyn {
 		});
 		chckBoxRegal2.setEnabled(mapa.getRegalFreeBoxes(1) == 2);
 
-		ButtonGroup regal3ButtonGroup = new ButtonGroup();
-
-		regal3_rb1 = new JRadioButton("1");
-		regal3_rb1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chckBoxRegal3.setEnabled(false);
-				mapa.setRegalFreeBoxes(2, 1);
-			}
-		});
-		regal3_rb1.setSelected(mapa.getRegalFreeBoxes(2) == 1);
-
-		regal3_rb2 = new JRadioButton("2");
-		regal3_rb2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				chckBoxRegal3.setEnabled(true);
-				mapa.setRegalFreeBoxes(2, 2);
-			}
-		});
-		regal3_rb2.setSelected(mapa.getRegalFreeBoxes(2) == 2);
-
-		regal3ButtonGroup.add(regal3_rb1);
-		regal3ButtonGroup.add(regal3_rb2);
 
 		chckBoxRegal3 = new JCheckBox("Dolny regał");
 		chckBoxRegal3.addActionListener(new ActionListener() {
@@ -838,27 +763,111 @@ public class Magazyn {
 		});
 
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(
-				gl_panel_1
-						.createSequentialGroup()
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_1.createSequentialGroup().addGap(55).addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)).addGroup(gl_panel_1.createSequentialGroup().addContainerGap().addComponent(btnLeft).addGap(51).addComponent(btnRight)).addGroup(gl_panel_1.createSequentialGroup().addGap(56).addComponent(btnDown)))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false).addComponent(liftDown, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(liftUp, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addPreferredGap(ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
-						.addGroup(
-								gl_panel_1.createParallelGroup(Alignment.LEADING, false).addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup().addComponent(lblR_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED).addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)).addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup().addComponent(lblR, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED).addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
-										.addGroup(gl_panel_1.createSequentialGroup().addComponent(lblR_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))).addPreferredGap(ComponentPlacement.UNRELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false).addGroup(gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(regal1_rb1).addComponent(regal2_rb1)).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(regal1_rb2).addComponent(regal2_rb2))).addGroup(gl_panel_1.createSequentialGroup().addComponent(regal3_rb1).addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(regal3_rb2))).addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addComponent(chckBoxRegal1).addComponent(chckBoxRegal2).addComponent(chckBoxRegal3)).addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addComponent(btnLeftRegal3).addComponent(btnLeftRegal2)).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel_1.createSequentialGroup().addComponent(btnRightRegal2).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnRandomRegal2)).addGroup(gl_panel_1.createSequentialGroup().addComponent(btnRightRegal3).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnRandomRegal3)))).addGroup(gl_panel_1.createSequentialGroup().addComponent(btnLeftRegal1).addPreferredGap(ComponentPlacement.RELATED).addComponent(btnRightRegal1).addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnRandomRegal1))).addContainerGap()));
-		gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING).addGroup(
-				gl_panel_1
-						.createSequentialGroup()
-						.addGroup(
-								gl_panel_1
-										.createParallelGroup(Alignment.LEADING)
-										.addGroup(
-												gl_panel_1.createSequentialGroup().addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal1).addComponent(btnRightRegal1).addComponent(btnLeftRegal1).addComponent(chckBoxRegal1).addComponent(regal1_rb2).addComponent(regal1_rb1).addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblR)).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal2).addComponent(btnRightRegal2).addComponent(btnLeftRegal2).addComponent(chckBoxRegal2).addComponent(regal2_rb2).addComponent(regal2_rb1).addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(lblR_1)).addPreferredGap(ComponentPlacement.RELATED)
-														.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnRandomRegal3).addComponent(btnRightRegal3).addComponent(btnLeftRegal3).addComponent(chckBoxRegal3).addComponent(regal3_rb2).addComponent(regal3_rb1).addComponent(lblR_2).addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))).addGroup(gl_panel_1.createSequentialGroup().addContainerGap().addComponent(btnUp).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnLeft).addComponent(btnRight).addComponent(liftUp)).addPreferredGap(ComponentPlacement.RELATED).addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(btnDown).addComponent(liftDown)))).addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		gl_panel_1.setHorizontalGroup(
+			gl_panel_1.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(55)
+							.addComponent(btnUp, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnLeft)
+							.addGap(51)
+							.addComponent(btnRight))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGap(56)
+							.addComponent(btnDown)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(liftDown, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(liftUp, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+							.addGroup(gl_panel_1.createSequentialGroup()
+								.addComponent(lblR_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_panel_1.createSequentialGroup()
+								.addComponent(lblR, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addComponent(lblR_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+					.addGap(37)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(chckBoxRegal1)
+						.addComponent(chckBoxRegal2)
+						.addComponent(chckBoxRegal3))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnLeftRegal3)
+								.addComponent(btnLeftRegal2))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addComponent(btnRightRegal2)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(btnRandomRegal2))
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addComponent(btnRightRegal3)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(btnRandomRegal3))))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addComponent(btnLeftRegal1)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnRightRegal1)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnRandomRegal1)))
+					.addContainerGap())
+		);
+		gl_panel_1.setVerticalGroup(
+			gl_panel_1.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_1.createSequentialGroup()
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnRandomRegal1)
+								.addComponent(btnRightRegal1)
+								.addComponent(btnLeftRegal1)
+								.addComponent(chckBoxRegal1)
+								.addComponent(textFieldRegal1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblR))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnRandomRegal2)
+								.addComponent(btnRightRegal2)
+								.addComponent(btnLeftRegal2)
+								.addComponent(chckBoxRegal2)
+								.addComponent(textFieldRegal2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblR_1))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnRandomRegal3)
+								.addComponent(btnRightRegal3)
+								.addComponent(btnLeftRegal3)
+								.addComponent(chckBoxRegal3)
+								.addComponent(lblR_2)
+								.addComponent(textFieldRegal3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnUp)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnLeft)
+								.addComponent(btnRight)
+								.addComponent(liftUp))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnDown)
+								.addComponent(liftDown))))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 		panel_1.setLayout(gl_panel_1);
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1486,12 +1495,22 @@ public class Magazyn {
 		radioButton2Boxy = new JRadioButton("2", false);
 		radioButton2Boxy.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		radioButton1Box.setActionCommand("1Box");
-		radioButton2Boxy.setActionCommand("2Boxy");
-		
-		RadioButtonHandler handler = new RadioButtonHandler();
-		radioButton1Box.addActionListener(handler);
-		radioButton2Boxy.addActionListener(handler);
+		radioButton1Box.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for(int i=0; i<MagazynUtils.liczbaRegalow; i++)
+					mapa.setRegalFreeBoxes(i, 1);
+			}
+		});
+		radioButton2Boxy.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for(int i=0; i<MagazynUtils.liczbaRegalow; i++)
+					mapa.setRegalFreeBoxes(i, 2);
+			}
+		});
 		
 		ButtonGroup zmianaIlosciBoxow = new ButtonGroup();
 		zmianaIlosciBoxow.add(radioButton1Box);
@@ -1540,25 +1559,7 @@ public class Magazyn {
 		}
 
 	}
-	
-    private class RadioButtonHandler implements  ActionListener {
-	    @Override
-	    public void actionPerformed( ActionEvent e ) {
-	        if (e.getActionCommand().equals("1Box")){
-	        	//TODO
-	        	dodajWpisDoKonsoli("Wybrano 1 Box");
-	        	log.info("Wybrano 1 Box");
-	        }
-	        else {
-	        	//TODO
-	        	dodajWpisDoKonsoli("Wybrano 2 Boxy");
-	        	log.info("Wybrano 2 Boxy");
-	        }
-	
-	    }
-
-    }
-    
+	  
 	private void ustawStyl() {
 		ustawStyl(getLookAndFeelStyle());
 	}

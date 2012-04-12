@@ -176,19 +176,7 @@ public class RegalPanel extends JPanel {
 	
 
 	public void setFreeBoxes(int freeBoxes, int nrRegalu) {
-		switch(nrRegalu){
-			case 0: 
-				idPola = 0;
-				break;
-			case 1:
-				idPola = MagazynUtils.liczbaBoxowWRegale;
-				break;
-			case 2:
-				idPola = 2 * MagazynUtils.liczbaBoxowWRegale;
-				break;
-			default:
-				log.error("Nie powinienem tu byc - Nieprawidlowy numer regalu w setFreeBoxes");
-		}
+		idPola = nrRegalu * MagazynUtils.liczbaBoxowWRegale;
 		
 		setLiczbaPustychBoksow(freeBoxes);
 		pietro0.clear();
@@ -251,7 +239,7 @@ public class RegalPanel extends JPanel {
 				p.setId(idPola++);
 				p.setBox(true);
 //				System.out.println(idPola);
-				if (getLiczbaPustychBoksow() == 1 && j == 0 && i == 0) { // gorny pusty box
+				if (liczbaPustychBoksow == 1 && j == 0 && i == 0) { // gorny pusty box
 					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setFree(true);
@@ -260,7 +248,7 @@ public class RegalPanel extends JPanel {
 					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
-				} else if (getLiczbaPustychBoksow() == 2 && (i == 0 || i == rows-1) && j == cols / 2) { // gorny lub dolny pusty box
+				} else if (liczbaPustychBoksow == 2 && (j == 0 || j == rows-1) && i == cols / 2) { // gorny lub dolny pusty box
 					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setFree(true);
@@ -269,7 +257,7 @@ public class RegalPanel extends JPanel {
 					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
-				} else if (getLiczbaPustychBoksow() == 2 && (i == 0 || i == rows)) { // gorny lub dolny poruszajacy sie box
+				} else if (liczbaPustychBoksow == 2 && (j == 0 || j == rows)) { // gorny lub dolny poruszajacy sie box
 					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setBackground(MagazynUtils.defaultBoxBackground);
@@ -277,7 +265,7 @@ public class RegalPanel extends JPanel {
 					bp.setToolTipText("Pusty");
 					String position = c + Integer.toString(i + 1);
 					level.put(position, bp);
-				} else if (getLiczbaPustychBoksow() == 1 && (i == 0 || i == rows-1 || j == 0 || j == cols)) {
+				} else if (liczbaPustychBoksow == 1 && (j == 0 || j == rows-1 || i == 0 || i == cols)) {
 					p.setMovable(true);
 					bp = new BoxPanel(i, j, p);
 					bp.setBackground(MagazynUtils.defaultBoxBackground);
