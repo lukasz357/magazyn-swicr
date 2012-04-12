@@ -168,7 +168,7 @@ public class Magazyn {
 	private static JList<String> listProdukty;
 	private HashMap<String, ListTowarTO> towaryNaMagazynie; // tylko do listy po prawej stronie
 	private HashMap<Integer, ZamowienieTO> zamowienia;
-	private List<ZamowienieTO> zamowieniaLista;
+	private List<ZamowienieTO> zamowieniaLista; //tylko do listy po prawej stronie
 	private int idPolaCounter;
 
 	private MagazynTO magazyn;
@@ -236,7 +236,7 @@ public class Magazyn {
 
 		});
 		ustawStyl();
-
+		
 		fileChooser = new JFileChooser();
 		FileNameExtensionFilter txtFilter = new FileNameExtensionFilter("Plik CSV (*.csv)", "csv");
 		fileChooser.setFileFilter(txtFilter);
@@ -377,7 +377,7 @@ public class Magazyn {
 							@Override
 							public List<ZamowienieTO> getNoweZamowienia() {
 								log.info("Wielkosc listy zamowien: "+zamowieniaLista.size());
-								return zamowieniaLista;
+								return new ArrayList<ZamowienieTO>(zamowienia.values());
 							}
 						};
 						algorithm.startAlgorithm();		
@@ -979,6 +979,11 @@ public class Magazyn {
 		scrollPaneListaZamowien.setViewportView(listZamowienia);
 		
 		JButton btnUsunZamowienia = new JButton("Usuń");
+		btnUsunZamowienia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
 		gl_panel_6.setHorizontalGroup(
 			gl_panel_6.createParallelGroup(Alignment.LEADING)
@@ -1411,11 +1416,13 @@ public class Magazyn {
 		
 		JPanel panel_8 = new JPanel();
 		panel_8.setBorder(new TitledBorder(null, "Liczba wolnych box\u00F3w", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_8.setBounds(821, 11, 203, 50);
+		panel_8.setBounds(812, 0, 212, 70);
 		frmSystemyWbudowaneI.getContentPane().add(panel_8);
 		
 		radioButton1Box = new JRadioButton("1", true);
+		radioButton1Box.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		radioButton2Boxy = new JRadioButton("2", false);
+		radioButton2Boxy.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		radioButton1Box.setActionCommand("1Box");
 		radioButton2Boxy.setActionCommand("2Boxy");
@@ -1433,16 +1440,16 @@ public class Magazyn {
 			gl_panel_8.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_8.createSequentialGroup()
 					.addGap(35)
-					.addComponent(radioButton1Box)
-					.addGap(31)
+					.addComponent(radioButton1Box, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addComponent(radioButton2Boxy)
-					.addContainerGap(63, Short.MAX_VALUE))
+					.addContainerGap(72, Short.MAX_VALUE))
 		);
 		gl_panel_8.setVerticalGroup(
 			gl_panel_8.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_8.createSequentialGroup()
 					.addGroup(gl_panel_8.createParallelGroup(Alignment.BASELINE)
-						.addComponent(radioButton1Box)
+						.addComponent(radioButton1Box, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(radioButton2Boxy))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
