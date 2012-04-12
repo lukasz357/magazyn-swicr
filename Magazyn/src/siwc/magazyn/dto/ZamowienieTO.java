@@ -68,6 +68,6 @@ public class ZamowienieTO {
 	
 	@Override
 	public String toString() {
-		return "Zamówienie numer: "+numerZamowienia+", priorytet: "+priorytet+", termin realizacji: "+terminRealizacji+", dane klienta: "+daneKlienta+".";
+		return "Zamówienie numer: "+numerZamowienia+", termin realizacji: "+terminRealizacji+", dane klienta: "+daneKlienta+".";
 	}
 }

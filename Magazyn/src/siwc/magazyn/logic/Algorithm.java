@@ -48,7 +48,6 @@ public class Algorithm {
 		}
 		else {
 			timeStartCount();
-			int index = 0;
 			for (ZamowienieTO zamowienie : this.zamowienia) {
 
 				timeStartCountTowar();
@@ -56,8 +55,6 @@ public class Algorithm {
 				Magazyn.dodajWpisDoKonsoli("Przetwarzam zamowienie dla: "+zamowienie.toString());
 				
 				for (TowarTO towar : zamowienie.getTowary()) {
-					if (index > 2)
-						break;
 					
 					timeStartCount();
 					PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
@@ -67,8 +64,11 @@ public class Algorithm {
 					
 //						//zabieramy na bary teraz towar i zawozimy do miejsca odbioru
 						magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].setTowar(null);
+						mapa.zmienKolorBoksu(pole.getNrRegalu(), pole.getZ(), pole.getPosition(), MagazynUtils.defaultBoxBackground);
+						
 						aktualnyTowar = towar;
 						PoleTO poleOdbioru = znajdzPierwszeLepszeWolnePoleOdbioru();
+						
 						if (poleOdbioru == null) {
 							log.info("Brak wolnych miejsc w polu odbioru!");
 						} else {
@@ -77,13 +77,14 @@ public class Algorithm {
 							magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].setTowar(towar);
 							log.info("Wstawilem towar na miejsce odbioru i jest rowny temu: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
 							aktualnyTowar = null;
+							
+							Magazyn.dodajWpisDoKonsoli("Towar dostarczony do punktu odbioru: "+poleOdbioru.getX()+", "+poleOdbioru.getY()+" w czasie: "+timeEndCountTowar());
 							wycofajWozek();
 						}
 					}
 					else {
 						Magazyn.dodajWpisDoKonsoli("Nie odnaleziono boxu o ID: " + towar.getIdBoxu());
 					}
-					index++;
 					timeEndCountTowar();
 				}
 				timeEndCount();
@@ -255,9 +256,10 @@ public class Algorithm {
 		log.info("Startuje mierzenie czasu: "+timeStart);
 	}
 	
-	private void timeEndCount() {
+	private String timeEndCount() {
 		timeEnd = System.currentTimeMillis();
-		log.info("Stopuje mierzenie czasu: "+timeEnd+". Zmierzony czas: "+((timeEnd-timeStart)/1000F)+" sekund.");
+		log.info("Stopuje mierzenie czasu: "+timeEnd+". Zmierzony czas: "+((timeEnd-timeStart)/100F)+" sekund.");
+		return ((timeEnd-timeStart)/100F)+" sekund";
 	}
 	
 	private void timeStartCountTowar() {
@@ -265,9 +267,10 @@ public class Algorithm {
 		log.info("Startuje mierzenie czasu towaru: "+timeStartTowar);
 	}
 	
-	private void timeEndCountTowar() {
+	private String timeEndCountTowar() {
 		timeEndTowar = System.currentTimeMillis();
-		log.info("Stopuje mierzenie czasu towaru: "+timeEndTowar+". Zmierzony czas: "+((timeEndTowar-timeStartTowar)/1000F)+" sekund.");
+		log.info("Stopuje mierzenie czasu towaru: "+timeEndTowar+". Zmierzony czas: "+((timeEndTowar-timeStartTowar)/100F)+" sekund.");
+		return ((timeEndTowar-timeStartTowar)/100F)+" sekund";
 	}
 
 
