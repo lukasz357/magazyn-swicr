@@ -169,6 +169,7 @@ public class Magazyn {
 	private int idPolaCounter;
 
 	private MagazynTO magazyn;
+	Algorithm algorithm;
 	
 	/**
 	 * Launch the application.
@@ -358,7 +359,7 @@ public class Magazyn {
 					
 					@Override
 					public void run() {
-						Algorithm algorithm = new Algorithm(mapa, zamowieniaLista, magazyn);
+						algorithm = new Algorithm(mapa, zamowieniaLista, magazyn);
 						algorithm.startAlgorithm();		
 					}
 				});
@@ -1146,12 +1147,15 @@ public class Magazyn {
 	        	String value = (String)spinnerScaleTime.getValue();
 	            if(value.equals("Real")){
 	            	zegar.rescaleTime(1000);
+	            	algorithm.setJakiSleep(2000);
 	            }
 	            else if(value.equals("10x")){
 	            	zegar.rescaleTime(100);
+	            	algorithm.setJakiSleep(200);
 	            }
 	            else if(value.equals("100x")){
 	            	zegar.rescaleTime(10);
+	            	algorithm.setJakiSleep(20);
 	            }
 	            else {
 	            	log.error("Błąd przy reskalowaniu zegara");
