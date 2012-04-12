@@ -304,7 +304,6 @@ public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, Za
 					p.setX(x);
 					p.setY(y);
 					p.setBox(true);
-					
 					pietro[x][y] = p;
 //					System.out.println(pietro[y][x].getTowar().toString());
 				}
