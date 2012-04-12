@@ -64,14 +64,14 @@ import javax.swing.SpinnerListModel;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
-	private JFrame frame;
+	private JFrame frmSystemyWbudowaneI;
 	private JMenuItem saveFile;
 	private JMenuItem openFile;
 	private JMenuItem saveAsFile;
 	private JMenuItem closeWindow;
 	private JMenu mnZmienStyl;
 	private JFileChooser fileChooser;
-	private JLabel lblNewLabel = new JLabel("Magazyn");
+	private JLabel lblNewLabel = new JLabel("Systemy wbudowane i czasu rzeczywistego - Magazyn");
 	private MapaMagazynu mapa;
 	private JButton btnRandomRegal1;
 	private JButton btnRandomRegal2;
@@ -178,7 +178,7 @@ public class Magazyn {
 			public void run() {
 				try {
 					Magazyn window = new Magazyn();
-					window.frame.setVisible(true);
+					window.frmSystemyWbudowaneI.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -212,18 +212,18 @@ public class Magazyn {
 		lblNewLabel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("DejaVu Sans Mono", Font.BOLD, 16));
-		frame = new JFrame();
-		frame.setTitle(MagazynUtils.frameTitle);
-		frame.setSize(1303, 893);
+		frmSystemyWbudowaneI = new JFrame();
+		frmSystemyWbudowaneI.setTitle("Systemy wbudowane i czasu rzeczywistego - Magazyn");
+		frmSystemyWbudowaneI.setSize(1303, 893);
 
 		if (MagazynUtils.screenSize.getWidth() <= 1366)
-			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frmSystemyWbudowaneI.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-		frame.setResizable(true);
+		frmSystemyWbudowaneI.setResizable(true);
 		// frame.setBounds(50, 50, MagazynUtils.frameWidth, MagazynUtils.frameHeight);
-		log.info("Rozmiar okna: " + MagazynUtils.frameWidth + "x" + MagazynUtils.frameHeight + "\t" + frame.getWidth() + "x" + frame.getHeight());
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.addWindowListener(new WindowAdapter() {
+		log.info("Rozmiar okna: " + MagazynUtils.frameWidth + "x" + MagazynUtils.frameHeight + "\t" + frmSystemyWbudowaneI.getWidth() + "x" + frmSystemyWbudowaneI.getHeight());
+		frmSystemyWbudowaneI.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frmSystemyWbudowaneI.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				// int result = JOptionPane.showConfirmDialog(frame, "Zamknąć program?", "Zamknąc?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -231,7 +231,7 @@ public class Magazyn {
 				// frame.dispose();
 				// }
 				// TODO
-				frame.dispose();
+				frmSystemyWbudowaneI.dispose();
 				System.exit(0);
 			}
 
@@ -247,7 +247,7 @@ public class Magazyn {
 		fileChooser.setAcceptAllFileFilterUsed(true);
 
 		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+		frmSystemyWbudowaneI.setJMenuBar(menuBar);
 
 		JMenu menuPlik = new JMenu("Plik");
 		menuBar.add(menuPlik);
@@ -265,7 +265,7 @@ public class Magazyn {
 		openFile = new JMenuItem("Otwórz plik");
 		openFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int result = fileChooser.showOpenDialog(frame);
+				int result = fileChooser.showOpenDialog(frmSystemyWbudowaneI);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
 					IOLogic logic = new IOLogic();
@@ -287,7 +287,7 @@ public class Magazyn {
 		saveFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (fileChooser.getSelectedFile() == null) {
-					int result = fileChooser.showSaveDialog(frame);
+					int result = fileChooser.showSaveDialog(frmSystemyWbudowaneI);
 					if (result != JFileChooser.APPROVE_OPTION)
 						return;
 				}
@@ -304,7 +304,7 @@ public class Magazyn {
 		saveAsFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				int result = fileChooser.showSaveDialog(frame);
+				int result = fileChooser.showSaveDialog(frmSystemyWbudowaneI);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					IOLogic logic = new IOLogic();
 					logic.saveToFile(fileChooser.getSelectedFile(), regaly);
@@ -319,7 +319,7 @@ public class Magazyn {
 		closeWindow = new JMenuItem("Zakończ");
 		closeWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int result = JOptionPane.showConfirmDialog(frame, "Zamknąć program?", "Zamknąc?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				int result = JOptionPane.showConfirmDialog(frmSystemyWbudowaneI, "Zamknąć program?", "Zamknąc?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				if (result == JOptionPane.OK_OPTION) {
 					System.exit(0);
@@ -881,20 +881,20 @@ public class Magazyn {
 		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(lblPietro).addGap(18).addComponent(btnMinus).addPreferredGap(ComponentPlacement.RELATED).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED).addComponent(btnPlus).addGap(16)));
 		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(btnMinus).addComponent(lblPietro).addComponent(levelTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(btnPlus)).addContainerGap()));
 		panel.setLayout(gl_panel);
-		frame.getContentPane().setLayout(null);
-		frame.getContentPane().add(panel_1);
-		frame.getContentPane().add(lblNewLabel);
-		frame.getContentPane().add(panel);
-		frame.getContentPane().add(mapa);
-		frame.getContentPane().add(KonsolaScrollPane);
-		frame.getContentPane().add(lblKonsola);
-		frame.getContentPane().add(panelStatystyki);
+		frmSystemyWbudowaneI.getContentPane().setLayout(null);
+		frmSystemyWbudowaneI.getContentPane().add(panel_1);
+		frmSystemyWbudowaneI.getContentPane().add(lblNewLabel);
+		frmSystemyWbudowaneI.getContentPane().add(panel);
+		frmSystemyWbudowaneI.getContentPane().add(mapa);
+		frmSystemyWbudowaneI.getContentPane().add(KonsolaScrollPane);
+		frmSystemyWbudowaneI.getContentPane().add(lblKonsola);
+		frmSystemyWbudowaneI.getContentPane().add(panelStatystyki);
 
 		lblSredniCzasRealizacji = new JLabel("0");
 		lblSredniCzasRealizacji.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSredniCzasRealizacji.setBounds(185, 159, 19, 14);
 		panelStatystyki.add(lblSredniCzasRealizacji);
-		frame.getContentPane().add(panelLegenda);
+		frmSystemyWbudowaneI.getContentPane().add(panelLegenda);
 		panelLegenda.setLayout(null);
 
 		lblPustaPka = new JLabel("boks wolny");
@@ -935,13 +935,13 @@ public class Magazyn {
 		
 		
 		
-		frame.getContentPane().add(btnStop);
-		frame.getContentPane().add(btnStart);
+		frmSystemyWbudowaneI.getContentPane().add(btnStop);
+		frmSystemyWbudowaneI.getContentPane().add(btnStart);
 
 		panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "Zam\u00F3wienia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_6.setBounds(1034, 31, 212, 336);
-		frame.getContentPane().add(panel_6);
+		frmSystemyWbudowaneI.getContentPane().add(panel_6);
 		btnWczytajZamowienia = new JButton("Wczytaj");
 		btnDodajZamowienie = new JButton("Dodaj");
 
@@ -978,13 +978,13 @@ public class Magazyn {
 		panel_7_produkty.setBorder(new TitledBorder(null, "Produkty", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_7_produkty.setBounds(812, 31, 212, 336);
 
-		frame.getContentPane().add(panel_7_produkty);
+		frmSystemyWbudowaneI.getContentPane().add(panel_7_produkty);
 		
 		/* wczytaj produkty */
 		btnWczytajProdukty = new JButton("Wczytaj");
 		btnWczytajProdukty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int result = fileChooser.showOpenDialog(frame);
+				int result = fileChooser.showOpenDialog(frmSystemyWbudowaneI);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
 					IOLogic logic = new IOLogic();
@@ -1008,7 +1008,7 @@ public class Magazyn {
 		JButton btnDodajProdukt = new JButton("Dodaj");
 		btnDodajProdukt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new AddProductBox(frame, true){
+				new AddProductBox(frmSystemyWbudowaneI, true){
 					private static final long serialVersionUID = 8696383312762375207L;
 
 					@Override
@@ -1053,7 +1053,7 @@ public class Magazyn {
 						}
 
 						if(!OK) {
-							JOptionPane.showMessageDialog(frame, error,
+							JOptionPane.showMessageDialog(frmSystemyWbudowaneI, error,
 		                    "Błąd", JOptionPane.ERROR_MESSAGE);
 						}
 						else{
@@ -1116,7 +1116,7 @@ public class Magazyn {
 		JPanel panel_7 = new JPanel();
 		panel_7.setBorder(new TitledBorder(null, "Czas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_7.setBounds(812, 579, 462, 95);
-		frame.getContentPane().add(panel_7);
+		frmSystemyWbudowaneI.getContentPane().add(panel_7);
 		zegar = new Clock();
 		
 		spinnerScaleTime = new JSpinner();
@@ -1162,7 +1162,7 @@ public class Magazyn {
 		panel_7.setLayout(gl_panel_7);
 		btnDodajZamowienie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new AddOrderBox(frame, true) {
+				new AddOrderBox(frmSystemyWbudowaneI, true) {
 					private static final long serialVersionUID = 8786018651594226410L;
 					private String imieINazwisko = "";
 					
@@ -1199,7 +1199,7 @@ public class Magazyn {
 						zamowienie.setTerminRealizacji(terminRealizacji);
 						zamowienie.setPriorytet(priorytet); 
 						zamowienie.setNumerZamowienia(index);
-						new SelectProductBox(frame, rootPaneCheckingEnabled, towaryNaMagazynie) {
+						new SelectProductBox(frmSystemyWbudowaneI, rootPaneCheckingEnabled, towaryNaMagazynie) {
 							private static final long serialVersionUID = 7735927972721100415L;
 							
 							@Override
@@ -1222,7 +1222,7 @@ public class Magazyn {
 									error += "Brak wystarczającej ilości towaru: "+nazwaTowaru+" - jest: "+towary.size()+" zamowienie: "+ilePaczek;
 								}
 								if(!OK) {
-									JOptionPane.showMessageDialog(frame, error,
+									JOptionPane.showMessageDialog(frmSystemyWbudowaneI, error,
 				                    "Błąd", JOptionPane.ERROR_MESSAGE);
 								}
 								else{
@@ -1249,7 +1249,7 @@ public class Magazyn {
 					@Override
 					public void dodajZamowieniaOKAction() {
 						if(zamowienie.getTowary().size() < 1 || imieINazwisko.length() == 0){
-							JOptionPane.showMessageDialog(frame, "Musisz wypełnić: \"Imię i nazwisko\" oraz wybrać elementy zamówienia.",
+							JOptionPane.showMessageDialog(frmSystemyWbudowaneI, "Musisz wypełnić: \"Imię i nazwisko\" oraz wybrać elementy zamówienia.",
 				                    "Błąd", JOptionPane.ERROR_MESSAGE);
 						}
 						else {
@@ -1284,7 +1284,7 @@ public class Magazyn {
 		});
 		btnWczytajZamowienia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int result = fileChooser.showOpenDialog(frame);
+				int result = fileChooser.showOpenDialog(frmSystemyWbudowaneI);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
 					IOLogic logic = new IOLogic();
@@ -1340,7 +1340,7 @@ public class Magazyn {
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		SwingUtilities.updateComponentTreeUI(frame);
+		SwingUtilities.updateComponentTreeUI(frmSystemyWbudowaneI);
 	}
 
 	private String getLookAndFeelStyle() {
