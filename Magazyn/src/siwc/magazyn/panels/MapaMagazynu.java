@@ -175,9 +175,8 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public void przesunBoxWPrawo(String regal, int level, boolean czyDolny) {
-		int regalIndex = Integer.parseInt(regal.substring(5))-1;
-		regaly.get(regalIndex).moveBoxRight(level, czyDolny);
+	public void przesunBoxWPrawo(int regal, int level, boolean czyDolny) {
+			regaly.get(regal).moveBoxRight(level, czyDolny);
 
 	}
 
