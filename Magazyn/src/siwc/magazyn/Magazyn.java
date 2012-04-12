@@ -637,7 +637,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapa.zmienKolorBoksu(1, position, colors[c]);
+				mapa.zmienKolorBoksu(1, pietro, position, colors[c]);
 			}
 		});
 
@@ -652,7 +652,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapa.zmienKolorBoksu(0, position, colors[c]);
+				mapa.zmienKolorBoksu(0, pietro, position, colors[c]);
 			}
 		});
 
@@ -667,7 +667,7 @@ public class Magazyn {
 
 				String position = prefix + Integer.toString(sufix + 1);
 
-				mapa.zmienKolorBoksu(2, position, colors[c]);
+				mapa.zmienKolorBoksu(2, pietro, position, colors[c]);
 				log.info("R3: [" + position + "] color=" + c + "\t linia 192 jak nie wiesz jaki kolor");
 			}
 		});
