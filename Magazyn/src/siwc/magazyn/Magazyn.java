@@ -1219,7 +1219,7 @@ public class Magazyn {
 		zegar.setFont(new Font("SansSerif", Font.PLAIN, 30));
 		
 		spinnerScaleTime = new JSpinner();
-		spinnerScaleTime.setModel(new SpinnerListModel(new String[] {"Real", "10x", "20x", "30x", "100x"}));
+		spinnerScaleTime.setModel(new SpinnerListModel(new String[] {"Real", "10x", "20x", "30x", "50x", "100x", "1000x"}));
 		spinnerScaleTime.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		spinnerScaleTime.getEditor().setEnabled(false);
 		spinnerScaleTime.addChangeListener(new ChangeListener() {
@@ -1247,10 +1247,20 @@ public class Magazyn {
 	            	if(algorithm != null)
 	            		algorithm.setJakiSleep(40);
 	            }
+	            else if(value.equals("50x")){
+	            	zegar.rescaleTime(20);
+	            	if(algorithm != null)
+	            		algorithm.setJakiSleep(24);
+	            }
 	            else if(value.equals("100x")){
 	            	zegar.rescaleTime(10);
 	            	if(algorithm != null)
 	            		algorithm.setJakiSleep(12);
+	            }
+	            else if(value.equals("1000x")){
+	            	zegar.rescaleTime(1);
+	            	if(algorithm != null)
+	            		algorithm.setJakiSleep(1);
 	            }
 	            else {
 	            	log.error("Błąd przy reskalowaniu zegara");
