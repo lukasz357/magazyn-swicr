@@ -301,6 +301,8 @@ public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, Za
 					int x = xRegalu + MagazynUtils.convertToColumn(k);
 					int y = yRegalu + MagazynUtils.convertToRow(k);
 					PoleTO p = levelMap.get(k).getPole();
+					p.setPosition(k);
+					p.setNrRegalu(j);
 					p.setX(x);
 					p.setY(y);
 					p.setBox(true);

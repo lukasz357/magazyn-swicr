@@ -2,12 +2,14 @@ package siwc.magazyn.dto;
 
 public class PoleTO {
 
-	Integer id;
-	TowarTO towar;
+	private Integer id;
+	private TowarTO towar;
+	private int nrRegalu;
+	private String position;
 	
-	int x;
-	int y;
-	int z;
+	private int x;
+	private int y;
+	private int z;
 	
 	boolean isPunktOdbioru;
 	boolean isBox;
@@ -58,6 +60,18 @@ public class PoleTO {
 	}
 	public void setZ(int z) {
 		this.z = z;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public int getNrRegalu() {
+		return nrRegalu;
+	}
+	public void setNrRegalu(int nrRegalu) {
+		this.nrRegalu = nrRegalu;
 	}
 	
 }
