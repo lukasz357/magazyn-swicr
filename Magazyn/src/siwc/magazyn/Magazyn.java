@@ -375,7 +375,7 @@ public class Magazyn {
 							
 							@Override
 							public void odswiezZamowienia(ZamowienieTO z) {
-								zamowienia.remove(z);
+								zamowienia.remove(z.getNumerZamowienia());
 								zamowieniaListModel.removeElement(z.getNumerZamowienia() + ": "+z.getDaneKlienta() + " - "+z.getTowary().size() + " el." + " ("+z.getTerminRealizacji()+")");
 								listZamowienia.setModel(zamowieniaListModel);
 							}
