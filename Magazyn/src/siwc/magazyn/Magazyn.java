@@ -705,7 +705,7 @@ public class Magazyn {
 						boolean bottom = chckBoxRegal1.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-							mapa.przesunBoxWPrawo(0, pietro, bottom);
+							mapa.przesunBoxWPrawo(0, pietro, null, bottom);
 						}
 
 					}
@@ -727,7 +727,7 @@ public class Magazyn {
 						boolean bottom = chckBoxRegal2.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-							mapa.przesunBoxWPrawo(1, pietro, bottom);
+							mapa.przesunBoxWPrawo(1, pietro, null, bottom);
 						}
 
 					}
@@ -749,7 +749,7 @@ public class Magazyn {
 						boolean bottom = chckBoxRegal3.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-							mapa.przesunBoxWPrawo(2, pietro, bottom);
+							mapa.przesunBoxWPrawo(2, pietro, "", bottom);
 						}
 
 					}
@@ -772,7 +772,7 @@ public class Magazyn {
 						boolean bottom = chckBoxRegal1.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-							mapa.przesunBoxWLewo("regal1", pietro, bottom);
+//							mapa.przesunBoxWLewo("regal1", pietro, bottom);
 						}
 
 					}
@@ -795,7 +795,7 @@ public class Magazyn {
 						boolean bottom = chckBoxRegal2.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-							mapa.przesunBoxWLewo("regal2", pietro, bottom);
+//							mapa.przesunBoxWLewo("regal2", pietro, bottom);
 						}
 
 					}
@@ -818,7 +818,7 @@ public class Magazyn {
 						boolean bottom = chckBoxRegal3.isSelected();
 						for (int i = 0; i < numbers; i++) {
 							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-							mapa.przesunBoxWLewo("regal3", pietro, bottom);
+//							mapa.przesunBoxWLewo("regal3", pietro, bottom);
 						}
 
 					}

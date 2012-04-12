@@ -299,7 +299,7 @@ public class RegalPanel extends JPanel {
 
 	}
 
-	private String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap) {
+	public String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap) {
 		for(String k : levelMap.keySet()) {
 			if(levelMap.get(k).isFree())
 				return k;
@@ -308,7 +308,7 @@ public class RegalPanel extends JPanel {
 			
 	}
 
-	private String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap, boolean bottom) {
+	public String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap, boolean bottom) {
 		if (bottom == false) {
 			for (int i = 1; i <= MagazynUtils.kolumnWRegale; i++) {
 				if (levelMap.get("A" + i).isFree())
@@ -430,5 +430,12 @@ public class RegalPanel extends JPanel {
 	public void setLiczbaPustychBoksow(int liczbaPustychBoksow) {
 		this.liczbaPustychBoksow = liczbaPustychBoksow;
 	}
+
+	public String getFreeBoxKey(int level) {
+		return getFreeBoxKey(getLevelMap(level));
+	}
 	
+	public String getFreeBoxKey(int level, boolean bottom) {
+		return getFreeBoxKey(getLevelMap(level), bottom);
+	}
 }
