@@ -45,7 +45,6 @@ public class Clock extends JTextField {
 		setText(Clock.formatTime(h, m, s));
 		// ... Create a 1-second timer.
 		m_t = new javax.swing.Timer(1000, new ClockTickAction());
-		m_t.start(); // Start the timer
 	}
 
 	// ///////////////////////////////////////// inner class listener
@@ -86,13 +85,26 @@ public class Clock extends JTextField {
 	}
 	
 	public void rescaleTime(int miliseconds){
-		m_t.stop();
-		
-		m_t = new javax.swing.Timer(miliseconds, new ClockTickAction());
-		m_t.start(); // Start the timer
+		if(m_t.isRunning()){
+			m_t.stop();
+			
+			m_t = new javax.swing.Timer(miliseconds, new ClockTickAction());
+			m_t.start(); // Start the timer
+		}
+		else{
+			m_t = new javax.swing.Timer(miliseconds, new ClockTickAction());
+		}
 	}
 	
 	public int getTimeIntValue(){
 		return h * 86400 + m * 3600 + s;
+	}
+	
+	public void startClock(){
+		m_t.start(); // Start the timer
+	}
+	
+	public void stopClock(){
+		m_t.stop();
 	}
 }
