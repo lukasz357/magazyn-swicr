@@ -374,9 +374,9 @@ public class Magazyn {
 						algorithm = new Algorithm(mapa, magazyn) {
 							
 							@Override
-							public void odswiezZamowienia(ZamowienieTO zamowienie) {
-								zamowienia.remove(zamowienie);
-								zamowieniaListModel.removeElement(zamowienie);
+							public void odswiezZamowienia(ZamowienieTO z) {
+								zamowienia.remove(z);
+								zamowieniaListModel.removeElement(z.getNumerZamowienia() + ": "+z.getDaneKlienta() + " - "+z.getTowary().size() + " el." + " ("+z.getTerminRealizacji()+")");
 								listZamowienia.setModel(zamowieniaListModel);
 							}
 							
