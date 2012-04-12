@@ -1385,6 +1385,11 @@ public class Magazyn {
 		liczbaZamowien--;
 		lblLiczbaZamowien.setText(String.valueOf(liczbaZamowien));
 	}
+	
+	public static void ustalLiczbeZamowien(int lzam){
+		liczbaZamowien = lzam;
+		lblLiczbaZamowien.setText(String.valueOf(liczbaZamowien));
+	}
 
 	/* liczba zamowien zrealizowanych */
 	public static void zwiekszLiczbeZamowienZrealizowanych() {
