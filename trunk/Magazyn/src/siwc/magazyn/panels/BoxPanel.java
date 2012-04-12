@@ -13,7 +13,7 @@ public class BoxPanel extends JPanel {
 	private int positionY = 0; 				// pozycja Y w regale
 	private boolean shelf = false; 			// czy dany kwadrat magazynu jest regałem
 	private boolean entryPoint = false;		// czy jest punktem odbioru
-	private boolean movable = false; 		// czy możliwe jest przesuwanie
+
 	private boolean free = false;
 	private PoleTO pole = null;
 	private ImageIcon icon = null;
@@ -57,13 +57,7 @@ public class BoxPanel extends JPanel {
 		this.entryPoint = entryPoint;
 	}
 
-	public boolean isMovable() {
-		return movable;
-	}
-
-	public void setMovable(boolean movable) {
-		this.movable = movable;
-	}
+	
 
 	public PoleTO getPole() {
 		return pole;
