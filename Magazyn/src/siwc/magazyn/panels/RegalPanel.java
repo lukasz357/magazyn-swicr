@@ -247,7 +247,7 @@ public class RegalPanel extends JPanel {
 		for (int i = 0; i < cols; i++) {
 			for (int j = 0; j < rows; j++) {
 				char c = (char) (65 + j);
-				PoleTO p = new PoleTO(i, j);
+				PoleTO p = new PoleTO();
 				p.setId(idPola++);
 				p.setBox(true);
 //				System.out.println(idPola);
