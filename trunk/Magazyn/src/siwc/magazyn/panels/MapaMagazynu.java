@@ -192,7 +192,7 @@ public class MapaMagazynu extends JPanel {
 			else if (dstRow == dolRegalu) {
 				destination = "D" + (dstCol+1);
 			} else
-				throw new Exception("Cos zle poszlo");
+				throw new Exception("Nie udalo sie przydzielic literki do " + dstRow);
 
 			dstCol = MagazynUtils.convertToColumn(destination);
 			dstRow = MagazynUtils.convertToRow(destination);
@@ -203,18 +203,21 @@ public class MapaMagazynu extends JPanel {
 				boolean czyIscWLewo = czyIscWLewo(dstRow, dstCol, boxRow, boxCol);
 				System.out.println(czyIscWLewo);
 				if (czyIscWLewo) {
-					while (boxRow != dstRow && boxCol != dstCol) {
+					while (boxRow != dstRow || boxCol != dstCol) {
+						MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 						r.moveBoxLeft(level, false);
 						boxPosition = r.getFreeBoxKey(level);
 						boxCol = MagazynUtils.convertToColumn(boxPosition);
 						boxRow = MagazynUtils.convertToRow(boxPosition);
 					}
 				} else {
-					while (boxRow != dstRow && boxCol != dstCol) {
+					while (boxRow != dstRow || boxCol != dstCol) {
+						MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 						r.moveBoxRight(level, false);
 						boxPosition = r.getFreeBoxKey(level);
 						boxCol = MagazynUtils.convertToColumn(boxPosition);
 						boxRow = MagazynUtils.convertToRow(boxPosition);
+						revalidate();
 					}
 				}
 			}
@@ -240,11 +243,13 @@ public class MapaMagazynu extends JPanel {
 			int boxCol = MagazynUtils.convertToColumn(boxPosition);
 
 			while (boxCol > dstCol) {
+				MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 				r.moveBoxLeft(level, bottom);
 				boxPosition = r.getFreeBoxKey(level);
 				boxCol = MagazynUtils.convertToColumn(boxPosition);
 			}
 			while (boxCol < dstCol) {
+				MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 				r.moveBoxRight(level, bottom);
 				boxPosition = r.getFreeBoxKey(level);
 				boxCol = MagazynUtils.convertToColumn(boxPosition);
