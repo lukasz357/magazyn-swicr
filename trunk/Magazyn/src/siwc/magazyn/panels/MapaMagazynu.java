@@ -11,6 +11,7 @@ import javax.swing.border.LineBorder;
 
 import org.apache.log4j.Logger;
 
+import siwc.magazyn.Magazyn;
 import siwc.magazyn.utils.MagazynUtils;
 
 public class MapaMagazynu extends JPanel {
@@ -175,35 +176,91 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public void przesunBoxWPrawo(int regal, int level, String destination, boolean botton) {
-			regaly.get(regal).moveBoxRight(level, false);
-
-	}
-
-	public void gonZBoksemWLewo(int regal, int level, String destination, boolean bottom) throws Exception {
+	public void gonZBoksem(int regal, int level) throws Exception {
 		RegalPanel r = regaly.get(regal);
 		if (r.getLiczbaPustychBoksow() == 1) {
 			String boxPosition = r.getFreeBoxKey(level);
+			String destination = null;
+			int boxSize = MagazynUtils.boxSize;
+			int dstCol = lift.getX() / boxSize - MagazynUtils.regalX;
+			int dstRow = lift.getY() / boxSize;
+
+			if (dstRow + 2 == MagazynUtils.getRegalYPosition(regal) / boxSize) // winda od gory
+				destination = "A";
+			else if ((dstRow - MagazynUtils.kolumnWRegale - 1) == (MagazynUtils.getRegalYPosition(regal) / boxSize)) {
+				destination = "D";
+			} else
+				throw new Exception("Cos zle poszlo");
+
+			dstCol = MagazynUtils.convertToColumn(destination);
+			dstRow = MagazynUtils.convertToRow(destination);
+
+			int boxCol = MagazynUtils.convertToColumn(boxPosition);
+			int boxRow = MagazynUtils.convertToRow(boxPosition);
 			if (!boxPosition.equals(destination)) {
-				int dstCol = MagazynUtils.convertToColumn(destination);
-				int dstRow = MagazynUtils.convertToRow(destination);
-
-				int boxCol = MagazynUtils.convertToColumn(boxPosition);
-				int boxRow = MagazynUtils.convertToRow(boxPosition);
-
 				if (dstCol != MagazynUtils.kolumnWRegale - 1 && dstCol != 0 || dstRow != MagazynUtils.rzedowWRegale - 1 && dstRow != 0)
 					throw new Exception("Nie znalazlem pozycji " + destination + " :(");
-
-				while (boxRow != dstRow && boxCol != dstCol) {
-					r.moveBoxLeft(level, bottom);
-					boxPosition = r.getFreeBoxKey(level);
-					boxCol = MagazynUtils.convertToColumn(boxPosition);
-					boxRow = MagazynUtils.convertToRow(boxPosition);
+				boolean czyIscWLewo = czyIscWLewo(dstRow, dstCol, boxRow, boxCol);
+				if (czyIscWLewo) {
+					while (boxRow != dstRow && boxCol != dstCol) {
+						r.moveBoxLeft(level, false);
+						boxPosition = r.getFreeBoxKey(level);
+						boxCol = MagazynUtils.convertToColumn(boxPosition);
+						boxRow = MagazynUtils.convertToRow(boxPosition);
+					}
+				} else {
+					while (boxRow != dstRow && boxCol != dstCol) {
+						r.moveBoxRight(level, false);
+						boxPosition = r.getFreeBoxKey(level);
+						boxCol = MagazynUtils.convertToColumn(boxPosition);
+						boxRow = MagazynUtils.convertToRow(boxPosition);
+					}
 				}
 			}
 		} else if (r.getLiczbaPustychBoksow() == 2) {
-			throw new Exception("ic pan");
+			String boxPosition = r.getFreeBoxKey(level);
+			String destination = null;
+			int boxSize = MagazynUtils.boxSize;
+			int dstCol = lift.getX() / boxSize - MagazynUtils.regalX;
+			int dstRow = lift.getY() / boxSize;
+
+			boolean bottom = false;
+			if (dstRow + 2 == MagazynUtils.getRegalYPosition(regal) / boxSize) // winda od gory
+				bottom = false;
+			else if ((dstRow - MagazynUtils.kolumnWRegale - 1) == (MagazynUtils.getRegalYPosition(regal) / boxSize)) {
+				bottom = true;
+			} else
+				throw new Exception("Cos zle poszlo");
+
+			dstCol = MagazynUtils.convertToColumn(destination);
+			dstRow = MagazynUtils.convertToRow(destination);
+
+			int boxCol = MagazynUtils.convertToColumn(boxPosition);
+
+			while (boxCol > dstCol) {
+				r.moveBoxLeft(level, bottom);
+				boxPosition = r.getFreeBoxKey(level);
+				boxCol = MagazynUtils.convertToColumn(boxPosition);
+			}
+			while (boxCol < dstCol) {
+				r.moveBoxRight(level, bottom);
+				boxPosition = r.getFreeBoxKey(level);
+				boxCol = MagazynUtils.convertToColumn(boxPosition);
+			}
+
 		}
+	}
+
+	private boolean czyIscWLewo(int dstRow, int dstCol, int boxRow, int boxCol) {
+		int obwod = 2 *MagazynUtils.rzedowWRegale + 2*MagazynUtils.kolumnWRegale - 4;
+		if (dstRow == boxRow && boxCol < MagazynUtils.rzedowWRegale /2 && dstCol < boxCol)
+			return true;
+		else if(dstRow == boxRow && boxCol != MagazynUtils.rzedowWRegale-1 && boxCol >= MagazynUtils.rzedowWRegale /2 && dstCol < boxCol)
+			return false;
+		else if (dstRow > boxRow && dstCol + boxCol + dstRow < obwod/2) 
+			return true;
+			
+		return false;
 	}
 
 	public void lifDown() {
