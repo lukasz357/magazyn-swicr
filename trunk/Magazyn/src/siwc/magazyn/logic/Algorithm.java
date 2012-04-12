@@ -55,13 +55,13 @@ public class Algorithm {
 				Magazyn.dodajWpisDoKonsoli("Przetwarzam zamowienie dla: "+zamowienie.toString());
 				
 				for (TowarTO towar : zamowienie.getTowary()) {
-					if (index > 1)
+					if (index > 2)
 						break;
 					
 					timeStartCount();
 					PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
 					if (pole != null) {
-						przemiescWozek(pole.getX(), pole.getY()-2);
+						przemiescWozek(pole.getX(), pole.getY());
 						log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
 					
 //						//zabieramy na bary teraz towar i zawozimy do miejsca odbioru
@@ -92,10 +92,11 @@ public class Algorithm {
 	
 	
 	private void przemiescWozek(int xTo, int yTo) {
+		yTo -= 2;
 		wycofajWozek();
 		log.info("XY WOZKA: "+mapa.getLiftX()+", "+mapa.getLiftY()+" a nalezy przesunac na: "+xTo+", "+yTo);
 		int index=0;
-			while(Math.abs(mapa.getLiftX() - xTo) > 2 || Math.abs(mapa.getLiftY() - yTo) > 2) {
+			while(Math.abs(mapa.getLiftX() - xTo) > 1 || Math.abs(mapa.getLiftY() - yTo) > 1) {
 				if (index > 10)
 					break;
 				log.info("Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
@@ -103,7 +104,7 @@ public class Algorithm {
 				if (mapa.getLiftY() - yTo < 0) {
 					int yWozka = mapa.getLiftY();
 					for (int i=0; i < (yTo - yWozka); i++) {
-						log.info("Lece w dol");
+						log.info("Lece w dol"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftDown();
 							MagazynUtils.sleep(200);
@@ -116,7 +117,7 @@ public class Algorithm {
 				else if (mapa.getLiftY() - yTo > 0) {
 					int yWozka = mapa.getLiftY();
 					for (int i=0; i < (yWozka - yTo); i++) {
-						log.info("Lece w gore");
+						log.info("Lece w gore"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftUp();
 							MagazynUtils.sleep(200);
@@ -129,7 +130,7 @@ public class Algorithm {
 				else if (mapa.getLiftX() - xTo < 0) {
 					int xWozka = mapa.getLiftX();
 					for (int i=0; i < (xTo - xWozka); i++) {
-						log.info("Lece w prawo");
+						log.info("Lece w prawo"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftRight();
 							MagazynUtils.sleep(200);
@@ -142,7 +143,7 @@ public class Algorithm {
 				else if (mapa.getLiftX() - xTo > 0) {
 					int xWozka = mapa.getLiftX();
 					for (int i=0; i < (xWozka - xTo); i++) {
-						log.info("Lece w lewo");
+						log.info("Lece w lewo"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftLeft();
 							MagazynUtils.sleep(200);
@@ -191,9 +192,7 @@ public class Algorithm {
 			for(int i=0; i < magazyn.getPietra().keySet().size(); i++) {
 				for (int j=0; j < magazyn.getWielkoscXMagazynu(); j++) {
 					for (int k=0; k < magazyn.getWielkoscYMagazynu(); k++) {
-						if (magazyn.getPietra().get(i)[j][k].getId() == null)
-							log.info("ID POLA == NULL :(((((((((((((");
-						else if (magazyn.getPietra().get(i)[j][k].getId().equals(id)) {
+						if (magazyn.getPietra().get(i)[j][k].getId() != null &&magazyn.getPietra().get(i)[j][k].getId().equals(id)) {
 							magazyn.getPietra().get(i)[j][k].setZ(i);
 							
 							//magazyn.getPietra().get(i)[j][k].setX(j);
