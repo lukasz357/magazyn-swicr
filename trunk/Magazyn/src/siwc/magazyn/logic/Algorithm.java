@@ -1,7 +1,6 @@
 package siwc.magazyn.logic;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -23,7 +22,7 @@ public class Algorithm {
 	private Long timeStartTowar;
 	private Long timeEndTowar;
 	
-	private int jakiSleep = 100;
+	private int jakiSleep = 2000;
 	
 	MagazynTO magazyn;
 	MapaMagazynu mapa;
@@ -99,7 +98,7 @@ public class Algorithm {
 		wycofajWozek();
 		log.info("XY WOZKA: "+mapa.getLiftX()+", "+mapa.getLiftY()+" a nalezy przesunac na: "+xTo+", "+yTo);
 		int index=0;
-			while(Math.abs(mapa.getLiftX() - xTo) > 0 || Math.abs(mapa.getLiftY() - yTo) > 0) {
+			while(Math.abs(mapa.getLiftX() - xTo) > 2 || Math.abs(mapa.getLiftY() - yTo) > 2) {
 				if (index > 10)
 					break;
 				log.info("Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
@@ -140,10 +139,10 @@ public class Algorithm {
 							mapa.moveLiftRight();
 							MagazynUtils.sleep(jakiSleep);
 						} catch (Exception e) {
-							if (index % 2 == 0)
-								yTo+=1;
+							if (mapa.getLiftY()-yTo < 0)
+								yTo-=1;
 							else
-								yTo-=2;
+								yTo+=1;
 							log.info(">>>>>> Zmienilem wartosc Y na: "+yTo);
 							log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
@@ -210,8 +209,6 @@ public class Algorithm {
 						if (magazyn.getPietra().get(i)[j][k].getId() != null &&magazyn.getPietra().get(i)[j][k].getId().equals(id)) {
 							magazyn.getPietra().get(i)[j][k].setZ(i);
 							
-							//magazyn.getPietra().get(i)[j][k].setX(j);
-							//magazyn.getPietra().get(i)[j][k].setY(k-2);
 							log.info("=================== ZNALAZLEM ================= "+j+", "+k+", "+i+" WSP: "+magazyn.getPietra().get(i)[j][k].getX()+", "+magazyn.getPietra().get(i)[j][k].getY());
 							return magazyn.getPietra().get(i)[j][k];
 						}
@@ -271,5 +268,15 @@ public class Algorithm {
 	private void timeEndCountTowar() {
 		timeEndTowar = System.currentTimeMillis();
 		log.info("Stopuje mierzenie czasu towaru: "+timeEndTowar+". Zmierzony czas: "+((timeEndTowar-timeStartTowar)/1000F)+" sekund.");
+	}
+
+
+	public int getJakiSleep() {
+		return jakiSleep;
+	}
+
+
+	public void setJakiSleep(int jakiSleep) {
+		this.jakiSleep = jakiSleep;
 	}
 }
