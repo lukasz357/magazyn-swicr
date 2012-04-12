@@ -376,6 +376,7 @@ public class Magazyn {
 							
 							@Override
 							public List<ZamowienieTO> getNoweZamowienia() {
+								log.info("Wielkosc listy zamowien: "+zamowieniaLista.size());
 								return zamowieniaLista;
 							}
 						};

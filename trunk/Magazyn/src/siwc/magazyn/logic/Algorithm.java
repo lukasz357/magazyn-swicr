@@ -56,25 +56,33 @@ public abstract class Algorithm {
 				timeStartCount();
 				for (int i=0; i < this.zamowienia.size(); i++) {
 					zamowienia = getNoweZamowienia();
+					//todo posortowac zamowienia wg priorytetu
+					
 					ZamowienieTO zamowienie = zamowienia.get(i);
 					
-					timeStartCountTowar();
+					timeStartCount();
 					log.info("Przetwarzam zamowienie: "+zamowienie.toString());
 					Magazyn.dodajWpisDoKonsoli("Przetwarzam zamowienie dla: "+zamowienie.toString());
 					
 					for (TowarTO towar : zamowienie.getTowary()) {
 						
-						timeStartCount();
+						timeStartCountTowar();
 						PoleTO pole = znajdzPolePoId(towar.getIdBoxu());
+						
 						if (pole != null) {
 							przemiescWozek(pole.getX(), pole.getY(), pole.getZ());
+							//if (pole.get)
+								
 							log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
 						
 	//						//zabieramy na bary teraz towar i zawozimy do miejsca odbioru
-							magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].setTowar(null);
-							mapa.zmienKolorBoksu(pole.getNrRegalu(), pole.getZ(), pole.getPosition(), MagazynUtils.defaultBoxBackground);
+							magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().setIlosc(magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getIlosc()-1);
+							if (magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getIlosc() == 0)
+								mapa.zmienKolorBoksu(pole.getNrRegalu(), pole.getZ(), pole.getPosition(), MagazynUtils.defaultBoxBackground);
 							
-							aktualnyTowar = towar;
+							aktualnyTowar = magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar();
+							aktualnyTowar.setIlosc(1);
+							
 							PoleTO poleOdbioru = znajdzPierwszeLepszeWolnePoleOdbioru();
 							
 							if (poleOdbioru == null) {
@@ -95,7 +103,7 @@ public abstract class Algorithm {
 						}
 						timeEndCountTowar();
 					}
-					timeEndCount();
+					Magazyn.dodajWpisDoKonsoli("Zamówienie przetworzone w czasie: "+timeEndCount());
 					this.zamowienia.remove(i);
 					odswiezZamowienia(i);
 				}
