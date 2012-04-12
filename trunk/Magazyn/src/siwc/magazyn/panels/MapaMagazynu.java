@@ -22,7 +22,10 @@ public class MapaMagazynu extends JPanel {
 	private LiftPanel lift;
 	private JPanel odbior;
 
-	public MapaMagazynu(int idPolaCounter) {
+	private Magazyn magazyn;
+
+	public MapaMagazynu(Magazyn m, int idPolaCounter) {
+		this.magazyn = m;
 		regaly = new ArrayList<>();
 
 		for (int i = 0; i < MagazynUtils.liczbaRegalow; i++) {
@@ -33,7 +36,8 @@ public class MapaMagazynu extends JPanel {
 
 	}
 
-	public MapaMagazynu(ArrayList<RegalPanel> regaly) {
+	public MapaMagazynu(Magazyn m, ArrayList<RegalPanel> regaly) {
+		this.magazyn = m;
 		this.regaly = regaly;
 		initialize();
 	}
@@ -171,9 +175,9 @@ public class MapaMagazynu extends JPanel {
 	}
 
 	public void pokazPietro(int pietro) {
+		magazyn.setPietro(pietro);
 		for (RegalPanel r : regaly)
-			r.pokazPietro(pietro);
-
+			r.pokazPietro(pietro);		
 	}
 
 	public void gonZBoksem(int regal, int level) throws Exception {
