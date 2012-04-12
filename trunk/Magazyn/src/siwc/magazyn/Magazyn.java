@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -1418,13 +1416,16 @@ public class Magazyn {
 		radioButton1Box = new JRadioButton("1", true);
 		radioButton2Boxy = new JRadioButton("2", false);
 		
-		RadioButtonHandler handler = new RadioButtonHandler();
-		radioButton1Box.addItemListener(handler);
-		radioButton2Boxy.addItemListener(handler);
+		radioButton1Box.setActionCommand("1Box");
+		radioButton2Boxy.setActionCommand("2Boxy");
 		
-//		ButtonGroup zmianaIlosciBoxow = new ButtonGroup();
-//		zmianaIlosciBoxow.add(radioButton1Box);
-//		zmianaIlosciBoxow.add(radioButton2Boxy);
+		RadioButtonHandler handler = new RadioButtonHandler();
+		radioButton1Box.addActionListener(handler);
+		radioButton2Boxy.addActionListener(handler);
+		
+		ButtonGroup zmianaIlosciBoxow = new ButtonGroup();
+		zmianaIlosciBoxow.add(radioButton1Box);
+		zmianaIlosciBoxow.add(radioButton2Boxy);
 		
 		GroupLayout gl_panel_8 = new GroupLayout(panel_8);
 		gl_panel_8.setHorizontalGroup(
@@ -1470,21 +1471,21 @@ public class Magazyn {
 
 	}
 	
-    private class RadioButtonHandler implements ItemListener {
-    @Override
-    public void itemStateChanged( ItemEvent e ) {
-        if ( e.getSource() == radioButton1Box ){
-        	//TODO
-        	dodajWpisDoKonsoli("Wybrano 1 Box");
-        	log.info("Wybrano 1 Box");
-        }
-        else {
-        	//TODO
-        	dodajWpisDoKonsoli("Wybrano 2 Boxy");
-        	log.info("Wybrano 2 Boxy");
-        }
-
-    }
+    private class RadioButtonHandler implements  ActionListener {
+	    @Override
+	    public void actionPerformed( ActionEvent e ) {
+	        if (e.getActionCommand().equals("1Box")){
+	        	//TODO
+	        	dodajWpisDoKonsoli("Wybrano 1 Box");
+	        	log.info("Wybrano 1 Box");
+	        }
+	        else {
+	        	//TODO
+	        	dodajWpisDoKonsoli("Wybrano 2 Boxy");
+	        	log.info("Wybrano 2 Boxy");
+	        }
+	
+	    }
 
     }
     
