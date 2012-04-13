@@ -190,7 +190,7 @@ public class MapaMagazynu extends JPanel {
 			int dstRow = lift.getY() / boxSize;
 			int goraRegalu = MagazynUtils.getRegalYPosition(regal) / boxSize;
 			int dolRegalu = (MagazynUtils.getRegalYPosition(regal) / boxSize)+MagazynUtils.rzedowWRegale;
-			System.out.println("Regal: " + regal + " gora: " + goraRegalu + " dol: " + dolRegalu	 );
+			System.out.println("Regal: " + regal + " gora: " + goraRegalu + " dol: " + dolRegalu );
 			if (dstRow + 2 == goraRegalu) // winda od gory
 				destination = "A" + (dstCol+1);
 			else if (dstRow == dolRegalu) {
@@ -198,15 +198,17 @@ public class MapaMagazynu extends JPanel {
 			} else
 				throw new Exception("Nie udalo sie przydzielic literki do " + dstRow);
 
-			dstCol = MagazynUtils.convertToColumn(destination);
+			dstCol = MagazynUtils.convertToColumn(destination)+1;
 			dstRow = MagazynUtils.convertToRow(destination);
 
 			int boxCol = MagazynUtils.convertToColumn(boxPosition);
 			int boxRow = MagazynUtils.convertToRow(boxPosition);
 			if (!boxPosition.equals(destination)) {
 				boolean czyIscWLewo = czyIscWLewo(dstRow, dstCol, boxRow, boxCol);
+				System.out.println(boxCol + " " + boxRow + " " + dstCol + " " + dstRow);
 				System.out.println(czyIscWLewo);
-				if (czyIscWLewo) {
+				if (czyIscWLewo == true) {
+					System.out.println();
 					while (boxRow != dstRow || boxCol != dstCol) {
 						MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 						r.moveBoxLeft(level, false);
@@ -215,6 +217,7 @@ public class MapaMagazynu extends JPanel {
 						boxRow = MagazynUtils.convertToRow(boxPosition);
 					}
 				} else {
+					System.out.println();
 					while (boxRow != dstRow || boxCol != dstCol) {
 						MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 						r.moveBoxRight(level, false);
@@ -263,14 +266,15 @@ public class MapaMagazynu extends JPanel {
 	}
 
 	private boolean czyIscWLewo(int dstRow, int dstCol, int boxRow, int boxCol) {
-		int obwod = 2 *MagazynUtils.rzedowWRegale + 2*MagazynUtils.kolumnWRegale - 4;
-		if (dstRow == boxRow && boxCol < MagazynUtils.rzedowWRegale /2 && dstCol < boxCol)
-			return true;
-		else if(dstRow == boxRow && boxCol != MagazynUtils.rzedowWRegale-1 && boxCol >= MagazynUtils.rzedowWRegale /2 && dstCol < boxCol)
+		if(dstRow == boxRow && dstRow == 0 && dstCol > boxCol)
 			return false;
-		else if (dstRow > boxRow && dstCol + boxCol + dstRow < obwod/2) 
+		else if(dstRow == boxRow && dstRow == 0 && dstCol < boxCol)
+				return true;
+		else if (dstRow == boxRow && dstRow == MagazynUtils.rzedowWRegale-1 && dstCol < boxCol)
+			return false;
+		else if (dstRow == boxRow && dstRow == MagazynUtils.rzedowWRegale-1 && dstCol > boxCol)
 			return true;
-			
+					
 		return false;
 	}
 
