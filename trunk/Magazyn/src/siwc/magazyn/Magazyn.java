@@ -12,18 +12,14 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -113,18 +109,18 @@ public class Magazyn {
 	/* statystyki */
 	private static int liczbaZamowien = 0;
 	private static int liczbaZamowienZrealizowany = 0;
-	private static int liczbaMiejscZajetych = 0;
+	private static int liczbaWszystkichMiejsc = MagazynUtils.liczbaRegalow * MagazynUtils.liczbaBoxowWRegale;
 	private static int liczbaPrzedmiotow = 0;
 	private JLabel lblLiczbaZamwienZrealizowanychTekst;
 	private static JLabel lblLiczbaZamowienZrealizowanych;
-	private JLabel lblIloPrzedmiotwTekst;
-	private static JLabel lblLbliloscprzedmiotow;
-	private JLabel lblIloscWszystkichMiejscTekst;
-	private static JLabel lblLiczbaMiejscZajetych;
+	private JLabel lblIleProduktowTekst;
+	private static JLabel lblIloscprzedmiotow;
+	private JLabel lblLiczbaDostepnychProduktowText;
+	private static JLabel lblLiczbaWszystkichMiejscWMagazynieText;
 	private JLabel lblSredniCzasRealizacjiTekst;
-	private static JLabel lblWszystkieMiejsca;
-	private JLabel lblMiejscaZajete;
-	private JLabel lblSredniCzasRealizacji;
+	private static JLabel lblDostepnychProduktow;
+	private static JLabel lblWszystkichMiejscWMag;
+	private static JLabel lblSredniCzasRealizacji;
 	private JLabel lblPustaPka;
 	private JLabel lblPkaTransferowa;
 	private JPanel panel_2;
@@ -391,7 +387,7 @@ public class Magazyn {
 		lblKonsola.setBounds(20, 565, 37, 14);
 
 		panelStatystyki = new JPanel();
-		panelStatystyki.setBounds(802, 462, 222, 183);
+		panelStatystyki.setBounds(802, 462, 243, 183);
 		panelStatystyki.setBorder(new TitledBorder(null, "Statystyki", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		panelLegenda = new JPanel();
@@ -406,48 +402,48 @@ public class Magazyn {
 		lblLiczbaZamowien = new JLabel("0");
 		lblLiczbaZamowien.setFont(new Font("Tahoma", Font.BOLD, 11));
 		// lblLiczbaZamowien.set
-		lblLiczbaZamowien.setBounds(185, 34, 19, 14);
+		lblLiczbaZamowien.setBounds(185, 34, 35, 14);
 		panelStatystyki.add(lblLiczbaZamowien);
 
-		lblLiczbaZamwienZrealizowanychTekst = new JLabel("Liczba zamówien zrealizowanych :");
+		lblLiczbaZamwienZrealizowanychTekst = new JLabel("Liczba zamówien zrealizowanych:");
 		lblLiczbaZamwienZrealizowanychTekst.setBounds(10, 59, 165, 14);
 		panelStatystyki.add(lblLiczbaZamwienZrealizowanychTekst);
 
 		lblLiczbaZamowienZrealizowanych = new JLabel("0");
 		lblLiczbaZamowienZrealizowanych.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblLiczbaZamowienZrealizowanych.setBounds(185, 59, 19, 14);
+		lblLiczbaZamowienZrealizowanych.setBounds(185, 59, 35, 14);
 		panelStatystyki.add(lblLiczbaZamowienZrealizowanych);
 
-		lblIloPrzedmiotwTekst = new JLabel("Ilość przedmiotów :");
-		lblIloPrzedmiotwTekst.setBounds(10, 84, 165, 14);
-		panelStatystyki.add(lblIloPrzedmiotwTekst);
+		lblIleProduktowTekst = new JLabel("Liczba wszystkich produktów:");
+		lblIleProduktowTekst.setBounds(10, 84, 165, 14);
+		panelStatystyki.add(lblIleProduktowTekst);
 
-		lblLbliloscprzedmiotow = new JLabel("0");
-		lblLbliloscprzedmiotow.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblLbliloscprzedmiotow.setBounds(185, 84, 19, 14);
-		panelStatystyki.add(lblLbliloscprzedmiotow);
+		lblIloscprzedmiotow = new JLabel("0");
+		lblIloscprzedmiotow.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblIloscprzedmiotow.setBounds(185, 84, 35, 14);
+		panelStatystyki.add(lblIloscprzedmiotow);
 
-		lblIloscWszystkichMiejscTekst = new JLabel("Wszystkie miejsca :");
-		lblIloscWszystkichMiejscTekst.setBounds(10, 109, 134, 14);
-		panelStatystyki.add(lblIloscWszystkichMiejscTekst);
+		lblLiczbaDostepnychProduktowText = new JLabel("Liczba dostępnych produktów:");
+		lblLiczbaDostepnychProduktowText.setBounds(10, 109, 165, 14);
+		panelStatystyki.add(lblLiczbaDostepnychProduktowText);
 
-		lblLiczbaMiejscZajetych = new JLabel("Miejsca Zajęte :");
-		lblLiczbaMiejscZajetych.setBounds(10, 134, 94, 14);
-		panelStatystyki.add(lblLiczbaMiejscZajetych);
+		lblLiczbaWszystkichMiejscWMagazynieText = new JLabel("Wszystkich miejsc w magazynie:");
+		lblLiczbaWszystkichMiejscWMagazynieText.setBounds(10, 134, 165, 14);
+		panelStatystyki.add(lblLiczbaWszystkichMiejscWMagazynieText);
 
-		lblSredniCzasRealizacjiTekst = new JLabel("Średni czas realizacji :");
+		lblSredniCzasRealizacjiTekst = new JLabel("Średni czas realizacji:");
 		lblSredniCzasRealizacjiTekst.setBounds(10, 159, 165, 14);
 		panelStatystyki.add(lblSredniCzasRealizacjiTekst);
 
-		lblWszystkieMiejsca = new JLabel("0");
-		lblWszystkieMiejsca.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblWszystkieMiejsca.setBounds(185, 109, 19, 14);
-		panelStatystyki.add(lblWszystkieMiejsca);
+		lblDostepnychProduktow = new JLabel("0");
+		lblDostepnychProduktow.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblDostepnychProduktow.setBounds(185, 109, 35, 14);
+		panelStatystyki.add(lblDostepnychProduktow);
 
-		lblMiejscaZajete = new JLabel("0");
-		lblMiejscaZajete.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblMiejscaZajete.setBounds(185, 134, 19, 14);
-		panelStatystyki.add(lblMiejscaZajete);
+		lblWszystkichMiejscWMag = new JLabel("0");
+		lblWszystkichMiejscWMag.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblWszystkichMiejscWMag.setBounds(185, 134, 35, 14);
+		panelStatystyki.add(lblWszystkichMiejscWMag);
 		// KonsolaList = new JList(konsolaLista.toArray());
 
 		KonsolaList = new JList<>();
@@ -517,7 +513,7 @@ public class Magazyn {
 
 		lblSredniCzasRealizacji = new JLabel("0");
 		lblSredniCzasRealizacji.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblSredniCzasRealizacji.setBounds(185, 159, 19, 14);
+		lblSredniCzasRealizacji.setBounds(185, 159, 35, 14);
 		panelStatystyki.add(lblSredniCzasRealizacji);
 		frmSystemyWbudowaneI.getContentPane().add(panelLegenda);
 		panelLegenda.setLayout(null);
@@ -613,6 +609,9 @@ public class Magazyn {
 				}
 				listZamowienia.setModel(zamowieniaListModel);
 				aktualizujProdukty(towaryNaMagazynie);
+				ustalLiczbeZamowien(zamowienia.size());
+				ustalLiczbePrzedmiotow(magazyn.getLiczbaWszystkichProduktow());
+				ustalLiczbeDostepnychProduktow(getLiczbaDostepnychProduktow());
 			}
 		});
 		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
@@ -642,7 +641,7 @@ public class Magazyn {
 		panel_6.setLayout(gl_panel_6);
 		
 		panel_7_produkty = new JPanel();
-		panel_7_produkty.setBorder(new TitledBorder(null, "Produkty", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_7_produkty.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Dost\u0119pne produkty", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_7_produkty.setBounds(812, 72, 212, 366);
 
 		frmSystemyWbudowaneI.getContentPane().add(panel_7_produkty);
@@ -669,6 +668,8 @@ public class Magazyn {
 						btnDodajZamowienie.setToolTipText("Dodaj zamówienie");
 						btnWczytajZamowienia.setToolTipText("Wczytaj zamówienia z pliku");
 					}
+					ustalLiczbePrzedmiotow(magazyn.getLiczbaWszystkichProduktow());
+					ustalLiczbeDostepnychProduktow(getLiczbaDostepnychProduktow());
 				}
 			}
 		});
@@ -760,6 +761,8 @@ public class Magazyn {
 							logic.convertToMagazynTO(regaly);
 							produktyListModel.clear();
 							dodajProdukty(towaryNaMagazynie);
+							zwiekszLiczbePrzedmiotow();
+							ustalLiczbeDostepnychProduktow(getLiczbaDostepnychProduktow());
 							dodajWpisDoKonsoli("Dodano produkt: "+kodTowaru + " - "+nazwa + " 1 x "+ilosc);
 							closeAddPBox();
 							
@@ -800,6 +803,8 @@ public class Magazyn {
 				}
 				listProdukty.setModel(produktyListModel);
 				aktualizujProdukty(towaryNaMagazynie);
+				ustalLiczbePrzedmiotow(magazyn.getLiczbaWszystkichProduktow());
+				ustalLiczbeDostepnychProduktow(getLiczbaDostepnychProduktow());
 			}
 		});
 		GroupLayout gl_panel_7_produkty = new GroupLayout(panel_7_produkty);
@@ -1017,6 +1022,8 @@ public class Magazyn {
 //							}
 							listZamowienia.setModel(zamowieniaListModel);
 							aktualizujProdukty(towaryNaMagazynie);
+							ustalLiczbeZamowien(zamowienia.size());
+							ustalLiczbeDostepnychProduktow(getLiczbaDostepnychProduktow());
 							closeAddOrderBox();
 						}
 					}
@@ -1099,6 +1106,8 @@ public class Magazyn {
 					saveAsFile.setEnabled(true);
 					log.info("Wczytano zamówienia");			
 					dodajWpisDoKonsoli("Wczytano zamówienia z pliku :" + fileChooser.getSelectedFile());
+					ustalLiczbeZamowien(zamowienia.size());
+					ustalLiczbeDostepnychProduktow(getLiczbaDostepnychProduktow());
 				}
 			}
 		});
@@ -1183,7 +1192,7 @@ public class Magazyn {
 		ToolTipManager.sharedInstance().setDismissDelay(20000);
 		ToolTipManager.sharedInstance().registerComponent(listProdukty);
 		ToolTipManager.sharedInstance().registerComponent(listZamowienia);
-
+		ustalLiczbeWszystkichMiejsc(liczbaWszystkichMiejsc);
 	}
 	  
 	private void ustawStyl() {
@@ -1258,48 +1267,44 @@ public class Magazyn {
 		lblLiczbaZamowienZrealizowanych.setText(String.valueOf(liczbaZamowienZrealizowany));
 	}
 
-	/* liczba miejsc zajetych */
-
-	public static void zwiekszLiczbeMiejscZajetych() {
-		liczbaMiejscZajetych++;
-		lblLiczbaMiejscZajetych.setText(String.valueOf(liczbaMiejscZajetych));
-	}
-
-	public static void zmniejszLiczbeMiejscZajetych() {
-		liczbaMiejscZajetych--;
-		lblLiczbaMiejscZajetych.setText(String.valueOf(liczbaMiejscZajetych));
-	}
-
-	/* ilosc przedmiotow */
-	public static void ustawLiczbePrzedmiotow(int lprzedm) {
-		lblLbliloscprzedmiotow.setText(String.valueOf(lprzedm));
+	/* ilosc wszystkich produktow */
+	public static void ustalLiczbePrzedmiotow(int lPrzedm) {
+		liczbaPrzedmiotow = lPrzedm;
+		lblIloscprzedmiotow.setText(String.valueOf(lPrzedm));
 	}
 	
 	public static void zmniejszLiczbePrzedmiotow(){
 		liczbaPrzedmiotow --;
-		lblLbliloscprzedmiotow.setText(String.valueOf(liczbaPrzedmiotow));
+		lblIloscprzedmiotow.setText(String.valueOf(liczbaPrzedmiotow));
 	}
 	
 	public static void zwiekszLiczbePrzedmiotow() {
 		liczbaPrzedmiotow++;
-		lblLbliloscprzedmiotow.setText(String.valueOf(liczbaPrzedmiotow));
+		lblIloscprzedmiotow.setText(String.valueOf(liczbaPrzedmiotow));
 	}
 	
 
-	/* liczba wszystkich miejsc */
-	public static void ustawLiczbeWszystkichMiejsc(int liczbaWszystkichMiejsc) {
-		lblWszystkieMiejsca.setText(String.valueOf(liczbaWszystkichMiejsc));
+	/* liczba dostepnych produktow */
+	public static void ustalLiczbeDostepnychProduktow(int liczbaDostepnychProduktow) {
+		lblDostepnychProduktow.setText(String.valueOf(liczbaDostepnychProduktow));
 	}
-
+	
+	/* liczba wszystkich miejsc w magazynie */
+	public static void ustalLiczbeWszystkichMiejsc(int liczbaWszystkichMiejsc){
+		lblWszystkichMiejscWMag.setText(String.valueOf(liczbaWszystkichMiejsc));
+	}
+	
+	/* średni czas realizacji */
+	
+	public static void ustalSredniCzasRealizacji(int sredniCzasRealizacji){
+		lblSredniCzasRealizacji.setText(String.valueOf(sredniCzasRealizacji));
+	}
 	/* Dodaj zamowienia */
 	public static void dodajZamowienia(ArrayList<ZamowienieTO> listaZamowien) {
 
 		if (listaZamowien != null){
 			for (ZamowienieTO z : listaZamowien) {
 				zamowieniaListModel.addElement(z.getNumerZamowienia() + ": "+z.getDaneKlienta() + " - "+z.getTowary().size() + " el." + " ("+z.getTerminRealizacji()+")");
-//				for(ListTowarTO t: z.getTowaryDoListy()) {
-//					zamowieniaListModel.addElement("ID:"+ z.getNumerZamowienia() + " - "+ z.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+z.getTerminRealizacji()+")");
-//				}
 			}
 			listZamowienia.setModel(zamowieniaListModel);
 		}else{
@@ -1443,5 +1448,13 @@ public class Magazyn {
 	    public String getToolTipText(MouseEvent e){
 	        return super.getToolTipText();
 	    }
+	}
+	
+	private int getLiczbaDostepnychProduktow(){
+		int liczba = 0;
+		for(ListTowarTO lt: towaryNaMagazynie.values()){
+			liczba += lt.getIlePaczek();
+		}
+		return liczba;
 	}
 }

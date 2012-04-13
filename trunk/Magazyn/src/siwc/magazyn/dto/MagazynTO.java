@@ -29,6 +29,19 @@ public class MagazynTO {
 		return list;
 	}
 	
+	public int getLiczbaWszystkichProduktow(){
+		int liczba = 0;
+		for(PoleTO[][] tab : pietra.values()){
+			for(int i = 0; i < getWielkoscXMagazynu(); i++)
+				for(int j = 0; j < getWielkoscYMagazynu(); j++){
+					TowarTO t = tab[i][j].getTowar();
+					if(t != null && t.getKodTowaru() != null)
+						liczba++;
+				}
+		}
+		return liczba;
+	}
+	
 	public ArrayList<PoleTO> getPolaZDostepnymiTowaramiByKod(String kod){
 		ArrayList<PoleTO> list = new ArrayList<>();
 		int nrPietra = 0;

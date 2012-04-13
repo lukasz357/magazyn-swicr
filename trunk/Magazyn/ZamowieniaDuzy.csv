@@ -1,53 +1,45 @@
 Krok;00:01:00
-PWMC;Półka wiszaca;2;
-SKKC;Szafka kuchenna;3;
+PWMC;Półka wiszaca;2
 $
 Kowalski;00:02:00
-DDDC;Drzwi debowe;1;
+DDDC;Drzwi debowe;1
 $
 Brzeczyszczykiewicz;00:03:00
-FTHK;Fotel hamakowy;2;
-STOK;Stół okrągły;1;
+STOK;Stół okrągły;1
 $
 Basion;00:04:30
-SKKC;Szafka kuchenna;3;
-GBLT;Gablotka;1;
-LZK;Łóżko;1;
+GBLT;Gablotka;1
+LZK;Łóżko;1
 $
 Garnecki;00:04:50
-SKKC;Szafka kuchenna;1;
-DDDC;Drzwi debowe;1;
-GBLT;Gablotka;1;
-PLKW;Półka wisząca;1;
+DDDC;Drzwi debowe;1
+GBLT;Gablotka;1
+PLKW;Półka wisząca;1
 $
 Streczowski;00:05:10
-DDDC;Drzwi debowe;1;
-FTHK;Fotel hamakowy;2;
-$
-Panewicz;00:06:00
-SKKC;Szafka kuchenna;1;
+DDDC;Drzwi debowe;1
+FTHK;Fotel hamakowy;2
 $
 Miodek;00:07:00
-FTHK;Fotel hamakowy;2;
+FTHK;Fotel hamakowy;2
 $
 Wereszczyński;00:10:00
-GBLT;Gablotka;1;
-SKKC;Szafka kuchenna;3;
+GBLT;Gablotka;1
+SKKC;Szafka kuchenna;3
 $
 Anielewicz;00:13:00
-DDDC;Drzwi debowe;1;
+DDDC;Drzwi debowe;1
 $
 Satkowska;00:15:00
-LZK;Łóżko;1;
+LZK;Łóżko;1
 $
 Nikołajczyk;00:20:00
-SKKC;Szafka kuchenna;1;
-GBLT;Gablotka;1;
+GBLT;Gablotka;1
 $
 Ninewicz;00:21:00
-STOK;Stół okrągły;1;
+STOK;Stół okrągły;1
 $
 Karolewski;00:22:00
-DDDC;Drzwi debowe;1;
-SKKC;Szafka kuchenna;1;
+DDDC;Drzwi debowe;1
+SKKC;Szafka kuchenna;1
 $
