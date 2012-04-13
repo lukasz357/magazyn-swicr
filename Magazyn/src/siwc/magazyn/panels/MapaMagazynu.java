@@ -274,7 +274,7 @@ public class MapaMagazynu extends JPanel {
 			return false;
 		else if (dstRow == boxRow && dstRow == MagazynUtils.rzedowWRegale-1 && dstCol > boxCol)
 			return true;
-					
+//		to jest do poprawy
 		return false;
 	}
 
