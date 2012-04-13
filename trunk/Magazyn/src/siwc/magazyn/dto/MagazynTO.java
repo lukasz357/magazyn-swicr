@@ -29,6 +29,24 @@ public class MagazynTO {
 		return list;
 	}
 	
+	public ArrayList<PoleTO> getPolaZDostepnymiTowaramiByKod(String kod){
+		ArrayList<PoleTO> list = new ArrayList<>();
+		int nrPietra = 0;
+		for(PoleTO[][] tab : pietra.values()){
+			for(int i = 0; i < getWielkoscXMagazynu(); i++)
+				for(int j = 0; j < getWielkoscYMagazynu(); j++){
+					TowarTO t = tab[i][j].getTowar();
+					if(t != null && t.getKodTowaru() != null)
+						if(t.getKodTowaru().equals(kod) && !t.isZarezerwowany()){
+							tab[i][j].setPietro(nrPietra);
+							list.add(tab[i][j]);
+						}
+				}
+			nrPietra++;
+		}
+		
+		return list;
+	}
 	public ArrayList<String> getInfoODostepnychTowarachByKod(String kod){
 		ArrayList<String> list = new ArrayList<>();
 		int nrPietra = 0;

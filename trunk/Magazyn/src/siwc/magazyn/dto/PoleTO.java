@@ -6,6 +6,7 @@ public class PoleTO {
 	private TowarTO towar;
 	private int nrRegalu;
 	private String position;
+	private int pietro;
 	
 	private int x;
 	private int y;
@@ -79,6 +80,12 @@ public class PoleTO {
 	}
 	public void setMovable(boolean isMovable) {
 		this.isMovable = isMovable;
+	}
+	public int getPietro() {
+		return pietro;
+	}
+	public void setPietro(int pietro) {
+		this.pietro = pietro;
 	}
 	
 }

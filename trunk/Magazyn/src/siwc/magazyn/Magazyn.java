@@ -56,6 +56,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import siwc.magazyn.dto.ListTowarTO;
 import siwc.magazyn.dto.MagazynTO;
+import siwc.magazyn.dto.PoleTO;
 import siwc.magazyn.dto.TowarTO;
 import siwc.magazyn.dto.ZamowienieTO;
 import siwc.magazyn.logic.Algorithm;
@@ -773,6 +774,34 @@ public class Magazyn {
 		});
 		
 		JButton btnUsunProdukty = new JButton("Usuń");
+		btnUsunProdukty.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int [] indexy = listProdukty.getSelectedIndices();
+				ArrayList<String> listObjects = new ArrayList<>();
+				for(int i = 0; i < indexy.length; i++){
+					String el = produktyListModel.getElementAt(indexy[i]);
+					listObjects.add(el);
+					String kodProduktu= el.substring(0, el.indexOf(':'));
+
+					List<PoleTO> pola = magazyn.getPolaZDostepnymiTowaramiByKod(kodProduktu);
+					if(pola != null && pola.size() > 0){
+						for(PoleTO p : pola){
+							regaly.get(p.getNrRegalu()).zmienKolorBoksu(p.getPietro(), p.getPosition(), MagazynUtils.defaultBoxBackground);
+							regaly.get(p.getNrRegalu()).zmienToolTipTextBoxu(p.getPietro(), p.getPosition(), "Pusty");
+							int id = p.getTowar().getIdBoxu();
+							p.setTowar(new TowarTO(id));
+						}
+					}
+					towaryNaMagazynie.remove(kodProduktu);
+				}
+				
+				for(String obj : listObjects){
+					produktyListModel.removeElement(obj);
+				}
+				listProdukty.setModel(produktyListModel);
+				aktualizujProdukty(towaryNaMagazynie);
+			}
+		});
 		GroupLayout gl_panel_7_produkty = new GroupLayout(panel_7_produkty);
 		gl_panel_7_produkty.setHorizontalGroup(
 			gl_panel_7_produkty.createParallelGroup(Alignment.TRAILING)
