@@ -808,7 +808,7 @@ public class Magazyn {
 		zegar.setFont(new Font("SansSerif", Font.PLAIN, 30));
 		
 		spinnerScaleTime = new JSpinner();
-		spinnerScaleTime.setModel(new SpinnerListModel(new String[] {"Real", "10x", "20x", "30x", "50x", "100x", "1000x"}));
+		spinnerScaleTime.setModel(new SpinnerListModel(new String[] {"Real", "5x", "10x", "20x", "30x", "50x", "100x", "1000x"}));
 		spinnerScaleTime.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		spinnerScaleTime.getEditor().setEnabled(false);
 		spinnerScaleTime.addChangeListener(new ChangeListener() {
@@ -821,6 +821,12 @@ public class Magazyn {
 	            	MagazynUtils.boxMovingSleepTime = 1200;
 	            	if(algorithm != null)
 	            		algorithm.setJakiSleep(1200);
+	            }
+	            else if(value.equals("5x")){
+	            	zegar.rescaleTime(200);
+	            	MagazynUtils.boxMovingSleepTime = 240;
+	            	if(algorithm != null)
+	            		algorithm.setJakiSleep(240);
 	            }
 	            else if(value.equals("10x")){
 	            	zegar.rescaleTime(100);

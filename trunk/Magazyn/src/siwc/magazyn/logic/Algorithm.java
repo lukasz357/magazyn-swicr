@@ -92,7 +92,7 @@ public abstract class Algorithm {
 						
 						if (pole != null) {
 							Magazyn.dodajWpisDoKonsoli("Wyruszam po towar: "+towar.getNazwa());
-							przemiescWozek(pole.getX(), pole.getY(), pole.getZ());
+							przemiescWozek(pole.getX(), pole.getY(), pole.getZ(), pole.getPosition());
 							if (!pole.isMovable()) {
 								try {
 									mapa.gonZBoksem(pole.getNrRegalu(), pole.getZ());
@@ -123,7 +123,7 @@ public abstract class Algorithm {
 								stop=1;
 								break;
 							} else {
-								przemiescWozek(poleOdbioru.getX(), poleOdbioru.getY(), poleOdbioru.getZ());
+								przemiescWozek(poleOdbioru.getX(), poleOdbioru.getY(), poleOdbioru.getZ(), poleOdbioru.getPosition());
 								log.info("Przed wstawieniem: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
 								magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].setTowar(towar);
 								log.info("Wstawilem towar na miejsce odbioru i jest rowny temu: "+magazyn.getPietra().get(poleOdbioru.getZ())[poleOdbioru.getX()][poleOdbioru.getY()].getTowar());
@@ -148,7 +148,7 @@ public abstract class Algorithm {
 	}
 	
 	
-	private void przemiescWozek(int xTo, int yTo, int zTo) {
+	private void przemiescWozek(int xTo, int yTo, int zTo, String destination) {
 		mapa.pokazPietro(zTo);
 		for (int i = 0; i <= Math.abs(zTo-mapa.getLiftLeve()); i++) {
 			if (mapa.getLiftLeve() < zTo)
@@ -157,14 +157,16 @@ public abstract class Algorithm {
 				mapa.lifDown();
 		}
 		
-		if (Math.abs(mapa.getLiftY() - yTo) > 2)
-			yTo -= 2;
-		else
-			yTo += 2;
+		if (yTo < 18) {
+			if (destination.charAt(0) == 'A' || destination.charAt(0) == 'B')
+				yTo -= 2;
+			else
+				yTo += 2;
+		}
 		wycofajWozek();
 		log.info("XY WOZKA: "+mapa.getLiftX()+", "+mapa.getLiftY()+" a nalezy przesunac na: "+xTo+", "+yTo);
 		int index=0;
-			while(Math.abs(mapa.getLiftX() - xTo) > 2 || Math.abs(mapa.getLiftY() - yTo) > 2) {
+			while(Math.abs(mapa.getLiftX() - xTo) > 1 || Math.abs(mapa.getLiftY() - yTo) > 2) {
 				if (index > 10)
 					break;
 				//log.info("Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
