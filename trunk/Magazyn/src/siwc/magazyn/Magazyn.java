@@ -42,6 +42,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -131,14 +132,14 @@ public class Magazyn {
 	private JLabel lblWzek;
 	private JPanel panel_6;
 	private JScrollPane scrollPaneListaZamowien;
-	private static MyList listZamowienia;
+	private static ZamowieniaJList listZamowienia;
 	private JPanel panel_4;
 	private JLabel lblBoksZajety;
 	private JPanel panel_7_produkty;
 	private JButton btnWczytajProdukty;
 	private JScrollPane scrollPaneProdukty;
 	private ArrayList<RegalPanel> regaly;
-	private static JList<String> listProdukty;
+	private static ProduktyJList listProdukty;
 	private HashMap<String, ListTowarTO> towaryNaMagazynie; // tylko do listy po prawej stronie
 	private HashMap<Integer, ZamowienieTO> zamowienia;
 	private List<ZamowienieTO> zamowieniaLista; //tylko do listy po prawej stronie
@@ -572,7 +573,7 @@ public class Magazyn {
 
 		scrollPaneListaZamowien = new JScrollPane();
 
-		listZamowienia = new MyList();
+		listZamowienia = new ZamowieniaJList();
 		listZamowienia.setModel(zamowieniaListModel);
 		scrollPaneListaZamowien.setViewportView(listZamowienia);
 		
@@ -673,7 +674,7 @@ public class Magazyn {
 		
 		scrollPaneProdukty = new JScrollPane();
 		
-		listProdukty = new JList<>();
+		listProdukty = new ProduktyJList();
 		scrollPaneProdukty.setViewportView(listProdukty);
 		
 		JButton btnDodajProdukt = new JButton("Dodaj");
@@ -1143,6 +1144,10 @@ public class Magazyn {
 				mnZmienStyl.add(styleRadioMenu);
 			}
 		}
+		//Zwiekszenie czasu wyswietlania sie ToolTipTextu
+		ToolTipManager.sharedInstance().setDismissDelay(20000);
+		ToolTipManager.sharedInstance().registerComponent(listProdukty);
+		ToolTipManager.sharedInstance().registerComponent(listZamowienia);
 
 	}
 	  
@@ -1323,16 +1328,16 @@ public class Magazyn {
 		}
 
 	
-	class MyList extends JList<String> {
+	class ZamowieniaJList extends JList<String> {
 		private static final long serialVersionUID = -7810572755518819881L;
 
-		public MyList() {
+		public ZamowieniaJList() {
 	        super();
 
 		// Attach a mouse motion adapter to let us know the mouse is over an item and to show the tip.
 		addMouseMotionListener( new MouseMotionAdapter() {
 			public void mouseMoved( MouseEvent e) {
-				MyList theList = (MyList) e.getSource();
+				ZamowieniaJList theList = (ZamowieniaJList) e.getSource();
 				ListModel<String> model = theList.getModel();
 				int index = theList.locationToIndex(e.getPoint());
 				if (index > -1) {
@@ -1359,7 +1364,47 @@ public class Magazyn {
 		});
 	    }
 
-	    // Expose the getToolTipText event of our JList
+	    public String getToolTipText(MouseEvent e){
+	        return super.getToolTipText();
+	    }
+	}
+	
+	class ProduktyJList extends JList<String> {
+		private static final long serialVersionUID = -7810572755518819881L;
+
+		public ProduktyJList() {
+	        super();
+
+		// Attach a mouse motion adapter to let us know the mouse is over an item and to show the tip.
+		addMouseMotionListener( new MouseMotionAdapter() {
+			public void mouseMoved( MouseEvent e) {
+				ProduktyJList theList = (ProduktyJList) e.getSource();
+				ListModel<String> model = theList.getModel();
+				int index = theList.locationToIndex(e.getPoint());
+				if (index > -1) {
+					theList.setToolTipText(null);
+					String el = model.getElementAt(index);
+					String kodTowaru = el.substring(0, el.indexOf(':'));
+					ArrayList<String> towary = magazyn.getInfoODostepnychTowarachByKod(kodTowaru);
+					
+					String text = "<html>Pozycje towarów o kodzie "+kodTowaru+":<br>";
+					int idx = 1;
+					for(String t : towary){
+						String [] info = t.split(":");
+						if(info.length != 3){
+							log.error("Blad w parsowaniu info o towarze do listy");
+							continue;
+						}
+						text += idx+". "+" Pietro: "+info[0] + " Regał: " + info[1] + " Pozycja: " + info[2] + "<br>";
+						idx++;
+					}
+					text += "</html>";
+					theList.setToolTipText(text);
+				}
+			}
+		});
+	    }
+
 	    public String getToolTipText(MouseEvent e){
 	        return super.getToolTipText();
 	    }
