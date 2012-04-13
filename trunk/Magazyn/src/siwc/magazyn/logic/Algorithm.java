@@ -20,7 +20,7 @@ public abstract class Algorithm {
 	public abstract void odswiezZamowienia(ZamowienieTO zamowienie);
 	public abstract List<ZamowienieTO> getNoweZamowienia();
 	public abstract int getTimeIntValue();
-	public abstract void zwiekszLiczbeZamowienZrealizowanych();
+	public abstract void zwiekszLiczbeZamowienZrealizowanych(float czasRealizacjiZamowienia);
 	
 	private Logger log = Logger.getLogger(MapaMagazynu.class);
 	
@@ -139,7 +139,7 @@ public abstract class Algorithm {
 						timeEndCountTowar();
 					}
 					Magazyn.dodajWpisDoKonsoli("Zamówienie przetworzone w czasie: "+timeEndCount());
-					zwiekszLiczbeZamowienZrealizowanych();
+					zwiekszLiczbeZamowienZrealizowanych((timeEnd-timeStart)/100F);
 					odswiezZamowienia(zamowienie);
 					zamowienia.remove(0);
 				}

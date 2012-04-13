@@ -111,6 +111,7 @@ public class Magazyn {
 	private static int liczbaZamowienZrealizowany = 0;
 	private static int liczbaWszystkichMiejsc = MagazynUtils.liczbaRegalow * MagazynUtils.liczbaBoxowWRegale;
 	private static int liczbaPrzedmiotow = 0;
+	private static float calkowityCzasRealizacji = 0;
 	private JLabel lblLiczbaZamwienZrealizowanychTekst;
 	private static JLabel lblLiczbaZamowienZrealizowanych;
 	private JLabel lblIleProduktowTekst;
@@ -358,8 +359,8 @@ public class Magazyn {
 							}
 
 							@Override
-							public void zwiekszLiczbeZamowienZrealizowanych() {
-								Magazyn.zwiekszLiczbeZamowienZrealizowanych();
+							public void zwiekszLiczbeZamowienZrealizowanych(float czasRealizacjiZamowienia) {
+								Magazyn.zwiekszLiczbeZamowienZrealizowanych(czasRealizacjiZamowienia);
 							}
 						};
 						algorithm.startAlgorithm();		
@@ -387,7 +388,7 @@ public class Magazyn {
 		lblKonsola.setBounds(20, 565, 37, 14);
 
 		panelStatystyki = new JPanel();
-		panelStatystyki.setBounds(802, 462, 243, 183);
+		panelStatystyki.setBounds(802, 462, 280, 183);
 		panelStatystyki.setBorder(new TitledBorder(null, "Statystyki", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		panelLegenda = new JPanel();
@@ -1257,8 +1258,11 @@ public class Magazyn {
 	}
 
 	/* liczba zamowien zrealizowanych */
-	public static void zwiekszLiczbeZamowienZrealizowanych() {
+	public static void zwiekszLiczbeZamowienZrealizowanych(float czasRealizacjiZamowienia) {
+		calkowityCzasRealizacji += czasRealizacjiZamowienia;
 		liczbaZamowienZrealizowany++;
+		float sredniCzas = calkowityCzasRealizacji/liczbaZamowienZrealizowany;
+		lblSredniCzasRealizacji.setText(String.valueOf(sredniCzas) + " s");
 		lblLiczbaZamowienZrealizowanych.setText(String.valueOf(liczbaZamowienZrealizowany));
 	}
 
