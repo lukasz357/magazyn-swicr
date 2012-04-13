@@ -125,7 +125,7 @@ public class IOLogic {
 					String nazwa = tLine[3].trim();
 					String producent = tLine[4].trim();
 					String kodTowaru = tLine[5].trim();
-					int ilosc = Integer.parseInt(tLine[6].trim());;
+					int ilosc = Integer.parseInt(tLine[6].trim());
 					
 					if(regalID >= MagazynUtils.liczbaRegalow || pietro >= MagazynUtils.liczbaPieter) 
 						continue;
@@ -238,7 +238,7 @@ public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, Za
 						int ilePaczek = Integer.parseInt(tLine[2].trim());
 						ArrayList<TowarTO> towary = magazyn.getDostepneTowaryByKod(kodTowaru);
 						if(towary.size() < 1) {
-							log.error("Nie znaleziono towaru/ów o podanym kodzie");
+							log.error("Nie znaleziono towaru/ów o podanym kodzie: "+kodTowaru);
 							continue;
 						}
 						else if(ilePaczek > towary.size()){
