@@ -157,11 +157,13 @@ public abstract class Algorithm {
 				mapa.lifDown();
 		}
 		
-		if (yTo < 18) {
-			if (destination.charAt(0) == 'A' || destination.charAt(0) == 'B')
-				yTo -= 2;
-			else
-				yTo += 2;
+		if (destination != null) {
+			if (yTo < 18) {
+				if (destination.charAt(0) == 'A' || destination.charAt(0) == 'B')
+					yTo -= 2;
+				else
+					yTo += 2;
+			}
 		}
 		wycofajWozek();
 		log.info("XY WOZKA: "+mapa.getLiftX()+", "+mapa.getLiftY()+" a nalezy przesunac na: "+xTo+", "+yTo);

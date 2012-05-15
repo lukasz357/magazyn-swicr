@@ -16,8 +16,8 @@ public class MagazynUtils {
 	public static Dimension screenSize = toolkit.getScreenSize();
 
 	public static Rectangle maxBounds = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds(); // maxymalne
-	public static int frameWidth = maxBounds.getWidth() > 1366 ? 1366 : (int) maxBounds.getWidth();
-	public static int frameHeight = maxBounds.getWidth() > 1366 ? 750 : (int) maxBounds.getHeight();
+	public static int frameWidth = 1366;//maxBounds.getWidth() > 1366 ? 1366 : (int) maxBounds.getWidth();
+	public static int frameHeight = 1366;//maxBounds.getWidth() > 1366 ? 750 : (int) maxBounds.getHeight();
 
 
 	// box
