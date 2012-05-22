@@ -76,6 +76,10 @@ public class MapaMagazynu extends JPanel {
 	public void zmienKolorBoksu(int numer, int level, String position, Color c) {
 			regaly.get(numer).zmienKolorBoksu(level, position, c);
 	}
+	
+	public void zmienToolTipBoxu(int numer, int level, String position, String toolTipText) {
+		regaly.get(numer).zmienToolTipTextBoxu(level, position, toolTipText);
+}
 
 	public void moveLiftUp() throws Exception {
 		int liftMaxX = lift.getX() + lift.getXsize();

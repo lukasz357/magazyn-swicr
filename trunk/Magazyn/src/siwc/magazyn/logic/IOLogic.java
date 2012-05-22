@@ -173,29 +173,11 @@ public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, Za
 						String pozycja = tLine[3].trim();
 						int nrRg = Integer.parseInt(nrRegalu);
 						int nrPtr = Integer.parseInt(nrPietra);
-//						int ilePaczek = Integer.parseInt(tLine[2].trim());
-//						ArrayList<TowarTO> towary = magazyn.getDostepneTowaryByKod(kodTowaru);
-//						if(towary.size() < 1) {
-//							log.error("Nie znaleziono towaru/ów o podanym kodzie: "+kodTowaru);
-//							continue;
-//						}
-//						else if(ilePaczek > towary.size()){
-//							log.error("Brak wystarczającej ilości towaru: "+nazwaTowaru+"- jest: "+towary.size()+" zamowienie: "+ilePaczek);
-//							continue;
-//						}
-//						else {
-//							for(int i = 0; i < ilePaczek; i++){
-//								zamowienie.getTowary().add(towary.get(i));
-//								towary.get(i).setZarezerwowany(true);
-//								towaryNaMagazynie.get(kodTowaru).zmniejszIlosc();
-//							}
-//						}
-						
 						TowarTO towar = regaly.get(nrRg -1).getTowar(nrPtr, pozycja);
 						towar.setZarezerwowany(true);
 						towaryNaMagazynie.get(kodTowaru).zmniejszIlosc();
 						zamowienie.getTowary().add(towar);
-						regaly.get(nrRg -1).zmienKolorBoksu(nrPtr, pozycja, Color.BLACK);
+						regaly.get(nrRg -1).zmienKolorBoksu(nrPtr, pozycja, MagazynUtils.reservedBoxBackground);
 					}catch(NumberFormatException e){
 						e.printStackTrace();
 					}

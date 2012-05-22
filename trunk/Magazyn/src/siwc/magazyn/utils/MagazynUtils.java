@@ -26,6 +26,7 @@ public class MagazynUtils {
 	public static Color freeBoxBackround = Color.BLUE;
 	public static Color liftBackground = Color.RED;
 	public static Color busyBoxBackground = Color.YELLOW;
+	public static Color reservedBoxBackground = Color.RED;
 	public static int boxMovingSleepTime = 100;
 	public static int defaultFreeBoxes = 1;
 	

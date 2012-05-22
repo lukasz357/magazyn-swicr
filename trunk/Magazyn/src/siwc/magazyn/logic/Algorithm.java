@@ -108,6 +108,8 @@ public abstract class Algorithm {
 							if (magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar() == null)
 								Magazyn.dodajWpisDoKonsoli("We wskazanym polu nie ma juz towaru: "+magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getNazwa()+" !!!");
 							mapa.zmienKolorBoksu(pole.getNrRegalu(), pole.getZ(), pole.getPosition(), MagazynUtils.defaultBoxBackground);
+							mapa.zmienToolTipBoxu(pole.getNrRegalu(), pole.getZ(), pole.getPosition(), "Pusty");
+							
 							//else if (magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getIlosc() < 0) {
 							//	Magazyn.dodajWpisDoKonsoli("We wskazanym polu nie ma juz towaru: "+magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getNazwa()+" !!!");
 							//}

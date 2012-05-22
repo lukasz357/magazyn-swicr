@@ -548,12 +548,21 @@ public class Magazyn {
 		
 		panel_5 = new JPanel();
 		panel_5.setBackground(MagazynUtils.liftBackground);
-		panel_5.setBounds(377, 28, MagazynUtils.liftSizeX, MagazynUtils.liftSizeY);
+		panel_5.setBounds(516, 28, MagazynUtils.liftSizeX, MagazynUtils.liftSizeY);
 		panelLegenda.add(panel_5);
 
 		lblWzek = new JLabel("wózek");
-		lblWzek.setBounds(431, 50, 46, 14);
+		lblWzek.setBounds(544, 50, 46, 14);
 		panelLegenda.add(lblWzek);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(MagazynUtils.reservedBoxBackground);
+		panel_1.setBounds(377, 46, 18, 18);
+		panelLegenda.add(panel_1);
+		
+		JLabel lblBoksZarezerwowany = new JLabel("boks zarezerwowany");
+		lblBoksZarezerwowany.setBounds(403, 50, 131, 14);
+		panelLegenda.add(lblBoksZarezerwowany);
 		
 		
 		
