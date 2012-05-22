@@ -426,4 +426,5 @@ public class RegalPanel extends JPanel {
 	public String getFreeBoxKey(int level, boolean bottom) {
 		return getFreeBoxKey(getLevelMap(level), bottom);
 	}
+	
 }
