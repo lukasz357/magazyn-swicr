@@ -1,9 +1,9 @@
 #Regal; Pietro; Pozycja; nazwa; producent; kod, ilosc w jednej paczce - potrzebne zeby sumowac do listy towarów z całego magazynu
 #trololo 3:44
 1;0;A1;Stolek;StolekCORP;STC;5;
-1;0;A2;Stolek;StolekCORP;STC;5;
+#1;0;A2;Stolek;StolekCORP;STC;5;
 1;0;A3;Stolek;StolekCORP;STC;5;
-1;0;A4;Stolek;StolekCORP;STC;5;
+#1;0;A4;Stolek;StolekCORP;STC;5;
 1;0;A5;Stolek;StolekCORP;STC;5;
 1;0;A6;Stolek;StolekCORP;STC;5;
 1;0;A7;Stolek;StolekCORP;STC;5;
@@ -13,7 +13,7 @@
 1;0;A11;Stolek;StolekCORP;STC;5;
 1;0;A12;Stolek;StolekCORP;STC;5;
 1;0;A13;Stolek;StolekCORP;STC;5;
-1;0;A14;Stolek;StolekCORP;STC;5;
+#1;0;A14;Stolek;StolekCORP;STC;5;
 1;0;A15;Stolek;StolekCORP;STC;5;
 1;0;A16;Stolek;StolekCORP;STC;5;
 1;0;A17;Stolek;StolekCORP;STC;5;
@@ -22,7 +22,7 @@
 1;0;A20;Stolek;StolekCORP;STC;5;
 1;0;A21;Stolek;StolekCORP;STC;5;
 1;0;A22;Stolek;StolekCORP;STC;5;
-1;0;A23;Stolek;StolekCORP;STC;5;
+#1;0;A23;Stolek;StolekCORP;STC;5;
 1;0;A24;Stolek;StolekCORP;STC;5;
 1;0;A25;Stolek;StolekCORP;STC;5;
 1;0;A26;Stolek;StolekCORP;STC;5;
@@ -46,7 +46,7 @@
 1;0;B6;Stolek;StolekCORP;STC;5;
 1;0;B7;Stolek;StolekCORP;STC;5;
 1;0;B8;Stolek;StolekCORP;STC;5;
-1;0;B9;Stolek;StolekCORP;STC;5;
+#1;0;B9;Stolek;StolekCORP;STC;5;
 1;0;B10;Stolek;StolekCORP;STC;5;
 1;0;B11;Stolek;StolekCORP;STC;5;
 1;0;B12;Stolek;StolekCORP;STC;5;
@@ -85,7 +85,7 @@
 1;0;C7;Drzwi;DrzwiCORP;DC;5;
 1;0;C8;Drzwi;DrzwiCORP;DC;5;
 1;0;C9;Drzwi;DrzwiCORP;DC;5;
-1;0;C10;Drzwi;DrzwiCORP;DC;5;
+#1;0;C10;Drzwi;DrzwiCORP;DC;5;
 1;0;C11;Drzwi;DrzwiCORP;DC;5;
 1;0;C12;Drzwi;DrzwiCORP;DC;5;
 1;0;C13;Drzwi;DrzwiCORP;DC;5;
@@ -95,7 +95,7 @@
 1;0;C17;Drzwi;DrzwiCORP;DC;5;
 1;0;C18;Drzwi;DrzwiCORP;DC;5;
 1;0;C19;Drzwi;DrzwiCORP;DC;5;
-1;0;C20;Drzwi;DrzwiCORP;DC;5;
+#1;0;C20;Drzwi;DrzwiCORP;DC;5;
 1;0;C21;Drzwi;DrzwiCORP;DC;5;
 1;0;C22;Drzwi;DrzwiCORP;DC;5;
 1;0;C23;Drzwi;DrzwiCORP;DC;5;
@@ -128,7 +128,7 @@
 1;0;D12;Drzwi;DrzwiCorp;DC;5;
 1;0;D13;Drzwi;DrzwiCorp;DC;5;
 1;0;D14;Drzwi;DrzwiCorp;DC;5;
-1;0;D15;Drzwi;DrzwiCorp;DC;5;
+#1;0;D15;Drzwi;DrzwiCorp;DC;5;
 1;0;D16;Drzwi;DrzwiCorp;DC;5;
 1;0;D17;Drzwi;DrzwiCorp;DC;5;
 1;0;D18;Drzwi;DrzwiCorp;DC;5;
@@ -828,7 +828,7 @@
 2;0;B28;Polka wiszaca;PolkaCORP;PC;5;
 2;0;B29;Polka wiszaca;PolkaCORP;PC;5;
 2;0;B30;Polka wiszaca;PolkaCORP;PC;5;
-2;0;B31;Polka wiszaca;PolkaCORP;PC;5;
+#2;0;B31;Polka wiszaca;PolkaCORP;PC;5;
 2;0;B32;Polka wiszaca;PolkaCORP;PC;5;
 2;0;B33;Polka wiszaca;PolkaCORP;PC;5;
 2;0;B34;Polka wiszaca;PolkaCORP;PC;5;
@@ -847,7 +847,7 @@
 2;0;C9;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C10;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C11;Szafka stojaca;SzafkaCorp;SS;5;
-2;0;C12;Szafka stojaca;SzafkaCorp;SS;5;
+#2;0;C12;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C13;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C14;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C15;Szafka stojaca;SzafkaCorp;SS;5;
@@ -860,7 +860,7 @@
 2;0;C22;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C23;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C24;Szafka stojaca;SzafkaCorp;SS;5;
-2;0;C25;Szafka stojaca;SzafkaCorp;SS;5;
+#2;0;C25;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C26;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C27;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C28;Szafka stojaca;SzafkaCorp;SS;5;
@@ -870,7 +870,7 @@
 2;0;C32;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C33;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C34;Szafka stojaca;SzafkaCorp;SS;5;
-2;0;C35;Szafka stojaca;SzafkaCorp;SS;5;
+#2;0;C35;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C36;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C37;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;C38;Szafka stojaca;SzafkaCorp;SS;5;
@@ -894,7 +894,7 @@
 2;0;D18;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;D19;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;D20;Szafka stojaca;SzafkaCorp;SS;5;
-2;0;D21;Szafka stojaca;SzafkaCorp;SS;5;
+#2;0;D21;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;D22;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;D23;Szafka stojaca;SzafkaCorp;SS;5;
 2;0;D24;Szafka stojaca;SzafkaCorp;SS;5;
@@ -1617,7 +1617,7 @@
 3;0;C19;Mebel kuchenny;KuchenneCorp;KC;5;
 3;0;C20;Mebel kuchenny;KuchenneCorp;KC;5;
 3;0;C21;Mebel kuchenny;KuchenneCorp;KC;5;
-3;0;C22;Mebel kuchenny;KuchenneCorp;KC;5;
+#3;0;C22;Mebel kuchenny;KuchenneCorp;KC;5;
 3;0;C23;Mebel kuchenny;KuchenneCorp;KC;5;
 3;0;C24;Mebel kuchenny;KuchenneCorp;KC;5;
 3;0;C25;Mebel kuchenny;KuchenneCorp;KC;5;
@@ -1637,7 +1637,7 @@
 3;0;D1;Mebel kuchenny;KuchenneCorp;KC;5;
 3;0;D2;Mebel kuchenny;KuchenneCorp;KC;5;
 3;0;D3;Mebel kuchenny;KuchenneCorp;KC;5;
-3;0;D4;Mebel kuchenny;KuchenneCorp;KC;5;
+#3;0;D4;Mebel kuchenny;KuchenneCorp;KC;5;
 3;0;D5;Mebel kuchenny;KuchenneCorp;KC;5;
 3;0;D6;Mebel kuchenny;KuchenneCorp;KC;5;
 3;0;D7;Mebel kuchenny;KuchenneCorp;KC;5;
