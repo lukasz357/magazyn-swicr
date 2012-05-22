@@ -29,6 +29,21 @@ public class MagazynTO {
 		return list;
 	}
 	
+	public ArrayList<String>getDokladnePozycjeByKod(String kod) {
+		ArrayList<String> list = new ArrayList<>();
+		for(PoleTO[][] tab : pietra.values()){
+			for(int i = 0; i < getWielkoscXMagazynu(); i++)
+				for(int j = 0; j < getWielkoscYMagazynu(); j++){
+					TowarTO t = tab[i][j].getTowar();
+					if(t != null && t.getKodTowaru() != null)
+						if(t.getKodTowaru().equals(kod) && !t.isZarezerwowany())
+							list.add(tab[i][j].getNrRegalu()+":"+tab[i][j].getPietro()+":"+tab[i][j].getPosition());
+				}
+		}
+		
+		return list;
+	}
+	
 	public int getLiczbaWszystkichProduktow(){
 		int liczba = 0;
 		for(PoleTO[][] tab : pietra.values()){

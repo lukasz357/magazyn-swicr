@@ -15,7 +15,8 @@ import siwc.magazyn.dto.ListTowarTO;
 
 public abstract class SelectProductBox extends javax.swing.JDialog{
 	public abstract void dodajTowarAction();
-	
+	public abstract void comboBoxChangeAction();
+	public abstract void comboBoxPozycjeInitAction();
 	
 	public SelectProductBox(java.awt.Frame parent, boolean modal, HashMap<String, ListTowarTO> towaryNaMagazynie){
         super(parent, modal);
@@ -39,10 +40,18 @@ public abstract class SelectProductBox extends javax.swing.JDialog{
 	private void initComponents(HashMap<String, ListTowarTO> towaryNaMagazynie){
 		setTitle("Wybierz towar");
 
+		comboBoxPozycje = new JComboBox<>();
+		
 		comboBoxTowary = new JComboBox<ListTowarTO>();
 		for(ListTowarTO lt : towaryNaMagazynie.values()){
 			comboBoxTowary.addItem(lt);
 		}
+		comboBoxTowary.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		        comboBoxChangeAction();
+		    }
+		});
+		comboBoxPozycjeInitAction();
 		
 		btnDodaj = new JButton("Dodaj");
 		btnDodaj.addActionListener(new ActionListener() {
@@ -57,6 +66,7 @@ public abstract class SelectProductBox extends javax.swing.JDialog{
 		JLabel lblTowar = new JLabel("Towar:");
 		
 		JLabel lblIlePaczek = new JLabel("Ile paczek:");
+		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -66,7 +76,7 @@ public abstract class SelectProductBox extends javax.swing.JDialog{
 							.addContainerGap()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(comboBoxTowary, 0, 190, Short.MAX_VALUE)
+									.addComponent(comboBoxTowary, 0, 200, Short.MAX_VALUE)
 									.addGap(38))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(lblTowar)
@@ -75,9 +85,10 @@ public abstract class SelectProductBox extends javax.swing.JDialog{
 							.addGap(139)
 							.addComponent(btnDodaj, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(lblIlePaczek)
-						.addComponent(textFieldIlePaczek, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textFieldIlePaczek)
+						.addComponent(comboBoxPozycje, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -92,8 +103,10 @@ public abstract class SelectProductBox extends javax.swing.JDialog{
 						.addComponent(comboBoxTowary, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textFieldIlePaczek, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnDodaj, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnDodaj, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBoxPozycje, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(25, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
 	}
@@ -102,4 +115,5 @@ public abstract class SelectProductBox extends javax.swing.JDialog{
 	protected JTextField textFieldIlePaczek;
 	protected JButton btnDodaj;
 	protected JComboBox<ListTowarTO> comboBoxTowary;
+	protected JComboBox<String> comboBoxPozycje;
 }

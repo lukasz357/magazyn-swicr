@@ -997,6 +997,26 @@ public class Magazyn {
 								}
 			
 							}
+
+							@Override
+							public void comboBoxChangeAction() {
+								ListTowarTO lt = (ListTowarTO)comboBoxTowary.getSelectedItem();
+								ArrayList<String> pozycje = magazyn.getDokladnePozycjeByKod(lt.getKodTowaru());
+								comboBoxPozycje.removeAllItems();
+								for(String s : pozycje) {
+									comboBoxPozycje.addItem(s);
+								}
+							}
+
+							@Override
+							public void comboBoxPozycjeInitAction() {
+								ListTowarTO lt = (ListTowarTO)comboBoxTowary.getSelectedItem();
+								ArrayList<String> pozycje = magazyn.getDokladnePozycjeByKod(lt.getKodTowaru());
+								comboBoxPozycje.removeAllItems();
+								for(String s : pozycje) {
+									comboBoxPozycje.addItem(s);
+								}
+							}
 						};
 						
 					}
