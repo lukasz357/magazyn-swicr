@@ -29,7 +29,6 @@ public abstract class Algorithm {
 	private Long timeStartTowar;
 	private Long timeEndTowar;
 	
-	private int jakiSleep = 1200;
 	private int buforNaRealizacjeZamowienia = 4000;//ile minut przed potrzebnym czasem zaczac wykonywac zamowienie
 	private int stop = 0;
 	
@@ -179,7 +178,7 @@ public abstract class Algorithm {
 						//log.info("Lece w dol"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftDown();
-							MagazynUtils.sleep(jakiSleep);
+							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 						} catch (Exception e) {
 							//log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
@@ -192,7 +191,7 @@ public abstract class Algorithm {
 						//log.info("Lece w gore"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftUp();
-							MagazynUtils.sleep(jakiSleep);
+							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 						} catch (Exception e) {
 							//log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
@@ -205,7 +204,7 @@ public abstract class Algorithm {
 						//log.info("Lece w prawo"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftRight();
-							MagazynUtils.sleep(jakiSleep);
+							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 						} catch (Exception e) {
 							log.info("Mapa liftY: "+mapa.getLiftY()+" yto: "+yTo);
 							if (mapa.getLiftY()-yTo <= 0)
@@ -224,7 +223,7 @@ public abstract class Algorithm {
 						//log.info("Lece w lewo"+"-- Obecna pozycja: "+Math.abs(mapa.getLiftX())+", "+Math.abs(mapa.getLiftY()));
 						try {
 							mapa.moveLiftLeft();
-							MagazynUtils.sleep(jakiSleep);
+							MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 						} catch (Exception e) {
 							//log.warn("PANIE GDZIE PAN JEDZIESZ?! chce jechac na: "+xTo+", "+yTo);
 							break;
@@ -243,17 +242,17 @@ public abstract class Algorithm {
 		for (int i=0; i < (xWozka - xTo); i++) {
 			try {
 				mapa.moveLiftLeft();
-				MagazynUtils.sleep(jakiSleep);
+				MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 			} catch (Exception e) {
 				log.info("Przyrznalem w polke przy cofaniu, sprobuje w dol.");
 				try {
 					mapa.moveLiftDown();
-					MagazynUtils.sleep(jakiSleep);
+					MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 				} catch (Exception f) {
 					log.info("Przyrznalem w polke przy cofaniu, sprobuje w gore.");
 					try {
 						mapa.moveLiftUp();
-						MagazynUtils.sleep(jakiSleep);
+						MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
 					} catch (Exception g) {
 						log.info("Zaklinowalem sie, nie moge sie wycofac.");
 					}
@@ -335,16 +334,6 @@ public abstract class Algorithm {
 		timeEndTowar = System.currentTimeMillis();
 		log.info("Stopuje mierzenie czasu towaru: "+timeEndTowar+". Zmierzony czas: "+((timeEndTowar-timeStartTowar)/100F)+" sekund.");
 		return ((timeEndTowar-timeStartTowar)/100F)+" sekund";
-	}
-
-
-	public int getJakiSleep() {
-		return jakiSleep;
-	}
-
-
-	public void setJakiSleep(int jakiSleep) {
-		this.jakiSleep = jakiSleep;
 	}
 
 

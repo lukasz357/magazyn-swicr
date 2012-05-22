@@ -837,7 +837,7 @@ public class Magazyn {
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.setBorder(new TitledBorder(null, "Czas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_7.setBounds(1034, 0, 212, 70);
+		panel_7.setBounds(812, 0, 434, 70);
 		frmSystemyWbudowaneI.getContentPane().add(panel_7);
 		zegar = new Clock();
 		zegar.setFont(new Font("SansSerif", Font.PLAIN, 30));
@@ -854,50 +854,34 @@ public class Magazyn {
 	            if(value.equals("Real")){
 	            	zegar.rescaleTime(1000);
 	            	MagazynUtils.boxMovingSleepTime = 1200;
-	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(1200);
 	            }
 	            else if(value.equals("5x")){
 	            	zegar.rescaleTime(200);
 	            	MagazynUtils.boxMovingSleepTime = 240;
-	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(240);
 	            }
 	            else if(value.equals("10x")){
 	            	zegar.rescaleTime(100);
 	            	MagazynUtils.boxMovingSleepTime = 120;
-	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(120);
 	            }
 	            else if(value.equals("20x")){
 	            	zegar.rescaleTime(50);
 	            	MagazynUtils.boxMovingSleepTime = 60;
-	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(60);
 	            }
 	            else if(value.equals("30x")){
 	            	zegar.rescaleTime(33);
 	            	MagazynUtils.boxMovingSleepTime = 40;
-	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(40);
 	            }
 	            else if(value.equals("50x")){
 	            	zegar.rescaleTime(20);
 	            	MagazynUtils.boxMovingSleepTime = 24;
-	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(24);
 	            }
 	            else if(value.equals("100x")){
 	            	zegar.rescaleTime(10);
 	            	MagazynUtils.boxMovingSleepTime = 12;
-	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(12);
 	            }
 	            else if(value.equals("1000x")){
 	            	zegar.rescaleTime(1);
 	            	MagazynUtils.boxMovingSleepTime = 1;
-	            	if(algorithm != null)
-	            		algorithm.setJakiSleep(1);
 	            }
 	            else {
 	            	log.error("Błąd przy reskalowaniu zegara");
@@ -907,20 +891,20 @@ public class Magazyn {
 		GroupLayout gl_panel_7 = new GroupLayout(panel_7);
 		gl_panel_7.setHorizontalGroup(
 			gl_panel_7.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_7.createSequentialGroup()
-					.addContainerGap()
+				.addGroup(Alignment.TRAILING, gl_panel_7.createSequentialGroup()
+					.addContainerGap(130, Short.MAX_VALUE)
 					.addComponent(zegar, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(spinnerScaleTime, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(251, Short.MAX_VALUE))
+					.addGap(103))
 		);
 		gl_panel_7.setVerticalGroup(
-			gl_panel_7.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_7.createSequentialGroup()
+			gl_panel_7.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_panel_7.createSequentialGroup()
 					.addGroup(gl_panel_7.createParallelGroup(Alignment.TRAILING)
 						.addComponent(spinnerScaleTime, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
 						.addComponent(zegar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(27))
+					.addGap(2))
 		);
 		panel_7.setLayout(gl_panel_7);
 		btnDodajZamowienie.addActionListener(new ActionListener() {
@@ -1120,6 +1104,7 @@ public class Magazyn {
 		JPanel panel_8 = new JPanel();
 		panel_8.setBorder(new TitledBorder(null, "Liczba wolnych box\u00F3w", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_8.setBounds(812, 0, 212, 70);
+		panel_8.setVisible(false);
 		frmSystemyWbudowaneI.getContentPane().add(panel_8);
 		
 		radioButton1Box = new JRadioButton("1", true);
