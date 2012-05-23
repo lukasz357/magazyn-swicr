@@ -666,6 +666,12 @@ public class Magazyn {
 					if(towary != null && towary.size() > 0){
 						for(TowarTO t : towary){
 							t.setZarezerwowany(false);
+							PoleTO p = znajdzPolePoId(t.getIdBoxu());
+							int nrRg = p.getNrRegalu();
+							int nrPtr = p.getPietro();
+							String position = p.getPosition();
+							regaly.get(nrRg).zmienKolorBoksu(nrPtr, position, MagazynUtils.busyBoxBackground);
+							regaly.get(nrRg).zmienToolTipTextBoxu(nrPtr, position, "Pusty");
 							if(towaryNaMagazynie.get(t.getKodTowaru()) == null){
 								towaryNaMagazynie.put(t.getKodTowaru(), new ListTowarTO(t));
 							}
@@ -1538,5 +1544,24 @@ public class Magazyn {
 			liczba += lt.getIlePaczek();
 		}
 		return liczba;
+	}
+	
+	private PoleTO znajdzPolePoId(Integer id) {
+		if (id != null) {
+			
+			for(int i=0; i < magazyn.getPietra().keySet().size(); i++) {
+				for (int j=0; j < magazyn.getWielkoscXMagazynu(); j++) {
+					for (int k=0; k < magazyn.getWielkoscYMagazynu(); k++) {
+						if (magazyn.getPietra().get(i)[j][k].getId() != null &&magazyn.getPietra().get(i)[j][k].getId().equals(id)) {
+							magazyn.getPietra().get(i)[j][k].setZ(i);
+							return magazyn.getPietra().get(i)[j][k];
+						}
+					}
+				}
+			}
+			return null;
+		}
+		else
+			return null;
 	}
 }
