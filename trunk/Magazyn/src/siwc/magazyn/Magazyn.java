@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
@@ -61,6 +62,7 @@ import siwc.magazyn.dto.TowarTO;
 import siwc.magazyn.dto.ZamowienieTO;
 import siwc.magazyn.logic.Algorithm;
 import siwc.magazyn.logic.IOLogic;
+import siwc.magazyn.panels.BoxPanel;
 import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.thirdparty.Clock;
@@ -250,6 +252,9 @@ public class Magazyn {
 					produktyListModel.clear();
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
+					
+					ustawWolnePola();
+					
 					magazyn = logic.convertToMagazynTO(regaly);
 					dodajProdukty(towaryNaMagazynie);
 					saveFile.setEnabled(true);
@@ -267,6 +272,8 @@ public class Magazyn {
 					saveAsFile.setEnabled(true);
 				}
 			}
+
+		
 		});
 		readProductsMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
 		menuPlik.add(readProductsMenuItem);
@@ -745,6 +752,7 @@ public class Magazyn {
 					produktyListModel.clear();
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
+					ustawWolnePola();
 					magazyn = logic.convertToMagazynTO(regaly);
 					dodajProdukty(towaryNaMagazynie);
 					saveFile.setEnabled(true);
@@ -1571,5 +1579,21 @@ public class Magazyn {
 		}
 		else
 			return null;
+	}
+	
+	private void ustawWolnePola() {
+		for (int i = 0; i < regaly.size(); i++) {
+			RegalPanel rp = regaly.get(i);
+			for (int j = 0; j < MagazynUtils.liczbaPieter; j++) {
+				Set<String> positions = rp.getLevelMap(j).keySet();
+				for (String key : positions) {
+					BoxPanel bp = rp.getLevelMap(j).get(key);
+					if (bp.getBackground().equals(MagazynUtils.defaultBoxBackground))
+						if (key.startsWith("A") || key.startsWith("D"))
+							mapa.zmienKolorBoksu(i, j, key, MagazynUtils.freeBoxBackround);
+				}
+			}
+		}
+
 	}
 }
