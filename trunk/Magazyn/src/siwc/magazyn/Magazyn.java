@@ -732,14 +732,6 @@ public class Magazyn {
 							error +="Na wybranej pozycji znajduje się zarezerwowany towar.";
 							OK = false;
 						}
-						int ilosc = -1;
-						try {
-							ilosc = Integer.parseInt(textFieldIloscWPaczce.getText());
-						}catch(NumberFormatException e){
-							error += "Nieprawidlowa liczba w polu \"Ilosc w paczce\"\n";
-							OK = false;
-						}
-
 						if(!OK) {
 							JOptionPane.showMessageDialog(frmSystemyWbudowaneI, error,
 		                    "Błąd", JOptionPane.ERROR_MESSAGE);
@@ -757,7 +749,7 @@ public class Magazyn {
 								towar.setNazwa(nazwa);
 								towar.setProducent(producent);
 								towar.setKodTowaru(kodTowaru);
-								towar.setIlosc(ilosc);
+//								towar.setIlosc(ilosc);
 							}
 							
 							rp.zmienToolTipTextBoxu(pietro, pozycja, "<html>"+pozycja+"<br>"+towar.getOpis());
@@ -774,7 +766,7 @@ public class Magazyn {
 							dodajProdukty(towaryNaMagazynie);
 							zwiekszLiczbePrzedmiotow();
 							ustalLiczbeDostepnychProduktow(getLiczbaDostepnychProduktow());
-							dodajWpisDoKonsoli("Dodano produkt: "+kodTowaru + " - "+nazwa + " 1 x "+ilosc);
+							dodajWpisDoKonsoli("Dodano produkt: "+kodTowaru + " - "+nazwa + " 1 szt.");
 							closeAddPBox();
 							
 							if(towaryNaMagazynie.size() > 0){
@@ -1346,7 +1338,7 @@ public class Magazyn {
 	public static void dodajProdukty(HashMap<String, ListTowarTO> listaProduktow){
 		if(listaProduktow != null){
 			for(ListTowarTO t: listaProduktow.values())
-				produktyListModel.addElement(t.getKodTowaru()+": "+t.getNazwa() + " - "+t.getIlePaczek() +" x " + t.getIlosc() +" szt.");
+				produktyListModel.addElement(t.getKodTowaru()+": "+t.getNazwa() + " - "+t.getIlePaczek() +" szt.");
 			listProdukty.setModel(produktyListModel);
 		}else{
 			log.error("pusta lista produktow");
@@ -1357,7 +1349,7 @@ public class Magazyn {
 	public static void aktualizujProdukty(HashMap<String, ListTowarTO> towaryNaMagazynie) {
 		produktyListModel.clear();
 		for(ListTowarTO t : towaryNaMagazynie.values())				
-			produktyListModel.addElement(t.getKodTowaru()+": "+t.getNazwa() + " - "+t.getIlePaczek() +" x " + t.getIlosc() +" szt.");
+			produktyListModel.addElement(t.getKodTowaru()+": "+t.getNazwa() + " - "+t.getIlePaczek() +" szt.");
 		listProdukty.setModel(produktyListModel);
 	}
 
@@ -1424,7 +1416,7 @@ public class Magazyn {
 					String text = "<html>Elementy zamówienia:<br>";
 					int idx = 1;
 					for(ListTowarTO t : zamowienie.getTowaryDoListy()){
-						text += idx+". "+t.getKodTowaru() + ": " + t.getNazwa() + " - " + t.getIlePaczek() + " x " + t.getIlosc() + " szt.<br>";
+						text += idx+". "+t.getKodTowaru() + ": " + t.getNazwa() + " - " + t.getIlePaczek() + " szt.<br>";
 						idx++;
 					}
 					text += "</html>";

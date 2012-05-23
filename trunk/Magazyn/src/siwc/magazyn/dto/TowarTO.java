@@ -6,7 +6,6 @@ public class TowarTO {
 	
 	String nazwa;
 	String producent;
-	Integer ilosc;
 	String kodTowaru;
 	boolean zarezerwowany;
 	
@@ -21,7 +20,6 @@ public class TowarTO {
 	public TowarTO(TowarTO towar) {
 		this.nazwa = towar.getNazwa();
 		this.producent = towar.getProducent();
-		this.ilosc = towar.getIlosc();
 		this.kodTowaru = towar.getKodTowaru();
 		this.zarezerwowany = towar.isZarezerwowany();
 	}
@@ -30,7 +28,6 @@ public class TowarTO {
 		String opis = "";//"<html>";
 		opis += "Kod towaru: "+kodTowaru+"<br>";
 		opis += "Nazwa: "+nazwa+"<br>";
-		opis += "Ilosc: "+ilosc+"<br>";
 		opis += "Producent: "+producent;
 		opis += "</html>";
 		
@@ -51,14 +48,6 @@ public class TowarTO {
 
 	public void setProducent(String producent) {
 		this.producent = producent;
-	}
-
-	public Integer getIlosc() {
-		return ilosc;
-	}
-
-	public void setIlosc(Integer ilosc) {
-		this.ilosc = ilosc;
 	}
 
 	public String getKodTowaru() {
@@ -88,7 +77,7 @@ public class TowarTO {
 	@Override
 	public String toString() {
 		return "TowarTO [idBoxu=" + idBoxu + ", nazwa=" + nazwa
-				+ ", producent=" + producent + ", ilosc=" + ilosc
+				+ ", producent=" + producent
 				+ ", kodTowaru=" + kodTowaru + ", zarezerwowany="
 				+ zarezerwowany + "]";
 	}

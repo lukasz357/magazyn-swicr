@@ -59,7 +59,6 @@ public class IOLogic {
 					String nazwa = tLine[3].trim();
 					String producent = tLine[4].trim();
 					String kodTowaru = tLine[5].trim();
-					int ilosc = Integer.parseInt(tLine[6].trim());
 					
 					if(regalID >= MagazynUtils.liczbaRegalow || pietro >= MagazynUtils.liczbaPieter) 
 						continue;
@@ -76,7 +75,6 @@ public class IOLogic {
 						towar.setNazwa(nazwa);
 						towar.setProducent(producent);
 						towar.setKodTowaru(kodTowaru);
-						towar.setIlosc(ilosc);
 						towar.setZarezerwowany(false);
 					}
 					

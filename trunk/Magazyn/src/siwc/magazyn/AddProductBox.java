@@ -91,11 +91,6 @@ public abstract class AddProductBox extends javax.swing.JDialog {
         
         lblKod = new JLabel("Kod:");
         
-        textFieldIloscWPaczce = new JTextField();
-        textFieldIloscWPaczce.setColumns(10);
-        
-        lblIloscWPaczce = new JLabel("Ilość w jednej paczce:");
-        
         comboBoxPositionA_C = new JComboBox<String>();
         comboBoxPositionA_C.setModel(new DefaultComboBoxModel<String>(new String[] {"A", "B", "C"}));
         
@@ -106,15 +101,14 @@ public abstract class AddProductBox extends javax.swing.JDialog {
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addGap(39)
+        			.addGap(76)
         			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
         				.addComponent(lblNumerRegalu)
         				.addComponent(lblNumerPietra)
         				.addComponent(lblPozycja)
         				.addComponent(lblNazwa)
         				.addComponent(lblProducent)
-        				.addComponent(lblKod)
-        				.addComponent(lblIloscWPaczce))
+        				.addComponent(lblKod))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(layout.createSequentialGroup()
@@ -130,21 +124,17 @@ public abstract class AddProductBox extends javax.swing.JDialog {
         							.addPreferredGap(ComponentPlacement.RELATED)
         							.addComponent(comboBoxPosition1_38, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         							.addGap(196))
-        						.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        							.addGroup(layout.createSequentialGroup()
-        								.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        									.addComponent(textFieldNazwa, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-        									.addComponent(textFieldProducent, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-        									.addComponent(textFieldKod, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-        									.addGroup(layout.createSequentialGroup()
-        										.addGap(98)
-        										.addComponent(okButton)
-        										.addPreferredGap(ComponentPlacement.RELATED)
-        										.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)))
-        								.addGap(32))
-        							.addGroup(layout.createSequentialGroup()
-        								.addComponent(textFieldIloscWPaczce, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-        								.addContainerGap()))))))
+        						.addGroup(layout.createSequentialGroup()
+        							.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        								.addComponent(textFieldNazwa, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+        								.addComponent(textFieldProducent, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+        								.addComponent(textFieldKod, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+        								.addGroup(layout.createSequentialGroup()
+        									.addGap(98)
+        									.addComponent(okButton)
+        									.addPreferredGap(ComponentPlacement.RELATED)
+        									.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)))
+        							.addGap(32))))))
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
@@ -174,17 +164,10 @@ public abstract class AddProductBox extends javax.swing.JDialog {
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(textFieldKod, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         				.addComponent(lblKod))
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(layout.createSequentialGroup()
-        					.addGap(48)
-        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(cancelButton)
-        						.addComponent(okButton)))
-        				.addGroup(layout.createSequentialGroup()
-        					.addPreferredGap(ComponentPlacement.RELATED)
-        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        						.addComponent(lblIloscWPaczce)
-        						.addComponent(textFieldIloscWPaczce, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+        			.addGap(48)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(cancelButton)
+        				.addComponent(okButton))
         			.addContainerGap())
         );
         layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {okButton, cancelButton});
@@ -206,14 +189,12 @@ public abstract class AddProductBox extends javax.swing.JDialog {
     protected javax.swing.JTextField textFieldNazwa;
     protected JTextField textFieldProducent;
     protected JTextField textFieldKod;
-    protected JTextField textFieldIloscWPaczce;
     protected JLabel lblNumerRegalu;
     protected JLabel lblNumerPietra;
     protected JLabel lblNazwa;
     protected JLabel lblPozycja;
     protected JLabel lblProducent;
     protected JLabel lblKod;
-    protected JLabel lblIloscWPaczce;
     protected JSpinner spinnerNumerRegalu;
     protected JSpinner spinnerNumerPietra;
     protected JComboBox<String> comboBoxPositionA_C;
