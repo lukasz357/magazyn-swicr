@@ -188,6 +188,9 @@ public class IOLogic {
 						}else if(towar == null || towar.getKodTowaru() == null) {
 							log.error("Nullowy towar: Regał: "+nrRg +" Pietro: "+nrPtr +" Pozycja: "+pozycja);
 							continue;
+						}else if(towar.isZarezerwowany()){
+							log.error("Towar na pozycji: Regał: "+nrRg +" Pietro: "+nrPtr +" Pozycja: "+pozycja + " był już zarezerwowany. Pomijam..");
+							continue;
 						}else{
 							towar.setZarezerwowany(true);
 							towaryNaMagazynie.get(kodTowaru).zmniejszIlosc();
