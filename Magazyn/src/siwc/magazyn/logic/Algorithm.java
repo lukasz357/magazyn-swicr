@@ -91,6 +91,7 @@ public abstract class Algorithm {
 						
 						if (pole != null) {
 							Magazyn.dodajWpisDoKonsoli("Wyruszam po towar: "+towar.getNazwa());
+							mapa.zmienKolorBoksu(pole.getNrRegalu(), pole.getPietro(), pole.getPosition(), MagazynUtils.targetBoxBacground);
 							przemiescWozek(pole.getX(), pole.getY(), pole.getZ(), pole.getPosition());
 							if (!pole.isMovable()) {
 								try {
