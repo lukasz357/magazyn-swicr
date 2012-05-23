@@ -75,6 +75,7 @@ public class Magazyn {
 	private JMenuItem saveAsFile;
 	private JMenuItem closeWindow;
 	private JMenuItem aboutBox;
+	private JMenuItem helpBox;
 	private JMenu mnZmienStyl;
 	private JMenu mnPomoc;
 	private JFileChooser fileChooser;
@@ -356,7 +357,14 @@ public class Magazyn {
 			}
 		});
 		mnPomoc.add(aboutBox);
-		
+		mnPomoc.addSeparator();
+		helpBox = new JMenuItem("Pomoc");
+		helpBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new HelpBox(frmSystemyWbudowaneI, true);
+			}
+		});
+		mnPomoc.add(helpBox);
 
 		/* STOP MAGAZYNU */
 		btnStart = new JButton("START");
