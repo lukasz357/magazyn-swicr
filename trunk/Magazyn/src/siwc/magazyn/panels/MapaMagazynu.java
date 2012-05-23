@@ -74,7 +74,13 @@ public class MapaMagazynu extends JPanel {
 	}
 
 	public void zmienKolorBoksu(int numer, int level, String position, Color c) {
-			regaly.get(numer).zmienKolorBoksu(level, position, c);
+		RegalPanel r = regaly.get(numer);
+		r.zmienKolorBoksu(level, position, c);
+		BoxPanel bp = r.getBoxPanel(level, position);
+		if(c.equals(MagazynUtils.defaultBoxBackground) || c.equals(MagazynUtils.freeBoxBackround)) {
+			bp.getPole().setMovable(true);
+			bp.setFree(true);
+		}
 	}
 	
 	public void zmienToolTipBoxu(int numer, int level, String position, String toolTipText) {
