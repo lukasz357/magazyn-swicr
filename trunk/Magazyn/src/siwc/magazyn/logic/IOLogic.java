@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
@@ -162,6 +161,8 @@ public class IOLogic {
 				zamowienie.setNumerZamowienia(index);
 				while (!(itemLine = in.readLine()).equals("$") && itemLine != null) {
 					tLine = null;
+					if (itemLine.startsWith("#") || itemLine.equals("")) // komentarz - pusta linia
+						continue;
 					if (itemLine.contains(";"))
 						tLine = itemLine.split(";");
 					else if (itemLine.contains(","))
@@ -181,10 +182,18 @@ public class IOLogic {
 						int nrRg = Integer.parseInt(nrRegalu);
 						int nrPtr = Integer.parseInt(nrPietra);
 						TowarTO towar = regaly.get(nrRg - 1).getTowar(nrPtr, pozycja);
-						towar.setZarezerwowany(true);
-						towaryNaMagazynie.get(kodTowaru).zmniejszIlosc();
-						zamowienie.getTowary().add(towar);
-						regaly.get(nrRg - 1).zmienKolorBoksu(nrPtr, pozycja, MagazynUtils.reservedBoxBackground);
+						if(regaly.get(nrRg - 1).getBoxColor(nrPtr, pozycja).equals(MagazynUtils.freeBoxBackround)) {
+							log.error("Tam na pewno nie ma towaru - wolny box: Regał: "+nrRg +" Pietro: "+nrPtr +" Pozycja: "+pozycja);
+							continue;
+						}else if(towar == null || towar.getKodTowaru() == null) {
+							log.error("Nullowy towar: Regał: "+nrRg +" Pietro: "+nrPtr +" Pozycja: "+pozycja);
+							continue;
+						}else{
+							towar.setZarezerwowany(true);
+							towaryNaMagazynie.get(kodTowaru).zmniejszIlosc();
+							zamowienie.getTowary().add(towar);
+							regaly.get(nrRg - 1).zmienKolorBoksu(nrPtr, pozycja, MagazynUtils.reservedBoxBackground);
+						}
 					} catch (NumberFormatException e) {
 						e.printStackTrace();
 					}
