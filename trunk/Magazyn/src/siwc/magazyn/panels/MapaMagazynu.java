@@ -193,7 +193,7 @@ public class MapaMagazynu extends JPanel {
 	public void gonZBoksem(int regal, int level) throws Exception {
 		RegalPanel r = regaly.get(regal);
 		if (r.getLiczbaPustychBoksow() == 1) {
-			String boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
+			String boxPosition = r.getFreeBoxKey(level, lift.getX()/MagazynUtils.boxSize, lift.getY()/MagazynUtils.boxSize);
 			String destination = null;
 			int boxSize = MagazynUtils.boxSize;
 			int dstCol = lift.getX() / boxSize - MagazynUtils.regalX/boxSize;
