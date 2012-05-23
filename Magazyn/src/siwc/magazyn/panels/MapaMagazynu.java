@@ -77,9 +77,12 @@ public class MapaMagazynu extends JPanel {
 		RegalPanel r = regaly.get(numer);
 		r.zmienKolorBoksu(level, position, c);
 		BoxPanel bp = r.getBoxPanel(level, position);
-		if(c.equals(MagazynUtils.defaultBoxBackground) || c.equals(MagazynUtils.freeBoxBackround)) {
-			bp.getPole().setMovable(true);
-			bp.setFree(true);
+		if (position.startsWith("A") || position.startsWith("D")) {
+
+			if (c.equals(MagazynUtils.defaultBoxBackground) || c.equals(MagazynUtils.freeBoxBackround)) {
+				bp.getPole().setMovable(true);
+				bp.setFree(true);
+			}
 		}
 	}
 	
