@@ -202,17 +202,18 @@ public class MapaMagazynu extends JPanel {
 			int dolRegalu = (MagazynUtils.getRegalYPosition(regal) / boxSize)+MagazynUtils.rzedowWRegale;
 			System.out.println("Regal: " + regal + " gora: " + goraRegalu + " dol: " + dolRegalu + " " + dstCol );
 			if (dstRow + 2 == goraRegalu) // winda od gory
-				destination = "A" + (dstCol);
+				destination = "A" + (dstCol+1);
 			else if (dstRow == dolRegalu) {
-				destination = "D" + (dstCol);
+				destination = "D" + (dstCol+1);
 			} else
 				throw new Exception("Nie udalo sie przydzielic literki do " + dstRow);
 
-			dstCol = MagazynUtils.convertToColumn(destination)+1;
+			dstCol = MagazynUtils.convertToColumn(destination);
 			dstRow = MagazynUtils.convertToRow(destination);
 
 			int boxCol = MagazynUtils.convertToColumn(boxPosition);
 			int boxRow = MagazynUtils.convertToRow(boxPosition);
+			System.out.println(boxPosition + " " + destination);
 			if (!boxPosition.equals(destination)) {
 				boolean czyIscWLewo = czyIscWLewo(dstRow, dstCol, boxRow, boxCol);
 				System.out.println(boxCol + " " + boxRow + " " + dstCol + " " + dstRow);
