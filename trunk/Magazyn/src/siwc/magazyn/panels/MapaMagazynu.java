@@ -200,11 +200,11 @@ public class MapaMagazynu extends JPanel {
 			int dstRow = lift.getY() / boxSize;
 			int goraRegalu = MagazynUtils.getRegalYPosition(regal) / boxSize;
 			int dolRegalu = (MagazynUtils.getRegalYPosition(regal) / boxSize)+MagazynUtils.rzedowWRegale;
-			System.out.println("Regal: " + regal + " gora: " + goraRegalu + " dol: " + dolRegalu );
+			System.out.println("Regal: " + regal + " gora: " + goraRegalu + " dol: " + dolRegalu + " " + dstCol );
 			if (dstRow + 2 == goraRegalu) // winda od gory
-				destination = "A" + (dstCol+1);
+				destination = "A" + (dstCol);
 			else if (dstRow == dolRegalu) {
-				destination = "D" + (dstCol+1);
+				destination = "D" + (dstCol);
 			} else
 				throw new Exception("Nie udalo sie przydzielic literki do " + dstRow);
 
