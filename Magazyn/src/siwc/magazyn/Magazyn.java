@@ -69,7 +69,7 @@ public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
 	private JFrame frmSystemyWbudowaneI;
 	private JMenuItem saveFile;
-	private JMenuItem openFile;
+	private JMenuItem readProductsMenuItem;
 	private JMenuItem saveAsFile;
 	private JMenuItem closeWindow;
 	private JMenuItem aboutBox;
@@ -236,24 +236,38 @@ public class Magazyn {
 
 		mapa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));		
 		
-		openFile = new JMenuItem("Otwórz plik");
-		openFile.addActionListener(new ActionListener() {
+		readProductsMenuItem = new JMenuItem("Wczytaj produkty");
+		readProductsMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int result = fileChooser.showOpenDialog(frmSystemyWbudowaneI);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
 					IOLogic logic = new IOLogic();
+					//Wyczyszczenie poprzednich produktów
+					towaryNaMagazynie.clear();
+					produktyListModel.clear();
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
 					magazyn = logic.convertToMagazynTO(regaly);
 					dodajProdukty(towaryNaMagazynie);
 					saveFile.setEnabled(true);
 					saveAsFile.setEnabled(true);
+					dodajWpisDoKonsoli("Wczytano produkty z pliku : " + fileChooser.getSelectedFile());
+					if(towaryNaMagazynie.size() > 0){
+						btnDodajZamowienie.setEnabled(true);
+						btnWczytajZamowienia.setEnabled(true);
+						btnDodajZamowienie.setToolTipText("Dodaj zamówienie");
+						btnWczytajZamowienia.setToolTipText("Wczytaj zamówienia z pliku");
+					}
+					ustalLiczbePrzedmiotow(magazyn.getLiczbaWszystkichProduktow());
+					ustalLiczbeDostepnychProduktow(getLiczbaDostepnychProduktow());
+					saveFile.setEnabled(true);
+					saveAsFile.setEnabled(true);
 				}
 			}
 		});
-		openFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
-		menuPlik.add(openFile);
+		readProductsMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+		menuPlik.add(readProductsMenuItem);
 		menuPlik.addSeparator();
 
 		saveFile = new JMenuItem("Zapisz");
@@ -687,6 +701,9 @@ public class Magazyn {
 
 				if (result == JFileChooser.APPROVE_OPTION) {
 					IOLogic logic = new IOLogic();
+					//Wyczyszczenie poprzednich produktów
+					towaryNaMagazynie.clear();
+					produktyListModel.clear();
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
 					magazyn = logic.convertToMagazynTO(regaly);
@@ -770,7 +787,6 @@ public class Magazyn {
 								towar.setNazwa(nazwa);
 								towar.setProducent(producent);
 								towar.setKodTowaru(kodTowaru);
-//								towar.setIlosc(ilosc);
 							}
 							
 							rp.zmienToolTipTextBoxu(pietro, pozycja, "<html>"+pozycja+"<br>"+towar.getOpis());
@@ -782,7 +798,7 @@ public class Magazyn {
 								towaryNaMagazynie.put(kodTowaru, new ListTowarTO(towar, 1));
 							}
 							IOLogic logic = new IOLogic();
-							logic.convertToMagazynTO(regaly);
+							magazyn = logic.convertToMagazynTO(regaly);
 							produktyListModel.clear();
 							dodajProdukty(towaryNaMagazynie);
 							zwiekszLiczbePrzedmiotow();
