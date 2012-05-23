@@ -98,25 +98,25 @@ public class IOLogic {
 			e.printStackTrace();
 		}
 
-		ustawWolnePola(regaly);
+//		ustawWolnePola(regaly);
 
 		return "OK";
 	}
 
-	private void ustawWolnePola(ArrayList<RegalPanel> regaly) {
-		for(RegalPanel rp : regaly) {
-			for(int i=0; i<MagazynUtils.liczbaPieter; i++) {
-				Set<String> positions = rp.getLevelMap(i).keySet();
-				for(String key : positions) {
-					BoxPanel bp = rp.getLevelMap(i).get(key);
-					if(rp.getBoxColor(i, key).equals(MagazynUtils.defaultBoxBackground) || rp.getBoxColor(i, key).equals(MagazynUtils.freeBoxBackround));
-						bp.setFree(true);
-						bp.getPole().setMovable(true);
-				}
-			}
-		}
-
-	}
+//	private void ustawWolnePola(ArrayList<RegalPanel> regaly) {
+//		for(RegalPanel rp : regaly) {
+//			for(int i=0; i<MagazynUtils.liczbaPieter; i++) {
+//				Set<String> positions = rp.getLevelMap(i).keySet();
+//				for(String key : positions) {
+//					BoxPanel bp = rp.getLevelMap(i).get(key);
+//					if(rp.getBoxColor(i, key).equals(MagazynUtils.defaultBoxBackground) || rp.getBoxColor(i, key).equals(MagazynUtils.freeBoxBackround));
+//						bp.setFree(true);
+//						bp.getPole().setMovable(true);
+//				}
+//			}
+//		}
+//
+//	}
 
 	public void readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, ArrayList<RegalPanel> regaly, MagazynTO magazyn, HashMap<String, ListTowarTO> towaryNaMagazynie) {
 
