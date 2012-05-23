@@ -72,7 +72,9 @@ public class Magazyn {
 	private JMenuItem openFile;
 	private JMenuItem saveAsFile;
 	private JMenuItem closeWindow;
+	private JMenuItem aboutBox;
 	private JMenu mnZmienStyl;
+	private JMenu mnPomoc;
 	private JFileChooser fileChooser;
 	private JLabel lblNewLabel = new JLabel("Systemy wbudowane i czasu rzeczywistego - Magazyn");
 	private MapaMagazynu mapa;
@@ -306,6 +308,16 @@ public class Magazyn {
 
 		mnZmienStyl = new JMenu("Zmień styl");
 		mnOkno.add(mnZmienStyl);
+		mnPomoc = new JMenu("Pomoc");
+		menuBar.add(mnPomoc);
+		aboutBox = new JMenuItem("O programie");
+		aboutBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new AboutBox(frmSystemyWbudowaneI, true);
+			}
+		});
+		mnPomoc.add(aboutBox);
+		
 
 		/* STOP MAGAZYNU */
 		btnStart = new JButton("START");
