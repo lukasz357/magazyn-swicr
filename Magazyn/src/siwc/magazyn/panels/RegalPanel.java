@@ -452,4 +452,8 @@ public class RegalPanel extends JPanel {
 		this.log = log;
 	}
 	
+	public BoxPanel getBoxPanel(int level, String position) {
+		return getLevelMap(level).get(position);
+	}
+	
 }
