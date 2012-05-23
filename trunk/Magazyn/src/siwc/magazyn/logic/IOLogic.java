@@ -1,6 +1,5 @@
 package siwc.magazyn.logic;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -53,9 +52,7 @@ public class IOLogic {
 					int regalID = Integer.parseInt(tLine[0].trim())-1;
 					int pietro = Integer.parseInt(tLine[1].trim());
 					String pozycja = tLine[2].trim().toUpperCase();
-					if(pozycja.equals("A1"))
-						continue;
-					
+
 					String nazwa = tLine[3].trim();
 					String producent = tLine[4].trim();
 					String kodTowaru = tLine[5].trim();
@@ -65,8 +62,9 @@ public class IOLogic {
 					if( MagazynUtils.convertToRow(pozycja) >= MagazynUtils.rzedowWRegale || MagazynUtils.convertToColumn(pozycja) > MagazynUtils.kolumnWRegale )
 						continue;
 					RegalPanel rp = regaly.get(regalID);
-//					if(rp.isMovable(pietro, pozycja))
-//						continue;
+					
+					if(rp.getBoxColor(pietro, pozycja).equals(MagazynUtils.freeBoxBackround))
+						continue;
 					
 					rp.zmienKolorBoksu(pietro, pozycja, MagazynUtils.busyBoxBackground);
 					
