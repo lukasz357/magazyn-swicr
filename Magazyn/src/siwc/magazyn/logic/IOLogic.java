@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
@@ -67,7 +68,8 @@ public class IOLogic {
 						continue;
 
 					rp.zmienKolorBoksu(pietro, pozycja, MagazynUtils.busyBoxBackground);
-
+//					rp.getLevelMap(pietro).get(pozycja).setFree(false);
+					
 					TowarTO towar = rp.getTowar(pietro, pozycja);
 					if (towar != null) {
 						towar.setNazwa(nazwa);
@@ -97,25 +99,9 @@ public class IOLogic {
 			e.printStackTrace();
 		}
 
-//		ustawWolnePola(regaly);
 
 		return "OK";
 	}
-
-//	private void ustawWolnePola(ArrayList<RegalPanel> regaly) {
-//		for(RegalPanel rp : regaly) {
-//			for(int i=0; i<MagazynUtils.liczbaPieter; i++) {
-//				Set<String> positions = rp.getLevelMap(i).keySet();
-//				for(String key : positions) {
-//					BoxPanel bp = rp.getLevelMap(i).get(key);
-//					if(rp.getBoxColor(i, key).equals(MagazynUtils.defaultBoxBackground) || rp.getBoxColor(i, key).equals(MagazynUtils.freeBoxBackround));
-//						bp.setFree(true);
-//						bp.getPole().setMovable(true);
-//				}
-//			}
-//		}
-//
-//	}
 
 	public void readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, ArrayList<RegalPanel> regaly, MagazynTO magazyn, HashMap<String, ListTowarTO> towaryNaMagazynie) {
 
