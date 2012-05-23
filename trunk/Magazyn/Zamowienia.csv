@@ -1,7 +1,39 @@
-Krok;00:05:00
-PWMC;Półka wiszaca;2;
-SKKC;Szafka kuchenna;3;
-$
 Kowalski;00:02:00
-DDDC;Drzwi debowe;1;
+DC;1;0;C1
+DC;1;0;D2
+DC;1;0;C3
+DC;1;0;D4
+DC;1;0;C5
+DC;1;0;D6
+DC;1;0;C7
+DC;1;0;D8
+SS;2;0;C1
+SS;2;0;D2
+SS;2;0;C3
+SS;2;0;D4
+SS;2;0;C5
+SS;2;0;D6
+SS;2;0;C7
+SS;2;0;D8
+KOMC;3;0;B2
+KOMC;3;0;A3
+KOMC;3;0;B4
+KOMC;3;0;A5
+KOMC;3;0;B6
+KOMC;3;0;A7
+KOMC;3;0;B8
+KC;3;0;C1
+KC;3;0;D2
+KC;3;0;C3
+KC;3;0;C5
+KC;3;0;D6
+KC;3;0;C7
+KC;3;0;D8
+PC;2;0;B2
+PC;2;0;A3
+PC;2;0;B4
+PC;2;0;A5
+PC;2;0;B6
+PC;2;0;A7
+PC;2;0;B8
 $
