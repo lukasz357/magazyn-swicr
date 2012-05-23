@@ -253,7 +253,7 @@ public class Magazyn {
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
 					
-					ustawWolnePola();
+//					ustawWolnePola();
 					
 					magazyn = logic.convertToMagazynTO(regaly);
 					dodajProdukty(towaryNaMagazynie);
@@ -752,7 +752,7 @@ public class Magazyn {
 					produktyListModel.clear();
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
-					ustawWolnePola();
+//					ustawWolnePola();
 					magazyn = logic.convertToMagazynTO(regaly);
 					dodajProdukty(towaryNaMagazynie);
 					saveFile.setEnabled(true);
