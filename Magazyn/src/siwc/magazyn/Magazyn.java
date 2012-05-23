@@ -253,7 +253,7 @@ public class Magazyn {
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
 					
-//					ustawWolnePola();
+					ustawWolnePola();
 					
 					magazyn = logic.convertToMagazynTO(regaly);
 					dodajProdukty(towaryNaMagazynie);
@@ -752,7 +752,7 @@ public class Magazyn {
 					produktyListModel.clear();
 					
 					logic.readFileToRegalPanelArray(fileChooser.getSelectedFile(), regaly, towaryNaMagazynie);
-//					ustawWolnePola();
+					ustawWolnePola();
 					magazyn = logic.convertToMagazynTO(regaly);
 					dodajProdukty(towaryNaMagazynie);
 					saveFile.setEnabled(true);
@@ -1589,8 +1589,10 @@ public class Magazyn {
 				for (String key : positions) {
 					BoxPanel bp = rp.getLevelMap(j).get(key);
 					if (bp.getBackground().equals(MagazynUtils.defaultBoxBackground))
-						if (key.startsWith("A") || key.startsWith("D"))
-							mapa.zmienKolorBoksu(i, j, key, MagazynUtils.freeBoxBackround);
+						if (key.startsWith("A") || key.startsWith("D")) {
+//							mapa.zmienKolorBoksu(i, j, key, MagazynUtils.freeBoxBackround);
+							rp.getLevelMap(j).get(key).setFree(true);
+						}
 				}
 			}
 		}
