@@ -309,8 +309,8 @@ public class RegalPanel extends JPanel {
 	
 	//zwraca wartosc C z twierdzenia pitegorasa
 	public double getC(BoxPanel b, int x, int y) {
-		log.info("C: "+ Math.sqrt(Math.pow(Math.abs(b.getX()-x), 2)+Math.pow(Math.abs(b.getY()-y), 2)));
-		return Math.sqrt(Math.pow(Math.abs(b.getX()-x), 2)+Math.pow(Math.abs(b.getY()-y), 2));
+		log.info("C: "+ Math.sqrt(Math.pow(Math.abs(b.getPositionX()-x), 2)+Math.pow(Math.abs(b.getPositionY()-y), 2)));
+		return Math.sqrt(Math.pow(Math.abs(b.getPositionX()-x), 2)+Math.pow(Math.abs(b.getPositionY()-y), 2));
 	}
 
 	public String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap, boolean bottom) {
