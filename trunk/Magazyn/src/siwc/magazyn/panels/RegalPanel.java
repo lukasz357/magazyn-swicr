@@ -288,7 +288,7 @@ public class RegalPanel extends JPanel {
 	}
 
 	public String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap, int x, int y) {
-		double min = 100000;
+		double min = Double.MAX_VALUE;
 		String minid = null;
 		for(String k : levelMap.keySet()) {
 			if (levelMap.get(k).isFree()) {
