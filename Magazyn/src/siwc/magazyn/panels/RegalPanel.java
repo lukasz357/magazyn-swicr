@@ -98,12 +98,12 @@ public class RegalPanel extends JPanel {
 		}
 	}
 
-	public void moveBoxRight(int level, boolean bottom) {
+	public void moveBoxRight(int level, boolean bottom, int x, int y) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
 
 		if (getLiczbaPustychBoksow() == 1) {
 			
-			String freeBoxKey = getFreeBoxKey(levelMap);
+			String freeBoxKey = getFreeBoxKey(levelMap, x, y);
 			if(freeBoxKey == null) 
 				return;
 			String rightBoxKey = getRightBoxKey(freeBoxKey);
@@ -139,10 +139,10 @@ public class RegalPanel extends JPanel {
 
 
 
-	public void moveBoxLeft(int level, boolean bottom) {
+	public void moveBoxLeft(int level, boolean bottom, int x, int y) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
 		if (getLiczbaPustychBoksow() == 1) {
-			String freeBoxKey = getFreeBoxKey(levelMap);
+			String freeBoxKey = getFreeBoxKey(levelMap, x, y);
 			if(freeBoxKey == null) 
 				return;
 			String rightBoxKey = getLeftBoxKey(freeBoxKey);
@@ -287,13 +287,30 @@ public class RegalPanel extends JPanel {
 
 	}
 
-	public String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap) {
+	public String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap, int x, int y) {
+		double min = 100000;
+		String minid = null;
 		for(String k : levelMap.keySet()) {
-			if(levelMap.get(k).isFree())
-				return k;
+			if (levelMap.get(k).isFree()) {
+				if (getC(levelMap.get(k), x, y) < min) {
+					log.info("K: "+k);
+					min = getC(levelMap.get(k), x, y);
+					minid = k;
+				}
+			}
 		}
-		return null;
-			
+		
+//		for(String k : levelMap.keySet()) {
+//			if(levelMap.get(k).isFree())
+//				return k;
+//		}
+		return minid;
+	}
+	
+	//zwraca wartosc C z twierdzenia pitegorasa
+	public double getC(BoxPanel b, int x, int y) {
+		log.info("C: "+ Math.sqrt(Math.pow(Math.abs(b.getX()-x), 2)+Math.pow(Math.abs(b.getY()-y), 2)));
+		return Math.sqrt(Math.pow(Math.abs(b.getX()-x), 2)+Math.pow(Math.abs(b.getY()-y), 2));
 	}
 
 	public String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap, boolean bottom) {
@@ -419,8 +436,8 @@ public class RegalPanel extends JPanel {
 		this.liczbaPustychBoksow = liczbaPustychBoksow;
 	}
 
-	public String getFreeBoxKey(int level) {
-		return getFreeBoxKey(getLevelMap(level));
+	public String getFreeBoxKey(int level, int x, int y) {
+		return getFreeBoxKey(getLevelMap(level), x, y);
 	}
 	
 	public String getFreeBoxKey(int level, boolean bottom) {

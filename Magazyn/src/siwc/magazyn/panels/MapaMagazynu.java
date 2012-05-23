@@ -187,7 +187,7 @@ public class MapaMagazynu extends JPanel {
 	public void gonZBoksem(int regal, int level) throws Exception {
 		RegalPanel r = regaly.get(regal);
 		if (r.getLiczbaPustychBoksow() == 1) {
-			String boxPosition = r.getFreeBoxKey(level);
+			String boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
 			String destination = null;
 			int boxSize = MagazynUtils.boxSize;
 			int dstCol = lift.getX() / boxSize - MagazynUtils.regalX/boxSize;
@@ -215,8 +215,8 @@ public class MapaMagazynu extends JPanel {
 					System.out.println();
 					while (boxRow != dstRow || boxCol != dstCol) {
 						MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-						r.moveBoxLeft(level, false);
-						boxPosition = r.getFreeBoxKey(level);
+						r.moveBoxLeft(level, false, lift.getX(), lift.getY());
+						boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
 						boxCol = MagazynUtils.convertToColumn(boxPosition);
 						boxRow = MagazynUtils.convertToRow(boxPosition);
 					}
@@ -224,8 +224,8 @@ public class MapaMagazynu extends JPanel {
 					System.out.println();
 					while (boxRow != dstRow || boxCol != dstCol) {
 						MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-						r.moveBoxRight(level, false);
-						boxPosition = r.getFreeBoxKey(level);
+						r.moveBoxRight(level, false, lift.getX(), lift.getY());
+						boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
 						boxCol = MagazynUtils.convertToColumn(boxPosition);
 						boxRow = MagazynUtils.convertToRow(boxPosition);
 						revalidate();
@@ -234,7 +234,7 @@ public class MapaMagazynu extends JPanel {
 			}
 		} else if (r.getLiczbaPustychBoksow() == 2) {
 			System.out.println("LOL 2 BOKSY");
-			String boxPosition = r.getFreeBoxKey(level);
+			String boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
 			String destination = null;
 			int boxSize = MagazynUtils.boxSize;
 			int dstCol = lift.getX() / boxSize - MagazynUtils.regalX;
@@ -255,14 +255,14 @@ public class MapaMagazynu extends JPanel {
 
 			while (boxCol > dstCol) {
 				MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-				r.moveBoxLeft(level, bottom);
-				boxPosition = r.getFreeBoxKey(level);
+				r.moveBoxLeft(level, bottom, lift.getX(), lift.getY());
+				boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
 				boxCol = MagazynUtils.convertToColumn(boxPosition);
 			}
 			while (boxCol < dstCol) {
 				MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-				r.moveBoxRight(level, bottom);
-				boxPosition = r.getFreeBoxKey(level);
+				r.moveBoxRight(level, bottom, lift.getX(), lift.getY());
+				boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
 				boxCol = MagazynUtils.convertToColumn(boxPosition);
 			}
 
