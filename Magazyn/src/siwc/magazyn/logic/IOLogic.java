@@ -100,19 +100,12 @@ public class IOLogic {
 		return "OK";
 	}
 
-public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, ArrayList<RegalPanel> regaly, MagazynTO magazyn, HashMap<String, ListTowarTO> towaryNaMagazynie){
+public void readOrdersFromFile(File file, HashMap<Integer, ZamowienieTO> zamowienia, ArrayList<RegalPanel> regaly, MagazynTO magazyn, HashMap<String, ListTowarTO> towaryNaMagazynie){
 		
 		FileReader fr = null;
 		BufferedReader in = null;
-		int index = 0;
-		ArrayList<ZamowienieTO> noweZam = new ArrayList<>();
-		if(zamowienia != null) {
-			if(zamowienia.size() > 0){
-				index = getMaxKey(zamowienia) + 1;
-			}
-			else
-				index = 1;
-		}
+		int index = 1;
+		zamowienia.clear();
 		try {
 			fr = new FileReader(file);
 			in = new BufferedReader(fr);
@@ -160,7 +153,7 @@ public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, Za
 						log.error("Problem przy wczytywaniu zamówień z pliku!");
 						in.close();
 						fr.close();
-						return null;
+						return;
 					}
 					try{
 						String kodTowaru = tLine[0].trim();
@@ -179,7 +172,6 @@ public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, Za
 					}
 				}
 				zamowienia.put(index, zamowienie);
-				noweZam.add(zamowienie);
 				index++;
 			}
 			
@@ -189,8 +181,6 @@ public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, Za
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		return noweZam;
 	}
 	
 	public MagazynTO convertToMagazynTO(ArrayList<RegalPanel> regaly) {
@@ -259,19 +249,6 @@ public ArrayList<ZamowienieTO> readOrdersFromFile(File file, HashMap<Integer, Za
 	public void saveToFile(File file, ArrayList<RegalPanel> regaly) {
 		log.info("zaimplementuj zapisywanie w iologic");
 		
-	}
-	
-	private Integer getMaxKey(HashMap<Integer, ZamowienieTO> zamowienia){
-		Integer max = null;
-
-		for (Integer i : zamowienia.keySet()) {
-		    if (max == null || i  > max)
-		    {
-		    	max = i;
-		    }
-		}
-		
-		return max;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package siwc.magazyn;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -32,10 +34,12 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListModel;
+import javax.swing.SpinnerListModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
@@ -61,15 +65,13 @@ import siwc.magazyn.panels.MapaMagazynu;
 import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.thirdparty.Clock;
 import siwc.magazyn.utils.MagazynUtils;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerListModel;
-import java.awt.Dimension;
 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
 	private JFrame frmSystemyWbudowaneI;
 	private JMenuItem saveFile;
 	private JMenuItem readProductsMenuItem;
+	private JMenuItem readOrdersMenuItem;
 	private JMenuItem saveAsFile;
 	private JMenuItem closeWindow;
 	private JMenuItem aboutBox;
@@ -142,7 +144,6 @@ public class Magazyn {
 	private static ProduktyJList listProdukty;
 	private HashMap<String, ListTowarTO> towaryNaMagazynie; // tylko do listy po prawej stronie
 	private HashMap<Integer, ZamowienieTO> zamowienia;
-	private List<ZamowienieTO> zamowieniaLista; //tylko do listy po prawej stronie
 	private int idPolaCounter;
 	private ArrayList<String> tempDoklPoz;
 
@@ -266,9 +267,33 @@ public class Magazyn {
 				}
 			}
 		});
-		readProductsMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+		readProductsMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
 		menuPlik.add(readProductsMenuItem);
 		menuPlik.addSeparator();
+		
+		readOrdersMenuItem = new JMenuItem("Wczytaj zamówienia");
+		readOrdersMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int result = fileChooser.showOpenDialog(frmSystemyWbudowaneI);
+
+				if (result == JFileChooser.APPROVE_OPTION) {
+					IOLogic logic = new IOLogic();			
+					logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, regaly, magazyn, towaryNaMagazynie);
+					dodajZamowienia(zamowienia);
+					aktualizujProdukty(towaryNaMagazynie);
+					saveFile.setEnabled(true);
+					saveAsFile.setEnabled(true);
+					log.info("Wczytano zamówienia");			
+					dodajWpisDoKonsoli("Wczytano zamówienia z pliku :" + fileChooser.getSelectedFile());
+					ustalLiczbeZamowien(zamowienia.size());
+					ustalLiczbeDostepnychProduktow(getLiczbaDostepnychProduktow());
+				}
+			}
+		});
+		readOrdersMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
+		menuPlik.add(readOrdersMenuItem);
+		menuPlik.addSeparator();
+		
 
 		saveFile = new JMenuItem("Zapisz");
 		saveFile.setEnabled(false);
@@ -985,7 +1010,7 @@ public class Magazyn {
 						zamowienie.setTerminRealizacji(terminRealizacji);
 						zamowienie.setPriorytet(priorytet); 
 						zamowienie.setNumerZamowienia(index);
-						tempDoklPoz = new ArrayList();
+						tempDoklPoz = new ArrayList<String>();
 						new SelectProductBox(frmSystemyWbudowaneI, rootPaneCheckingEnabled, towaryNaMagazynie) {
 							private static final long serialVersionUID = 7735927972721100415L;
 							
@@ -1151,11 +1176,9 @@ public class Magazyn {
 				int result = fileChooser.showOpenDialog(frmSystemyWbudowaneI);
 
 				if (result == JFileChooser.APPROVE_OPTION) {
-					IOLogic logic = new IOLogic();
-					
-					ArrayList<ZamowienieTO> noweZam = logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, regaly, magazyn, towaryNaMagazynie);
-					zamowieniaLista = noweZam;
-					dodajZamowienia(noweZam);
+					IOLogic logic = new IOLogic();			
+					logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, regaly, magazyn, towaryNaMagazynie);
+					dodajZamowienia(zamowienia);
 					aktualizujProdukty(towaryNaMagazynie);
 					saveFile.setEnabled(true);
 					saveAsFile.setEnabled(true);
@@ -1359,10 +1382,10 @@ public class Magazyn {
 		lblSredniCzasRealizacji.setText(String.valueOf(sredniCzasRealizacji));
 	}
 	/* Dodaj zamowienia */
-	public static void dodajZamowienia(ArrayList<ZamowienieTO> listaZamowien) {
-
+	public static void dodajZamowienia(HashMap<Integer, ZamowienieTO> listaZamowien) {
+		zamowieniaListModel.clear();
 		if (listaZamowien != null){
-			for (ZamowienieTO z : listaZamowien) {
+			for (ZamowienieTO z : listaZamowien.values()) {
 				zamowieniaListModel.addElement(z.getNumerZamowienia() + ": "+z.getDaneKlienta() + " - "+z.getTowary().size() + " el." + " ("+z.getTerminRealizacji()+")");
 			}
 			listZamowienia.setModel(zamowieniaListModel);
