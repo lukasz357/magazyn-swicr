@@ -293,9 +293,9 @@ public class RegalPanel extends JPanel {
 		for(String k : levelMap.keySet()) {
 			if (levelMap.get(k).isFree()) {
 				if (getC(levelMap.get(k), x, y) < min) {
-					log.info("K: "+k);
 					min = getC(levelMap.get(k), x, y);
 					minid = k;
+					log.info("K: "+k+" c: "+min);
 				}
 			}
 		}
@@ -304,12 +304,12 @@ public class RegalPanel extends JPanel {
 //			if(levelMap.get(k).isFree())
 //				return k;
 //		}
+		log.info("Zwracam minid: "+minid+" dla min: "+min);
 		return minid;
 	}
 	
 	//zwraca wartosc C z twierdzenia pitegorasa
 	public double getC(BoxPanel b, int x, int y) {
-		log.info("C: "+ Math.sqrt(Math.pow(Math.abs(b.getPositionX()-x), 2)+Math.pow(Math.abs(b.getPositionY()-y), 2)));
 		return Math.sqrt(Math.pow(Math.abs(b.getPositionX()-x), 2)+Math.pow(Math.abs(b.getPositionY()-y), 2));
 	}
 
