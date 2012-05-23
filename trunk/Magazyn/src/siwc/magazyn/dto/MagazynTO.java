@@ -37,7 +37,7 @@ public class MagazynTO {
 					TowarTO t = tab[i][j].getTowar();
 					if(t != null && t.getKodTowaru() != null)
 						if(t.getKodTowaru().equals(kod) && !t.isZarezerwowany())
-							list.add(tab[i][j].getNrRegalu()+":"+tab[i][j].getPietro()+":"+tab[i][j].getPosition());
+							list.add("Regał "+tab[i][j].getNrRegalu()+":Pietro "+tab[i][j].getPietro()+":Pozycja "+tab[i][j].getPosition());
 				}
 		}
 		

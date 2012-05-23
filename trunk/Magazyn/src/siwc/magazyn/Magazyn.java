@@ -142,6 +142,7 @@ public class Magazyn {
 	private HashMap<Integer, ZamowienieTO> zamowienia;
 	private List<ZamowienieTO> zamowieniaLista; //tylko do listy po prawej stronie
 	private int idPolaCounter;
+	private ArrayList<String> tempDoklPoz;
 
 	private MagazynTO magazyn;
 	Algorithm algorithm;
@@ -955,46 +956,43 @@ public class Magazyn {
 						zamowienie.setTerminRealizacji(terminRealizacji);
 						zamowienie.setPriorytet(priorytet); 
 						zamowienie.setNumerZamowienia(index);
+						tempDoklPoz = new ArrayList();
 						new SelectProductBox(frmSystemyWbudowaneI, rootPaneCheckingEnabled, towaryNaMagazynie) {
 							private static final long serialVersionUID = 7735927972721100415L;
 							
 							@Override
 							public void dodajTowarAction() {
-								String error = "";
-								boolean OK = true;
 								ListTowarTO towar = (ListTowarTO) comboBoxTowary.getSelectedItem();
+								int idx = comboBoxPozycje.getSelectedIndex();
 								String kodTowaru = towar.getKodTowaru();
 								String nazwaTowaru = towar.getNazwa();
-								int ilePaczek = -1;
+								String doklPoz = (String) comboBoxPozycje.getItemAt(idx);
+								String [] pozycjaSplit = doklPoz.split(":");
+								Integer nrRg = -1;
+								Integer nrPtr = -1;
+								String pzc = pozycjaSplit[2].substring("Pozycja ".length());
+								
 								try{
-									ilePaczek = Integer.parseInt(textFieldIlePaczek.getText());
+									nrRg = Integer.parseInt(pozycjaSplit[0].trim().substring("Regał ".length()));
+									nrPtr = Integer.parseInt(pozycjaSplit[1].trim().substring("Piętro ".length()));
 								}catch(NumberFormatException e){
-									OK = false;
-									error += "Nieprawidłowa liczba w polu \"Ile paczek\"";
+									log.error("Nieudane parsowanie nr Regalu lub nr Pietra z combo boxa");
+									e.printStackTrace();
 								}
-								ArrayList<TowarTO> towary = magazyn.getDostepneTowaryByKod(kodTowaru);
-								if(ilePaczek > towary.size()){
-									OK = false;
-									error += "Brak wystarczającej ilości towaru: "+nazwaTowaru+" - jest: "+towary.size()+" zamowienie: "+ilePaczek;
-								}
-								if(!OK) {
-									JOptionPane.showMessageDialog(frmSystemyWbudowaneI, error,
-				                    "Błąd", JOptionPane.ERROR_MESSAGE);
-								}
-								else{
-									for(int i = 0; i < ilePaczek; i++){
-										TowarTO t = towary.get(i);
-										ListTowarTO lt = towaryNaMagazynie.get(kodTowaru);
-										zamowienie.getTowary().add(t);
-										t.setZarezerwowany(true);
-										lt.zmniejszIlosc();
-										if(lt.getIlePaczek()< 1){
-											towaryNaMagazynie.remove(kodTowaru);
-										}
-									}
-									listModel.addElement(kodTowaru + " - "+nazwaTowaru + " - " +ilePaczek + " szt.");
-									listElementy.setModel(listModel);
-								}
+								
+								TowarTO t = regaly.get(nrRg).getTowar(nrPtr, pzc);
+								ListTowarTO lt = towaryNaMagazynie.get(kodTowaru);
+								t.setZarezerwowany(true);
+								lt.zmniejszIlosc();
+								zamowienie.getTowary().add(t);
+								tempDoklPoz.add(doklPoz);
+                                if(lt.getIlePaczek()< 1)
+                                         towaryNaMagazynie.remove(kodTowaru);
+
+								listModel.addElement(kodTowaru + " - "+nazwaTowaru + " - " +doklPoz);
+								listElementy.setModel(listModel);
+								comboBoxPozycje.removeItemAt(idx);
+								comboBoxPozycje.revalidate();
 			
 							}
 
@@ -1028,6 +1026,20 @@ public class Magazyn {
 				                    "Błąd", JOptionPane.ERROR_MESSAGE);
 						}
 						else {
+							for(String doklPoz : tempDoklPoz) {
+								String [] pozycjaSplit = doklPoz.split(":");
+								Integer nrRg = -1;
+								Integer nrPtr = -1;
+								String pzc = pozycjaSplit[2].substring("Pozycja ".length());
+								try{
+									nrRg = Integer.parseInt(pozycjaSplit[0].trim().substring("Regał ".length()));
+									nrPtr = Integer.parseInt(pozycjaSplit[1].trim().substring("Piętro ".length()));
+								}catch(NumberFormatException e){
+									log.error("Nieudane parsowanie nr Regalu lub nr Pietra z combo boxa");
+									e.printStackTrace();
+								}
+								regaly.get(nrRg).zmienKolorBoksu(nrPtr, pzc, MagazynUtils.reservedBoxBackground);// !!!! Dopiero tutaj trzeba
+							}
 							zamowienie.setDaneKlienta(textFieldImieINazwisko.getText());
 							zamowienia.put(index, zamowienie);
 							zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+zamowienie.getDaneKlienta() + " - "+zamowienie.getTowary().size() + " el." + " ("+zamowienie.getTerminRealizacji()+")");
