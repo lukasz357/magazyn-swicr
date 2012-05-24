@@ -97,6 +97,34 @@ public class RegalPanel extends JPanel {
 			}
 		}
 	}
+	
+	public String moveBoxRight(int level, String boxPosition) {
+		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
+		BoxPanel freeBox = levelMap.get(boxPosition);
+		String dstBox = getRightBoxKey(boxPosition);
+		BoxPanel rightBox = levelMap.get(dstBox);
+		
+		levelMap.put(boxPosition, rightBox);
+		levelMap.put(dstBox, freeBox);
+		
+		if (pietro == level)
+			pokazPietro(level);
+		return dstBox;
+	}
+	
+	public String moveBoxLeft(int level, String boxPosition) {
+		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
+		BoxPanel freeBox = levelMap.get(boxPosition);
+		String dstBox = getLeftBoxKey(boxPosition);
+		BoxPanel rightBox = levelMap.get(dstBox);
+		
+		levelMap.put(boxPosition, rightBox);
+		levelMap.put(dstBox, freeBox);
+		if (pietro == level)
+			pokazPietro(level);
+		
+		return dstBox;
+	}
 
 	public void moveBoxRight(int level, boolean bottom, int x, int y) {
 		TreeMap<String, BoxPanel> levelMap = getLevelMap(level);
