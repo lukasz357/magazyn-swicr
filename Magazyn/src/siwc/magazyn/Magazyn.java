@@ -68,13 +68,15 @@ import siwc.magazyn.panels.RegalPanel;
 import siwc.magazyn.thirdparty.Clock;
 import siwc.magazyn.utils.MagazynUtils;
 
+
+// Wrfyv znfm gra xbq qb cbcenjvravn: cemrcenfmnz | Info do odszyfrowania :D 
 public class Magazyn {
 	private static Logger log = Logger.getLogger(Magazyn.class);
 	private JFrame frmSystemyWbudowaneI;
-	private JMenuItem saveFile;
+//	private JMenuItem saveFile;
 	private JMenuItem readProductsMenuItem;
 	private JMenuItem readOrdersMenuItem;
-	private JMenuItem saveAsFile;
+//	private JMenuItem saveAsFile;
 	private JMenuItem closeWindow;
 	private JMenuItem aboutBox;
 	private JMenuItem helpBox;
@@ -204,11 +206,6 @@ public class Magazyn {
 		frmSystemyWbudowaneI.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				// int result = JOptionPane.showConfirmDialog(frame, "Zamknąć program?", "Zamknąc?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				// if (result == JOptionPane.YES_OPTION) {
-				// frame.dispose();
-				// }
-				// TODO
 				frmSystemyWbudowaneI.dispose();
 				System.exit(0);
 			}
@@ -257,8 +254,6 @@ public class Magazyn {
 					
 					magazyn = logic.convertToMagazynTO(regaly);
 					dodajProdukty(towaryNaMagazynie);
-					saveFile.setEnabled(true);
-					saveAsFile.setEnabled(true);
 					dodajWpisDoKonsoli("Wczytano produkty z pliku : " + fileChooser.getSelectedFile());
 					if(towaryNaMagazynie.size() > 0){
 						btnDodajZamowienie.setEnabled(true);
@@ -268,8 +263,6 @@ public class Magazyn {
 					}
 					ustalLiczbePrzedmiotow(magazyn.getLiczbaWszystkichProduktow());
 					ustalLiczbeDostepnychProduktow(getLiczbaDostepnychProduktow());
-					saveFile.setEnabled(true);
-					saveAsFile.setEnabled(true);
 				}
 			}
 
@@ -289,8 +282,6 @@ public class Magazyn {
 					logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, regaly, magazyn, towaryNaMagazynie);
 					dodajZamowienia(zamowienia);
 					aktualizujProdukty(towaryNaMagazynie);
-					saveFile.setEnabled(true);
-					saveAsFile.setEnabled(true);
 					log.info("Wczytano zamówienia");			
 					dodajWpisDoKonsoli("Wczytano zamówienia z pliku :" + fileChooser.getSelectedFile());
 					ustalLiczbeZamowien(zamowienia.size());
@@ -300,40 +291,6 @@ public class Magazyn {
 		});
 		readOrdersMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
 		menuPlik.add(readOrdersMenuItem);
-		menuPlik.addSeparator();
-		
-
-		saveFile = new JMenuItem("Zapisz");
-		saveFile.setEnabled(false);
-		saveFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (fileChooser.getSelectedFile() == null) {
-					int result = fileChooser.showSaveDialog(frmSystemyWbudowaneI);
-					if (result != JFileChooser.APPROVE_OPTION)
-						return;
-				}
-				IOLogic logic = new IOLogic();
-				logic.saveToFile(fileChooser.getSelectedFile(), regaly);
-
-			}
-		});
-		saveFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-		menuPlik.add(saveFile);
-
-		saveAsFile = new JMenuItem("Zapisz jako");
-		saveAsFile.setEnabled(false);
-		saveAsFile.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				int result = fileChooser.showSaveDialog(frmSystemyWbudowaneI);
-				if (result == JFileChooser.APPROVE_OPTION) {
-					IOLogic logic = new IOLogic();
-					logic.saveToFile(fileChooser.getSelectedFile(), regaly);
-				}		
-			}
-		});
-		saveAsFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
-		menuPlik.add(saveAsFile);
 
 		menuPlik.addSeparator();
 
@@ -519,13 +476,6 @@ public class Magazyn {
 
 		KonsolaScrollPane.setViewportView(KonsolaList);
 
-		// TODO MOCK ZMAIAN W BOXACH - do wywalenia soon
-		final Color[] colors = new Color[4];
-		colors[0] = Color.WHITE;
-		colors[1] = Color.BLACK;
-		colors[2] = Color.RED;
-		colors[3] = Color.YELLOW;
-
 		btnMinus = new JButton("-");
 		btnMinus.setEnabled(false);
 		btnMinus.addActionListener(new ActionListener() {
@@ -581,7 +531,7 @@ public class Magazyn {
 
 		lblSredniCzasRealizacji = new JLabel("0");
 		lblSredniCzasRealizacji.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblSredniCzasRealizacji.setBounds(185, 159, 35, 14);
+		lblSredniCzasRealizacji.setBounds(185, 159, 70, 14);
 		panelStatystyki.add(lblSredniCzasRealizacji);
 		frmSystemyWbudowaneI.getContentPane().add(panelLegenda);
 		panelLegenda.setLayout(null);
@@ -755,8 +705,6 @@ public class Magazyn {
 					ustawWolnePola();
 					magazyn = logic.convertToMagazynTO(regaly);
 					dodajProdukty(towaryNaMagazynie);
-					saveFile.setEnabled(true);
-					saveAsFile.setEnabled(true);
 					dodajWpisDoKonsoli("Wczytano produkty z pliku : " + fileChooser.getSelectedFile());
 					if(towaryNaMagazynie.size() > 0){
 						btnDodajZamowienie.setEnabled(true);
@@ -1119,9 +1067,6 @@ public class Magazyn {
 							zamowienie.setDaneKlienta(textFieldImieINazwisko.getText());
 							zamowienia.put(index, zamowienie);
 							zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+zamowienie.getDaneKlienta() + " - "+zamowienie.getTowary().size() + " el." + " ("+zamowienie.getTerminRealizacji()+")");
-//							for(ListTowarTO t: zamowienie.getTowaryDoListy()) {
-//								zamowieniaListModel.addElement(zamowienie.getNumerZamowienia() + ": "+ zamowienie.getDaneKlienta() + " - "+t.getIlePaczek() + " x "+t.getNazwa() +" ("+zamowienie.getTerminRealizacji()+")");
-//							}
 							listZamowienia.setModel(zamowieniaListModel);
 							aktualizujProdukty(towaryNaMagazynie);
 							ustalLiczbeZamowien(zamowienia.size());
@@ -1202,8 +1147,6 @@ public class Magazyn {
 					logic.readOrdersFromFile(fileChooser.getSelectedFile(), zamowienia, regaly, magazyn, towaryNaMagazynie);
 					dodajZamowienia(zamowienia);
 					aktualizujProdukty(towaryNaMagazynie);
-					saveFile.setEnabled(true);
-					saveAsFile.setEnabled(true);
 					log.info("Wczytano zamówienia");			
 					dodajWpisDoKonsoli("Wczytano zamówienia z pliku :" + fileChooser.getSelectedFile());
 					ustalLiczbeZamowien(zamowienia.size());
