@@ -225,8 +225,9 @@ public class MapaMagazynu extends JPanel {
 					System.out.println();
 					while (boxRow != dstRow || boxCol != dstCol) {
 						MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-						r.moveBoxLeft(level, false, lift.getX(), lift.getY());
-						boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
+						boxPosition = r.moveBoxLeft(level, boxPosition);
+//						boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
+						System.out.println(boxPosition);
 						boxCol = MagazynUtils.convertToColumn(boxPosition);
 						boxRow = MagazynUtils.convertToRow(boxPosition);
 					}
@@ -234,8 +235,8 @@ public class MapaMagazynu extends JPanel {
 					System.out.println();
 					while (boxRow != dstRow || boxCol != dstCol) {
 						MagazynUtils.sleep(MagazynUtils.boxMovingSleepTime);
-						r.moveBoxRight(level, false, lift.getX(), lift.getY());
-						boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
+						boxPosition = r.moveBoxRight(level, boxPosition);
+//						boxPosition = r.getFreeBoxKey(level, lift.getX(), lift.getY());
 						boxCol = MagazynUtils.convertToColumn(boxPosition);
 						boxRow = MagazynUtils.convertToRow(boxPosition);
 						revalidate();
