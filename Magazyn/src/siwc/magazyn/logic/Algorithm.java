@@ -69,7 +69,6 @@ public abstract class Algorithm {
 				int size = zamowienia.size();
 				for (int i=0; i < size; i++) {
 					
-					//todo posortowac zamowienia wg priorytetu
 					ZamowienieTO zamowienie = zamowienia.get(0);
 					
 					log.info("getpriorytet: "+zamowienie.getPriorytet()+" time: "+getTimeIntValue()+" sleep: "+(zamowienie.getPriorytet() - (getTimeIntValue()+(buforNaRealizacjeZamowienia*zamowienie.getTowary().size()))));
@@ -287,20 +286,7 @@ public abstract class Algorithm {
 			return null;
 	}
 	
-	private PoleTO znajdzPierwszeLepszeWolnePole() {
-			for(int i=0; i < magazyn.getPietra().keySet().size(); i++) {
-				for (int j=0; j < magazyn.getWielkoscXMagazynu(); j++) {
-					for (int k=0; k < magazyn.getWielkoscYMagazynu(); k++) {
-						if (magazyn.getPietra().get(i)[j][k].getTowar() == null) {
-							magazyn.getPietra().get(i)[j][k].setZ(i);
-							return magazyn.getPietra().get(i)[j][k];
-						}
-					}
-				}
-			}
-			return null;
-	}
-	
+
 	private PoleTO znajdzPierwszeLepszeWolnePoleOdbioru() {
 		for(int i=0; i < magazyn.getPietra().keySet().size(); i++) {
 			for (int j=0; j < magazyn.getWielkoscXMagazynu(); j++) {
