@@ -319,7 +319,9 @@ public class RegalPanel extends JPanel {
 		double min = Double.MAX_VALUE;
 		String minid = null;
 		for(String k : levelMap.keySet()) {
+			log.info("K: "+k+" isFree: "+levelMap.get(k).isFree());
 			if (levelMap.get(k).isFree()) {
+				log.info("C: "+getC(levelMap.get(k), x, y)+" MIN: "+min+"dla x,y: "+x+" "+y);
 				if (getC(levelMap.get(k), x, y) < min) {
 					min = getC(levelMap.get(k), x, y);
 					minid = k;
@@ -338,7 +340,7 @@ public class RegalPanel extends JPanel {
 	
 	//zwraca wartosc C z twierdzenia pitegorasa
 	public double getC(BoxPanel b, int x, int y) {
-		return Math.sqrt(Math.pow(Math.abs(b.getPositionX()-x), 2)+Math.pow(Math.abs(b.getPositionY()-y), 2));
+		return Math.sqrt(Math.pow(Math.abs(b.getPole().getX()-x), 2)+Math.pow(Math.abs(b.getPole().getY()-y), 2));
 	}
 
 	public String getFreeBoxKey(TreeMap<String, BoxPanel> levelMap, boolean bottom) {

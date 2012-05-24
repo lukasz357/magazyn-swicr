@@ -104,7 +104,7 @@ public abstract class Algorithm {
 								
 							log.info("Przemiescilem wozek na pole XY: "+pole.getX()+", "+pole.getY());
 						
-	//						//zabieramy na bary teraz towar i zawozimy do miejsca odbioru
+							//zabieramy na bary teraz towar i zawozimy do miejsca odbioru
 							//magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().setIlosc(magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getIlosc()-1);
 							if (magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar() == null)
 								Magazyn.dodajWpisDoKonsoli("We wskazanym polu nie ma juz towaru: "+magazyn.getPietra().get(pole.getZ())[pole.getX()][pole.getY()].getTowar().getNazwa()+" !!!");
